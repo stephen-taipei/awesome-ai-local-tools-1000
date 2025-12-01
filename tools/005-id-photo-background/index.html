@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI ID Photo Background | AI 證件照背景</title>
+    <meta name="description" content="Create professional ID photos with standard background colors. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 證件照背景</h1>
+            <p class="subtitle" data-i18n="subtitle">一鍵製作標準證件照，白/藍/紅背景</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Model Status -->
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+
+        <!-- Progress Container -->
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText" data-i18n="downloading">正在下載模型...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea" style="display: none;">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">📸</div>
+                <p class="upload-text" data-i18n="uploadText">上傳您的照片</p>
+                <p class="upload-hint" data-i18n="uploadHint">建議使用正面免冠照片，光線均勻</p>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <!-- Preview -->
+                <div class="preview-section">
+                    <div class="preview-box original-preview">
+                        <h3 data-i18n="original">原圖</h3>
+                        <div class="image-wrapper">
+                            <img id="originalImage" alt="Original">
+                        </div>
+                    </div>
+                    <div class="preview-box result-preview">
+                        <h3 data-i18n="result">證件照</h3>
+                        <div class="image-wrapper" id="resultWrapper">
+                            <canvas id="resultCanvas"></canvas>
+                            <div class="processing-overlay" id="processingOverlay">
+                                <div class="spinner"></div>
+                                <p data-i18n="processing">正在處理中...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls-panel">
+                    <!-- Background Color -->
+                    <div class="control-section">
+                        <h3 data-i18n="backgroundColor">背景顏色</h3>
+                        <div class="color-options">
+                            <button class="color-btn active" data-color="#ffffff" data-name="white">
+                                <span class="color-swatch" style="background: #ffffff;"></span>
+                                <span data-i18n="white">白色</span>
+                            </button>
+                            <button class="color-btn" data-color="#438edb" data-name="blue">
+                                <span class="color-swatch" style="background: #438edb;"></span>
+                                <span data-i18n="blue">藍色</span>
+                            </button>
+                            <button class="color-btn" data-color="#d93a3a" data-name="red">
+                                <span class="color-swatch" style="background: #d93a3a;"></span>
+                                <span data-i18n="red">紅色</span>
+                            </button>
+                            <button class="color-btn" data-color="#67a667" data-name="green">
+                                <span class="color-swatch" style="background: #67a667;"></span>
+                                <span data-i18n="green">綠色</span>
+                            </button>
+                            <button class="color-btn" data-color="#f0f0f0" data-name="gray">
+                                <span class="color-swatch" style="background: #f0f0f0;"></span>
+                                <span data-i18n="gray">淺灰</span>
+                            </button>
+                        </div>
+                        <div class="custom-color">
+                            <label data-i18n="customColor">自訂顏色：</label>
+                            <input type="color" id="customColor" value="#ffffff">
+                        </div>
+                    </div>
+
+                    <!-- Photo Size -->
+                    <div class="control-section">
+                        <h3 data-i18n="photoSize">照片尺寸</h3>
+                        <div class="size-options">
+                            <button class="size-btn active" data-width="295" data-height="413" data-name="1inch">
+                                <span class="size-name" data-i18n="size1inch">1寸</span>
+                                <span class="size-dim">25×35mm</span>
+                            </button>
+                            <button class="size-btn" data-width="413" data-height="579" data-name="2inch">
+                                <span class="size-name" data-i18n="size2inch">2寸</span>
+                                <span class="size-dim">35×49mm</span>
+                            </button>
+                            <button class="size-btn" data-width="390" data-height="567" data-name="small2inch">
+                                <span class="size-name" data-i18n="sizeSmall2inch">小2寸</span>
+                                <span class="size-dim">33×48mm</span>
+                            </button>
+                            <button class="size-btn" data-width="413" data-height="531" data-name="passport">
+                                <span class="size-name" data-i18n="sizePassport">護照</span>
+                                <span class="size-dim">35×45mm</span>
+                            </button>
+                            <button class="size-btn" data-width="358" data-height="441" data-name="visa">
+                                <span class="size-name" data-i18n="sizeVisa">簽證</span>
+                                <span class="size-dim">33×48mm</span>
+                            </button>
+                            <button class="size-btn" data-width="600" data-height="600" data-name="square">
+                                <span class="size-name" data-i18n="sizeSquare">正方形</span>
+                                <span class="size-dim">51×51mm</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Output Quality -->
+                    <div class="control-section">
+                        <h3 data-i18n="outputQuality">輸出品質</h3>
+                        <div class="quality-options">
+                            <button class="quality-btn" data-dpi="150" data-i18n="qualityWeb">網頁用</button>
+                            <button class="quality-btn active" data-dpi="300" data-i18n="qualityPrint">列印用</button>
+                            <button class="quality-btn" data-dpi="600" data-i18n="qualityHD">高清</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-success" disabled data-i18n="download">下載證件照</button>
+                    <button id="downloadSheetBtn" class="btn btn-primary" disabled data-i18n="downloadSheet">下載排版照片</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他照片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Common Sizes Reference -->
+        <section class="size-reference">
+            <h2 data-i18n="sizeReference">常見證件照尺寸參考</h2>
+            <div class="size-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="sizeName">名稱</th>
+                            <th data-i18n="sizeDimensions">尺寸 (mm)</th>
+                            <th data-i18n="sizeUsage">用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="size1inch">1寸</td>
+                            <td>25 × 35</td>
+                            <td data-i18n="usage1inch">身分證、學生證</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="size2inch">2寸</td>
+                            <td>35 × 49</td>
+                            <td data-i18n="usage2inch">護照、簽證</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="sizePassport">護照</td>
+                            <td>35 × 45</td>
+                            <td data-i18n="usagePassport">護照申請</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🤖</div>
+                    <h3 data-i18n="aiModel">AI 模型</h3>
+                    <p data-i18n="aiModelDesc">使用專業人像分割模型，精確分離人物與背景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="standardColors">標準背景</h3>
+                    <p data-i18n="standardColorsDesc">提供白、藍、紅等標準證件照背景色</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📐</div>
+                    <h3 data-i18n="standardSizes">標準尺寸</h3>
+                    <p data-i18n="standardSizesDesc">內建多種常見證件照尺寸，一鍵裁切</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🖨️</div>
+                    <h3 data-i18n="printReady">列印就緒</h3>
+                    <p data-i18n="printReadyDesc">支援高解析度輸出，可直接列印使用</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #005</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
