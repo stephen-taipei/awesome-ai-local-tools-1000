@@ -10,6 +10,7 @@
 | 003 | [AI Background Blur](./003-background-blur/) | Image Processing | MediaPipe Selfie Segmenter | ✅ Complete |
 | 004 | [AI Background Color Fill](./004-background-color-fill/) | Image Processing | RMBG-1.4 | ✅ Complete |
 | 005 | [AI ID Photo Background](./005-id-photo-background/) | Image Processing | RMBG-1.4 | ✅ Complete |
+| 051 | [AI Image Classifier](./051-image-classifier/) | Image Recognition | MobileNetV2 | ✅ Complete |
 
 ## Directory Structure
 
@@ -29,6 +30,10 @@ tools/
 │   ├── style.css
 │   └── app.js
 ├── 005-id-photo-background/     # AI ID Photo Background
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 051-image-classifier/        # AI Image Classifier
 │   ├── index.html
 │   ├── style.css
 │   └── app.js
