@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Background Color Fill | AI 背景顏色填充</title>
+    <meta name="description" content="Remove image background and fill with solid colors or gradients. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 背景顏色填充</h1>
+            <p class="subtitle" data-i18n="subtitle">移除背景，填充純色或漸層色彩</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Model Status -->
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+
+        <!-- Progress Container -->
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText" data-i18n="downloading">正在下載模型...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-note" data-i18n="progressNote">首次載入需下載約 4.7MB，之後會快取至本地</p>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea" style="display: none;">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">🎨</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP</p>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <!-- Preview -->
+                <div class="preview-container">
+                    <div class="preview-box">
+                        <h3 data-i18n="original">原圖</h3>
+                        <div class="image-wrapper">
+                            <img id="originalImage" alt="Original">
+                        </div>
+                    </div>
+                    <div class="preview-box">
+                        <h3 data-i18n="result">填充結果</h3>
+                        <div class="image-wrapper" id="resultWrapper">
+                            <canvas id="resultCanvas"></canvas>
+                            <div class="processing-overlay" id="processingOverlay">
+                                <div class="spinner"></div>
+                                <p data-i18n="processing">正在處理中...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Controls -->
+                <div class="color-controls">
+                    <h3 data-i18n="backgroundSettings">背景設定</h3>
+
+                    <!-- Fill Mode -->
+                    <div class="control-group">
+                        <label data-i18n="fillMode">填充模式：</label>
+                        <div class="mode-buttons">
+                            <button id="modeSolid" class="mode-btn active" data-i18n="solid">純色</button>
+                            <button id="modeGradient" class="mode-btn" data-i18n="gradient">漸層</button>
+                        </div>
+                    </div>
+
+                    <!-- Solid Color -->
+                    <div class="control-group" id="solidControls">
+                        <label data-i18n="selectColor">選擇顏色：</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="solidColor" value="#ffffff">
+                            <input type="text" id="solidColorHex" value="#ffffff" maxlength="7">
+                        </div>
+                        <div class="preset-colors">
+                            <button class="preset-color" data-color="#ffffff" title="White"></button>
+                            <button class="preset-color" data-color="#000000" title="Black"></button>
+                            <button class="preset-color" data-color="#ff0000" title="Red"></button>
+                            <button class="preset-color" data-color="#00ff00" title="Green"></button>
+                            <button class="preset-color" data-color="#0000ff" title="Blue"></button>
+                            <button class="preset-color" data-color="#ffff00" title="Yellow"></button>
+                            <button class="preset-color" data-color="#ff00ff" title="Magenta"></button>
+                            <button class="preset-color" data-color="#00ffff" title="Cyan"></button>
+                            <button class="preset-color" data-color="#f0f0f0" title="Light Gray"></button>
+                            <button class="preset-color" data-color="#808080" title="Gray"></button>
+                        </div>
+                    </div>
+
+                    <!-- Gradient Controls -->
+                    <div class="control-group" id="gradientControls" style="display: none;">
+                        <div class="gradient-colors">
+                            <div class="gradient-color">
+                                <label data-i18n="colorStart">起始顏色：</label>
+                                <input type="color" id="gradientStart" value="#667eea">
+                            </div>
+                            <div class="gradient-color">
+                                <label data-i18n="colorEnd">結束顏色：</label>
+                                <input type="color" id="gradientEnd" value="#764ba2">
+                            </div>
+                        </div>
+                        <div class="gradient-direction">
+                            <label data-i18n="direction">方向：</label>
+                            <div class="direction-buttons">
+                                <button class="dir-btn" data-dir="to right" title="→">→</button>
+                                <button class="dir-btn active" data-dir="to bottom" title="↓">↓</button>
+                                <button class="dir-btn" data-dir="to bottom right" title="↘">↘</button>
+                                <button class="dir-btn" data-dir="to bottom left" title="↙">↙</button>
+                                <button class="dir-btn" data-dir="circle" title="◉">◉</button>
+                            </div>
+                        </div>
+                        <div class="gradient-presets">
+                            <label data-i18n="presets">預設漸層：</label>
+                            <div class="preset-gradients">
+                                <button class="preset-gradient" data-start="#667eea" data-end="#764ba2" style="background: linear-gradient(135deg, #667eea, #764ba2);"></button>
+                                <button class="preset-gradient" data-start="#f093fb" data-end="#f5576c" style="background: linear-gradient(135deg, #f093fb, #f5576c);"></button>
+                                <button class="preset-gradient" data-start="#4facfe" data-end="#00f2fe" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></button>
+                                <button class="preset-gradient" data-start="#43e97b" data-end="#38f9d7" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></button>
+                                <button class="preset-gradient" data-start="#fa709a" data-end="#fee140" style="background: linear-gradient(135deg, #fa709a, #fee140);"></button>
+                                <button class="preset-gradient" data-start="#a8edea" data-end="#fed6e3" style="background: linear-gradient(135deg, #a8edea, #fed6e3);"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-success" disabled data-i18n="download">下載結果</button>
+                    <button id="downloadTransparentBtn" class="btn btn-primary" disabled data-i18n="downloadTransparent">下載透明背景</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🤖</div>
+                    <h3 data-i18n="aiModel">AI 模型</h3>
+                    <p data-i18n="aiModelDesc">使用輕量級 U2-Net 模型精確分離前景與背景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="colorFill">顏色填充</h3>
+                    <p data-i18n="colorFillDesc">支援純色、漸層等多種背景填充方式</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="fast">快速處理</h3>
+                    <p data-i18n="fastDesc">模型僅 4.7MB，載入快速，即時預覽</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="privacy">隱私保護</h3>
+                    <p data-i18n="privacyDesc">所有處理在本地完成，圖片不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Specs -->
+        <section class="tech-specs">
+            <h2 data-i18n="techSpecs">技術規格</h2>
+            <table class="specs-table">
+                <tr>
+                    <td data-i18n="specModel">AI 模型</td>
+                    <td>U2-Net (Lite)</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specFormat">模型格式</td>
+                    <td>ONNX</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specSize">模型大小</td>
+                    <td>~4.7 MB</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specRuntime">推論引擎</td>
+                    <td>Transformers.js + ONNX Runtime Web</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #004</span> ·
+                <a href="https://github.com" target="_blank" data-i18n="sourceCode">原始碼</a>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
