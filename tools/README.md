@@ -17,6 +17,7 @@
 | 010 | [AI Background Animation](./010-background-animation/) | Image Processing | Perlin Noise + Canvas | ✅ Complete |
 | 012 | [AI Super Resolution 2x](./012-super-resolution-2x/) | Image Enhancement | Swin2SR | ✅ Complete |
 | 013 | [Anime Image Enhancement](./013-anime-enhancement/) | Image Enhancement | Swin2SR + Anime Filter | ✅ Complete |
+| 014 | [Old Photo Restoration](./014-old-photo-restoration/) | Image Enhancement | Restoration AI | ✅ Complete |
 | 051 | [AI Image Classifier](./051-image-classifier/) | Image Recognition | MobileNetV2 | ✅ Complete |
 | 052 | [AI Object Detection](./052-object-detection/) | Image Recognition | YOLOS-tiny | ✅ Complete |
 
@@ -66,6 +67,10 @@ tools/
 │   ├── style.css
 │   └── app.js
 ├── 013-anime-enhancement/       # Anime Image Enhancement
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 014-old-photo-restoration/   # Old Photo Restoration
 │   ├── index.html
 │   ├── style.css
 │   └── app.js

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>老照片修復 | Old Photo Restoration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="../../" class="back-link" data-i18n="backToHome">← 返回首頁</a>
+                    <span class="tool-badge" data-i18n="toolNumber">工具 #014</span>
+                </div>
+                <div class="lang-switch">
+                    <button class="lang-btn active" id="lang-zh">中文</button>
+                    <button class="lang-btn" id="lang-en">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="title-section">
+                <h1 data-i18n="title">老照片修復</h1>
+                <p class="subtitle" data-i18n="subtitle">AI 智慧修復老舊照片的劃痕、褪色、噪點，重現珍貴回憶</p>
+                <div class="privacy-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+                </div>
+            </div>
+
+            <!-- Model Loading -->
+            <div class="model-loading" id="modelLoading">
+                <div class="loading-content">
+                    <div class="loading-icon">
+                        <span class="vintage-icon">📷</span>
+                    </div>
+                    <h3 data-i18n="loadingModel">正在載入修復模型...</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="loadProgress"></div>
+                    </div>
+                    <p class="loading-hint" id="loadingStatus" data-i18n="loadingHint">首次載入需下載模型檔案</p>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea" style="display: none;">
+                <div class="upload-content">
+                    <div class="upload-frame">
+                        <svg class="upload-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </div>
+                    <p class="upload-text" data-i18n="uploadText">點擊或拖放老照片到這裡</p>
+                    <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG 格式</p>
+                    <div class="restoration-hints">
+                        <span class="hint-tag">🔧 劃痕修復</span>
+                        <span class="hint-tag">🎨 褪色還原</span>
+                        <span class="hint-tag">✨ 清晰增強</span>
+                    </div>
+                </div>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <!-- Preview Section -->
+                <div class="preview-section">
+                    <div class="preview-tabs">
+                        <button class="preview-tab active" data-view="split">
+                            <span data-i18n="viewSplit">對比檢視</span>
+                        </button>
+                        <button class="preview-tab" data-view="original">
+                            <span data-i18n="viewOriginal">原圖</span>
+                        </button>
+                        <button class="preview-tab" data-view="restored">
+                            <span data-i18n="viewRestored">修復後</span>
+                        </button>
+                    </div>
+                    <div class="preview-container" id="previewContainer">
+                        <div class="split-view" id="splitView">
+                            <canvas id="originalCanvas" class="preview-canvas"></canvas>
+                            <canvas id="resultCanvas" class="preview-canvas"></canvas>
+                            <div class="split-divider" id="splitDivider">
+                                <div class="divider-line"></div>
+                                <div class="divider-handle">
+                                    <span>◀ ▶</span>
+                                </div>
+                            </div>
+                            <div class="split-labels">
+                                <span class="label-before" data-i18n="before">修復前</span>
+                                <span class="label-after" data-i18n="after">修復後</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls Section -->
+                <div class="controls-section">
+                    <!-- Restoration Mode -->
+                    <div class="control-group">
+                        <label class="control-label" data-i18n="restorationMode">修復模式</label>
+                        <div class="mode-buttons">
+                            <button class="mode-btn active" data-mode="auto">
+                                <span class="mode-icon">🤖</span>
+                                <span data-i18n="modeAuto">自動修復</span>
+                            </button>
+                            <button class="mode-btn" data-mode="face">
+                                <span class="mode-icon">👤</span>
+                                <span data-i18n="modeFace">人臉增強</span>
+                            </button>
+                            <button class="mode-btn" data-mode="colorize">
+                                <span class="mode-icon">🎨</span>
+                                <span data-i18n="modeColorize">黑白上色</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Enhancement Settings -->
+                    <div class="control-group">
+                        <label class="control-label" data-i18n="enhanceSettings">增強設定</label>
+
+                        <div class="slider-control">
+                            <div class="slider-header">
+                                <span data-i18n="scratchRemoval">劃痕修復</span>
+                                <span class="slider-value" id="scratchValue">50%</span>
+                            </div>
+                            <input type="range" class="slider" id="scratchSlider" min="0" max="100" value="50">
+                        </div>
+
+                        <div class="slider-control">
+                            <div class="slider-header">
+                                <span data-i18n="colorRestore">色彩還原</span>
+                                <span class="slider-value" id="colorValue">60%</span>
+                            </div>
+                            <input type="range" class="slider" id="colorSlider" min="0" max="100" value="60">
+                        </div>
+
+                        <div class="slider-control">
+                            <div class="slider-header">
+                                <span data-i18n="denoise">降噪程度</span>
+                                <span class="slider-value" id="denoiseValue">40%</span>
+                            </div>
+                            <input type="range" class="slider" id="denoiseSlider" min="0" max="100" value="40">
+                        </div>
+
+                        <div class="slider-control">
+                            <div class="slider-header">
+                                <span data-i18n="sharpen">清晰度</span>
+                                <span class="slider-value" id="sharpenValue">50%</span>
+                            </div>
+                            <input type="range" class="slider" id="sharpenSlider" min="0" max="100" value="50">
+                        </div>
+                    </div>
+
+                    <!-- Apply Button -->
+                    <button class="btn btn-apply" id="applyBtn">
+                        <span data-i18n="applyRestoration">套用修復</span>
+                    </button>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="resetBtn">
+                            <span data-i18n="newImage">選擇新圖片</span>
+                        </button>
+                        <button class="btn btn-primary" id="downloadBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span data-i18n="download">下載結果</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Overlay -->
+            <div class="processing-overlay" id="processingOverlay" style="display: none;">
+                <div class="processing-content">
+                    <div class="processing-animation">
+                        <div class="restore-ring"></div>
+                        <span class="restore-icon">📷</span>
+                    </div>
+                    <p class="processing-text" data-i18n="processing">正在修復老照片...</p>
+                    <p class="processing-hint" data-i18n="processingHint">AI 正在分析並修復損傷</p>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <section class="info-section">
+                <h2 data-i18n="howItWorks">如何運作？</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">🔍</div>
+                        <h3 data-i18n="step1Title">損傷偵測</h3>
+                        <p data-i18n="step1Desc">AI 自動識別照片中的劃痕、折痕、污漬等損傷</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🔧</div>
+                        <h3 data-i18n="step2Title">智慧修復</h3>
+                        <p data-i18n="step2Desc">使用深度學習模型填補損傷區域</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🎨</div>
+                        <h3 data-i18n="step3Title">色彩還原</h3>
+                        <p data-i18n="step3Desc">恢復褪色照片的原始色彩與對比度</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">✨</div>
+                        <h3 data-i18n="step4Title">細節增強</h3>
+                        <p data-i18n="step4Desc">提升清晰度，讓珍貴回憶煥然一新</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Specs -->
+            <section class="specs-section">
+                <h2 data-i18n="techSpecs">技術規格</h2>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specModel">AI 模型</span>
+                        <span class="spec-value">Restoration AI</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specFeatures">修復功能</span>
+                        <span class="spec-value" data-i18n="specFeaturesValue">劃痕/褪色/噪點</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specInput">輸入格式</span>
+                        <span class="spec-value">JPG, PNG</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specOutput">輸出格式</span>
+                        <span class="spec-value">PNG</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
