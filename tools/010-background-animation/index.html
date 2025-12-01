@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 背景動態化 | AI Background Animation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="../../" class="back-link" data-i18n="backToHome">← 返回首頁</a>
+                    <span class="tool-badge" data-i18n="toolNumber">工具 #010</span>
+                </div>
+                <div class="lang-switch">
+                    <button class="lang-btn active" id="lang-zh">中文</button>
+                    <button class="lang-btn" id="lang-en">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="title-section">
+                <h1 data-i18n="title">AI 背景動態化</h1>
+                <p class="subtitle" data-i18n="subtitle">將靜態圖片背景轉換為動態效果，創造生動的動畫</p>
+                <div class="privacy-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <svg class="upload-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                    <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
+                </div>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <!-- Preview Section -->
+                <div class="preview-section">
+                    <div class="preview-box" id="previewBox">
+                        <canvas id="previewCanvas"></canvas>
+                        <div class="play-controls">
+                            <button class="control-btn" id="playPauseBtn" title="Play/Pause">
+                                <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                                <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                                    <rect x="6" y="4" width="4" height="16"></rect>
+                                    <rect x="14" y="4" width="4" height="16"></rect>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="preview-info">
+                        <span id="frameInfo">0 / 60</span>
+                        <span id="durationInfo">0.0s</span>
+                    </div>
+                </div>
+
+                <!-- Controls Section -->
+                <div class="controls-section">
+                    <!-- Animation Type -->
+                    <div class="control-group">
+                        <label class="control-label" data-i18n="animationType">動畫類型</label>
+                        <div class="animation-presets">
+                            <button class="preset-btn active" data-type="clouds">
+                                <span class="preset-icon">☁️</span>
+                                <span data-i18n="animClouds">雲彩飄動</span>
+                            </button>
+                            <button class="preset-btn" data-type="water">
+                                <span class="preset-icon">🌊</span>
+                                <span data-i18n="animWater">水波蕩漾</span>
+                            </button>
+                            <button class="preset-btn" data-type="fire">
+                                <span class="preset-icon">🔥</span>
+                                <span data-i18n="animFire">火焰搖曳</span>
+                            </button>
+                            <button class="preset-btn" data-type="wind">
+                                <span class="preset-icon">🍃</span>
+                                <span data-i18n="animWind">風吹草動</span>
+                            </button>
+                            <button class="preset-btn" data-type="sparkle">
+                                <span class="preset-icon">✨</span>
+                                <span data-i18n="animSparkle">閃爍星光</span>
+                            </button>
+                            <button class="preset-btn" data-type="pulse">
+                                <span class="preset-icon">💫</span>
+                                <span data-i18n="animPulse">呼吸脈動</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Animation Settings -->
+                    <div class="control-group">
+                        <label class="control-label" data-i18n="animSettings">動畫設定</label>
+
+                        <div class="slider-control">
+                            <div class="slider-header">
+                                <span data-i18n="intensity">強度</span>
+                                <span class="slider-value" id="intensityValue">50%</span>
+                            </div>
+                            <input type="range" class="slider" id="intensitySlider" min="10" max="100" value="50">
+                        </div>
+
+                        <div class="slider-control">
+                            <div class="slider-header">
+                                <span data-i18n="speed">速度</span>
+                                <span class="slider-value" id="speedValue">1.0x</span>
+                            </div>
+                            <input type="range" class="slider" id="speedSlider" min="25" max="200" value="100">
+                        </div>
+
+                        <div class="slider-control">
+                            <div class="slider-header">
+                                <span data-i18n="scale">縮放</span>
+                                <span class="slider-value" id="scaleValue">1.0x</span>
+                            </div>
+                            <input type="range" class="slider" id="scaleSlider" min="50" max="200" value="100">
+                        </div>
+                    </div>
+
+                    <!-- Direction Control -->
+                    <div class="control-group">
+                        <label class="control-label" data-i18n="direction">方向控制</label>
+                        <div class="direction-pad">
+                            <button class="dir-btn" data-dir="up">↑</button>
+                            <button class="dir-btn" data-dir="left">←</button>
+                            <button class="dir-btn active" data-dir="center">●</button>
+                            <button class="dir-btn" data-dir="right">→</button>
+                            <button class="dir-btn" data-dir="down">↓</button>
+                        </div>
+                    </div>
+
+                    <!-- Output Settings -->
+                    <div class="control-group">
+                        <label class="control-label" data-i18n="outputSettings">輸出設定</label>
+
+                        <div class="output-format">
+                            <button class="format-btn active" data-format="gif">GIF</button>
+                            <button class="format-btn" data-format="webm">WebM</button>
+                            <button class="format-btn" data-format="mp4">MP4</button>
+                        </div>
+
+                        <div class="slider-control">
+                            <div class="slider-header">
+                                <span data-i18n="duration">時長</span>
+                                <span class="slider-value" id="durationValue">2.0s</span>
+                            </div>
+                            <input type="range" class="slider" id="durationSlider" min="1" max="10" value="2" step="0.5">
+                        </div>
+
+                        <div class="slider-control">
+                            <div class="slider-header">
+                                <span data-i18n="fps">幀率</span>
+                                <span class="slider-value" id="fpsValue">30 fps</span>
+                            </div>
+                            <input type="range" class="slider" id="fpsSlider" min="15" max="60" value="30" step="5">
+                        </div>
+
+                        <div class="quality-selector">
+                            <span data-i18n="quality">品質</span>
+                            <div class="quality-btns">
+                                <button class="quality-btn" data-quality="low" data-i18n="qualityLow">低</button>
+                                <button class="quality-btn active" data-quality="medium" data-i18n="qualityMedium">中</button>
+                                <button class="quality-btn" data-quality="high" data-i18n="qualityHigh">高</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="resetBtn">
+                            <span data-i18n="newImage">選擇新圖片</span>
+                        </button>
+                        <button class="btn btn-primary" id="exportBtn">
+                            <span data-i18n="export">匯出動畫</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Overlay -->
+            <div class="processing-overlay" id="processingOverlay" style="display: none;">
+                <div class="processing-content">
+                    <div class="spinner"></div>
+                    <p class="processing-text" data-i18n="processing">正在生成動畫...</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">0%</p>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <section class="info-section">
+                <h2 data-i18n="howItWorks">如何運作？</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">🎨</div>
+                        <h3 data-i18n="step1Title">圖像分析</h3>
+                        <p data-i18n="step1Desc">分析圖片結構和色彩分布，準備動畫處理</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🌀</div>
+                        <h3 data-i18n="step2Title">程序動畫</h3>
+                        <p data-i18n="step2Desc">使用柏林噪聲和向量場生成自然流暢的動態效果</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">⚡</div>
+                        <h3 data-i18n="step3Title">即時渲染</h3>
+                        <p data-i18n="step3Desc">WebGL 硬體加速，流暢的即時預覽體驗</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📹</div>
+                        <h3 data-i18n="step4Title">多格式匯出</h3>
+                        <p data-i18n="step4Desc">支援 GIF、WebM、MP4 等多種動畫格式</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Specs -->
+            <section class="specs-section">
+                <h2 data-i18n="techSpecs">技術規格</h2>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specMethod">處理方式</span>
+                        <span class="spec-value" data-i18n="specMethodValue">程序化動畫 + WebGL</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specRealtime">即時預覽</span>
+                        <span class="spec-value" data-i18n="specRealtimeValue">是 (60 FPS)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specInput">輸入格式</span>
+                        <span class="spec-value">JPG, PNG, WebP</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specOutput">輸出格式</span>
+                        <span class="spec-value">GIF, WebM, MP4</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <!-- GIF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
