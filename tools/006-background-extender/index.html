@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Background Extender | AI 背景延伸器</title>
+    <meta name="description" content="Extend image backgrounds intelligently. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 背景延伸器</h1>
+            <p class="subtitle" data-i18n="subtitle">智慧延伸圖片背景，擴展畫布尺寸</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">🖼️</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="editor-layout">
+                    <!-- Canvas Section -->
+                    <div class="canvas-section">
+                        <div class="canvas-wrapper" id="canvasWrapper">
+                            <canvas id="previewCanvas"></canvas>
+                            <div class="expand-controls">
+                                <button class="expand-btn top" id="expandTop" title="向上延伸">
+                                    <span class="arrow">↑</span>
+                                </button>
+                                <button class="expand-btn right" id="expandRight" title="向右延伸">
+                                    <span class="arrow">→</span>
+                                </button>
+                                <button class="expand-btn bottom" id="expandBottom" title="向下延伸">
+                                    <span class="arrow">↓</span>
+                                </button>
+                                <button class="expand-btn left" id="expandLeft" title="向左延伸">
+                                    <span class="arrow">←</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="canvas-info">
+                            <span data-i18n="originalSize">原始尺寸</span>:
+                            <span id="originalSize">-</span>
+                            <span class="separator">|</span>
+                            <span data-i18n="currentSize">目前尺寸</span>:
+                            <span id="currentSize">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Controls Section -->
+                    <div class="controls-section">
+                        <h3 data-i18n="extendSettings">延伸設定</h3>
+
+                        <!-- Extend Amount -->
+                        <div class="control-group">
+                            <label data-i18n="extendAmount">延伸距離 (像素)</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="extendAmountSlider" min="10" max="500" value="100">
+                                <input type="number" id="extendAmountInput" min="10" max="1000" value="100">
+                            </div>
+                        </div>
+
+                        <!-- Extend Mode -->
+                        <div class="control-group">
+                            <label data-i18n="extendMode">延伸模式</label>
+                            <div class="mode-buttons">
+                                <button class="mode-btn active" data-mode="mirror" data-i18n="modeMirror">鏡像</button>
+                                <button class="mode-btn" data-mode="repeat" data-i18n="modeRepeat">重複</button>
+                                <button class="mode-btn" data-mode="stretch" data-i18n="modeStretch">拉伸</button>
+                                <button class="mode-btn" data-mode="color" data-i18n="modeColor">純色</button>
+                            </div>
+                        </div>
+
+                        <!-- Fill Color (for color mode) -->
+                        <div class="control-group" id="colorPickerGroup" style="display: none;">
+                            <label data-i18n="fillColor">填充顏色</label>
+                            <div class="color-picker-row">
+                                <input type="color" id="fillColor" value="#ffffff">
+                                <button class="sample-btn" id="sampleColorBtn" data-i18n="sampleFromEdge">從邊緣取色</button>
+                            </div>
+                        </div>
+
+                        <!-- Blend Amount -->
+                        <div class="control-group" id="blendGroup">
+                            <label data-i18n="blendAmount">混合程度</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="blendAmountSlider" min="0" max="100" value="50">
+                                <span id="blendAmountValue">50%</span>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="control-group">
+                            <label data-i18n="quickActions">快速操作</label>
+                            <div class="quick-actions">
+                                <button class="quick-btn" id="expandAllBtn" data-i18n="expandAll">四邊延伸</button>
+                                <button class="quick-btn" id="expand16x9Btn">16:9</button>
+                                <button class="quick-btn" id="expand1x1Btn">1:1</button>
+                                <button class="quick-btn" id="expand4x3Btn">4:3</button>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button id="undoBtn" class="btn btn-secondary" disabled data-i18n="undo">復原</button>
+                            <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">重設</button>
+                            <button id="downloadBtn" class="btn btn-primary" data-i18n="download">下載結果</button>
+                        </div>
+
+                        <button id="newImageBtn" class="btn btn-outline" data-i18n="newImage">選擇新圖片</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Examples Section -->
+        <section class="examples-section" id="examplesSection">
+            <h2 data-i18n="tryExamples">試試範例圖片</h2>
+            <div class="examples-grid">
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=640" data-i18n="exampleMountain">山景</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=640" data-i18n="examplePortrait">人像</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=640" data-i18n="exampleBeach">海灘</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=640" data-i18n="exampleForest">森林</button>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🪞</div>
+                    <h3 data-i18n="mirrorMode">鏡像模式</h3>
+                    <p data-i18n="mirrorModeDesc">鏡像翻轉邊緣像素，適合對稱背景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔁</div>
+                    <h3 data-i18n="repeatMode">重複模式</h3>
+                    <p data-i18n="repeatModeDesc">重複邊緣圖案，適合紋理背景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">↔️</div>
+                    <h3 data-i18n="stretchMode">拉伸模式</h3>
+                    <p data-i18n="stretchModeDesc">漸變拉伸邊緣顏色，適合漸層背景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="colorMode">純色模式</h3>
+                    <p data-i18n="colorModeDesc">使用指定顏色填充，可從邊緣取色</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="use-cases-section">
+            <h2 data-i18n="useCases">使用場景</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <span class="use-case-icon">📱</span>
+                    <span data-i18n="useCaseSocial">社群媒體比例調整</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🖥️</span>
+                    <span data-i18n="useCaseWallpaper">桌布尺寸擴展</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🎬</span>
+                    <span data-i18n="useCaseVideo">影片背景延伸</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🖨️</span>
+                    <span data-i18n="useCasePrint">列印邊距擴展</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Specs -->
+        <section class="tech-specs">
+            <h2 data-i18n="techSpecs">技術規格</h2>
+            <table class="specs-table">
+                <tr>
+                    <td data-i18n="specMethod">延伸方法</td>
+                    <td data-i18n="specMethodValue">智慧邊緣取樣</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specModes">支援模式</td>
+                    <td>4 (鏡像/重複/拉伸/純色)</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specMax">最大延伸</td>
+                    <td>1000px / 方向</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specFormats">支援格式</td>
+                    <td>PNG, JPG, WebP</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specRuntime">執行環境</td>
+                    <td>Canvas API</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #006</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

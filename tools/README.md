@@ -10,6 +10,7 @@
 | 003 | [AI Background Blur](./003-background-blur/) | Image Processing | MediaPipe Selfie Segmenter | ✅ Complete |
 | 004 | [AI Background Color Fill](./004-background-color-fill/) | Image Processing | RMBG-1.4 | ✅ Complete |
 | 005 | [AI ID Photo Background](./005-id-photo-background/) | Image Processing | RMBG-1.4 | ✅ Complete |
+| 006 | [AI Background Extender](./006-background-extender/) | Image Processing | Canvas API | ✅ Complete |
 | 051 | [AI Image Classifier](./051-image-classifier/) | Image Recognition | MobileNetV2 | ✅ Complete |
 | 052 | [AI Object Detection](./052-object-detection/) | Image Recognition | YOLOS-tiny | ✅ Complete |
 
@@ -31,6 +32,10 @@ tools/
 │   ├── style.css
 │   └── app.js
 ├── 005-id-photo-background/     # AI ID Photo Background
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 006-background-extender/     # AI Background Extender
 │   ├── index.html
 │   ├── style.css
 │   └── app.js
