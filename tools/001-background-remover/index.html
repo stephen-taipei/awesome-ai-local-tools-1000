@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Background Remover | AI 背景移除器</title>
+    <meta name="description" content="Remove image backgrounds locally in your browser with AI. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 背景移除器</h1>
+            <p class="subtitle" data-i18n="subtitle">完全在瀏覽器本地執行，資料不外傳</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Model Status -->
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+
+        <!-- Model Progress -->
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText" data-i18n="downloading">正在下載模型...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-note" data-i18n="progressNote">首次載入需下載約 176MB，之後會快取至本地</p>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">📷</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP (最大 4096x4096)</p>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <div class="image-container">
+                    <div class="image-box">
+                        <h3 data-i18n="original">原圖</h3>
+                        <div class="image-wrapper">
+                            <img id="originalImage" alt="Original">
+                        </div>
+                    </div>
+                    <div class="image-box">
+                        <h3 data-i18n="result">去背結果</h3>
+                        <div class="image-wrapper checkered-bg">
+                            <img id="resultImage" alt="Result" style="display: none;">
+                            <div class="processing-overlay" id="processingOverlay">
+                                <div class="spinner"></div>
+                                <p data-i18n="processing">正在處理中...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-success" disabled data-i18n="download">下載去背圖片</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🤖</div>
+                    <h3 data-i18n="aiModel">AI 模型</h3>
+                    <p data-i18n="aiModelDesc">使用 RMBG-1.4 深度學習模型，精確分離前景與背景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="privacy">隱私保護</h3>
+                    <p data-i18n="privacyDesc">所有處理在瀏覽器本地完成，圖片不會上傳至任何伺服器</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="performance">高效能</h3>
+                    <p data-i18n="performanceDesc">支援 WebGPU 加速，處理速度可達 2-5 秒/張</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💾</div>
+                    <h3 data-i18n="cache">離線快取</h3>
+                    <p data-i18n="cacheDesc">模型下載後自動快取，下次使用無需重新下載</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Specs -->
+        <section class="tech-specs">
+            <h2 data-i18n="techSpecs">技術規格</h2>
+            <table class="specs-table">
+                <tr>
+                    <td data-i18n="specModel">AI 模型</td>
+                    <td>RMBG-1.4 (briaai)</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specFormat">模型格式</td>
+                    <td>ONNX</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specSize">模型大小</td>
+                    <td>~176 MB</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specRuntime">推論引擎</td>
+                    <td>Transformers.js + ONNX Runtime Web</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specAccel">加速方式</td>
+                    <td id="accelerationMethod">-</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #001</span> ·
+                <a href="https://github.com" target="_blank" data-i18n="sourceCode">原始碼</a>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <!-- Canvas for processing (hidden) -->
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
