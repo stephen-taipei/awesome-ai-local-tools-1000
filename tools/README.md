@@ -15,6 +15,7 @@
 | 008 | [AI Background Bokeh](./008-background-bokeh/) | Image Processing | Depth-Anything | ✅ Complete |
 | 009 | [AI Green Screen](./009-green-screen/) | Image Processing | HSV Chroma Key | ✅ Complete |
 | 010 | [AI Background Animation](./010-background-animation/) | Image Processing | Perlin Noise + Canvas | ✅ Complete |
+| 012 | [AI Super Resolution 2x](./012-super-resolution-2x/) | Image Enhancement | Swin2SR | ✅ Complete |
 | 051 | [AI Image Classifier](./051-image-classifier/) | Image Recognition | MobileNetV2 | ✅ Complete |
 | 052 | [AI Object Detection](./052-object-detection/) | Image Recognition | YOLOS-tiny | ✅ Complete |
 
@@ -56,6 +57,10 @@ tools/
 │   ├── style.css
 │   └── app.js
 ├── 010-background-animation/    # AI Background Animation
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 012-super-resolution-2x/     # AI Super Resolution 2x
 │   ├── index.html
 │   ├── style.css
 │   └── app.js
