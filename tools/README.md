@@ -12,6 +12,7 @@
 | 005 | [AI ID Photo Background](./005-id-photo-background/) | Image Processing | RMBG-1.4 | ✅ Complete |
 | 006 | [AI Background Extender](./006-background-extender/) | Image Processing | Canvas API | ✅ Complete |
 | 007 | [AI Scene Background](./007-scene-background/) | Image Processing | RMBG-1.4 | ✅ Complete |
+| 008 | [AI Background Bokeh](./008-background-bokeh/) | Image Processing | Depth-Anything | ✅ Complete |
 | 051 | [AI Image Classifier](./051-image-classifier/) | Image Recognition | MobileNetV2 | ✅ Complete |
 | 052 | [AI Object Detection](./052-object-detection/) | Image Recognition | YOLOS-tiny | ✅ Complete |
 
@@ -41,6 +42,10 @@ tools/
 │   ├── style.css
 │   └── app.js
 ├── 007-scene-background/        # AI Scene Background
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 008-background-bokeh/        # AI Background Bokeh
 │   ├── index.html
 │   ├── style.css
 │   └── app.js
