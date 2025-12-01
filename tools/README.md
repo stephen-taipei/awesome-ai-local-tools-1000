@@ -7,6 +7,7 @@
 | # | Tool Name | Category | Model | Status |
 |---|-----------|----------|-------|--------|
 | 001 | [AI Background Remover](./001-background-remover/) | Image Processing | RMBG-1.4 | ✅ Complete |
+| 003 | [AI Background Blur](./003-background-blur/) | Image Processing | MediaPipe Selfie Segmenter | ✅ Complete |
 
 ## Directory Structure
 
@@ -14,9 +15,13 @@
 tools/
 ├── README.md                    # This file
 ├── 001-background-remover/      # AI Background Remover
-│   ├── index.html               # Main HTML file
-│   ├── style.css                # Styles
-│   └── app.js                   # Application logic
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 003-background-blur/         # AI Background Blur
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
 └── ...                          # More tools coming
 ```
 

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Background Blur | AI 背景模糊工具</title>
+    <meta name="description" content="Blur image backgrounds intelligently with AI. Real-time processing, 100% local.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 背景模糊工具</h1>
+            <p class="subtitle" data-i18n="subtitle">智慧偵測主體，即時模糊背景</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Model Status -->
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector" id="modeSelector" style="display: none;">
+            <button id="modeImage" class="mode-btn active" data-i18n="modeImage">📷 圖片模式</button>
+            <button id="modeCamera" class="mode-btn" data-i18n="modeCamera">🎥 攝像頭模式</button>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area (Image Mode) -->
+            <div class="upload-area" id="uploadArea" style="display: none;">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">📷</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP</p>
+            </div>
+
+            <!-- Camera Area -->
+            <div class="camera-area" id="cameraArea" style="display: none;">
+                <div class="video-container">
+                    <video id="videoInput" autoplay playsinline></video>
+                    <canvas id="outputCanvas"></canvas>
+                </div>
+                <div class="camera-controls">
+                    <button id="startCameraBtn" class="btn btn-primary" data-i18n="startCamera">開啟攝像頭</button>
+                    <button id="stopCameraBtn" class="btn btn-secondary" style="display: none;" data-i18n="stopCamera">關閉攝像頭</button>
+                    <button id="captureBtn" class="btn btn-success" style="display: none;" data-i18n="capture">擷取畫面</button>
+                </div>
+            </div>
+
+            <!-- Image Preview Area -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <div class="image-container">
+                    <div class="image-box">
+                        <h3 data-i18n="original">原圖</h3>
+                        <div class="image-wrapper">
+                            <img id="originalImage" alt="Original">
+                        </div>
+                    </div>
+                    <div class="image-box">
+                        <h3 data-i18n="result">模糊結果</h3>
+                        <div class="image-wrapper">
+                            <canvas id="resultCanvas"></canvas>
+                            <div class="processing-overlay" id="processingOverlay">
+                                <div class="spinner"></div>
+                                <p data-i18n="processing">正在處理中...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blur Control -->
+                <div class="blur-control">
+                    <label data-i18n="blurLevel">模糊程度：</label>
+                    <input type="range" id="blurSlider" min="1" max="50" value="15">
+                    <span id="blurValue">15px</span>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-success" disabled data-i18n="download">下載結果</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Performance Stats -->
+        <div class="stats" id="stats" style="display: none;">
+            <span data-i18n="fps">FPS: </span><span id="fpsValue">-</span>
+            <span class="stat-divider">|</span>
+            <span data-i18n="latency">延遲: </span><span id="latencyValue">-</span>
+        </div>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🤖</div>
+                    <h3 data-i18n="aiModel">AI 模型</h3>
+                    <p data-i18n="aiModelDesc">使用 MediaPipe Selfie Segmentation 即時分離前景與背景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="realtime">即時處理</h3>
+                    <p data-i18n="realtimeDesc">支援 30+ FPS 即時處理，流暢的視訊效果</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎚️</div>
+                    <h3 data-i18n="adjustable">可調整</h3>
+                    <p data-i18n="adjustableDesc">模糊程度可自由調整，從輕微到強烈</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📦</div>
+                    <h3 data-i18n="lightweight">超輕量</h3>
+                    <p data-i18n="lightweightDesc">模型僅 256KB，載入快速</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Specs -->
+        <section class="tech-specs">
+            <h2 data-i18n="techSpecs">技術規格</h2>
+            <table class="specs-table">
+                <tr>
+                    <td data-i18n="specModel">AI 模型</td>
+                    <td>MediaPipe Selfie Segmentation</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specFormat">模型格式</td>
+                    <td>TFLite</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specSize">模型大小</td>
+                    <td>~256 KB</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specFps">處理速度</td>
+                    <td>30+ FPS</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specRuntime">推論引擎</td>
+                    <td>MediaPipe Tasks Vision</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #003</span> ·
+                <a href="https://github.com" target="_blank" data-i18n="sourceCode">原始碼</a>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
