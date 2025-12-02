@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Object Detection | AI 物件偵測</title>
+    <meta name="description" content="Detect multiple objects in images with bounding boxes. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 物件偵測</h1>
+            <p class="subtitle" data-i18n="subtitle">智能偵測圖片中的物件，標示位置與類別</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Model Status -->
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+
+        <!-- Progress Container -->
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText" data-i18n="downloading">正在下載模型...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-note" id="progressNote" data-i18n="downloadNote">首次載入約 12MB，之後會快取</p>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea" style="display: none;">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">🎯</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
+            </div>
+
+            <!-- Result Area -->
+            <div class="result-area" id="resultArea" style="display: none;">
+                <div class="result-layout">
+                    <!-- Detection Canvas -->
+                    <div class="canvas-section">
+                        <div class="canvas-box" id="canvasBox">
+                            <canvas id="detectionCanvas"></canvas>
+                            <div class="processing-overlay" id="processingOverlay" style="display: none;">
+                                <div class="spinner"></div>
+                                <p data-i18n="processing">正在偵測中...</p>
+                            </div>
+                        </div>
+                        <div class="canvas-actions">
+                            <button id="resetBtn" class="btn btn-secondary btn-sm" data-i18n="reset">重新選擇</button>
+                            <button id="downloadBtn" class="btn btn-primary btn-sm" disabled data-i18n="download">下載結果</button>
+                        </div>
+                    </div>
+
+                    <!-- Detection Results -->
+                    <div class="results-section">
+                        <div class="results-header">
+                            <h3 data-i18n="detectedObjects">偵測到的物件</h3>
+                            <span class="object-count" id="objectCount">0</span>
+                        </div>
+                        <div class="results-list" id="resultsList">
+                            <!-- Detection results will be inserted here -->
+                        </div>
+                        <div class="inference-stats" id="inferenceStats" style="display: none;">
+                            <span data-i18n="inferenceTime">偵測耗時</span>
+                            <span id="inferenceTime">0ms</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settingsPanel" style="display: none;">
+            <h3 data-i18n="settings">設定</h3>
+            <div class="setting-item">
+                <label data-i18n="confidenceThreshold">信心度門檻</label>
+                <div class="slider-container">
+                    <input type="range" id="confidenceSlider" min="10" max="90" value="50">
+                    <span id="confidenceValue">50%</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label data-i18n="maxDetections">最大偵測數量</label>
+                <div class="slider-container">
+                    <input type="range" id="maxDetectionsSlider" min="5" max="100" value="50">
+                    <span id="maxDetectionsValue">50</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example Images -->
+        <section class="examples-section" id="examplesSection" style="display: none;">
+            <h2 data-i18n="tryExamples">試試範例圖片</h2>
+            <div class="examples-grid">
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640" data-i18n="exampleStreet">街景</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=640" data-i18n="exampleCat">貓咪</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=640" data-i18n="exampleDog">狗狗</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=640" data-i18n="exampleCar">汽車</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=640" data-i18n="exampleFood">食物</button>
+            </div>
+        </section>
+
+        <!-- Supported Objects -->
+        <section class="categories-section">
+            <h2 data-i18n="supportedObjects">支援偵測類別</h2>
+            <p class="categories-desc" data-i18n="categoriesDesc">本模型可偵測 COCO 資料集中的 80 種常見物件類別：</p>
+            <div class="category-tags">
+                <span class="tag" data-i18n="catPerson">人物</span>
+                <span class="tag" data-i18n="catVehicle">交通工具</span>
+                <span class="tag" data-i18n="catAnimal">動物</span>
+                <span class="tag" data-i18n="catFurniture">家具</span>
+                <span class="tag" data-i18n="catElectronics">電子產品</span>
+                <span class="tag" data-i18n="catFood">食物</span>
+                <span class="tag" data-i18n="catSports">運動用品</span>
+                <span class="tag" data-i18n="catKitchen">廚房用品</span>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3 data-i18n="aiModel">AI 模型</h3>
+                    <p data-i18n="aiModelDesc">使用 YOLOv8 輕量模型，快速精確偵測物件</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📦</div>
+                    <h3 data-i18n="boundingBox">邊界框</h3>
+                    <p data-i18n="boundingBoxDesc">精確標示每個物件的位置與範圍</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🏷️</div>
+                    <h3 data-i18n="multiClass">多類別</h3>
+                    <p data-i18n="multiClassDesc">支援 80 種 COCO 標準物件類別</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="realtime">即時偵測</h3>
+                    <p data-i18n="realtimeDesc">高效能推理，毫秒級回應速度</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Specs -->
+        <section class="tech-specs">
+            <h2 data-i18n="techSpecs">技術規格</h2>
+            <table class="specs-table">
+                <tr>
+                    <td data-i18n="specModel">模型</td>
+                    <td>YOLOv8n</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specSize">模型大小</td>
+                    <td>~12 MB</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specClasses">類別數</td>
+                    <td>80 (COCO)</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specInput">輸入尺寸</td>
+                    <td>640 × 640</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specRuntime">執行環境</td>
+                    <td>WebGPU / WASM</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #052</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

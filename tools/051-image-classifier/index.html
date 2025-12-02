@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Classifier | AI 圖像分類器</title>
+    <meta name="description" content="Classify images into 1000+ categories using AI. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 圖像分類器</h1>
+            <p class="subtitle" data-i18n="subtitle">識別圖片內容，分類至 1000+ 類別</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Model Status -->
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+
+        <!-- Progress Container -->
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText" data-i18n="downloading">正在下載模型...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-note" data-i18n="progressNote">首次載入需下載約 25MB，之後會快取至本地</p>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea" style="display: none;">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+                <div class="upload-icon">🔍</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP、GIF</p>
+            </div>
+
+            <!-- Result Area -->
+            <div class="result-area" id="resultArea" style="display: none;">
+                <div class="result-layout">
+                    <!-- Image Preview -->
+                    <div class="image-section">
+                        <div class="image-box">
+                            <img id="previewImage" alt="Preview">
+                        </div>
+                        <button id="uploadNewBtn" class="btn btn-secondary btn-sm" data-i18n="uploadAnother">上傳其他圖片</button>
+                    </div>
+
+                    <!-- Predictions -->
+                    <div class="predictions-section">
+                        <h3 data-i18n="predictions">分類結果</h3>
+
+                        <!-- Processing Overlay -->
+                        <div class="processing-overlay" id="processingOverlay">
+                            <div class="spinner"></div>
+                            <p data-i18n="analyzing">正在分析圖片...</p>
+                        </div>
+
+                        <!-- Top Prediction -->
+                        <div class="top-prediction" id="topPrediction" style="display: none;">
+                            <div class="top-label" id="topLabel">-</div>
+                            <div class="top-confidence">
+                                <span data-i18n="confidence">信心度：</span>
+                                <span id="topConfidence">-</span>
+                            </div>
+                        </div>
+
+                        <!-- All Predictions -->
+                        <div class="predictions-list" id="predictionsList"></div>
+
+                        <!-- Inference Stats -->
+                        <div class="inference-stats" id="inferenceStats" style="display: none;">
+                            <span data-i18n="inferenceTime">推論時間：</span>
+                            <span id="inferenceTimeValue">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Example Images -->
+        <section class="examples-section" id="examplesSection" style="display: none;">
+            <h2 data-i18n="tryExamples">試試這些範例</h2>
+            <div class="examples-grid">
+                <button class="example-btn" data-url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg">
+                    🐱 <span data-i18n="exampleCat">貓</span>
+                </button>
+                <button class="example-btn" data-url="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/YellowLabradorLooking_new.jpg/1200px-YellowLabradorLooking_new.jpg">
+                    🐕 <span data-i18n="exampleDog">狗</span>
+                </button>
+                <button class="example-btn" data-url="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/800px-Red_Apple.jpg">
+                    🍎 <span data-i18n="exampleApple">蘋果</span>
+                </button>
+                <button class="example-btn" data-url="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/1200px-Camponotus_flavomarginatus_ant.jpg">
+                    🐜 <span data-i18n="exampleAnt">螞蟻</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🤖</div>
+                    <h3 data-i18n="aiModel">AI 模型</h3>
+                    <p data-i18n="aiModelDesc">使用 MobileNet V3 深度學習模型，可識別 1000+ 種物體</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="fast">快速辨識</h3>
+                    <p data-i18n="fastDesc">毫秒級推論速度，即時顯示分類結果</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3 data-i18n="detailed">詳細結果</h3>
+                    <p data-i18n="detailedDesc">顯示 Top-5 分類結果及其信心度百分比</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="privacy">隱私保護</h3>
+                    <p data-i18n="privacyDesc">所有分析在本地完成，圖片不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Info -->
+        <section class="categories-section">
+            <h2 data-i18n="supportedCategories">支援的分類</h2>
+            <p class="categories-desc" data-i18n="categoriesDesc">
+                基於 ImageNet 資料集訓練，可識別包括動物、植物、交通工具、食物、日用品、樂器等 1000 種類別。
+            </p>
+            <div class="category-tags">
+                <span class="tag">🐕 動物</span>
+                <span class="tag">🌿 植物</span>
+                <span class="tag">🚗 交通工具</span>
+                <span class="tag">🍔 食物</span>
+                <span class="tag">🏠 建築</span>
+                <span class="tag">🎸 樂器</span>
+                <span class="tag">⚽ 運動用品</span>
+                <span class="tag">👕 服飾</span>
+                <span class="tag">💻 電子產品</span>
+                <span class="tag">🔧 工具</span>
+            </div>
+        </section>
+
+        <!-- Tech Specs -->
+        <section class="tech-specs">
+            <h2 data-i18n="techSpecs">技術規格</h2>
+            <table class="specs-table">
+                <tr>
+                    <td data-i18n="specModel">AI 模型</td>
+                    <td>MobileNet V3</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specFormat">模型格式</td>
+                    <td>ONNX</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specSize">模型大小</td>
+                    <td>~25 MB</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specCategories">分類數量</td>
+                    <td>1000 類</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specRuntime">推論引擎</td>
+                    <td>Transformers.js + ONNX Runtime</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #051</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

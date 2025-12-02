@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Background Bokeh | AI 背景虛化景深</title>
+    <meta name="description" content="Create professional depth-of-field bokeh effects. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 背景虛化景深</h1>
+            <p class="subtitle" data-i18n="subtitle">模擬專業相機景深效果，可調整焦點與虛化程度</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Model Status -->
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+
+        <!-- Progress Container -->
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText" data-i18n="downloading">正在下載模型...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-note" data-i18n="downloadNote">首次載入約 40MB，之後會快取</p>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea" style="display: none;">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">📷</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="editor-layout">
+                    <!-- Preview Section -->
+                    <div class="preview-section">
+                        <div class="preview-tabs">
+                            <button class="tab-btn active" data-tab="result" data-i18n="tabResult">效果預覽</button>
+                            <button class="tab-btn" data-tab="depth" data-i18n="tabDepth">深度圖</button>
+                            <button class="tab-btn" data-tab="original" data-i18n="tabOriginal">原圖</button>
+                        </div>
+                        <div class="preview-box" id="previewBox">
+                            <canvas id="resultCanvas"></canvas>
+                            <canvas id="depthCanvas" style="display: none;"></canvas>
+                            <canvas id="originalCanvas" style="display: none;"></canvas>
+                            <div class="focus-indicator" id="focusIndicator" style="display: none;">
+                                <div class="focus-ring"></div>
+                            </div>
+                            <div class="processing-overlay" id="processingOverlay" style="display: none;">
+                                <div class="spinner"></div>
+                                <p id="processingText" data-i18n="processing">正在處理中...</p>
+                            </div>
+                        </div>
+                        <p class="preview-hint" id="previewHint" data-i18n="clickToFocus">點擊圖片選擇對焦點</p>
+                        <div class="preview-actions">
+                            <button id="resetBtn" class="btn btn-secondary" data-i18n="newImage">選擇新圖片</button>
+                            <button id="downloadBtn" class="btn btn-primary" data-i18n="download">下載結果</button>
+                        </div>
+                    </div>
+
+                    <!-- Controls Section -->
+                    <div class="controls-section">
+                        <h3 data-i18n="bokehSettings">虛化設定</h3>
+
+                        <!-- Blur Amount -->
+                        <div class="control-group">
+                            <label data-i18n="blurAmount">虛化強度</label>
+                            <div class="slider-row">
+                                <input type="range" id="blurSlider" min="0" max="30" value="15">
+                                <span id="blurValue">15px</span>
+                            </div>
+                        </div>
+
+                        <!-- Focus Range -->
+                        <div class="control-group">
+                            <label data-i18n="focusRange">對焦範圍</label>
+                            <div class="slider-row">
+                                <input type="range" id="focusRangeSlider" min="5" max="50" value="20">
+                                <span id="focusRangeValue">20%</span>
+                            </div>
+                        </div>
+
+                        <!-- Gradient Smoothness -->
+                        <div class="control-group">
+                            <label data-i18n="gradientSmooth">漸變平滑度</label>
+                            <div class="slider-row">
+                                <input type="range" id="gradientSlider" min="0" max="100" value="50">
+                                <span id="gradientValue">50%</span>
+                            </div>
+                        </div>
+
+                        <!-- Bokeh Shape -->
+                        <div class="control-group">
+                            <label data-i18n="bokehShape">光斑形狀</label>
+                            <div class="shape-buttons">
+                                <button class="shape-btn active" data-shape="circle" title="圓形">⬤</button>
+                                <button class="shape-btn" data-shape="hexagon" title="六邊形">⬡</button>
+                                <button class="shape-btn" data-shape="heart" title="愛心">♥</button>
+                                <button class="shape-btn" data-shape="star" title="星形">★</button>
+                            </div>
+                        </div>
+
+                        <!-- Focus Mode -->
+                        <div class="control-group">
+                            <label data-i18n="focusMode">對焦模式</label>
+                            <div class="mode-buttons">
+                                <button class="mode-btn active" data-mode="point" data-i18n="modePoint">點擊對焦</button>
+                                <button class="mode-btn" data-mode="foreground" data-i18n="modeForeground">前景對焦</button>
+                                <button class="mode-btn" data-mode="background" data-i18n="modeBackground">背景對焦</button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Presets -->
+                        <div class="control-group">
+                            <label data-i18n="presets">快速預設</label>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" data-preset="portrait" data-i18n="presetPortrait">人像</button>
+                                <button class="preset-btn" data-preset="macro" data-i18n="presetMacro">微距</button>
+                                <button class="preset-btn" data-preset="cinematic" data-i18n="presetCinematic">電影</button>
+                                <button class="preset-btn" data-preset="tiltshift" data-i18n="presetTiltshift">移軸</button>
+                            </div>
+                        </div>
+
+                        <!-- Apply Button -->
+                        <button id="applyBtn" class="btn btn-primary btn-block" data-i18n="applyEffect">套用效果</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Examples Section -->
+        <section class="examples-section" id="examplesSection" style="display: none;">
+            <h2 data-i18n="tryExamples">試試範例圖片</h2>
+            <div class="examples-grid">
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800" data-i18n="examplePortrait">人像</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800" data-i18n="exampleNature">自然</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800" data-i18n="exampleStreet">街景</button>
+                <button class="example-btn" data-url="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800" data-i18n="exampleFlower">花卉</button>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🔍</div>
+                    <h3 data-i18n="depthEstimation">深度估計</h3>
+                    <p data-i18n="depthEstimationDesc">AI 分析圖片中每個像素的深度距離</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3 data-i18n="focusSelect">焦點選擇</h3>
+                    <p data-i18n="focusSelectDesc">點擊選擇對焦位置，保持清晰區域</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✨</div>
+                    <h3 data-i18n="bokehEffect">散景效果</h3>
+                    <p data-i18n="bokehEffectDesc">根據深度差異套用漸變虛化效果</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📸</div>
+                    <h3 data-i18n="proResult">專業成果</h3>
+                    <p data-i18n="proResultDesc">模擬大光圈相機的淺景深效果</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Specs -->
+        <section class="tech-specs">
+            <h2 data-i18n="techSpecs">技術規格</h2>
+            <table class="specs-table">
+                <tr>
+                    <td data-i18n="specModel">AI 模型</td>
+                    <td>MiDaS v2.1 Small</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specSize">模型大小</td>
+                    <td>~40 MB</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specInput">輸入尺寸</td>
+                    <td>256 × 256</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specOutput">輸出格式</td>
+                    <td>PNG, JPG</td>
+                </tr>
+                <tr>
+                    <td data-i18n="specRuntime">執行環境</td>
+                    <td>WebGPU / WASM</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #008</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
