@@ -1,0 +1,45 @@
+/* Image to Data URI - Tool #997 */
+
+.code-text {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+/* Drop zone styling */
+.drop-zone {
+    transition: all 0.3s ease;
+}
+
+.drop-zone.dragover {
+    border-color: #4f46e5;
+    background-color: #eef2ff;
+}
+
+.drop-zone:hover {
+    border-color: #a5b4fc;
+    background-color: #f8fafc;
+}
+
+/* Preview image */
+.preview-image {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+}
+
+/* Custom scrollbar */
+textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

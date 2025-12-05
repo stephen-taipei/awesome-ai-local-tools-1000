@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Data URI - Tool #997</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .code-text {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .drop-zone {
+            transition: all 0.3s ease;
+        }
+        .drop-zone.dragover {
+            border-color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    997
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Image to Data URI</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Image to Data URI Converter</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Convert images to Base64 Data URI format for embedding directly in HTML, CSS, or JavaScript.
+            </p>
+        </div>
+
+        <!-- Drop Zone -->
+        <div id="drop-zone" class="drop-zone bg-white rounded-xl shadow-sm border-2 border-dashed border-gray-300 p-8 mb-6 text-center cursor-pointer">
+            <input type="file" id="file-input" accept="image/*" class="hidden">
+            <div id="drop-content">
+                <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-700 mb-2">Drop image here or click to upload</h3>
+                <p class="text-sm text-gray-500">Supports PNG, JPG, GIF, SVG, WebP, ICO</p>
+            </div>
+            <div id="preview-content" class="hidden">
+                <img id="preview-image" class="preview-image mx-auto rounded-lg shadow-md mb-4" alt="Preview">
+                <button id="change-btn" class="text-sm text-indigo-600 hover:text-indigo-800">
+                    <i class="fas fa-exchange-alt mr-1"></i>Change Image
+                </button>
+            </div>
+        </div>
+
+        <!-- Image Info -->
+        <div id="image-info" class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6 hidden">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                <div>
+                    <div class="text-sm text-gray-500">Filename</div>
+                    <div id="info-filename" class="font-medium text-gray-800 truncate"></div>
+                </div>
+                <div>
+                    <div class="text-sm text-gray-500">Type</div>
+                    <div id="info-type" class="font-medium text-gray-800"></div>
+                </div>
+                <div>
+                    <div class="text-sm text-gray-500">Original Size</div>
+                    <div id="info-size" class="font-medium text-gray-800"></div>
+                </div>
+                <div>
+                    <div class="text-sm text-gray-500">Dimensions</div>
+                    <div id="info-dimensions" class="font-medium text-gray-800"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Options -->
+        <div id="output-options" class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6 hidden">
+            <h3 class="font-medium text-gray-700 mb-3">Output Format</h3>
+            <div class="flex flex-wrap gap-4">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="output-format" value="datauri" checked class="text-indigo-600">
+                    <span class="text-sm text-gray-600">Data URI</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="output-format" value="base64" class="text-indigo-600">
+                    <span class="text-sm text-gray-600">Base64 only</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="output-format" value="css" class="text-indigo-600">
+                    <span class="text-sm text-gray-600">CSS background</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="output-format" value="html" class="text-indigo-600">
+                    <span class="text-sm text-gray-600">HTML img tag</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Output -->
+        <div id="output-section" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6 hidden">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-code mr-2"></i>Output
+                    </h3>
+                    <span id="output-size" class="text-xs text-gray-500"></span>
+                </div>
+                <div class="flex gap-2">
+                    <button id="copy-btn" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                        <i class="fas fa-copy mr-1"></i>Copy
+                    </button>
+                    <button id="download-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-download mr-1"></i>Download
+                    </button>
+                </div>
+            </div>
+            <div class="p-4">
+                <textarea id="output" class="code-text w-full h-48 px-4 py-3 border border-gray-300 rounded-lg resize-none text-sm" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- Decode Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-image mr-2"></i>Decode Data URI to Image
+                </h3>
+            </div>
+            <div class="p-4">
+                <textarea id="decode-input" class="code-text w-full h-24 px-4 py-3 border border-gray-300 rounded-lg resize-none text-sm mb-3" placeholder="Paste Data URI here to decode..."></textarea>
+                <button id="decode-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                    <i class="fas fa-magic mr-2"></i>Decode
+                </button>
+                <div id="decode-result" class="mt-4 hidden">
+                    <img id="decoded-image" class="max-w-full max-h-64 rounded-lg shadow-md" alt="Decoded image">
+                    <button id="download-decoded" class="mt-2 px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-download mr-1"></i>Download Image
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About Data URI
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Embed images directly in HTML/CSS</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Reduce HTTP requests</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Works offline once embedded</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Best for small icons and graphics</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>~33% larger than binary</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local processing</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
