@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Tester - Tool #993</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        .code-text {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .method-get { background-color: #22c55e; }
+        .method-post { background-color: #3b82f6; }
+        .method-put { background-color: #f59e0b; }
+        .method-patch { background-color: #8b5cf6; }
+        .method-delete { background-color: #ef4444; }
+        pre[class*="language-"] {
+            margin: 0;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    993
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">API Tester</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">REST API Tester</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Test REST API endpoints with custom headers and body. View response data and timing.
+            </p>
+        </div>
+
+        <!-- Request Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-paper-plane mr-2"></i>Request
+                </h3>
+            </div>
+            <div class="p-4 space-y-4">
+                <!-- URL & Method -->
+                <div class="flex gap-2">
+                    <select id="method" class="px-4 py-2 border border-gray-300 rounded-lg font-medium text-white method-get">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="PATCH">PATCH</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                    <input type="text" id="url" class="code-text flex-1 px-4 py-2 border border-gray-300 rounded-lg" placeholder="https://api.example.com/endpoint">
+                    <button id="send-btn" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                        <i class="fas fa-bolt mr-2"></i>Send
+                    </button>
+                </div>
+
+                <!-- Tabs -->
+                <div class="border-b border-gray-200">
+                    <nav class="flex gap-4">
+                        <button class="tab-btn px-3 py-2 text-sm font-medium border-b-2 border-indigo-600 text-indigo-600" data-tab="headers">
+                            Headers
+                        </button>
+                        <button class="tab-btn px-3 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="body">
+                            Body
+                        </button>
+                        <button class="tab-btn px-3 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="auth">
+                            Auth
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Headers Tab -->
+                <div id="headers-tab" class="tab-content">
+                    <div id="headers-list" class="space-y-2">
+                        <div class="header-row flex gap-2 items-center">
+                            <input type="text" class="header-key flex-1 px-3 py-2 border border-gray-300 rounded text-sm" placeholder="Header name" value="Content-Type">
+                            <input type="text" class="header-value flex-1 px-3 py-2 border border-gray-300 rounded text-sm" placeholder="Header value" value="application/json">
+                            <button class="remove-header p-2 text-red-400 hover:text-red-600">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button id="add-header" class="mt-2 px-3 py-1 text-sm text-indigo-600 hover:text-indigo-800">
+                        <i class="fas fa-plus mr-1"></i>Add Header
+                    </button>
+                </div>
+
+                <!-- Body Tab -->
+                <div id="body-tab" class="tab-content hidden">
+                    <div class="flex gap-4 mb-2">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="body-type" value="json" checked class="text-indigo-600">
+                            <span class="text-sm text-gray-600">JSON</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="body-type" value="form" class="text-indigo-600">
+                            <span class="text-sm text-gray-600">Form Data</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="body-type" value="raw" class="text-indigo-600">
+                            <span class="text-sm text-gray-600">Raw</span>
+                        </label>
+                    </div>
+                    <textarea id="body-input" class="code-text w-full h-40 px-4 py-3 border border-gray-300 rounded-lg resize-none text-sm" placeholder='{"key": "value"}'></textarea>
+                </div>
+
+                <!-- Auth Tab -->
+                <div id="auth-tab" class="tab-content hidden">
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Auth Type</label>
+                            <select id="auth-type" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                                <option value="none">None</option>
+                                <option value="bearer">Bearer Token</option>
+                                <option value="basic">Basic Auth</option>
+                                <option value="api-key">API Key</option>
+                            </select>
+                        </div>
+                        <div id="auth-bearer" class="hidden">
+                            <label class="block text-sm text-gray-600 mb-1">Token</label>
+                            <input type="text" id="bearer-token" class="code-text w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" placeholder="Enter token">
+                        </div>
+                        <div id="auth-basic" class="hidden grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Username</label>
+                                <input type="text" id="basic-user" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Password</label>
+                                <input type="password" id="basic-pass" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                        </div>
+                        <div id="auth-apikey" class="hidden grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Key Name</label>
+                                <input type="text" id="apikey-name" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" placeholder="X-API-Key">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Key Value</label>
+                                <input type="text" id="apikey-value" class="code-text w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Response Section -->
+        <div id="response-section" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hidden">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-reply mr-2"></i>Response
+                    </h3>
+                    <span id="status-badge" class="px-2 py-1 rounded text-xs font-medium"></span>
+                    <span id="time-badge" class="text-xs text-gray-500"></span>
+                    <span id="size-badge" class="text-xs text-gray-500"></span>
+                </div>
+                <button id="copy-response" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                    <i class="fas fa-copy mr-1"></i>Copy
+                </button>
+            </div>
+            <div class="p-4">
+                <!-- Response Tabs -->
+                <div class="border-b border-gray-200 mb-4">
+                    <nav class="flex gap-4">
+                        <button class="res-tab-btn px-3 py-2 text-sm font-medium border-b-2 border-indigo-600 text-indigo-600" data-tab="res-body">
+                            Body
+                        </button>
+                        <button class="res-tab-btn px-3 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="res-headers">
+                            Headers
+                        </button>
+                    </nav>
+                </div>
+
+                <div id="res-body-tab" class="res-tab-content">
+                    <div class="h-80 overflow-auto rounded-lg bg-gray-900">
+                        <pre id="response-body" class="language-json p-4 text-sm"><code></code></pre>
+                    </div>
+                </div>
+
+                <div id="res-headers-tab" class="res-tab-content hidden">
+                    <div id="response-headers" class="divide-y divide-gray-100"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="hidden text-center py-8">
+            <i class="fas fa-spinner fa-spin text-4xl text-indigo-600"></i>
+            <p class="mt-2 text-gray-600">Sending request...</p>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About API Tester
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Support GET, POST, PUT, PATCH, DELETE</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Custom headers and request body</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Bearer token, Basic, API key auth</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Response time and size metrics</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>JSON syntax highlighting</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>View response headers</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

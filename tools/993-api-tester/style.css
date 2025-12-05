@@ -1,0 +1,48 @@
+/* API Tester - Tool #993 */
+
+.code-text {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+/* Method colors */
+.method-get { background-color: #22c55e; }
+.method-post { background-color: #3b82f6; }
+.method-put { background-color: #f59e0b; }
+.method-patch { background-color: #8b5cf6; }
+.method-delete { background-color: #ef4444; }
+
+pre[class*="language-"] {
+    margin: 0;
+    border-radius: 0.5rem;
+}
+
+/* Custom scrollbar */
+textarea::-webkit-scrollbar,
+.overflow-auto::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+textarea::-webkit-scrollbar-track,
+.overflow-auto::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.bg-gray-900::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+textarea::-webkit-scrollbar-thumb,
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.bg-gray-900::-webkit-scrollbar-thumb {
+    background: #4a5568;
+}
+
+textarea::-webkit-scrollbar-thumb:hover,
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
