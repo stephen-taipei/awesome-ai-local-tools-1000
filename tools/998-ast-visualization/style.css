@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+textarea, #ast-container {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Tree Visualization Styles */
+.ast-node {
+    margin-left: 20px;
+    line-height: 1.6;
+}
+
+.ast-key {
+    color: #888;
+    margin-right: 5px;
+}
+
+.ast-type {
+    color: #d946ef; /* Fuchsia-500 */
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ast-type:hover {
+    text-decoration: underline;
+}
+
+.ast-value {
+    color: #2563eb; /* Blue-600 */
+}
+
+.ast-string {
+    color: #16a34a; /* Green-600 */
+}
+
+.ast-toggle {
+    cursor: pointer;
+    display: inline-block;
+    width: 14px;
+    text-align: center;
+    color: #9ca3af;
+    margin-right: 4px;
+    font-size: 10px;
+    user-select: none;
+}
+
+.ast-toggle:hover {
+    color: #4b5563;
+}
+
+.ast-children {
+    display: block;
+    border-left: 1px solid #e5e7eb;
+    margin-left: 5px;
+    padding-left: 5px;
+}
+
+.ast-children.hidden {
+    display: none;
+}
+
+.ast-bracket {
+    color: #6b7280;
+}

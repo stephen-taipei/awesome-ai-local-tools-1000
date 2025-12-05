@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AST Visualization - Tool #998</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Esprima for parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/esprima@4.0.1/dist/esprima.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans h-screen flex flex-col">
+
+    <header class="bg-white shadow-sm z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold">
+                    998
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">AST Visualization</h1>
+            </div>
+            <a href="../../index.html" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col md:flex-row overflow-hidden">
+        <!-- Left: Code Input -->
+        <div class="flex-1 flex flex-col border-r border-gray-200 min-w-[300px]">
+            <div class="bg-gray-100 px-4 py-2 border-b border-gray-200 flex justify-between items-center">
+                <span class="text-sm font-medium text-gray-600">Source Code (JS)</span>
+                <div class="flex gap-2">
+                     <button id="sample-btn" class="text-xs text-blue-600 hover:text-blue-800 bg-white px-2 py-1 rounded border border-blue-200">Sample</button>
+                     <button id="generate-btn" class="text-xs text-white bg-green-600 hover:bg-green-700 px-3 py-1 rounded shadow-sm">Generate AST</button>
+                </div>
+            </div>
+            <textarea id="code-input" class="flex-1 w-full p-4 font-mono text-sm bg-gray-900 text-gray-100 resize-none focus:outline-none" spellcheck="false" placeholder="// Paste JS code here..."></textarea>
+        </div>
+
+        <!-- Right: AST Tree View -->
+        <div class="flex-[1.5] bg-white flex flex-col overflow-hidden relative">
+            <div class="bg-gray-100 px-4 py-2 border-b border-gray-200 flex justify-between items-center">
+                <span class="text-sm font-medium text-gray-600">Abstract Syntax Tree</span>
+                <div class="text-xs text-gray-400">Click nodes to expand/collapse</div>
+            </div>
+            <div id="ast-container" class="flex-1 overflow-auto p-6 font-mono text-sm">
+                <div class="text-gray-400 italic text-center mt-10">AST will appear here...</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
