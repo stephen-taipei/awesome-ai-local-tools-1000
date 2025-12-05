@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Calculator - Tool #986</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .hash-output {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            word-break: break-all;
+        }
+        .drop-zone {
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        .drop-zone.dragover {
+            border-color: #4f46e5;
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        .mode-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .hash-card {
+            transition: all 0.2s ease;
+        }
+        .hash-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    986
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Hash Calculator</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-5xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Hash Generator</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Calculate MD5, SHA-1, SHA-256, SHA-384, SHA-512 hashes for text or files locally in your browser.
+            </p>
+        </div>
+
+        <!-- Mode Selection -->
+        <div class="flex justify-center gap-2 mb-6">
+            <button class="mode-btn active px-6 py-2 rounded-lg font-medium transition-colors border border-gray-300" data-mode="text">
+                <i class="fas fa-font mr-2"></i>Text
+            </button>
+            <button class="mode-btn px-6 py-2 rounded-lg font-medium transition-colors border border-gray-300 hover:bg-gray-100" data-mode="file">
+                <i class="fas fa-file mr-2"></i>File
+            </button>
+            <button class="mode-btn px-6 py-2 rounded-lg font-medium transition-colors border border-gray-300 hover:bg-gray-100" data-mode="compare">
+                <i class="fas fa-code-compare mr-2"></i>Compare
+            </button>
+        </div>
+
+        <!-- Text Mode -->
+        <div id="text-mode" class="space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-edit mr-2"></i>Input Text
+                    </h3>
+                    <div class="flex gap-2">
+                        <button id="paste-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                            <i class="fas fa-paste mr-1"></i>Paste
+                        </button>
+                        <button id="clear-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                            <i class="fas fa-trash mr-1"></i>Clear
+                        </button>
+                    </div>
+                </div>
+                <textarea id="text-input" class="w-full h-40 p-4 resize-none border-0 focus:ring-0 font-mono" placeholder="Enter text to hash..."></textarea>
+            </div>
+
+            <div class="flex justify-center gap-4">
+                <button id="hash-btn" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all">
+                    <i class="fas fa-calculator mr-2"></i>Calculate Hashes
+                </button>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="auto-hash" checked class="rounded text-indigo-600 focus:ring-indigo-500">
+                    <span class="text-gray-600 text-sm">Auto-calculate</span>
+                </label>
+            </div>
+
+            <!-- Hash Results -->
+            <div id="hash-results" class="space-y-3">
+                <!-- MD5 -->
+                <div class="hash-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-medium text-gray-700">
+                            <span class="inline-block w-20">MD5</span>
+                            <span class="text-xs text-gray-400 font-normal">128-bit</span>
+                        </h3>
+                        <button class="copy-btn px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors" data-hash="md5">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div id="md5-output" class="hash-output text-sm text-gray-600 bg-gray-50 p-3 rounded-lg min-h-[40px]">
+                        <span class="text-gray-400">—</span>
+                    </div>
+                </div>
+
+                <!-- SHA-1 -->
+                <div class="hash-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-medium text-gray-700">
+                            <span class="inline-block w-20">SHA-1</span>
+                            <span class="text-xs text-gray-400 font-normal">160-bit</span>
+                        </h3>
+                        <button class="copy-btn px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors" data-hash="sha1">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div id="sha1-output" class="hash-output text-sm text-gray-600 bg-gray-50 p-3 rounded-lg min-h-[40px]">
+                        <span class="text-gray-400">—</span>
+                    </div>
+                </div>
+
+                <!-- SHA-256 -->
+                <div class="hash-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-medium text-gray-700">
+                            <span class="inline-block w-20">SHA-256</span>
+                            <span class="text-xs text-gray-400 font-normal">256-bit</span>
+                        </h3>
+                        <button class="copy-btn px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors" data-hash="sha256">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div id="sha256-output" class="hash-output text-sm text-gray-600 bg-gray-50 p-3 rounded-lg min-h-[40px]">
+                        <span class="text-gray-400">—</span>
+                    </div>
+                </div>
+
+                <!-- SHA-384 -->
+                <div class="hash-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-medium text-gray-700">
+                            <span class="inline-block w-20">SHA-384</span>
+                            <span class="text-xs text-gray-400 font-normal">384-bit</span>
+                        </h3>
+                        <button class="copy-btn px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors" data-hash="sha384">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div id="sha384-output" class="hash-output text-sm text-gray-600 bg-gray-50 p-3 rounded-lg min-h-[40px]">
+                        <span class="text-gray-400">—</span>
+                    </div>
+                </div>
+
+                <!-- SHA-512 -->
+                <div class="hash-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-medium text-gray-700">
+                            <span class="inline-block w-20">SHA-512</span>
+                            <span class="text-xs text-gray-400 font-normal">512-bit</span>
+                        </h3>
+                        <button class="copy-btn px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors" data-hash="sha512">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div id="sha512-output" class="hash-output text-sm text-gray-600 bg-gray-50 p-3 rounded-lg min-h-[40px]">
+                        <span class="text-gray-400">—</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Mode -->
+        <div id="file-mode" class="hidden space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div id="file-drop-zone" class="drop-zone rounded-lg p-8 text-center">
+                    <i class="fas fa-file-upload text-4xl text-gray-400 mb-4"></i>
+                    <p class="text-gray-600 mb-2">Drag & drop a file here, or click to select</p>
+                    <p class="text-gray-400 text-sm">Any file type supported</p>
+                    <input type="file" id="file-input" class="hidden">
+                    <button id="select-file-btn" class="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                        Select File
+                    </button>
+                </div>
+
+                <div id="file-info" class="mt-4 hidden">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-file text-2xl text-indigo-600"></i>
+                            <div>
+                                <div id="file-name" class="font-medium text-gray-700"></div>
+                                <div id="file-size" class="text-sm text-gray-500"></div>
+                            </div>
+                        </div>
+                        <div id="file-progress" class="hidden">
+                            <i class="fas fa-spinner fa-spin text-indigo-600"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Hash Results (reuses the same output divs) -->
+            <div id="file-hash-results" class="space-y-3">
+                <!-- Same structure as text mode -->
+            </div>
+        </div>
+
+        <!-- Compare Mode -->
+        <div id="compare-mode" class="hidden space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 class="font-medium text-gray-700 mb-4">
+                    <i class="fas fa-code-compare mr-2"></i>Compare Hash Values
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-2">Hash 1</label>
+                        <textarea id="hash1-input" class="w-full h-24 p-3 border border-gray-300 rounded-lg font-mono text-sm resize-none" placeholder="Enter first hash..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-2">Hash 2</label>
+                        <textarea id="hash2-input" class="w-full h-24 p-3 border border-gray-300 rounded-lg font-mono text-sm resize-none" placeholder="Enter second hash..."></textarea>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <button id="compare-btn" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                        <i class="fas fa-check-double mr-2"></i>Compare
+                    </button>
+                </div>
+                <div id="compare-result" class="mt-4 p-4 rounded-lg hidden"></div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About Hash Functions
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>MD5, SHA-1, SHA-256, SHA-384, SHA-512</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Hash text strings or files</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Compare two hash values</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Uses Web Crypto API</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Large file support with streaming</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local - no data uploaded</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- MD5 Library (Web Crypto doesn't support MD5) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
