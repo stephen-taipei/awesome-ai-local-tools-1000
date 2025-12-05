@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Formatter - Tool #981</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        .code-editor {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            tab-size: 2;
+        }
+        .code-editor:focus {
+            outline: none;
+        }
+        .language-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .copy-btn:hover {
+            transform: scale(1.05);
+        }
+        pre[class*="language-"] {
+            margin: 0;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    981
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Code Formatter</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Multi-Language Code Formatter</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Format your code with proper indentation and styling. Supports JavaScript, TypeScript, HTML, CSS, JSON, and more.
+            </p>
+        </div>
+
+        <!-- Language Selection -->
+        <div class="mb-4 flex flex-wrap gap-2 justify-center">
+            <button class="language-btn active px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium transition-colors" data-lang="javascript">
+                <i class="fab fa-js-square mr-1"></i> JavaScript
+            </button>
+            <button class="language-btn px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium transition-colors hover:bg-gray-100" data-lang="typescript">
+                <i class="fab fa-js-square mr-1"></i> TypeScript
+            </button>
+            <button class="language-btn px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium transition-colors hover:bg-gray-100" data-lang="html">
+                <i class="fab fa-html5 mr-1"></i> HTML
+            </button>
+            <button class="language-btn px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium transition-colors hover:bg-gray-100" data-lang="css">
+                <i class="fab fa-css3-alt mr-1"></i> CSS
+            </button>
+            <button class="language-btn px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium transition-colors hover:bg-gray-100" data-lang="json">
+                <i class="fas fa-code mr-1"></i> JSON
+            </button>
+            <button class="language-btn px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium transition-colors hover:bg-gray-100" data-lang="sql">
+                <i class="fas fa-database mr-1"></i> SQL
+            </button>
+        </div>
+
+        <!-- Options -->
+        <div class="mb-4 flex flex-wrap gap-4 justify-center items-center bg-white p-4 rounded-lg shadow-sm">
+            <div class="flex items-center gap-2">
+                <label class="text-sm text-gray-600">Indent:</label>
+                <select id="indent-size" class="px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="2">2 spaces</option>
+                    <option value="4">4 spaces</option>
+                    <option value="tab">Tab</option>
+                </select>
+            </div>
+            <div class="flex items-center gap-2">
+                <label class="text-sm text-gray-600">Quotes:</label>
+                <select id="quote-style" class="px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="single">Single</option>
+                    <option value="double">Double</option>
+                </select>
+            </div>
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="semicolons" checked class="rounded text-indigo-600 focus:ring-indigo-500">
+                <span class="text-sm text-gray-600">Semicolons</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="trailing-comma" class="rounded text-indigo-600 focus:ring-indigo-500">
+                <span class="text-sm text-gray-600">Trailing Comma</span>
+            </label>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- Input -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-edit mr-2"></i>Input Code
+                    </h3>
+                    <div class="flex gap-2">
+                        <button id="paste-btn" class="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-md transition-colors">
+                            <i class="fas fa-paste mr-1"></i> Paste
+                        </button>
+                        <button id="clear-btn" class="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-md transition-colors">
+                            <i class="fas fa-trash mr-1"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                <textarea id="input-code" class="code-editor w-full h-80 p-4 resize-none bg-gray-900 text-gray-100" placeholder="Paste your unformatted code here..."></textarea>
+            </div>
+
+            <!-- Output -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-magic mr-2"></i>Formatted Output
+                    </h3>
+                    <button id="copy-btn" class="copy-btn px-3 py-1.5 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-all">
+                        <i class="fas fa-copy mr-1"></i> Copy
+                    </button>
+                </div>
+                <div id="output-container" class="h-80 overflow-auto bg-gray-900">
+                    <pre class="h-full"><code id="output-code" class="language-javascript p-4 block text-gray-400">// Formatted code will appear here...</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Format Button -->
+        <div class="mt-6 text-center">
+            <button id="format-btn" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all transform hover:scale-105">
+                <i class="fas fa-wand-magic-sparkles mr-2"></i> Format Code
+            </button>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About This Tool
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>All formatting runs locally in your browser - no data sent to servers</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Supports multiple programming languages with syntax highlighting</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Customizable formatting options (indentation, quotes, semicolons)</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Works offline after initial page load</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.9/beautify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.9/beautify-html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.9/beautify-css.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
