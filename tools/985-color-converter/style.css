@@ -1,0 +1,74 @@
+/* Color Code Converter - Tool #985 */
+
+.color-preview {
+    transition: background-color 0.3s ease;
+}
+
+.format-card {
+    transition: all 0.2s ease;
+}
+
+.format-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.copy-btn {
+    transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Color picker styling */
+input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 8px;
+}
+
+/* Range slider styling */
+.slider-container input[type="range"] {
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #4f46e5;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.slider-container input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #4f46e5;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .format-card {
+        padding: 0.75rem;
+    }
+}

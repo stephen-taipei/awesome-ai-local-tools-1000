@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Code Converter - Tool #985</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .color-preview {
+            transition: background-color 0.3s ease;
+        }
+        .format-card {
+            transition: all 0.2s ease;
+        }
+        .format-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .copy-btn:hover {
+            transform: scale(1.05);
+        }
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 8px;
+        }
+        .slider-container input[type="range"] {
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 4px;
+        }
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #4f46e5;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    985
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Color Code Converter</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Color Format Converter</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Convert colors between HEX, RGB, HSL, HSV, and CMYK formats instantly.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Color Picker Section -->
+            <div class="lg:col-span-1 space-y-4">
+                <!-- Color Preview -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div id="color-preview" class="color-preview h-48 bg-indigo-600"></div>
+                    <div class="p-4">
+                        <div class="flex items-center gap-4">
+                            <input type="color" id="color-picker" value="#4f46e5" class="w-16 h-16 rounded-lg">
+                            <div class="flex-1">
+                                <label class="block text-sm text-gray-500 mb-1">Quick Pick</label>
+                                <input type="text" id="hex-quick-input" value="#4F46E5" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-center uppercase" placeholder="#RRGGBB">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RGB Sliders -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <h3 class="font-medium text-gray-700 mb-4">RGB Sliders</h3>
+                    <div class="space-y-4 slider-container">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-red-500 font-medium">Red</span>
+                                <span id="r-value" class="font-mono">79</span>
+                            </div>
+                            <input type="range" id="r-slider" min="0" max="255" value="79" class="w-full" style="background: linear-gradient(to right, #000 0%, #ff0000 100%);">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-green-500 font-medium">Green</span>
+                                <span id="g-value" class="font-mono">70</span>
+                            </div>
+                            <input type="range" id="g-slider" min="0" max="255" value="70" class="w-full" style="background: linear-gradient(to right, #000 0%, #00ff00 100%);">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-blue-500 font-medium">Blue</span>
+                                <span id="b-value" class="font-mono">229</span>
+                            </div>
+                            <input type="range" id="b-slider" min="0" max="255" value="229" class="w-full" style="background: linear-gradient(to right, #000 0%, #0000ff 100%);">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Palette -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <h3 class="font-medium text-gray-700 mb-3">Preset Colors</h3>
+                    <div class="grid grid-cols-8 gap-2" id="color-palette">
+                        <!-- Colors will be added by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Formats Section -->
+            <div class="lg:col-span-2 space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- HEX -->
+                    <div class="format-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-medium text-gray-700">HEX</h3>
+                            <button class="copy-btn px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-all" data-format="hex">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="hex-value" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-center uppercase" value="#4F46E5">
+                    </div>
+
+                    <!-- RGB -->
+                    <div class="format-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-medium text-gray-700">RGB</h3>
+                            <button class="copy-btn px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-all" data-format="rgb">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="rgb-value" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-center" value="rgb(79, 70, 229)">
+                    </div>
+
+                    <!-- RGBA -->
+                    <div class="format-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-medium text-gray-700">RGBA</h3>
+                            <button class="copy-btn px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-all" data-format="rgba">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="rgba-value" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg font-mono text-center text-sm" value="rgba(79, 70, 229, 1)">
+                            <input type="number" id="alpha-value" min="0" max="1" step="0.1" value="1" class="w-16 px-2 py-2 border border-gray-300 rounded-lg text-center">
+                        </div>
+                    </div>
+
+                    <!-- HSL -->
+                    <div class="format-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-medium text-gray-700">HSL</h3>
+                            <button class="copy-btn px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-all" data-format="hsl">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="hsl-value" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-center" value="hsl(243, 75%, 59%)">
+                    </div>
+
+                    <!-- HSV/HSB -->
+                    <div class="format-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-medium text-gray-700">HSV / HSB</h3>
+                            <button class="copy-btn px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-all" data-format="hsv">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="hsv-value" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-center" value="hsv(243, 69%, 90%)">
+                    </div>
+
+                    <!-- CMYK -->
+                    <div class="format-card bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-medium text-gray-700">CMYK</h3>
+                            <button class="copy-btn px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-all" data-format="cmyk">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="cmyk-value" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-center" value="cmyk(65%, 69%, 0%, 10%)">
+                    </div>
+                </div>
+
+                <!-- Color Harmonies -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <h3 class="font-medium text-gray-700 mb-4">Color Harmonies</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div>
+                            <div class="text-xs text-gray-500 mb-2">Complementary</div>
+                            <div id="complementary" class="h-12 rounded-lg cursor-pointer" title="Click to use"></div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-500 mb-2">Triadic 1</div>
+                            <div id="triadic1" class="h-12 rounded-lg cursor-pointer" title="Click to use"></div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-500 mb-2">Triadic 2</div>
+                            <div id="triadic2" class="h-12 rounded-lg cursor-pointer" title="Click to use"></div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-500 mb-2">Split Comp.</div>
+                            <div id="split-comp" class="h-12 rounded-lg cursor-pointer" title="Click to use"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shades & Tints -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <h3 class="font-medium text-gray-700 mb-4">Shades & Tints</h3>
+                    <div class="flex gap-1" id="shades-tints">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <!-- CSS Variables -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-medium text-gray-700">CSS Variable</h3>
+                        <button class="copy-btn px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-all" data-format="css-var">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <input type="text" id="css-var" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-sm bg-gray-50" value="--color-primary: #4F46E5;" readonly>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>Features
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Convert between HEX, RGB, HSL, HSV, CMYK</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Visual color picker with RGB sliders</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Color harmonies (complementary, triadic)</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Shades and tints generation</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>One-click copy to clipboard</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local processing</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
