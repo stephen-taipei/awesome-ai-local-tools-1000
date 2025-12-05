@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cron Generator - Tool #995</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .code-text {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .cron-field {
+            transition: all 0.2s ease;
+        }
+        .cron-field:focus-within {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        .preset-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    995
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Cron Generator</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Cron Expression Generator</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Build cron expressions visually. Generate and validate cron schedules with ease.
+            </p>
+        </div>
+
+        <!-- Cron Expression Display -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg p-6 mb-6 text-white">
+            <div class="text-center">
+                <div class="text-sm opacity-80 mb-2">Generated Cron Expression</div>
+                <div id="cron-expression" class="code-text text-3xl sm:text-4xl font-bold mb-3">* * * * *</div>
+                <div id="cron-description" class="text-sm opacity-90 mb-4">Every minute</div>
+                <button id="copy-cron" class="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors">
+                    <i class="fas fa-copy mr-2"></i>Copy
+                </button>
+            </div>
+        </div>
+
+        <!-- Preset Buttons -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+            <h3 class="text-sm font-medium text-gray-700 mb-3">Quick Presets</h3>
+            <div class="flex flex-wrap gap-2">
+                <button class="preset-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-cron="* * * * *">Every minute</button>
+                <button class="preset-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-cron="*/5 * * * *">Every 5 min</button>
+                <button class="preset-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-cron="*/15 * * * *">Every 15 min</button>
+                <button class="preset-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-cron="0 * * * *">Every hour</button>
+                <button class="preset-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-cron="0 0 * * *">Daily at midnight</button>
+                <button class="preset-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-cron="0 9 * * *">Daily at 9 AM</button>
+                <button class="preset-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-cron="0 0 * * 0">Weekly on Sunday</button>
+                <button class="preset-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-cron="0 0 1 * *">Monthly on 1st</button>
+                <button class="preset-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-cron="0 0 1 1 *">Yearly on Jan 1</button>
+            </div>
+        </div>
+
+        <!-- Cron Fields -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+            <h3 class="font-medium text-gray-700 mb-4">
+                <i class="fas fa-cog mr-2"></i>Configure Schedule
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-4">
+                <!-- Minute -->
+                <div class="cron-field border border-gray-200 rounded-lg p-4">
+                    <label class="block text-xs font-medium text-gray-500 mb-2 text-center">MINUTE</label>
+                    <select id="minute-type" class="w-full px-2 py-1 border border-gray-300 rounded text-sm mb-2">
+                        <option value="*">Every minute</option>
+                        <option value="specific">Specific</option>
+                        <option value="range">Range</option>
+                        <option value="step">Every N minutes</option>
+                    </select>
+                    <div id="minute-specific" class="hidden">
+                        <input type="number" id="minute-value" min="0" max="59" class="w-full px-2 py-1 border border-gray-300 rounded text-sm text-center" value="0">
+                    </div>
+                    <div id="minute-range" class="hidden grid grid-cols-2 gap-1">
+                        <input type="number" id="minute-start" min="0" max="59" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="From" value="0">
+                        <input type="number" id="minute-end" min="0" max="59" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="To" value="30">
+                    </div>
+                    <div id="minute-step" class="hidden">
+                        <input type="number" id="minute-step-value" min="1" max="59" class="w-full px-2 py-1 border border-gray-300 rounded text-sm text-center" value="5">
+                    </div>
+                </div>
+
+                <!-- Hour -->
+                <div class="cron-field border border-gray-200 rounded-lg p-4">
+                    <label class="block text-xs font-medium text-gray-500 mb-2 text-center">HOUR</label>
+                    <select id="hour-type" class="w-full px-2 py-1 border border-gray-300 rounded text-sm mb-2">
+                        <option value="*">Every hour</option>
+                        <option value="specific">Specific</option>
+                        <option value="range">Range</option>
+                        <option value="step">Every N hours</option>
+                    </select>
+                    <div id="hour-specific" class="hidden">
+                        <input type="number" id="hour-value" min="0" max="23" class="w-full px-2 py-1 border border-gray-300 rounded text-sm text-center" value="0">
+                    </div>
+                    <div id="hour-range" class="hidden grid grid-cols-2 gap-1">
+                        <input type="number" id="hour-start" min="0" max="23" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="From" value="9">
+                        <input type="number" id="hour-end" min="0" max="23" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="To" value="17">
+                    </div>
+                    <div id="hour-step" class="hidden">
+                        <input type="number" id="hour-step-value" min="1" max="23" class="w-full px-2 py-1 border border-gray-300 rounded text-sm text-center" value="2">
+                    </div>
+                </div>
+
+                <!-- Day of Month -->
+                <div class="cron-field border border-gray-200 rounded-lg p-4">
+                    <label class="block text-xs font-medium text-gray-500 mb-2 text-center">DAY (Month)</label>
+                    <select id="dom-type" class="w-full px-2 py-1 border border-gray-300 rounded text-sm mb-2">
+                        <option value="*">Every day</option>
+                        <option value="specific">Specific</option>
+                        <option value="range">Range</option>
+                        <option value="step">Every N days</option>
+                    </select>
+                    <div id="dom-specific" class="hidden">
+                        <input type="number" id="dom-value" min="1" max="31" class="w-full px-2 py-1 border border-gray-300 rounded text-sm text-center" value="1">
+                    </div>
+                    <div id="dom-range" class="hidden grid grid-cols-2 gap-1">
+                        <input type="number" id="dom-start" min="1" max="31" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="From" value="1">
+                        <input type="number" id="dom-end" min="1" max="31" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="To" value="15">
+                    </div>
+                    <div id="dom-step" class="hidden">
+                        <input type="number" id="dom-step-value" min="1" max="31" class="w-full px-2 py-1 border border-gray-300 rounded text-sm text-center" value="2">
+                    </div>
+                </div>
+
+                <!-- Month -->
+                <div class="cron-field border border-gray-200 rounded-lg p-4">
+                    <label class="block text-xs font-medium text-gray-500 mb-2 text-center">MONTH</label>
+                    <select id="month-type" class="w-full px-2 py-1 border border-gray-300 rounded text-sm mb-2">
+                        <option value="*">Every month</option>
+                        <option value="specific">Specific</option>
+                        <option value="range">Range</option>
+                    </select>
+                    <div id="month-specific" class="hidden">
+                        <select id="month-value" class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div id="month-range" class="hidden grid grid-cols-2 gap-1">
+                        <input type="number" id="month-start" min="1" max="12" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="From" value="1">
+                        <input type="number" id="month-end" min="1" max="12" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="To" value="6">
+                    </div>
+                </div>
+
+                <!-- Day of Week -->
+                <div class="cron-field border border-gray-200 rounded-lg p-4">
+                    <label class="block text-xs font-medium text-gray-500 mb-2 text-center">DAY (Week)</label>
+                    <select id="dow-type" class="w-full px-2 py-1 border border-gray-300 rounded text-sm mb-2">
+                        <option value="*">Every day</option>
+                        <option value="specific">Specific</option>
+                        <option value="range">Range</option>
+                    </select>
+                    <div id="dow-specific" class="hidden">
+                        <select id="dow-value" class="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+                            <option value="0">Sunday</option>
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                        </select>
+                    </div>
+                    <div id="dow-range" class="hidden grid grid-cols-2 gap-1">
+                        <input type="number" id="dow-start" min="0" max="6" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="From" value="1">
+                        <input type="number" id="dow-end" min="0" max="6" class="px-2 py-1 border border-gray-300 rounded text-sm" placeholder="To" value="5">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Runs -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+            <h3 class="font-medium text-gray-700 mb-4">
+                <i class="fas fa-calendar-alt mr-2"></i>Next 5 Executions
+            </h3>
+            <div id="next-runs" class="space-y-2"></div>
+        </div>
+
+        <!-- Manual Input -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+            <h3 class="text-sm font-medium text-gray-700 mb-3">Parse Cron Expression</h3>
+            <div class="flex gap-2">
+                <input type="text" id="cron-input" class="code-text flex-1 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Enter cron expression (e.g., 0 9 * * 1-5)">
+                <button id="parse-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                    <i class="fas fa-search mr-1"></i>Parse
+                </button>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>Cron Syntax Reference
+            </h3>
+            <div class="code-text text-sm bg-gray-50 p-4 rounded-lg mb-4">
+                ┌───────────── minute (0-59)<br>
+                │ ┌───────────── hour (0-23)<br>
+                │ │ ┌───────────── day of month (1-31)<br>
+                │ │ │ ┌───────────── month (1-12)<br>
+                │ │ │ │ ┌───────────── day of week (0-6, Sun=0)<br>
+                │ │ │ │ │<br>
+                * * * * *
+            </div>
+            <ul class="text-gray-600 space-y-1 text-sm">
+                <li><code class="bg-gray-100 px-1 rounded">*</code> - Any value</li>
+                <li><code class="bg-gray-100 px-1 rounded">,</code> - Value list separator (1,3,5)</li>
+                <li><code class="bg-gray-100 px-1 rounded">-</code> - Range of values (1-5)</li>
+                <li><code class="bg-gray-100 px-1 rounded">/</code> - Step values (*/15 = every 15)</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
