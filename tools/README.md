@@ -21,6 +21,9 @@
 | 015 | [Smart Denoise](./015-smart-denoise/) | Image Enhancement | Bilateral Filter | ✅ Complete |
 | 051 | [AI Image Classifier](./051-image-classifier/) | Image Recognition | MobileNetV2 | ✅ Complete |
 | 052 | [AI Object Detection](./052-object-detection/) | Image Recognition | YOLOS-tiny | ✅ Complete |
+| 998 | [AST Visualization](./998-ast-visualization/) | Developer Tools | N/A | ✅ Complete |
+| 999 | [Code Complexity Analysis](./999-code-complexity-analysis/) | Developer Tools | Code Analysis Net | ✅ Complete |
+| 1000 | [AI Code Completion](./1000-ai-code-completion/) | Developer Tools | StarCoder | ✅ Complete |
 
 ## Directory Structure
 
