@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum Generator - Tool #996</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .output-text {
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    996
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Lorem Ipsum Generator</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Lorem Ipsum Text Generator</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Generate placeholder text for design mockups and prototypes.
+            </p>
+        </div>
+
+        <!-- Options -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+            <h3 class="font-medium text-gray-700 mb-4">
+                <i class="fas fa-cog mr-2"></i>Options
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                <!-- Type -->
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">Generate</label>
+                    <select id="type" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <option value="paragraphs">Paragraphs</option>
+                        <option value="sentences">Sentences</option>
+                        <option value="words">Words</option>
+                        <option value="list">List Items</option>
+                    </select>
+                </div>
+
+                <!-- Count -->
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">Amount</label>
+                    <input type="number" id="count" min="1" max="100" value="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+
+                <!-- Format -->
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">Format</label>
+                    <select id="format" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <option value="plain">Plain Text</option>
+                        <option value="html">HTML</option>
+                        <option value="markdown">Markdown</option>
+                    </select>
+                </div>
+
+                <!-- Style -->
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">Style</label>
+                    <select id="style" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <option value="classic">Classic Lorem Ipsum</option>
+                        <option value="hipster">Hipster Ipsum</option>
+                        <option value="office">Office Ipsum</option>
+                        <option value="bacon">Bacon Ipsum</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-4 items-center">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="start-lorem" checked class="rounded text-indigo-600">
+                    <span class="text-sm text-gray-600">Start with "Lorem ipsum..."</span>
+                </label>
+
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="include-html-tags" class="rounded text-indigo-600">
+                    <span class="text-sm text-gray-600">Include HTML tags</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="text-center mb-6">
+            <button id="generate-btn" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                <i class="fas fa-magic mr-2"></i>Generate Text
+            </button>
+        </div>
+
+        <!-- Output -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-file-alt mr-2"></i>Generated Text
+                    </h3>
+                    <span id="stats" class="text-xs text-gray-500"></span>
+                </div>
+                <div class="flex gap-2">
+                    <button id="copy-btn" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                        <i class="fas fa-copy mr-1"></i>Copy
+                    </button>
+                    <button id="download-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-download mr-1"></i>Download
+                    </button>
+                </div>
+            </div>
+            <div id="output" class="p-6 output-text text-gray-700 min-h-[200px]">
+                <span class="text-gray-400">Click "Generate Text" to create placeholder text...</span>
+            </div>
+        </div>
+
+        <!-- Preview (for HTML format) -->
+        <div id="preview-section" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6 hidden">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-eye mr-2"></i>HTML Preview
+                </h3>
+            </div>
+            <div id="preview" class="p-6 prose max-w-none"></div>
+        </div>
+
+        <!-- Quick Generate -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+            <h3 class="text-sm font-medium text-gray-700 mb-3">Quick Generate</h3>
+            <div class="flex flex-wrap gap-2">
+                <button class="quick-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-type="paragraphs" data-count="1">1 Paragraph</button>
+                <button class="quick-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-type="paragraphs" data-count="3">3 Paragraphs</button>
+                <button class="quick-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-type="paragraphs" data-count="5">5 Paragraphs</button>
+                <button class="quick-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-type="sentences" data-count="5">5 Sentences</button>
+                <button class="quick-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-type="words" data-count="50">50 Words</button>
+                <button class="quick-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-type="words" data-count="100">100 Words</button>
+                <button class="quick-btn px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors" data-type="list" data-count="5">5 List Items</button>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About Lorem Ipsum
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Multiple text styles available</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Generate paragraphs, sentences, or words</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Plain text, HTML, or Markdown output</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Quick generate presets</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Copy or download output</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local processing</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

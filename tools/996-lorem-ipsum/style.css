@@ -1,0 +1,42 @@
+/* Lorem Ipsum Generator - Tool #996 */
+
+.output-text {
+    line-height: 1.8;
+}
+
+/* Prose styles for preview */
+.prose p {
+    margin-bottom: 1rem;
+}
+
+.prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.prose li {
+    margin-bottom: 0.5rem;
+}
+
+/* Custom scrollbar */
+#output::-webkit-scrollbar,
+#preview::-webkit-scrollbar {
+    width: 8px;
+}
+
+#output::-webkit-scrollbar-track,
+#preview::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+#output::-webkit-scrollbar-thumb,
+#preview::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+#output::-webkit-scrollbar-thumb:hover,
+#preview::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
