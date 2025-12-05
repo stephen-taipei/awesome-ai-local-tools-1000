@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+textarea {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Progress Circle Animation */
+circle {
+    transition: stroke-dashoffset 1s ease-out, stroke 0.3s ease;
+}
+
+.text-good { color: #10B981; }
+.text-warning { color: #F59E0B; }
+.text-bad { color: #EF4444; }
+
+.bg-good { background-color: #D1FAE5; color: #065F46; }
+.bg-warning { background-color: #FEF3C7; color: #92400E; }
+.bg-bad { background-color: #FEE2E2; color: #991B1B; }
