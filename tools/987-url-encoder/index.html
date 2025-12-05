@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Encoder/Decoder - Tool #987</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .code-text {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .mode-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .param-row:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    987
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">URL Encoder/Decoder</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-5xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">URL Encode & Decode</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Encode special characters for URLs or decode percent-encoded strings. Parse and build query strings easily.
+            </p>
+        </div>
+
+        <!-- Mode Selection -->
+        <div class="flex justify-center gap-2 mb-6">
+            <button class="mode-btn active px-6 py-2 rounded-lg font-medium transition-colors border border-gray-300" data-mode="encode">
+                <i class="fas fa-lock mr-2"></i>Encode/Decode
+            </button>
+            <button class="mode-btn px-6 py-2 rounded-lg font-medium transition-colors border border-gray-300 hover:bg-gray-100" data-mode="parse">
+                <i class="fas fa-link mr-2"></i>URL Parser
+            </button>
+            <button class="mode-btn px-6 py-2 rounded-lg font-medium transition-colors border border-gray-300 hover:bg-gray-100" data-mode="builder">
+                <i class="fas fa-hammer mr-2"></i>Query Builder
+            </button>
+        </div>
+
+        <!-- Encode/Decode Mode -->
+        <div id="encode-mode" class="space-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <!-- Decoded (Plain) -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                        <h3 class="font-medium text-gray-700">
+                            <i class="fas fa-font mr-2"></i>Decoded (Plain Text)
+                        </h3>
+                        <div class="flex gap-2">
+                            <button id="paste-decoded-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                                <i class="fas fa-paste mr-1"></i>Paste
+                            </button>
+                            <button id="copy-decoded-btn" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                                <i class="fas fa-copy mr-1"></i>Copy
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="decoded-input" class="code-text w-full h-48 p-4 resize-none border-0 focus:ring-0" placeholder="Enter text to encode..."></textarea>
+                </div>
+
+                <!-- Encoded -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                        <h3 class="font-medium text-gray-700">
+                            <i class="fas fa-lock mr-2"></i>Encoded (URL Safe)
+                        </h3>
+                        <div class="flex gap-2">
+                            <button id="paste-encoded-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                                <i class="fas fa-paste mr-1"></i>Paste
+                            </button>
+                            <button id="copy-encoded-btn" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                                <i class="fas fa-copy mr-1"></i>Copy
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="encoded-input" class="code-text w-full h-48 p-4 resize-none border-0 focus:ring-0 bg-gray-50" placeholder="Enter URL-encoded text to decode..."></textarea>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                <div class="flex flex-wrap items-center justify-center gap-6">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm text-gray-600">Encoding:</label>
+                        <select id="encode-type" class="px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500">
+                            <option value="component">encodeURIComponent</option>
+                            <option value="uri">encodeURI</option>
+                            <option value="escape">escape (legacy)</option>
+                        </select>
+                    </div>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="auto-convert" checked class="rounded text-indigo-600 focus:ring-indigo-500">
+                        <span class="text-gray-600 text-sm">Auto-convert</span>
+                    </label>
+                    <button id="clear-btn" class="px-4 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-trash mr-1"></i>Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Common Encodings Reference -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                <h3 class="font-medium text-gray-700 mb-3">Common Encodings</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2 text-sm">
+                    <div class="bg-gray-50 p-2 rounded text-center">
+                        <span class="text-gray-500">Space</span>
+                        <span class="text-indigo-600 font-mono ml-1">%20</span>
+                    </div>
+                    <div class="bg-gray-50 p-2 rounded text-center">
+                        <span class="text-gray-500">&</span>
+                        <span class="text-indigo-600 font-mono ml-1">%26</span>
+                    </div>
+                    <div class="bg-gray-50 p-2 rounded text-center">
+                        <span class="text-gray-500">=</span>
+                        <span class="text-indigo-600 font-mono ml-1">%3D</span>
+                    </div>
+                    <div class="bg-gray-50 p-2 rounded text-center">
+                        <span class="text-gray-500">?</span>
+                        <span class="text-indigo-600 font-mono ml-1">%3F</span>
+                    </div>
+                    <div class="bg-gray-50 p-2 rounded text-center">
+                        <span class="text-gray-500">/</span>
+                        <span class="text-indigo-600 font-mono ml-1">%2F</span>
+                    </div>
+                    <div class="bg-gray-50 p-2 rounded text-center">
+                        <span class="text-gray-500">#</span>
+                        <span class="text-indigo-600 font-mono ml-1">%23</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- URL Parser Mode -->
+        <div id="parse-mode" class="hidden space-y-4">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-link mr-2"></i>Enter URL to Parse
+                    </h3>
+                </div>
+                <div class="p-4">
+                    <input type="text" id="url-to-parse" class="code-text w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="https://example.com/path?query=value#hash">
+                    <button id="parse-url-btn" class="mt-3 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                        <i class="fas fa-search mr-2"></i>Parse URL
+                    </button>
+                </div>
+            </div>
+
+            <div id="parsed-result" class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hidden">
+                <h3 class="font-medium text-gray-700 mb-4">Parsed Components</h3>
+                <div class="space-y-3" id="url-components">
+                    <!-- Will be populated by JS -->
+                </div>
+            </div>
+
+            <div id="query-params" class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hidden">
+                <h3 class="font-medium text-gray-700 mb-4">Query Parameters</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-2 px-3 text-gray-500 font-medium">Key</th>
+                                <th class="text-left py-2 px-3 text-gray-500 font-medium">Value</th>
+                                <th class="w-20"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="params-table">
+                            <!-- Will be populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Query Builder Mode -->
+        <div id="builder-mode" class="hidden space-y-4">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-hammer mr-2"></i>Build Query String
+                    </h3>
+                    <button id="add-param-btn" class="px-3 py-1.5 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                        <i class="fas fa-plus mr-1"></i>Add Parameter
+                    </button>
+                </div>
+                <div id="builder-params" class="space-y-2">
+                    <!-- Parameter rows will be added here -->
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">Generated Query String</h3>
+                    <button id="copy-query-btn" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                        <i class="fas fa-copy mr-1"></i>Copy
+                    </button>
+                </div>
+                <div class="p-4">
+                    <input type="text" id="base-url" class="code-text w-full px-4 py-2 border border-gray-300 rounded-lg mb-3" placeholder="Base URL (optional): https://example.com/api">
+                    <div id="query-output" class="code-text bg-gray-50 p-4 rounded-lg text-sm break-all min-h-[60px]">
+                        <span class="text-gray-400">Query string will appear here...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>Features
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Encode/decode URL components</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Parse URLs into components</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Build query strings visually</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Multiple encoding methods</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Auto-convert on input</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local processing</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
