@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoder/Decoder - Tool #984</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .code-text {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .drop-zone {
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        .drop-zone.dragover {
+            border-color: #4f46e5;
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        .mode-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    984
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Base64 Encoder/Decoder</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Base64 Encode & Decode</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Convert text or files to Base64 and vice versa. All processing happens locally in your browser.
+            </p>
+        </div>
+
+        <!-- Mode Selection -->
+        <div class="flex justify-center gap-2 mb-6">
+            <button class="mode-btn active px-6 py-2 rounded-lg font-medium transition-colors border border-gray-300" data-mode="text">
+                <i class="fas fa-font mr-2"></i>Text
+            </button>
+            <button class="mode-btn px-6 py-2 rounded-lg font-medium transition-colors border border-gray-300 hover:bg-gray-100" data-mode="file">
+                <i class="fas fa-file mr-2"></i>File
+            </button>
+            <button class="mode-btn px-6 py-2 rounded-lg font-medium transition-colors border border-gray-300 hover:bg-gray-100" data-mode="image">
+                <i class="fas fa-image mr-2"></i>Image
+            </button>
+        </div>
+
+        <!-- Text Mode -->
+        <div id="text-mode" class="space-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <!-- Input -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                        <h3 class="font-medium text-gray-700">
+                            <i class="fas fa-edit mr-2"></i>Plain Text
+                        </h3>
+                        <div class="flex gap-2">
+                            <button id="paste-text-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                                <i class="fas fa-paste mr-1"></i>Paste
+                            </button>
+                            <button id="clear-text-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                                <i class="fas fa-trash mr-1"></i>Clear
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="plain-text" class="code-text w-full h-64 p-4 resize-none border-0 focus:ring-0" placeholder="Enter plain text to encode..."></textarea>
+                </div>
+
+                <!-- Output -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                        <h3 class="font-medium text-gray-700">
+                            <i class="fas fa-lock mr-2"></i>Base64 Encoded
+                        </h3>
+                        <div class="flex gap-2">
+                            <button id="copy-base64-btn" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                                <i class="fas fa-copy mr-1"></i>Copy
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="base64-text" class="code-text w-full h-64 p-4 resize-none border-0 focus:ring-0 bg-gray-50" placeholder="Base64 output will appear here..."></textarea>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-center gap-4">
+                <button id="encode-btn" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all">
+                    <i class="fas fa-arrow-right mr-2"></i>Encode
+                </button>
+                <button id="decode-btn" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all">
+                    <i class="fas fa-arrow-left mr-2"></i>Decode
+                </button>
+            </div>
+
+            <!-- Options -->
+            <div class="flex justify-center gap-6 text-sm">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="url-safe" class="rounded text-indigo-600 focus:ring-indigo-500">
+                    <span class="text-gray-600">URL Safe (replace +/ with -_)</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="line-wrap" class="rounded text-indigo-600 focus:ring-indigo-500">
+                    <span class="text-gray-600">Line wrap (76 chars)</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- File Mode -->
+        <div id="file-mode" class="hidden space-y-4">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div id="file-drop-zone" class="drop-zone rounded-lg p-8 text-center">
+                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                    <p class="text-gray-600 mb-2">Drag & drop a file here, or click to select</p>
+                    <p class="text-gray-400 text-sm">Max file size: 10MB</p>
+                    <input type="file" id="file-input" class="hidden">
+                    <button id="select-file-btn" class="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                        Select File
+                    </button>
+                </div>
+
+                <div id="file-info" class="mt-4 hidden">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-file text-2xl text-indigo-600"></i>
+                            <div>
+                                <div id="file-name" class="font-medium text-gray-700"></div>
+                                <div id="file-size" class="text-sm text-gray-500"></div>
+                            </div>
+                        </div>
+                        <button id="remove-file-btn" class="text-red-500 hover:text-red-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-lock mr-2"></i>Base64 Output
+                    </h3>
+                    <button id="copy-file-base64-btn" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                        <i class="fas fa-copy mr-1"></i>Copy
+                    </button>
+                </div>
+                <textarea id="file-base64-output" class="code-text w-full h-48 p-4 resize-none border-0 focus:ring-0 bg-gray-50" readonly placeholder="Base64 encoded file will appear here..."></textarea>
+            </div>
+
+            <!-- Decode file from Base64 -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-unlock mr-2"></i>Decode Base64 to File
+                    </h3>
+                </div>
+                <div class="p-4">
+                    <textarea id="decode-base64-input" class="code-text w-full h-32 p-4 border border-gray-300 rounded-lg resize-none" placeholder="Paste Base64 string to decode..."></textarea>
+                    <div class="mt-4 flex gap-4 items-center">
+                        <input type="text" id="decode-filename" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg" placeholder="Filename (e.g., document.pdf)">
+                        <button id="decode-file-btn" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
+                            <i class="fas fa-download mr-2"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Mode -->
+        <div id="image-mode" class="hidden space-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <div id="image-drop-zone" class="drop-zone rounded-lg p-8 text-center">
+                        <i class="fas fa-image text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-600 mb-2">Drag & drop an image here</p>
+                        <p class="text-gray-400 text-sm">PNG, JPG, GIF, WebP</p>
+                        <input type="file" id="image-input" class="hidden" accept="image/*">
+                        <button id="select-image-btn" class="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                            Select Image
+                        </button>
+                    </div>
+                    <div id="image-preview" class="mt-4 hidden">
+                        <img id="preview-img" class="max-w-full h-auto rounded-lg mx-auto" style="max-height: 200px;">
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                        <h3 class="font-medium text-gray-700">
+                            <i class="fas fa-code mr-2"></i>Data URI
+                        </h3>
+                        <button id="copy-data-uri-btn" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <textarea id="data-uri-output" class="code-text w-full h-64 p-4 resize-none border-0 focus:ring-0 bg-gray-50 text-xs" readonly placeholder="data:image/png;base64,... will appear here"></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="include-mime" checked class="rounded text-indigo-600 focus:ring-indigo-500">
+                    <span class="text-gray-600 text-sm">Include MIME type prefix</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About Base64
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Encode text, files, and images to Base64</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Decode Base64 back to original format</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>URL-safe encoding option</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Generate Data URIs for images</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Download decoded files directly</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local processing - no data uploaded</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
