@@ -1,0 +1,87 @@
+/* AST Viewer - Tool #998 */
+
+.code-text {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+/* Tree node styling */
+.tree-node {
+    cursor: pointer;
+    user-select: none;
+}
+
+.tree-node:hover {
+    background-color: #f3f4f6;
+}
+
+.tree-node.selected {
+    background-color: #eef2ff;
+}
+
+.tree-toggle {
+    width: 20px;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Node type colors */
+.node-type {
+    color: #4f46e5;
+    font-weight: 600;
+}
+
+.node-key {
+    color: #059669;
+}
+
+.node-value {
+    color: #d97706;
+}
+
+.node-string {
+    color: #16a34a;
+}
+
+.node-number {
+    color: #2563eb;
+}
+
+.node-boolean {
+    color: #dc2626;
+}
+
+.node-null {
+    color: #6b7280;
+}
+
+pre[class*="language-"] {
+    margin: 0;
+    border-radius: 0.5rem;
+}
+
+/* Custom scrollbar */
+textarea::-webkit-scrollbar,
+#ast-tree::-webkit-scrollbar,
+.overflow-auto::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+textarea::-webkit-scrollbar-track,
+#ast-tree::-webkit-scrollbar-track,
+.overflow-auto::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+textarea::-webkit-scrollbar-thumb,
+#ast-tree::-webkit-scrollbar-thumb,
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover,
+#ast-tree::-webkit-scrollbar-thumb:hover,
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
