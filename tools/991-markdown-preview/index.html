@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Preview - Tool #991</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <style>
+        .code-text {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 1024px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .markdown-body {
+            padding: 1.5rem;
+            min-height: 400px;
+        }
+        .markdown-body pre {
+            background-color: #f6f8fa;
+        }
+        #md-input {
+            resize: none;
+        }
+        .view-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    991
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Markdown Preview</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Markdown Editor & Preview</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Write Markdown with live preview. Supports GFM (GitHub Flavored Markdown).
+            </p>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-3 mb-6">
+            <div class="flex flex-wrap gap-2 items-center justify-between">
+                <!-- Format Buttons -->
+                <div class="flex gap-1">
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="bold" title="Bold (Ctrl+B)">
+                        <i class="fas fa-bold"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="italic" title="Italic (Ctrl+I)">
+                        <i class="fas fa-italic"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="strikethrough" title="Strikethrough">
+                        <i class="fas fa-strikethrough"></i>
+                    </button>
+                    <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="h1" title="Heading 1">
+                        <i class="fas fa-heading"></i><span class="text-xs">1</span>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="h2" title="Heading 2">
+                        <i class="fas fa-heading"></i><span class="text-xs">2</span>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="h3" title="Heading 3">
+                        <i class="fas fa-heading"></i><span class="text-xs">3</span>
+                    </button>
+                    <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="ul" title="Unordered List">
+                        <i class="fas fa-list-ul"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="ol" title="Ordered List">
+                        <i class="fas fa-list-ol"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="checklist" title="Checklist">
+                        <i class="fas fa-tasks"></i>
+                    </button>
+                    <div class="w-px h-6 bg-gray-300 mx-1"></div>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="link" title="Link">
+                        <i class="fas fa-link"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="image" title="Image">
+                        <i class="fas fa-image"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="code" title="Inline Code">
+                        <i class="fas fa-code"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="codeblock" title="Code Block">
+                        <i class="fas fa-file-code"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="quote" title="Blockquote">
+                        <i class="fas fa-quote-left"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="table" title="Table">
+                        <i class="fas fa-table"></i>
+                    </button>
+                    <button class="format-btn p-2 hover:bg-gray-100 rounded" data-format="hr" title="Horizontal Rule">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+
+                <!-- View Toggle (Mobile) -->
+                <div class="flex gap-1 lg:hidden">
+                    <button class="view-btn px-3 py-1 text-sm rounded active" data-view="split">Split</button>
+                    <button class="view-btn px-3 py-1 text-sm rounded" data-view="edit">Edit</button>
+                    <button class="view-btn px-3 py-1 text-sm rounded" data-view="preview">Preview</button>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-2">
+                    <button id="sample-btn" class="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 hover:bg-indigo-200 rounded transition-colors">
+                        <i class="fas fa-flask mr-1"></i>Sample
+                    </button>
+                    <button id="clear-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-trash mr-1"></i>Clear
+                    </button>
+                    <button id="copy-md-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-copy mr-1"></i>MD
+                    </button>
+                    <button id="copy-html-btn" class="px-3 py-1 text-sm bg-indigo-600 hover:bg-indigo-700 text-white rounded transition-colors">
+                        <i class="fas fa-code mr-1"></i>HTML
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor -->
+        <div id="editor-container" class="editor-container">
+            <!-- Input -->
+            <div id="input-panel" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-edit mr-2"></i>Markdown
+                    </h3>
+                    <span id="char-count" class="text-xs text-gray-500">0 chars</span>
+                </div>
+                <textarea id="md-input" class="code-text w-full h-96 lg:h-[500px] p-4 border-0 focus:ring-0 focus:outline-none text-sm" placeholder="Write your Markdown here..."></textarea>
+            </div>
+
+            <!-- Preview -->
+            <div id="preview-panel" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-eye mr-2"></i>Preview
+                    </h3>
+                </div>
+                <div id="md-preview" class="markdown-body h-96 lg:h-[500px] overflow-auto"></div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>Markdown Syntax
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="font-medium text-gray-700 mb-1">Headers</div>
+                    <code class="text-xs text-gray-600"># H1 ## H2 ### H3</code>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="font-medium text-gray-700 mb-1">Emphasis</div>
+                    <code class="text-xs text-gray-600">**bold** *italic* ~~strike~~</code>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="font-medium text-gray-700 mb-1">Lists</div>
+                    <code class="text-xs text-gray-600">- item 1. numbered - [ ] task</code>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="font-medium text-gray-700 mb-1">Links</div>
+                    <code class="text-xs text-gray-600">[text](url)</code>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="font-medium text-gray-700 mb-1">Images</div>
+                    <code class="text-xs text-gray-600">![alt](url)</code>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <div class="font-medium text-gray-700 mb-1">Code</div>
+                    <code class="text-xs text-gray-600">`inline` ```block```</code>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
