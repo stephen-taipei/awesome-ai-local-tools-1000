@@ -1,0 +1,41 @@
+/* CSS Minifier - Tool #992 */
+
+.code-text {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+pre[class*="language-"] {
+    margin: 0;
+    border-radius: 0.5rem;
+}
+
+/* Custom scrollbar */
+textarea::-webkit-scrollbar,
+#output-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+textarea::-webkit-scrollbar-track,
+#output-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+#output-container::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+textarea::-webkit-scrollbar-thumb,
+#output-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+#output-container::-webkit-scrollbar-thumb {
+    background: #4a5568;
+}
+
+textarea::-webkit-scrollbar-thumb:hover,
+#output-container::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
