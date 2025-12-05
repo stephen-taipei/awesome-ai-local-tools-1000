@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diff Checker - Tool #994</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .code-text {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .diff-added {
+            background-color: #dcfce7;
+            border-left: 3px solid #22c55e;
+        }
+        .diff-removed {
+            background-color: #fee2e2;
+            border-left: 3px solid #ef4444;
+        }
+        .diff-changed {
+            background-color: #fef3c7;
+            border-left: 3px solid #f59e0b;
+        }
+        .diff-unchanged {
+            background-color: #f9fafb;
+            border-left: 3px solid transparent;
+        }
+        .line-number {
+            min-width: 3rem;
+            text-align: right;
+            user-select: none;
+        }
+        .highlight-char-add {
+            background-color: #86efac;
+            border-radius: 2px;
+        }
+        .highlight-char-remove {
+            background-color: #fca5a5;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    994
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Diff Checker</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Text & Code Diff Checker</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Compare two texts or code snippets and highlight the differences.
+            </p>
+        </div>
+
+        <!-- Options -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+            <div class="flex flex-wrap gap-4 items-center">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="ignore-case" class="rounded text-indigo-600">
+                    <span class="text-sm text-gray-600">Ignore case</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="ignore-whitespace" class="rounded text-indigo-600">
+                    <span class="text-sm text-gray-600">Ignore whitespace</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="show-line-numbers" checked class="rounded text-indigo-600">
+                    <span class="text-sm text-gray-600">Show line numbers</span>
+                </label>
+                <div class="ml-auto flex gap-2">
+                    <button id="sample-btn" class="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 hover:bg-indigo-200 rounded transition-colors">
+                        <i class="fas fa-flask mr-1"></i>Sample
+                    </button>
+                    <button id="swap-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-exchange-alt mr-1"></i>Swap
+                    </button>
+                    <button id="clear-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-trash mr-1"></i>Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Areas -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Original Text -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 bg-red-50 border-b border-red-100 flex items-center justify-between">
+                    <h3 class="font-medium text-red-700">
+                        <i class="fas fa-file-alt mr-2"></i>Original Text
+                    </h3>
+                    <button class="paste-btn px-2 py-1 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded" data-target="text-original">
+                        <i class="fas fa-paste mr-1"></i>Paste
+                    </button>
+                </div>
+                <textarea id="text-original" class="code-text w-full h-64 p-4 border-0 resize-none focus:ring-0 text-sm" placeholder="Paste original text here..."></textarea>
+            </div>
+
+            <!-- Modified Text -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 bg-green-50 border-b border-green-100 flex items-center justify-between">
+                    <h3 class="font-medium text-green-700">
+                        <i class="fas fa-file-alt mr-2"></i>Modified Text
+                    </h3>
+                    <button class="paste-btn px-2 py-1 text-xs bg-green-100 hover:bg-green-200 text-green-700 rounded" data-target="text-modified">
+                        <i class="fas fa-paste mr-1"></i>Paste
+                    </button>
+                </div>
+                <textarea id="text-modified" class="code-text w-full h-64 p-4 border-0 resize-none focus:ring-0 text-sm" placeholder="Paste modified text here..."></textarea>
+            </div>
+        </div>
+
+        <!-- Compare Button -->
+        <div class="text-center mb-6">
+            <button id="compare-btn" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                <i class="fas fa-code-compare mr-2"></i>Compare
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div id="stats" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 hidden">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center">
+                <div class="text-2xl font-bold text-green-600" id="stat-added">0</div>
+                <div class="text-sm text-gray-500">Lines Added</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center">
+                <div class="text-2xl font-bold text-red-600" id="stat-removed">0</div>
+                <div class="text-sm text-gray-500">Lines Removed</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center">
+                <div class="text-2xl font-bold text-yellow-600" id="stat-changed">0</div>
+                <div class="text-sm text-gray-500">Lines Changed</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center">
+                <div class="text-2xl font-bold text-gray-600" id="stat-unchanged">0</div>
+                <div class="text-sm text-gray-500">Unchanged</div>
+            </div>
+        </div>
+
+        <!-- Diff Result -->
+        <div id="diff-result" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hidden">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-code-compare mr-2"></i>Differences
+                </h3>
+                <div class="flex gap-4 text-xs">
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 bg-green-200 border-l-2 border-green-500"></span> Added</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 bg-red-200 border-l-2 border-red-500"></span> Removed</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 bg-yellow-200 border-l-2 border-yellow-500"></span> Changed</span>
+                </div>
+            </div>
+            <div id="diff-output" class="code-text text-sm overflow-x-auto max-h-[500px] overflow-y-auto"></div>
+        </div>
+
+        <!-- Side by Side View -->
+        <div id="side-by-side" class="mt-6 hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-columns mr-2"></i>Side by Side View
+                    </h3>
+                </div>
+                <div class="grid grid-cols-2 divide-x divide-gray-200">
+                    <div id="side-original" class="code-text text-sm overflow-x-auto max-h-[400px] overflow-y-auto"></div>
+                    <div id="side-modified" class="code-text text-sm overflow-x-auto max-h-[400px] overflow-y-auto"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About Diff Checker
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Line-by-line difference detection</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Character-level highlighting</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Ignore case and whitespace options</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Side-by-side comparison view</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Statistics summary</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local processing</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+/* Diff Checker - Tool #994 */
+
+.code-text {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+/* Diff line styles */
+.diff-added {
+    background-color: #dcfce7;
+    border-left: 3px solid #22c55e;
+}
+
+.diff-removed {
+    background-color: #fee2e2;
+    border-left: 3px solid #ef4444;
+}
+
+.diff-changed {
+    background-color: #fef3c7;
+    border-left: 3px solid #f59e0b;
+}
+
+.diff-unchanged {
+    background-color: #f9fafb;
+    border-left: 3px solid transparent;
+}
+
+/* Line numbers */
+.line-number {
+    min-width: 3rem;
+    text-align: right;
+    user-select: none;
+}
+
+/* Character-level highlighting */
+.highlight-char-add {
+    background-color: #86efac;
+    border-radius: 2px;
+}
+
+.highlight-char-remove {
+    background-color: #fca5a5;
+    border-radius: 2px;
+}
+
+/* Custom scrollbar */
+textarea::-webkit-scrollbar,
+.overflow-auto::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+textarea::-webkit-scrollbar-track,
+.overflow-auto::-webkit-scrollbar-track,
+.overflow-y-auto::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+textarea::-webkit-scrollbar-thumb,
+.overflow-auto::-webkit-scrollbar-thumb,
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover,
+.overflow-auto::-webkit-scrollbar-thumb:hover,
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
