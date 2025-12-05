@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haptic Feedback - Tool #978</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            /* Optional: Make body full height for centering */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+    <header class="bg-white shadow-sm z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center text-white font-bold">
+                    978
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Haptic Feedback</h1>
+            </div>
+            <a href="../../index.html" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200 w-full max-w-md text-center">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">Vibration Patterns</h2>
+            <p id="support-message" class="text-sm mb-6 text-gray-600">
+                Tap the buttons below to experience different haptic feedback patterns.
+                (Note: This feature typically works on mobile devices with vibration support.)
+            </p>
+
+            <div class="grid grid-cols-2 gap-4">
+                <button id="short-vibrate" class="btn btn-primary bg-blue-600 hover:bg-blue-700">
+                    Short Vibrate
+                </button>
+                <button id="long-vibrate" class="btn btn-primary bg-green-600 hover:bg-green-700">
+                    Long Vibrate
+                </button>
+                <button id="pulse-vibrate" class="btn btn-primary bg-yellow-500 hover:bg-yellow-600">
+                    Pulse Pattern
+                </button>
+                <button id="sos-vibrate" class="btn btn-primary bg-red-600 hover:bg-red-700">
+                    SOS Pattern
+                </button>
+            </div>
+            <p id="disclaimer" class="text-xs text-gray-500 mt-6 hidden">
+                <i class="fas fa-info-circle mr-1"></i>
+                Your browser or device may not fully support the Vibration API, or it might be disabled.
+            </p>
+        </div>
+    </main>
+
+    <footer class="text-center text-gray-500 text-xs py-4">
+        Powered by Web Vibration API
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
