@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Speed Changer - Tool #979</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white font-sans min-h-screen flex flex-col">
+
+    <header class="bg-gray-800 shadow-lg z-10 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-pink-600 rounded-lg flex items-center justify-center text-white font-bold">
+                    979
+                </div>
+                <h1 class="text-xl font-semibold text-gray-100">Audio Speed Changer</h1>
+            </div>
+            <a href="../../index.html" class="text-gray-400 hover:text-gray-200 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 relative overflow-hidden">
+        <!-- Background Decoration -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-20">
+             <div class="absolute w-96 h-96 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl animate-blob top-0 left-0"></div>
+             <div class="absolute w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000 bottom-0 right-0"></div>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-gray-800/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-gray-700 w-full max-w-2xl">
+            
+            <!-- Upload Area -->
+            <div id="drop-zone" class="border-2 border-dashed border-gray-600 rounded-xl p-8 text-center hover:border-pink-500 transition-colors cursor-pointer mb-8">
+                <input type="file" id="audio-input" accept="audio/*" class="hidden">
+                <i class="fas fa-music text-4xl text-gray-500 mb-4"></i>
+                <p class="text-lg text-gray-300 font-medium">Click to upload audio or drag & drop</p>
+                <p class="text-sm text-gray-500 mt-2">Supports MP3, WAV, OGG</p>
+            </div>
+
+            <!-- Player Interface (Hidden initially) -->
+            <div id="player-ui" class="hidden space-y-6">
+                
+                <!-- Track Info -->
+                <div class="flex items-center justify-between">
+                    <div class="truncate pr-4">
+                        <h3 id="file-name" class="text-lg font-medium text-white truncate">Song Name.mp3</h3>
+                        <p id="time-display" class="text-sm text-pink-400 font-mono">00:00 / 00:00</p>
+                    </div>
+                    <div class="px-3 py-1 bg-gray-700 rounded text-xs font-bold text-gray-300 uppercase tracking-wider">
+                        Pitch Preserved
+                    </div>
+                </div>
+
+                <!-- Waveform / Visualizer Placeholder -->
+                <canvas id="visualizer" width="600" height="100" class="w-full h-24 bg-gray-900 rounded-lg border border-gray-700"></canvas>
+
+                <!-- Controls -->
+                <div class="flex flex-col gap-4">
+                    <!-- Progress Bar -->
+                    <input type="range" id="progress-bar" value="0" class="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                    
+                    <div class="flex items-center justify-between">
+                        <!-- Speed Control -->
+                        <div class="flex items-center gap-3 w-1/2">
+                            <span class="text-xs text-gray-400 uppercase font-bold">Speed</span>
+                            <input type="range" id="speed-control" min="0.5" max="3.0" step="0.1" value="1.0" class="w-24 sm:w-32 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                            <span id="speed-val" class="text-sm font-bold text-pink-400 w-12">1.0x</span>
+                        </div>
+
+                        <!-- Play/Pause -->
+                        <button id="play-btn" class="w-12 h-12 flex items-center justify-center bg-pink-600 hover:bg-pink-700 text-white rounded-full shadow-lg transition-transform transform hover:scale-105 focus:outline-none">
+                            <i class="fas fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
