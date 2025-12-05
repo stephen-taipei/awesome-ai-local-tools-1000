@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Parser - Tool #989</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .code-text {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .jwt-part {
+            transition: all 0.2s ease;
+        }
+        .jwt-part:hover {
+            transform: translateY(-2px);
+        }
+        .header-part { border-left: 4px solid #ef4444; }
+        .payload-part { border-left: 4px solid #8b5cf6; }
+        .signature-part { border-left: 4px solid #06b6d4; }
+        .jwt-header { color: #ef4444; }
+        .jwt-payload { color: #8b5cf6; }
+        .jwt-signature { color: #06b6d4; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    989
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">JWT Parser</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-5xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">JWT Token Parser</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Decode and analyze JSON Web Tokens (JWT) locally. View header, payload, and verify structure.
+            </p>
+        </div>
+
+        <!-- JWT Input -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-key mr-2"></i>JWT Token
+                </h3>
+                <div class="flex gap-2">
+                    <button id="paste-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-paste mr-1"></i>Paste
+                    </button>
+                    <button id="sample-btn" class="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 hover:bg-indigo-200 rounded transition-colors">
+                        <i class="fas fa-flask mr-1"></i>Sample
+                    </button>
+                    <button id="clear-btn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-trash mr-1"></i>Clear
+                    </button>
+                </div>
+            </div>
+            <div class="p-4">
+                <textarea id="jwt-input" class="code-text w-full h-32 px-4 py-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Paste your JWT token here..."></textarea>
+                <button id="decode-btn" class="mt-3 w-full px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
+                    <i class="fas fa-unlock-alt mr-2"></i>Decode JWT
+                </button>
+            </div>
+        </div>
+
+        <!-- Encoded Display -->
+        <div id="encoded-display" class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6 hidden">
+            <h3 class="font-medium text-gray-700 mb-3">
+                <i class="fas fa-code mr-2"></i>Encoded Token
+            </h3>
+            <div id="jwt-colored" class="code-text text-sm p-4 bg-gray-50 rounded-lg break-all"></div>
+        </div>
+
+        <!-- Decoded Result -->
+        <div id="decoded-result" class="hidden">
+            <!-- Validation Status -->
+            <div id="validation-status" class="mb-6 p-4 rounded-xl flex items-center gap-3">
+                <i id="status-icon" class="fas fa-check-circle text-2xl"></i>
+                <div>
+                    <div id="status-title" class="font-medium"></div>
+                    <div id="status-message" class="text-sm opacity-80"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Header -->
+                <div class="jwt-part header-part bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-4 py-3 bg-red-50 border-b border-red-100 flex items-center justify-between">
+                        <h3 class="font-medium text-red-700">
+                            <i class="fas fa-file-code mr-2"></i>Header
+                        </h3>
+                        <button class="copy-btn px-2 py-1 text-xs bg-red-100 hover:bg-red-200 text-red-700 rounded transition-colors" data-target="header-json">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <pre id="header-json" class="code-text text-sm bg-gray-50 p-4 rounded-lg overflow-x-auto"></pre>
+                    </div>
+                </div>
+
+                <!-- Payload -->
+                <div class="jwt-part payload-part bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-4 py-3 bg-purple-50 border-b border-purple-100 flex items-center justify-between">
+                        <h3 class="font-medium text-purple-700">
+                            <i class="fas fa-database mr-2"></i>Payload
+                        </h3>
+                        <button class="copy-btn px-2 py-1 text-xs bg-purple-100 hover:bg-purple-200 text-purple-700 rounded transition-colors" data-target="payload-json">
+                            <i class="fas fa-copy mr-1"></i>Copy
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <pre id="payload-json" class="code-text text-sm bg-gray-50 p-4 rounded-lg overflow-x-auto"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Claims Analysis -->
+            <div id="claims-section" class="mt-6 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                    <h3 class="font-medium text-gray-700">
+                        <i class="fas fa-list-check mr-2"></i>Claims Analysis
+                    </h3>
+                </div>
+                <div class="p-4">
+                    <div id="claims-table" class="divide-y divide-gray-100"></div>
+                </div>
+            </div>
+
+            <!-- Signature -->
+            <div class="mt-6 jwt-part signature-part bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 bg-cyan-50 border-b border-cyan-100 flex items-center justify-between">
+                    <h3 class="font-medium text-cyan-700">
+                        <i class="fas fa-signature mr-2"></i>Signature
+                    </h3>
+                    <button class="copy-btn px-2 py-1 text-xs bg-cyan-100 hover:bg-cyan-200 text-cyan-700 rounded transition-colors" data-target="signature-text">
+                        <i class="fas fa-copy mr-1"></i>Copy
+                    </button>
+                </div>
+                <div class="p-4">
+                    <div id="signature-text" class="code-text text-sm bg-gray-50 p-4 rounded-lg break-all"></div>
+                    <div id="signature-info" class="mt-3 text-sm text-gray-600"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Display -->
+        <div id="error-display" class="hidden bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+            <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-3"></i>
+            <h3 class="text-lg font-medium text-red-700 mb-2">Invalid JWT Token</h3>
+            <p id="error-message" class="text-red-600"></p>
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About JWT Tokens
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>JWT = JSON Web Token for secure transmission</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Three parts: Header, Payload, Signature</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Base64URL encoded (not encrypted)</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Standard claims: iat, exp, sub, iss, aud</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Supports HS256, RS256, ES256 algorithms</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local processing</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

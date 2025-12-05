@@ -1,0 +1,46 @@
+/* JWT Parser - Tool #989 */
+
+.code-text {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+.jwt-part {
+    transition: all 0.2s ease;
+}
+
+.jwt-part:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* JWT color coding */
+.header-part { border-left: 4px solid #ef4444; }
+.payload-part { border-left: 4px solid #8b5cf6; }
+.signature-part { border-left: 4px solid #06b6d4; }
+
+.jwt-header { color: #ef4444; }
+.jwt-payload { color: #8b5cf6; }
+.jwt-signature { color: #06b6d4; }
+
+/* Custom scrollbar */
+textarea::-webkit-scrollbar,
+pre::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+textarea::-webkit-scrollbar-track,
+pre::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+textarea::-webkit-scrollbar-thumb,
+pre::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover,
+pre::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
