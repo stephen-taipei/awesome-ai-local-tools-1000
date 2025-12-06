@@ -1,0 +1,52 @@
+/* Chemical Equation Balancer - Tool #902 */
+
+.equation-text {
+    font-family: 'Times New Roman', serif;
+    font-size: 1.5rem;
+}
+
+.coefficient {
+    color: #4f46e5;
+    font-weight: bold;
+}
+
+.element {
+    font-weight: 500;
+}
+
+.subscript {
+    font-size: 0.7em;
+    vertical-align: sub;
+}
+
+.example-btn {
+    transition: all 0.2s ease;
+}
+
+.example-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.step-card {
+    border-left: 3px solid #4f46e5;
+}
+
+/* Custom scrollbar */
+.overflow-auto::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

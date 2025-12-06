@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemical Equation Balancer - Tool #902</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .equation-text {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.5rem;
+        }
+        .coefficient {
+            color: #4f46e5;
+            font-weight: bold;
+        }
+        .element {
+            font-weight: 500;
+        }
+        .subscript {
+            font-size: 0.7em;
+            vertical-align: sub;
+        }
+        .example-btn {
+            transition: all 0.2s ease;
+        }
+        .example-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .step-card {
+            border-left: 3px solid #4f46e5;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    902
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Chemical Equation Balancer</h1>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Balance Chemical Equations</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Enter a chemical equation and get it automatically balanced.
+                Supports standard chemical notation.
+            </p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-flask mr-2 text-indigo-500"></i>Enter Equation
+                </h3>
+            </div>
+            <div class="p-4">
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="equation-input"
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="e.g., H2 + O2 -> H2O">
+                    <button id="balance-btn" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
+                        <i class="fas fa-balance-scale mr-2"></i>Balance
+                    </button>
+                </div>
+                <p class="text-sm text-gray-500">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    Use "->" or "=" for reaction arrow. Elements: H2, O2, H2O, CO2, etc.
+                </p>
+            </div>
+        </div>
+
+        <!-- Examples -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>Example Equations
+                </h3>
+            </div>
+            <div class="p-4">
+                <div class="flex flex-wrap gap-2" id="examples-list">
+                    <!-- Examples will be added by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="result-section" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6 hidden">
+            <div class="px-4 py-3 bg-green-50 border-b border-green-200">
+                <h3 class="font-medium text-green-700">
+                    <i class="fas fa-check-circle mr-2"></i>Balanced Equation
+                </h3>
+            </div>
+            <div class="p-6">
+                <div id="balanced-equation" class="equation-text text-center p-4 bg-gray-50 rounded-lg mb-4">
+                    <!-- Balanced equation will appear here -->
+                </div>
+
+                <!-- Atom Count -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <h4 class="font-medium text-blue-800 mb-2"><i class="fas fa-arrow-left mr-1"></i>Reactants</h4>
+                        <div id="reactant-counts" class="text-sm text-blue-700"></div>
+                    </div>
+                    <div class="p-4 bg-green-50 rounded-lg">
+                        <h4 class="font-medium text-green-800 mb-2"><i class="fas fa-arrow-right mr-1"></i>Products</h4>
+                        <div id="product-counts" class="text-sm text-green-700"></div>
+                    </div>
+                </div>
+
+                <!-- Verification -->
+                <div id="verification" class="p-3 bg-green-100 rounded-lg text-green-800 text-sm text-center">
+                    <i class="fas fa-check-circle mr-1"></i>
+                    Equation is balanced! All atoms are conserved.
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Section -->
+        <div id="error-section" class="bg-white rounded-xl shadow-sm border border-red-200 overflow-hidden mb-6 hidden">
+            <div class="px-4 py-3 bg-red-50 border-b border-red-200">
+                <h3 class="font-medium text-red-700">
+                    <i class="fas fa-exclamation-circle mr-2"></i>Error
+                </h3>
+            </div>
+            <div class="p-4">
+                <p id="error-message" class="text-red-600"></p>
+            </div>
+        </div>
+
+        <!-- Steps Section -->
+        <div id="steps-section" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6 hidden">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-list-ol mr-2 text-purple-500"></i>Balancing Steps
+                </h3>
+            </div>
+            <div class="p-4">
+                <div id="steps-list" class="space-y-3">
+                    <!-- Steps will be added by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Reaction Types -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-tags mr-2 text-orange-500"></i>Common Reaction Types
+                </h3>
+            </div>
+            <div class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <div class="p-3 bg-gray-50 rounded-lg">
+                    <div class="font-medium text-gray-800">Combustion</div>
+                    <div class="text-gray-500">Fuel + O₂ → CO₂ + H₂O</div>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-lg">
+                    <div class="font-medium text-gray-800">Synthesis</div>
+                    <div class="text-gray-500">A + B → AB</div>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-lg">
+                    <div class="font-medium text-gray-800">Decomposition</div>
+                    <div class="text-gray-500">AB → A + B</div>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-lg">
+                    <div class="font-medium text-gray-800">Single Replacement</div>
+                    <div class="text-gray-500">A + BC → AC + B</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About Chemical Equation Balancer
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Automatic equation balancing</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Supports complex molecules</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Step-by-step explanation</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Atom count verification</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Common equation examples</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local processing</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
