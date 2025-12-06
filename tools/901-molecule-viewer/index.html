@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molecule Viewer - Tool #901</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        #molecule-canvas {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 0.5rem;
+        }
+        .atom-btn {
+            transition: all 0.2s ease;
+        }
+        .atom-btn:hover {
+            transform: scale(1.05);
+        }
+        .molecule-card {
+            transition: all 0.2s ease;
+        }
+        .molecule-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-white shadow-sm z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    901
+                </div>
+                <h1 class="text-xl font-semibold text-gray-900">Molecule Viewer</h1>
+                <span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full font-medium">3D</span>
+            </div>
+            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-home"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl mx-auto w-full p-4 sm:p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">3D Molecule Structure Viewer</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Visualize and explore molecular structures in 3D.
+                Select preset molecules or build your own.
+            </p>
+        </div>
+
+        <!-- 3D Viewer -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-cube mr-2 text-indigo-500"></i>3D Viewer
+                </h3>
+                <div class="flex gap-2">
+                    <button id="reset-view" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                        <i class="fas fa-sync-alt mr-1"></i>Reset View
+                    </button>
+                    <button id="toggle-rotation" class="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 hover:bg-indigo-200 rounded transition-colors">
+                        <i class="fas fa-play mr-1"></i>Auto Rotate
+                    </button>
+                </div>
+            </div>
+            <div id="molecule-canvas"></div>
+            <div class="px-4 py-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between text-sm text-gray-500">
+                <span><i class="fas fa-mouse-pointer mr-1"></i>Drag to rotate, scroll to zoom</span>
+                <span id="molecule-name" class="font-medium text-gray-700">No molecule loaded</span>
+            </div>
+        </div>
+
+        <!-- Preset Molecules -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-flask mr-2 text-purple-500"></i>Preset Molecules
+                </h3>
+            </div>
+            <div class="p-4">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="preset-molecules">
+                    <!-- Presets will be added by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Molecule Info -->
+        <div id="molecule-info" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6 hidden">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-info-circle mr-2 text-blue-500"></i>Molecule Information
+                </h3>
+            </div>
+            <div class="p-4">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="text-center p-3 bg-gray-50 rounded-lg">
+                        <div class="text-2xl font-bold text-indigo-600" id="info-formula">-</div>
+                        <div class="text-xs text-gray-500">Formula</div>
+                    </div>
+                    <div class="text-center p-3 bg-gray-50 rounded-lg">
+                        <div class="text-2xl font-bold text-purple-600" id="info-atoms">0</div>
+                        <div class="text-xs text-gray-500">Atoms</div>
+                    </div>
+                    <div class="text-center p-3 bg-gray-50 rounded-lg">
+                        <div class="text-2xl font-bold text-green-600" id="info-bonds">0</div>
+                        <div class="text-xs text-gray-500">Bonds</div>
+                    </div>
+                    <div class="text-center p-3 bg-gray-50 rounded-lg">
+                        <div class="text-2xl font-bold text-orange-600" id="info-mass">0</div>
+                        <div class="text-xs text-gray-500">Mass (g/mol)</div>
+                    </div>
+                </div>
+                <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                    <p class="text-sm text-blue-800" id="info-description">Select a molecule to see its description.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Atom Legend -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <h3 class="font-medium text-gray-700">
+                    <i class="fas fa-palette mr-2 text-green-500"></i>Atom Colors
+                </h3>
+            </div>
+            <div class="p-4">
+                <div class="flex flex-wrap gap-3" id="atom-legend">
+                    <!-- Legend items will be added by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 mb-3">
+                <i class="fas fa-info-circle mr-2 text-indigo-600"></i>About Molecule Viewer
+            </h3>
+            <ul class="text-gray-600 space-y-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-2">
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Interactive 3D molecular visualization</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Common molecule presets included</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Rotate, zoom, and pan controls</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Atom color-coded by element</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>Molecule information display</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i>100% local processing</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

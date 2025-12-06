@@ -1,0 +1,44 @@
+/* Molecule Viewer - Tool #901 */
+
+#molecule-canvas {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 0.5rem;
+}
+
+.atom-btn {
+    transition: all 0.2s ease;
+}
+
+.atom-btn:hover {
+    transform: scale(1.05);
+}
+
+.molecule-card {
+    transition: all 0.2s ease;
+}
+
+.molecule-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom scrollbar */
+.overflow-auto::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
