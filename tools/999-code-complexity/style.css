@@ -1,0 +1,47 @@
+/* Code Complexity Analyzer - Tool #999 */
+
+.code-text {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+.metric-card {
+    transition: all 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Complexity indicators */
+.complexity-low { border-left: 4px solid #22c55e; }
+.complexity-medium { border-left: 4px solid #f59e0b; }
+.complexity-high { border-left: 4px solid #ef4444; }
+
+pre[class*="language-"] {
+    margin: 0;
+    border-radius: 0.5rem;
+}
+
+/* Custom scrollbar */
+textarea::-webkit-scrollbar,
+.overflow-auto::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+textarea::-webkit-scrollbar-track,
+.overflow-auto::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+textarea::-webkit-scrollbar-thumb,
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover,
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
