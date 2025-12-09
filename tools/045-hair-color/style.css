@@ -1,0 +1,33 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.controls {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.upload-section {
+    border: 2px dashed #4267b2;
+    padding: 40px;
+    background: white;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+canvas {
+    max-width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+}

@@ -1,0 +1,36 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+    background: #fff;
+    color: #333;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.controls {
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.upload-section {
+    border: 2px dashed #333;
+    padding: 50px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+canvas {
+    max-width: 100%;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+}

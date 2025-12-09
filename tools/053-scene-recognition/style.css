@@ -1,0 +1,93 @@
+:root {
+    --primary: #2563eb;
+    --background: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --border: #e2e8f0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.upload-section {
+    border: 2px dashed var(--border);
+    border-radius: 1rem;
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    background: var(--card);
+    transition: all 0.2s;
+}
+
+.upload-section:hover {
+    border-color: var(--primary);
+    background: #f1f5f9;
+}
+
+.preview-section {
+    margin-top: 2rem;
+    background: var(--card);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.image-container img {
+    max-width: 100%;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    margin: 0 1rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.score {
+    font-weight: 600;
+    min-width: 3rem;
+    text-align: right;
+}

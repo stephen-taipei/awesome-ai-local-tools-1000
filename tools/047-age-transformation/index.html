@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Age Transformation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Age Transformation</h1>
+            <p>See yourself younger or older.</p>
+        </header>
+
+        <main>
+            <div class="controls">
+                <input type="range" id="age-slider" min="0" max="100" value="50">
+                <span id="age-display">Age: 50</span>
+            </div>
+
+            <div class="upload-section" id="drop-area">
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <div class="upload-content">
+                    <p>Upload Face Photo</p>
+                </div>
+            </div>
+
+            <div class="preview-section" id="preview-section" style="display: none;">
+                <canvas id="result-canvas"></canvas>
+            </div>
+        </main>
+    </div>
+    <script src="app.js" type="module"></script>
+</body>
+</html>

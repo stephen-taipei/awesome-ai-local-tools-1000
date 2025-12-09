@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Expression Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Expression Editor</h1>
+            <p>Change facial expressions in photos using local AI processing.</p>
+        </header>
+
+        <main>
+            <div class="controls">
+                <button class="expression-btn active" data-exp="smile">Smile</button>
+                <button class="expression-btn" data-exp="surprise">Surprise</button>
+                <button class="expression-btn" data-exp="angry">Angry</button>
+                <button class="expression-btn" data-exp="sad">Sad</button>
+            </div>
+
+            <div class="upload-section" id="drop-area">
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <div class="upload-content">
+                    <p>Click or drag image here</p>
+                </div>
+            </div>
+
+            <div class="preview-section" id="preview-section" style="display: none;">
+                <canvas id="canvas"></canvas>
+                <div id="processing-msg" style="display: none;">Processing...</div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js" type="module"></script>
+</body>
+</html>

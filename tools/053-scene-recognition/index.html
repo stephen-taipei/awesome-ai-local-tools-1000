@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Scene Recognition</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.14.0"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Scene Recognition</h1>
+            <p>Identify scene categories in images using AI locally.</p>
+        </header>
+
+        <main>
+            <div class="upload-section" id="drop-area">
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <div class="upload-content">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <p>Drag & drop or click to upload</p>
+                </div>
+            </div>
+
+            <div class="preview-section" id="preview-section" style="display: none;">
+                <div class="image-container">
+                    <img id="preview-image" alt="Preview">
+                </div>
+                <div class="results-section">
+                    <h3>Scene Analysis Results</h3>
+                    <div id="loading" class="loading" style="display: none;">Analyzing...</div>
+                    <div id="results" class="results-list"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js" type="module"></script>
+</body>
+</html>
