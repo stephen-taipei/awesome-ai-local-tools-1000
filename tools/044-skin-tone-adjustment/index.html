@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool #044 - Skin Tone Adjustment | Awesome AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-magic"></i>
+                <div class="title">
+                    <h1 data-i18n="title">膚色調整</h1>
+                    <p data-i18n="subtitle">智慧調整膚色，美白或健康小麥色</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="lang-switcher">
+                    <button id="lang-zh" class="lang-btn active">中文</button>
+                    <button id="lang-en" class="lang-btn">EN</button>
+                </div>
+                <a href="../../index.html" class="back-btn">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="backToHome">返回首頁</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="tool-layout">
+                <div class="controls-panel">
+                    <div class="panel-section">
+                        <div class="status-indicator" id="statusIndicator">
+                            <span class="status-dot"></span>
+                            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+                        </div>
+                        <button id="loadModelBtn" class="primary-btn full-width">
+                            <i class="fas fa-download"></i>
+                            <span data-i18n="loadModel">載入模型</span>
+                        </button>
+                    </div>
+
+                    <div class="panel-section" id="controlsArea" style="display: none;">
+                        <h3 data-i18n="adjustments">調整選項</h3>
+
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <label data-i18n="brightness">美白 (亮度)</label>
+                                <span id="brightnessValue">0</span>
+                            </div>
+                            <input type="range" id="brightnessSlider" min="-50" max="50" value="0" class="slider">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <label data-i18n="warmth">色溫 (冷/暖)</label>
+                                <span id="warmthValue">0</span>
+                            </div>
+                            <input type="range" id="warmthSlider" min="-50" max="50" value="0" class="slider">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <label data-i18n="saturation">飽和度</label>
+                                <span id="saturationValue">0</span>
+                            </div>
+                            <input type="range" id="saturationSlider" min="-50" max="50" value="0" class="slider">
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="resetBtn" class="secondary-btn">
+                                <i class="fas fa-undo"></i>
+                                <span data-i18n="reset">重置</span>
+                            </button>
+                            <button id="downloadBtn" class="success-btn" disabled>
+                                <i class="fas fa-download"></i>
+                                <span data-i18n="download">下載</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="panel-section info-section">
+                        <h4 data-i18n="howItWorks">如何運作？</h4>
+                        <p data-i18n="howItWorksDesc">使用 MediaPipe Face Landmarker 偵測臉部區域，並針對皮膚區域進行色彩調整，保留眼睛與嘴唇的原色。</p>
+                    </div>
+                </div>
+
+                <div class="preview-panel">
+                    <div id="uploadArea" class="upload-area">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3 data-i18n="uploadText">拖放圖片到此處或點擊上傳</h3>
+                            <p data-i18n="uploadHint">支援 PNG, JPG, WebP</p>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/png, image/jpeg, image/webp" hidden>
+                    </div>
+
+                    <div id="previewArea" class="preview-area" style="display: none;">
+                        <div class="canvas-container">
+                            <canvas id="outputCanvas"></canvas>
+                            <div id="processingOverlay" class="processing-overlay" style="display: none;">
+                                <div class="spinner"></div>
+                                <span data-i18n="processing">處理中...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="tool-info">
+                <span data-i18n="toolNumber">工具 #044</span>
+                <span class="separator">|</span>
+                <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+            </div>
+            <div class="copyright">
+                Awesome AI Local Tools © 2024
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>
