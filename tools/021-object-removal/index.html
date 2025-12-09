@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Removal | 物件移除</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .brush-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        .brush-btn {
+            padding: 5px 10px;
+            cursor: pointer;
+            border: 1px solid #ced4da;
+            background: white;
+            border-radius: 4px;
+        }
+        .brush-btn.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        .canvas-container {
+            position: relative;
+            cursor: crosshair;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+        canvas {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="../../" class="back-link" data-i18n="backToHome">← 返回首頁</a>
+                    <span class="tool-badge" data-i18n="toolNumber">工具 #021</span>
+                </div>
+                <div class="lang-switch">
+                    <button class="lang-btn active" id="lang-zh">中文</button>
+                    <button class="lang-btn" id="lang-en">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="title-section">
+                <h1 data-i18n="title">物件移除</h1>
+                <p class="subtitle" data-i18n="subtitle">智慧移除圖片中不需要的物件，自動填補背景</p>
+                <div class="privacy-badge">
+                    <span class="badge-icon">🔒</span>
+                    <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <div class="upload-icon">📷</div>
+                    <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                    <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP</p>
+                </div>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+
+                <div class="brush-controls">
+                    <span data-i18n="brushSize">筆刷大小:</span>
+                    <input type="range" id="brushSize" min="5" max="100" value="20">
+                    <span id="brushSizeVal">20px</span>
+
+                    <button id="undoBtn" class="brush-btn" data-i18n="undo">復原</button>
+                    <button id="clearMaskBtn" class="brush-btn" data-i18n="clearMask">清除選區</button>
+                </div>
+
+                <div class="canvas-container" id="canvasContainer">
+                    <canvas id="mainCanvas"></canvas>
+                </div>
+
+                <div class="controls-panel">
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="resetBtn" data-i18n="uploadAnother">重新上傳</button>
+                        <button class="btn btn-primary" id="processBtn" data-i18n="removeObject">移除物件</button>
+                        <button class="btn btn-success" id="downloadBtn" style="display: none;" data-i18n="download">下載圖片</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Specs -->
+            <section class="tech-specs">
+                <h2 data-i18n="techSpecs">技術規格</h2>
+                <table class="specs-table">
+                    <tr>
+                        <td data-i18n="specTech">技術核心</td>
+                        <td>PatchMatch Inpainting / LaMa (Lite)</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="specSpeed">處理速度</td>
+                        <td data-i18n="speedDesc">約 1-3 秒</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="specPrivacy">隱私保護</td>
+                        <td data-i18n="localProcessing">100% 本地運算</td>
+                    </tr>
+                </table>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>
+                <a href="../../" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #021</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

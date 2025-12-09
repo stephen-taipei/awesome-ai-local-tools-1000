@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Color Correction | 自動色彩校正</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .comparison-view {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .comparison-box {
+            flex: 1;
+            text-align: center;
+        }
+        .comparison-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .auto-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 0 auto 20px auto;
+        }
+        .auto-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        .auto-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="../../" class="back-link" data-i18n="backToHome">← 返回首頁</a>
+                    <span class="tool-badge" data-i18n="toolNumber">工具 #018</span>
+                </div>
+                <div class="lang-switch">
+                    <button class="lang-btn active" id="lang-zh">中文</button>
+                    <button class="lang-btn" id="lang-en">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="title-section">
+                <h1 data-i18n="title">自動色彩校正</h1>
+                <p class="subtitle" data-i18n="subtitle">自動分析並校正圖片色彩平衡、曝光</p>
+                <div class="privacy-badge">
+                    <span class="badge-icon">🔒</span>
+                    <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <div class="upload-icon">📷</div>
+                    <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                    <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP</p>
+                </div>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+
+                <button id="autoCorrectBtn" class="auto-btn">
+                    <span>✨</span> <span data-i18n="autoCorrect">一鍵自動校正</span>
+                </button>
+
+                <div class="preview-container">
+                    <div class="comparison-view">
+                        <div class="comparison-box">
+                            <span class="comparison-label" data-i18n="original">原圖</span>
+                            <canvas id="originalCanvas"></canvas>
+                        </div>
+                        <div class="comparison-box">
+                            <span class="comparison-label" data-i18n="corrected">校正後</span>
+                            <canvas id="correctedCanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manual Fine Tune -->
+                <div class="controls-panel">
+                    <h3 data-i18n="fineTune">微調</h3>
+                    <div class="control-group">
+                        <label data-i18n="temperature">色溫</label>
+                        <input type="range" id="temperature" min="-50" max="50" value="0">
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="tint">色調</label>
+                        <input type="range" id="tint" min="-50" max="50" value="0">
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="brightness">亮度</label>
+                        <input type="range" id="brightness" min="-50" max="50" value="0">
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="resetBtn" data-i18n="uploadAnother">重新上傳</button>
+                        <button class="btn btn-primary" id="downloadBtn" data-i18n="download">下載圖片</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Specs -->
+            <section class="tech-specs">
+                <h2 data-i18n="techSpecs">技術規格</h2>
+                <table class="specs-table">
+                    <tr>
+                        <td data-i18n="specTech">技術核心</td>
+                        <td>Histogram Equalization / White Balance</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="specSpeed">處理速度</td>
+                        <td data-i18n="realTime">即時 (Real-time)</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="specPrivacy">隱私保護</td>
+                        <td data-i18n="localProcessing">100% 本地運算</td>
+                    </tr>
+                </table>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>
+                <a href="../../" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #018</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

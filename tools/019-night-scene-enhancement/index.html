@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Night Scene Enhancement | 夜景增強</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="../../" class="back-link" data-i18n="backToHome">← 返回首頁</a>
+                    <span class="tool-badge" data-i18n="toolNumber">工具 #019</span>
+                </div>
+                <div class="lang-switch">
+                    <button class="lang-btn active" id="lang-zh">中文</button>
+                    <button class="lang-btn" id="lang-en">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="title-section">
+                <h1 data-i18n="title">夜景增強</h1>
+                <p class="subtitle" data-i18n="subtitle">提升夜間/低光照片的亮度與清晰度</p>
+                <div class="privacy-badge">
+                    <span class="badge-icon">🔒</span>
+                    <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <div class="upload-icon">📷</div>
+                    <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                    <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP</p>
+                </div>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="preview-container">
+                    <div class="preview-box">
+                        <div class="preview-label" data-i18n="preview">預覽</div>
+                        <canvas id="previewCanvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <label data-i18n="brightness">提亮程度</label>
+                        <input type="range" id="brightness" min="0" max="100" value="50">
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="contrast">對比度保留</label>
+                        <input type="range" id="contrast" min="0" max="100" value="20">
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="denoise">噪點抑制</label>
+                        <input type="range" id="denoise" min="0" max="100" value="30">
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="resetBtn" data-i18n="uploadAnother">重新上傳</button>
+                        <button class="btn btn-primary" id="downloadBtn" data-i18n="download">下載圖片</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Specs -->
+            <section class="tech-specs">
+                <h2 data-i18n="techSpecs">技術規格</h2>
+                <table class="specs-table">
+                    <tr>
+                        <td data-i18n="specTech">技術核心</td>
+                        <td>WebGL Low-Light Enhancement</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="specSpeed">處理速度</td>
+                        <td data-i18n="realTime">即時 (Real-time)</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="specPrivacy">隱私保護</td>
+                        <td data-i18n="localProcessing">100% 本地運算</td>
+                    </tr>
+                </table>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>
+                <a href="../../" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #019</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
