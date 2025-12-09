@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Art Effect - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .preview-box {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pop Art Effect</h1>
+            <p>Create Andy Warhol style pop art from your images.</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/*">
+                <label for="imageInput" class="button">Choose Image</label>
+            </div>
+
+            <div class="controls">
+                <button id="processBtn" class="button primary">Generate Pop Art</button>
+            </div>
+
+            <div class="preview-container">
+                <div class="preview-box">
+                    <h3>Original</h3>
+                    <canvas id="originalCanvas"></canvas>
+                </div>
+                <div class="preview-box">
+                    <h3>Pop Art (2x2)</h3>
+                    <canvas id="outputCanvas"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

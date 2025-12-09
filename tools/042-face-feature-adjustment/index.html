@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Feature Adjustment - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+    <style>
+        .preview-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .preview-box {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            position: relative;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .control-group label {
+            width: 150px;
+            font-weight: bold;
+        }
+        .control-group input {
+            flex: 1;
+        }
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Face Feature Adjustment</h1>
+            <p>Adjust face features (eyes, nose, smile) using AI Face Mesh.</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/*">
+                <label for="imageInput" class="button">Choose Image</label>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="eyeSize">Eye Size</label>
+                    <input type="range" id="eyeSize" min="-50" max="50" value="0">
+                </div>
+                <div class="control-group">
+                    <label for="noseSize">Nose Width</label>
+                    <input type="range" id="noseSize" min="-50" max="50" value="0">
+                </div>
+                <div class="control-group">
+                    <label for="smile">Smile</label>
+                    <input type="range" id="smile" min="-50" max="50" value="0">
+                </div>
+                <button id="resetBtn" class="button">Reset</button>
+            </div>
+
+            <div class="preview-container">
+                <div class="preview-box">
+                    <h3>Editor</h3>
+                    <canvas id="outputCanvas"></canvas>
+                    <div id="loading" class="loading">Detecting Face Landmarks...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

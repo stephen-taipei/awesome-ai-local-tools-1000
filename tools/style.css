@@ -1,0 +1,83 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.upload-section {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 40px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.upload-section:hover {
+    border-color: #3498db;
+    background-color: #f0f8ff;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #2980b9;
+}
+
+.button.primary {
+    background-color: #27ae60;
+    width: 100%;
+}
+
+.button.primary:hover {
+    background-color: #219150;
+}
+
+canvas {
+    background-color: #eee;
+    background-image:
+        linear-gradient(45deg, #ddd 25%, transparent 25%),
+        linear-gradient(-45deg, #ddd 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ddd 75%),
+        linear-gradient(-45deg, transparent 75%, #ddd 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}

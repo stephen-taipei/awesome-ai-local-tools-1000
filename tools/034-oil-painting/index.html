@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oil Painting Effect - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .preview-box {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Oil Painting Effect</h1>
+            <p>Transform your photos into oil paintings entirely in your browser.</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/*">
+                <label for="imageInput" class="button">Choose Image</label>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="radius">Radius (Brush Size): <span id="radiusValue">4</span></label>
+                    <input type="range" id="radius" min="1" max="10" value="4">
+                </div>
+                <div class="control-group">
+                    <label for="intensity">Intensity Levels: <span id="intensityValue">30</span></label>
+                    <input type="range" id="intensity" min="5" max="255" value="30">
+                </div>
+                <button id="processBtn" class="button primary">Apply Oil Painting Effect</button>
+            </div>
+
+            <div class="preview-container">
+                <div class="preview-box">
+                    <h3>Original</h3>
+                    <canvas id="originalCanvas"></canvas>
+                </div>
+                <div class="preview-box">
+                    <h3>Oil Painting</h3>
+                    <canvas id="outputCanvas"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
