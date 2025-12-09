@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Skin Tone Adjustment</title>
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="onOpenCvReady();"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Skin Tone Adjustment</h1>
+            <p>Adjust skin tone while preserving texture.</p>
+        </header>
+
+        <main>
+            <div class="controls">
+                <label>Tone:
+                    <select id="tone-select">
+                        <option value="none">Original</option>
+                        <option value="fair">Fair / Light</option>
+                        <option value="tan">Tan / Warm</option>
+                        <option value="dark">Dark / Deep</option>
+                    </select>
+                </label>
+                <label>Intensity: <input type="range" id="intensity" min="0" max="100" value="50"></label>
+            </div>
+
+            <div class="upload-section" id="drop-area">
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <div class="upload-content">
+                    <p>Upload Photo</p>
+                </div>
+            </div>
+
+            <div class="preview-section" id="preview-section" style="display: none;">
+                <canvas id="canvas"></canvas>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

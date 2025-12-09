@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portrait to Anime</title>
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="onOpenCvReady();"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Portrait to Anime</h1>
+            <p>Turn your photos into anime style art.</p>
+        </header>
+
+        <main>
+            <div class="upload-section" id="drop-area">
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <div class="upload-content">
+                    <p>Upload Photo</p>
+                </div>
+            </div>
+
+            <div class="preview-section" id="preview-section" style="display: none;">
+                <div class="compare-container">
+                    <div class="img-box">
+                        <h3>Original</h3>
+                        <img id="original-img">
+                    </div>
+                    <div class="img-box">
+                        <h3>Anime Style</h3>
+                        <canvas id="result-canvas"></canvas>
+                    </div>
+                </div>
+                <div id="loading">Generating Anime Style...</div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

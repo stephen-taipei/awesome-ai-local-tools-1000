@@ -1,0 +1,51 @@
+body {
+    font-family: sans-serif;
+    background: #eef2f3;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    margin: 20px;
+    border-radius: 10px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.controls {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+input[type="range"] {
+    flex-grow: 1;
+}
+
+.upload-section {
+    border: 2px dashed #bdc3c7;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+canvas {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 20px;
+}
