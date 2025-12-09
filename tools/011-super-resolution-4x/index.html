@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 超解析度 4x | AI Super Resolution 4x</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="../../" class="back-link" data-i18n="backToHome">← 返回首頁</a>
+                    <span class="tool-badge" data-i18n="toolNumber">工具 #011</span>
+                </div>
+                <div class="lang-switch">
+                    <button class="lang-btn active" id="lang-zh">中文</button>
+                    <button class="lang-btn" id="lang-en">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="title-section">
+                <h1 data-i18n="title">AI 超解析度 4x</h1>
+                <p class="subtitle" data-i18n="subtitle">高品質 AI 放大，將圖片解析度提升 4 倍，還原細節</p>
+                <div class="privacy-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+                </div>
+            </div>
+
+            <!-- Model Loading -->
+            <div class="model-loading" id="modelLoading">
+                <div class="loading-content">
+                    <div class="loading-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12a9 9 0 11-6.219-8.56"></path>
+                        </svg>
+                    </div>
+                    <h3 data-i18n="loadingModel">正在載入 AI 模型...</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="loadProgress"></div>
+                    </div>
+                    <p class="loading-hint" id="loadingStatus" data-i18n="loadingHint">首次載入需下載約 64 MB 模型檔案</p>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea" style="display: none;">
+                <div class="upload-content">
+                    <svg class="upload-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                    <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式（建議不超過 512x512）</p>
+                </div>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <!-- Comparison View -->
+                <div class="comparison-section">
+                    <div class="comparison-container" id="comparisonContainer">
+                        <div class="image-box original-box">
+                            <div class="image-label" data-i18n="original">原圖</div>
+                            <canvas id="originalCanvas"></canvas>
+                            <div class="image-info" id="originalInfo">0 x 0</div>
+                        </div>
+                        <div class="divider">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="image-box result-box">
+                            <div class="image-label" data-i18n="result">放大結果</div>
+                            <canvas id="resultCanvas"></canvas>
+                            <div class="image-info" id="resultInfo">0 x 0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls Section -->
+                <div class="controls-section">
+                    <!-- Processing Info -->
+                    <div class="control-group">
+                        <label class="control-label" data-i18n="processingInfo">處理資訊</label>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label" data-i18n="inputSize">輸入尺寸</span>
+                                <span class="info-value" id="inputSizeValue">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" data-i18n="outputSize">輸出尺寸</span>
+                                <span class="info-value" id="outputSizeValue">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" data-i18n="processTime">處理時間</span>
+                                <span class="info-value" id="processTimeValue">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" data-i18n="scaleFactor">放大倍率</span>
+                                <span class="info-value">4x</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zoom Control -->
+                    <div class="control-group">
+                        <label class="control-label" data-i18n="zoomPreview">縮放預覽</label>
+                        <div class="zoom-controls">
+                            <button class="zoom-btn" data-zoom="fit" data-i18n="zoomFit">適應</button>
+                            <button class="zoom-btn active" data-zoom="100">100%</button>
+                            <button class="zoom-btn" data-zoom="200">200%</button>
+                            <button class="zoom-btn" data-zoom="400">400%</button>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="resetBtn">
+                            <span data-i18n="newImage">選擇新圖片</span>
+                        </button>
+                        <button class="btn btn-primary" id="downloadBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span data-i18n="download">下載結果</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Overlay -->
+            <div class="processing-overlay" id="processingOverlay" style="display: none;">
+                <div class="processing-content">
+                    <div class="spinner"></div>
+                    <p class="processing-text" data-i18n="processing">正在放大圖片...</p>
+                    <p class="processing-hint" data-i18n="processingHint">這可能需要幾秒鐘</p>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <section class="info-section">
+                <h2 data-i18n="howItWorks">如何運作？</h2>
+                <div class="info-grid-cards">
+                    <div class="info-card">
+                        <div class="info-icon">🔍</div>
+                        <h3 data-i18n="step1Title">圖像分析</h3>
+                        <p data-i18n="step1Desc">AI 分析圖片的紋理、邊緣和細節特徵</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🧠</div>
+                        <h3 data-i18n="step2Title">深度學習重建</h3>
+                        <p data-i18n="step2Desc">使用 Real-ESRGAN 模型智慧補充像素細節</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">✨</div>
+                        <h3 data-i18n="step3Title">細節增強</h3>
+                        <p data-i18n="step3Desc">銳化邊緣、還原紋理，提升整體清晰度</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📐</div>
+                        <h3 data-i18n="step4Title">4 倍放大</h3>
+                        <p data-i18n="step4Desc">輸出解析度提升為原圖的 16 倍像素</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Specs -->
+            <section class="specs-section">
+                <h2 data-i18n="techSpecs">技術規格</h2>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specModel">AI 模型</span>
+                        <span class="spec-value">ESRGAN-x4</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specScale">放大倍率</span>
+                        <span class="spec-value">4x</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specInput">輸入格式</span>
+                        <span class="spec-value">JPG, PNG, WebP</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label" data-i18n="specOutput">輸出格式</span>
+                        <span class="spec-value">PNG</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
