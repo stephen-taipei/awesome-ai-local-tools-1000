@@ -19,8 +19,15 @@
 | 013 | [Anime Image Enhancement](./013-anime-enhancement/) | Image Enhancement | Swin2SR + Anime Filter | ✅ Complete |
 | 014 | [Old Photo Restoration](./014-old-photo-restoration/) | Image Enhancement | Restoration AI | ✅ Complete |
 | 015 | [Smart Denoise](./015-smart-denoise/) | Image Enhancement | Bilateral Filter | ✅ Complete |
-| 051 | [AI Image Classifier](./051-image-classifier/) | Image Recognition | MobileNetV2 | ✅ Complete |
-| 052 | [AI Object Detection](./052-object-detection/) | Image Recognition | YOLOS-tiny | ✅ Complete |
+| 044-2 | [AI Skin Tone Adjustment-2](./044-skin-tone-2/) | Image Processing | OpenCV HSV | ✅ Complete |
+| 045-2 | [AI Hair Color Changer-2](./045-hair-color-2/) | Image Processing | MediaPipe Hair Segmenter | ✅ Complete |
+| 046-2 | [AI Virtual Makeup-2](./046-virtual-makeup-2/) | Image Processing | MediaPipe Face Mesh | ✅ Complete |
+| 047-2 | [AI Age Transformation-2](./047-age-transformation-2/) | Image Processing | Simulated | ✅ Complete |
+| 048-2 | [AI Portrait to Anime-2](./048-portrait-anime-2/) | Image Processing | Simulated | ✅ Complete |
+| 049-2 | [AI Expression Editing-2](./049-expression-editing-2/) | Image Processing | Simulated | ✅ Complete |
+| 051-2 | [AI Image Classifier-2](./051-image-classifier-2/) | Image Recognition | MobileNetV2 | ✅ Complete |
+| 052-2 | [AI Object Detection-2](./052-object-detection-2/) | Image Recognition | YOLOS-tiny | ✅ Complete |
+| 053-2 | [AI Scene Recognition-2](./053-scene-recognition-2/) | Image Recognition | ResNet-50 | ✅ Complete |
 | 998 | [AST Visualization](./998-ast-visualization/) | Developer Tools | N/A | ✅ Complete |
 | 999 | [Code Complexity Analysis](./999-code-complexity-analysis/) | Developer Tools | Code Analysis Net | ✅ Complete |
 | 1000 | [AI Code Completion](./1000-ai-code-completion/) | Developer Tools | StarCoder | ✅ Complete |
@@ -82,11 +89,39 @@ tools/
 │   ├── index.html
 │   ├── style.css
 │   └── app.js
-├── 051-image-classifier/        # AI Image Classifier
+├── 044-skin-tone-2/             # AI Skin Tone Adjustment-2
 │   ├── index.html
 │   ├── style.css
 │   └── app.js
-├── 052-object-detection/        # AI Object Detection
+├── 045-hair-color-2/            # AI Hair Color Changer-2
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 046-virtual-makeup-2/        # AI Virtual Makeup-2
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 047-age-transformation-2/    # AI Age Transformation-2
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 048-portrait-anime-2/        # AI Portrait to Anime-2
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 049-expression-editing-2/    # AI Expression Editing-2
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 051-image-classifier-2/      # AI Image Classifier-2
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 052-object-detection-2/      # AI Object Detection-2
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── 053-scene-recognition-2/     # AI Scene Recognition-2
 │   ├── index.html
 │   ├── style.css
 │   └── app.js
