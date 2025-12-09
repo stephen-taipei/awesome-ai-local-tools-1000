@@ -114,3 +114,10 @@ All tools in this collection:
 - Never upload your files to any server
 - Cache AI models in IndexedDB for offline use
 - Require no account or registration
+| 034 | [Oil Painting Effect](./034-oil-painting/) | Filter | Canvas API | ✅ Complete |
+| 035 | [Watercolor Effect](./035-watercolor/) | Filter | Canvas API | ✅ Complete |
+| 037 | [Cinematic Tone](./037-cinematic-tone/) | Filter | Canvas API | ✅ Complete |
+| 038 | [Pixel Art Converter](./038-pixel-art/) | Filter | Canvas API | ✅ Complete |
+| 039 | [Pop Art Effect](./039-pop-art/) | Filter | Canvas API | ✅ Complete |
+| 040 | [Custom Style Transfer](./040-custom-style-transfer/) | Filter | TensorFlow.js | ✅ Complete |
+| 042 | [Face Feature Adjustment](./042-face-feature-adjustment/) | Image Processing | MediaPipe Face Mesh | ✅ Complete |

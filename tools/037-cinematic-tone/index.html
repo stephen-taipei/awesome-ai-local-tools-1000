@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic Tone - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .preview-box {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .filter-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .filter-btn {
+            padding: 8px 16px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        .filter-btn:hover {
+            background: #f0f0f0;
+        }
+        .filter-btn.active:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cinematic Tone</h1>
+            <p>Apply cinematic color grading and tone mapping to your photos.</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/*">
+                <label for="imageInput" class="button">Choose Image</label>
+            </div>
+
+            <div class="controls">
+                <h3>Select Filter</h3>
+                <div class="filter-options" id="filterContainer">
+                    <button class="filter-btn active" data-filter="none">Original</button>
+                    <button class="filter-btn" data-filter="teal-orange">Teal & Orange</button>
+                    <button class="filter-btn" data-filter="vintage">Vintage Warm</button>
+                    <button class="filter-btn" data-filter="noir">Film Noir</button>
+                    <button class="filter-btn" data-filter="cyberpunk">Cyberpunk</button>
+                    <button class="filter-btn" data-filter="dramatic">Dramatic Cold</button>
+                </div>
+            </div>
+
+            <div class="preview-container">
+                <div class="preview-box">
+                    <h3>Preview</h3>
+                    <canvas id="outputCanvas"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
