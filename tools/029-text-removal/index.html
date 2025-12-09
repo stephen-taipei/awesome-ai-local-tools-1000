@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Removal - Awesome AI Local Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <div class="flex items-center">
+                <a href="../../index.html" class="text-blue-600 hover:text-blue-800 mr-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                </a>
+                <div>
+                    <h1 class="text-2xl font-bold" data-i18n="title">AI 文字移除</h1>
+                    <div class="flex items-center text-sm text-gray-500 mt-1">
+                        <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full mr-2" data-i18n="privacyBadge">100% 本地處理</span>
+                        <span data-i18n="toolNumber">工具 #029</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button id="lang-zh" class="lang-btn active px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">繁體中文</button>
+                <button id="lang-en" class="lang-btn px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">English</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <!-- Status Bar -->
+            <div class="flex items-center justify-between mb-6 p-4 bg-gray-50 rounded-lg">
+                <div class="flex items-center">
+                    <div id="statusIndicator" class="status-indicator mr-3"></div>
+                    <span id="statusText" class="font-medium text-gray-700" data-i18n="modelNotLoaded">模型未載入</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-sm text-gray-500">
+                        <span data-i18n="specAccel">加速方式</span>: <span id="accelerationMethod" class="font-bold">...</span>
+                    </div>
+                    <button id="loadModelBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        <span data-i18n="loadModel">載入模型</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div id="progressContainer" class="mb-6 hidden">
+                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                    <span data-i18n="downloading">正在下載模型...</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="progressFill" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-2" data-i18n="progressNote">首次載入需下載，之後會快取至本地</p>
+            </div>
+
+            <!-- Upload Area -->
+            <div id="uploadArea" class="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center hover:border-blue-500 transition-colors cursor-pointer">
+                <input type="file" id="fileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
+                <div class="text-gray-400 mb-4">
+                    <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-medium text-gray-700 mb-2" data-i18n="uploadText">拖放圖片到此處或點擊上傳</h3>
+                <p class="text-gray-500 text-sm" data-i18n="uploadHint">支援 PNG, JPG, WebP</p>
+            </div>
+
+            <!-- Preview Area -->
+            <div id="previewArea" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Original -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-medium text-gray-700 mb-2" data-i18n="original">原圖</h4>
+                        <div class="aspect-w-16 aspect-h-12 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+                            <img id="originalImage" class="max-w-full max-h-[400px] object-contain" src="" alt="Original">
+                        </div>
+                    </div>
+
+                    <!-- Result -->
+                    <div class="bg-gray-50 p-4 rounded-lg relative">
+                        <h4 class="font-medium text-gray-700 mb-2" data-i18n="result">移除結果</h4>
+                        <div class="aspect-w-16 aspect-h-12 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center min-h-[200px] relative">
+                            <img id="resultImage" class="max-w-full max-h-[400px] object-contain hidden" src="" alt="Result">
+
+                            <!-- Processing Overlay -->
+                            <div id="processingOverlay" class="absolute inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center z-10 hidden">
+                                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+                                <p class="text-blue-600 font-medium" data-i18n="processing">正在處理中...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-between items-center border-t border-gray-200 pt-6">
+                    <button id="resetBtn" class="text-gray-600 hover:text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        <span data-i18n="uploadAnother">上傳其他圖片</span>
+                    </button>
+                    <button id="downloadBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        <span data-i18n="download">下載修復圖片</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mt-8 border-t border-gray-200 pt-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-3" data-i18n="howItWorks">如何運作？</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-medium text-gray-700 mb-1" data-i18n="aiModel">AI 模型</h4>
+                        <p class="text-sm text-gray-600" data-i18n="aiModelDesc">使用 Text Detection + LaMa 模型，偵測並移除圖片中的文字。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-gray-700 mb-1" data-i18n="privacy">隱私保護</h4>
+                        <p class="text-sm text-gray-600" data-i18n="privacyDesc">所有計算皆在您的瀏覽器中進行，圖片不會上傳至任何伺服器。</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="mt-8 text-center text-gray-500 text-sm">
+            <p data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>
