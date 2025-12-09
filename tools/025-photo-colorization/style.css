@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #d1d5db; /* Gray-300 */
+}
+
+.status-indicator.loading {
+    background-color: #fbbf24; /* Amber-400 */
+    animation: pulse 1.5s infinite;
+}
+
+.status-indicator.ready {
+    background-color: #10b981; /* Emerald-500 */
+}
+
+.status-indicator.error {
+    background-color: #ef4444; /* Red-500 */
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.lang-btn.active {
+    background-color: #eff6ff;
+    border-color: #3b82f6;
+    color: #1d4ed8;
+    font-weight: 500;
+}
