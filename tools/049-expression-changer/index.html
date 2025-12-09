@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool #049 - Expression Changer | Awesome AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-smile"></i>
+                <div class="title">
+                    <h1 data-i18n="title">表情變換</h1>
+                    <p data-i18n="subtitle">改變人像的表情，微笑、驚訝或悲傷</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="lang-switcher">
+                    <button id="lang-zh" class="lang-btn active">中文</button>
+                    <button id="lang-en" class="lang-btn">EN</button>
+                </div>
+                <a href="../../index.html" class="back-btn">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="backToHome">返回首頁</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="tool-layout">
+                <div class="controls-panel">
+                    <div class="panel-section">
+                        <div class="status-indicator" id="statusIndicator">
+                            <span class="status-dot"></span>
+                            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+                        </div>
+                        <button id="loadModelBtn" class="primary-btn full-width">
+                            <i class="fas fa-download"></i>
+                            <span data-i18n="loadModel">載入模型</span>
+                        </button>
+                    </div>
+
+                    <div class="panel-section" id="controlsArea" style="display: none;">
+                        <h3 data-i18n="expression">選擇表情</h3>
+
+                        <div class="expression-grid">
+                            <button class="expr-btn active" data-expr="smile">
+                                <span class="emoji">😊</span>
+                                <span data-i18n="smile">微笑</span>
+                            </button>
+                            <button class="expr-btn" data-expr="laugh">
+                                <span class="emoji">😄</span>
+                                <span data-i18n="laugh">大笑</span>
+                            </button>
+                            <button class="expr-btn" data-expr="surprise">
+                                <span class="emoji">😮</span>
+                                <span data-i18n="surprise">驚訝</span>
+                            </button>
+                            <button class="expr-btn" data-expr="sad">
+                                <span class="emoji">😢</span>
+                                <span data-i18n="sad">悲傷</span>
+                            </button>
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-header">
+                                <label data-i18n="intensity">強度</label>
+                                <span id="intensityValue">50%</span>
+                            </div>
+                            <input type="range" id="intensitySlider" min="0" max="100" value="50" class="slider">
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="processBtn" class="primary-btn">
+                                <i class="fas fa-magic"></i>
+                                <span data-i18n="process">變換</span>
+                            </button>
+                            <button id="downloadBtn" class="success-btn" disabled>
+                                <i class="fas fa-download"></i>
+                                <span data-i18n="download">下載</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="panel-section info-section">
+                        <h4 data-i18n="howItWorks">如何運作？</h4>
+                        <p data-i18n="howItWorksDesc">使用 MediaPipe Face Mesh 偵測臉部網格，並透過網格變形（Warping）技術調整五官形狀以模擬不同表情。</p>
+                    </div>
+                </div>
+
+                <div class="preview-panel">
+                    <div id="uploadArea" class="upload-area">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3 data-i18n="uploadText">拖放圖片到此處或點擊上傳</h3>
+                            <p data-i18n="uploadHint">支援 PNG, JPG, WebP</p>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/png, image/jpeg, image/webp" hidden>
+                    </div>
+
+                    <div id="previewArea" class="preview-area" style="display: none;">
+                        <div class="canvas-container">
+                            <canvas id="outputCanvas"></canvas>
+                            <div id="processingOverlay" class="processing-overlay" style="display: none;">
+                                <div class="spinner"></div>
+                                <span data-i18n="processing">處理中...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="tool-info">
+                <span data-i18n="toolNumber">工具 #049</span>
+                <span class="separator">|</span>
+                <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+            </div>
+            <div class="copyright">
+                Awesome AI Local Tools © 2024
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>
