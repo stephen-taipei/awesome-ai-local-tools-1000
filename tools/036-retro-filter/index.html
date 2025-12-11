@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Filter | 復古濾鏡</title>
+    <meta name="description" content="Apply retro and vintage filters to your photos. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">復古濾鏡</h1>
+            <p class="subtitle" data-i18n="subtitle">套用復古、懷舊色調效果，重現經典風格</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">🎞️</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="editor-layout">
+                    <!-- Canvas Section -->
+                    <div class="canvas-section">
+                        <canvas id="previewCanvas"></canvas>
+                        <div class="canvas-info">
+                            <span data-i18n="originalSize">原始尺寸</span>:
+                            <span id="originalSize">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Controls Section -->
+                    <div class="controls-section">
+                        <h3 data-i18n="filters">濾鏡選擇</h3>
+
+                        <!-- Filter Presets -->
+                        <div class="filter-grid" id="filterGrid">
+                            <button class="filter-btn active" data-filter="none">
+                                <span class="filter-name" data-i18n="filterNone">原圖</span>
+                            </button>
+                            <button class="filter-btn" data-filter="sepia">
+                                <span class="filter-name" data-i18n="filterSepia">懷舊</span>
+                            </button>
+                            <button class="filter-btn" data-filter="grayscale">
+                                <span class="filter-name" data-i18n="filterBW">黑白</span>
+                            </button>
+                            <button class="filter-btn" data-filter="vintage">
+                                <span class="filter-name" data-i18n="filterVintage">復古</span>
+                            </button>
+                            <button class="filter-btn" data-filter="kodak">
+                                <span class="filter-name" data-i18n="filterKodak">柯達</span>
+                            </button>
+                            <button class="filter-btn" data-filter="polaroid">
+                                <span class="filter-name" data-i18n="filterPolaroid">拍立得</span>
+                            </button>
+                            <button class="filter-btn" data-filter="fuji">
+                                <span class="filter-name" data-i18n="filterFuji">富士</span>
+                            </button>
+                            <button class="filter-btn" data-filter="cyberpunk">
+                                <span class="filter-name" data-i18n="filterCyberpunk">賽博龐克</span>
+                            </button>
+                        </div>
+
+                        <!-- Adjustments -->
+                        <div class="adjustments-section">
+                            <h3 data-i18n="adjustments">細節調整</h3>
+
+                            <div class="control-group">
+                                <label data-i18n="intensity">濾鏡強度</label>
+                                <div class="slider-with-input">
+                                    <input type="range" id="intensitySlider" min="0" max="100" value="100">
+                                    <span id="intensityValue">100%</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label data-i18n="brightness">亮度</label>
+                                <div class="slider-with-input">
+                                    <input type="range" id="brightnessSlider" min="-100" max="100" value="0">
+                                    <span id="brightnessValue">0</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label data-i18n="contrast">對比度</label>
+                                <div class="slider-with-input">
+                                    <input type="range" id="contrastSlider" min="-100" max="100" value="0">
+                                    <span id="contrastValue">0</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label data-i18n="grain">顆粒感</label>
+                                <div class="slider-with-input">
+                                    <input type="range" id="grainSlider" min="0" max="100" value="0">
+                                    <span id="grainValue">0</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label data-i18n="vignette">暗角</label>
+                                <div class="slider-with-input">
+                                    <input type="range" id="vignetteSlider" min="0" max="100" value="0">
+                                    <span id="vignetteValue">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">重設</button>
+                            <button id="downloadBtn" class="btn btn-primary" data-i18n="download">下載結果</button>
+                        </div>
+
+                        <button id="newImageBtn" class="btn btn-outline" data-i18n="newImage">選擇新圖片</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Use Cases -->
+        <section class="use-cases-section">
+            <h2 data-i18n="useCases">使用場景</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <span class="use-case-icon">📸</span>
+                    <span data-i18n="useCaseSocial">社群媒體復古風格</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🕰️</span>
+                    <span data-i18n="useCaseMemory">重現老照片質感</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🎨</span>
+                    <span data-i18n="useCaseArt">藝術創作與設計</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #036</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <!-- Shaders -->
+    <script id="vs" type="x-shader/x-vertex">
+        attribute vec2 position;
+        attribute vec2 texCoord;
+        varying vec2 vTexCoord;
+        void main() {
+            gl_Position = vec4(position, 0.0, 1.0);
+            vTexCoord = texCoord;
+        }
+    </script>
+
+    <script id="fs" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform sampler2D uImage;
+        uniform float uIntensity;
+        uniform float uBrightness;
+        uniform float uContrast;
+        uniform float uGrain;
+        uniform float uVignette;
+        uniform int uFilterType; // 0:None, 1:Sepia, 2:BW, 3:Vintage, 4:Kodak, 5:Polaroid, 6:Fuji, 7:Cyberpunk
+        uniform float uTime;
+        varying vec2 vTexCoord;
+
+        // Random function for grain
+        float rand(vec2 co) {
+            return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+        }
+
+        vec3 adjustBrightnessContrast(vec3 color, float brightness, float contrast) {
+            color += brightness;
+            color = (color - 0.5) * (1.0 + contrast) + 0.5;
+            return color;
+        }
+
+        vec3 applySepia(vec3 color) {
+            vec3 sepiaColor;
+            sepiaColor.r = dot(color, vec3(0.393, 0.769, 0.189));
+            sepiaColor.g = dot(color, vec3(0.349, 0.686, 0.168));
+            sepiaColor.b = dot(color, vec3(0.272, 0.534, 0.131));
+            return sepiaColor;
+        }
+
+        vec3 applyBW(vec3 color) {
+            float gray = dot(color, vec3(0.299, 0.587, 0.114));
+            return vec3(gray);
+        }
+
+        vec3 applyVintage(vec3 color) {
+            vec3 c = color;
+            c.r *= 1.2;
+            c.g *= 0.9;
+            c.b *= 0.8;
+            c = adjustBrightnessContrast(c, 0.1, 0.1);
+            return mix(color, c, 1.0);
+        }
+
+        vec3 applyKodak(vec3 color) {
+            vec3 c = color;
+            c.r = pow(c.r, 1.1);
+            c.g = pow(c.g, 1.1);
+            c.b = pow(c.b, 1.2);
+            c = adjustBrightnessContrast(c, 0.0, 0.2);
+            return c;
+        }
+
+        vec3 applyPolaroid(vec3 color) {
+            vec3 c = color;
+            c.r = pow(c.r, 0.9);
+            c.g = pow(c.g, 1.0);
+            c.b = pow(c.b, 1.2); // More blue
+            c = adjustBrightnessContrast(c, 0.1, -0.1); // Low contrast
+            return c;
+        }
+
+        vec3 applyFuji(vec3 color) {
+            vec3 c = color;
+            c.r = pow(c.r, 1.05);
+            c.g = pow(c.g, 0.95); // More green
+            c.b = pow(c.b, 1.05);
+            c = adjustBrightnessContrast(c, 0.05, 0.1);
+            return c;
+        }
+
+        vec3 applyCyberpunk(vec3 color) {
+            vec3 c = color;
+            c.r = pow(c.r, 0.8); // More red
+            c.b = pow(c.b, 0.8); // More blue
+            c.g *= 0.8;
+            c = adjustBrightnessContrast(c, 0.0, 0.3);
+            return c;
+        }
+
+        void main() {
+            vec4 original = texture2D(uImage, vTexCoord);
+            vec3 color = original.rgb;
+
+            // Apply Base Filter
+            vec3 filtered = color;
+            if (uFilterType == 1) filtered = applySepia(color);
+            else if (uFilterType == 2) filtered = applyBW(color);
+            else if (uFilterType == 3) filtered = applyVintage(color);
+            else if (uFilterType == 4) filtered = applyKodak(color);
+            else if (uFilterType == 5) filtered = applyPolaroid(color);
+            else if (uFilterType == 6) filtered = applyFuji(color);
+            else if (uFilterType == 7) filtered = applyCyberpunk(color);
+
+            // Mix with original based on intensity
+            color = mix(color, filtered, uIntensity);
+
+            // Brightness and Contrast
+            color = adjustBrightnessContrast(color, uBrightness, uContrast);
+
+            // Grain
+            if (uGrain > 0.0) {
+                float noise = rand(vTexCoord * uTime) * uGrain;
+                color += noise - (uGrain * 0.5);
+            }
+
+            // Vignette
+            if (uVignette > 0.0) {
+                vec2 coord = vTexCoord - 0.5;
+                float dist = length(coord);
+                float vignette = smoothstep(0.8, 0.3, dist * (1.0 + uVignette));
+                color *= vignette;
+            }
+
+            gl_FragColor = vec4(color, original.a);
+        }
+    </script>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

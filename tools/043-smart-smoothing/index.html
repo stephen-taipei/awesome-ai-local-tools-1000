@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Smoothing | 智慧磨皮</title>
+    <meta name="description" content="Intelligent skin smoothing while preserving texture details. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">智慧磨皮</h1>
+            <p class="subtitle" data-i18n="subtitle">保留皮膚紋理的智慧磨皮，讓肌膚看起來自然無瑕</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">💧</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="editor-layout">
+                    <!-- Canvas Section -->
+                    <div class="canvas-section">
+                        <canvas id="previewCanvas"></canvas>
+                        <div class="canvas-info">
+                            <span data-i18n="originalSize">原始尺寸</span>:
+                            <span id="originalSize">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Controls Section -->
+                    <div class="controls-section">
+                        <h3 data-i18n="settings">磨皮設定</h3>
+
+                        <!-- Strength -->
+                        <div class="control-group">
+                            <label data-i18n="strength">磨皮強度</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="strengthSlider" min="0" max="100" value="50">
+                                <span id="strengthValue">50%</span>
+                            </div>
+                            <p class="help-text" data-i18n="strengthHelp">控制模糊程度，數值越高皮膚越光滑</p>
+                        </div>
+
+                        <!-- Texture -->
+                        <div class="control-group">
+                            <label data-i18n="texture">紋理保留</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="textureSlider" min="0" max="100" value="70">
+                                <span id="textureValue">70%</span>
+                            </div>
+                            <p class="help-text" data-i18n="textureHelp">控制細節保留程度，避免過度模糊</p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button id="compareBtn" class="btn btn-secondary" data-i18n="compare">按住對比</button>
+                            <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">重設</button>
+                            <button id="downloadBtn" class="btn btn-primary" data-i18n="download">下載結果</button>
+                        </div>
+
+                        <button id="newImageBtn" class="btn btn-outline" data-i18n="newImage">選擇新圖片</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Use Cases -->
+        <section class="use-cases-section">
+            <h2 data-i18n="useCases">使用場景</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <span class="use-case-icon">📸</span>
+                    <span data-i18n="useCasePortrait">人像攝影</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">💄</span>
+                    <span data-i18n="useCaseMakeup">美妝展示</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">✨</span>
+                    <span data-i18n="useCaseRestore">老照片修飾</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #043</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <!-- OpenCV.js -->
+    <script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

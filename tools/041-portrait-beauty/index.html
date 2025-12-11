@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portrait Beauty | AI 人像美化</title>
+    <meta name="description" content="AI-powered portrait beautification. Skin smoothing, whitening, and face slimming. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 人像美化</h1>
+            <p class="subtitle" data-i18n="subtitle">智慧美顏，包含磨皮、美白、瘦臉等功能</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">✨</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="editor-layout">
+                    <!-- Canvas Section -->
+                    <div class="canvas-section">
+                        <canvas id="previewCanvas"></canvas>
+                        <div class="canvas-info">
+                            <span data-i18n="originalSize">原始尺寸</span>:
+                            <span id="originalSize">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Controls Section -->
+                    <div class="controls-section">
+                        <h3 data-i18n="beautySettings">美顏設定</h3>
+
+                        <!-- Skin Smoothing -->
+                        <div class="control-group">
+                            <label data-i18n="smoothing">磨皮程度</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="smoothingSlider" min="0" max="100" value="50">
+                                <span id="smoothingValue">50%</span>
+                            </div>
+                        </div>
+
+                        <!-- Whitening -->
+                        <div class="control-group">
+                            <label data-i18n="whitening">美白程度</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="whiteningSlider" min="0" max="100" value="30">
+                                <span id="whiteningValue">30%</span>
+                            </div>
+                        </div>
+
+                        <!-- Sharpening -->
+                        <div class="control-group">
+                            <label data-i18n="sharpening">清晰度</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="sharpeningSlider" min="0" max="100" value="20">
+                                <span id="sharpeningValue">20%</span>
+                            </div>
+                        </div>
+
+                        <!-- Face Slimming (Future) -->
+                        <div class="control-group disabled" title="Coming soon with WebGPU models">
+                            <label data-i18n="slimming">瘦臉 (即將推出)</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="slimmingSlider" min="0" max="100" value="0" disabled>
+                                <span id="slimmingValue">0%</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button id="compareBtn" class="btn btn-secondary" data-i18n="compare">按住對比</button>
+                            <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">重設</button>
+                            <button id="downloadBtn" class="btn btn-primary" data-i18n="download">下載結果</button>
+                        </div>
+
+                        <button id="newImageBtn" class="btn btn-outline" data-i18n="newImage">選擇新圖片</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Use Cases -->
+        <section class="use-cases-section">
+            <h2 data-i18n="useCases">使用場景</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <span class="use-case-icon">🤳</span>
+                    <span data-i18n="useCaseSelfie">自拍美化</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">👩‍💼</span>
+                    <span data-i18n="useCaseProfile">個人頭像優化</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">📸</span>
+                    <span data-i18n="useCasePhoto">人像攝影後製</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #041</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <!-- OpenCV.js for Image Processing -->
+    <script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

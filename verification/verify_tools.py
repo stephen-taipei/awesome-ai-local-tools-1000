@@ -1,46 +1,43 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 import os
 
-def run(playwright):
-    browser = playwright.chromium.launch()
-    page = browser.new_page()
+def run():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context()
+        page = context.new_page()
 
-    # List of tools to verify
-    tools = [
-        ("053-scene-recognition", "AI Scene Recognition"),
-        ("049-expression-editing", "AI Expression Editor"),
-        ("048-portrait-anime", "Portrait to Anime"),
-        ("047-age-transformation", "Age Transformation"),
-        ("046-virtual-makeup", "Virtual Makeup"),
-        ("045-hair-color", "Hair Color Changer"),
-        ("044-skin-tone", "Skin Tone Adjustment")
-    ]
+        # Tools to verify
+        tools = [
+            '036-retro-filter',
+            '041-portrait-beauty',
+            '043-smart-smoothing',
+            '050-portrait-id-photo',
+            '054-color-analysis',
+            '055-image-quality',
+            '056-exif-reader'
+        ]
 
-    base_path = os.getcwd()
+        cwd = os.getcwd()
 
-    for tool_id, title in tools:
-        print(f"Verifying {title}...")
-        url = f"file://{base_path}/tools/{tool_id}/index.html"
-        try:
-            page.goto(url)
-            page.wait_for_load_state("networkidle")
+        for tool in tools:
+            try:
+                url = f"file://{cwd}/tools/{tool}/index.html"
+                print(f"Verifying {tool} at {url}")
+                page.goto(url)
 
-            # Verify title
-            page_title = page.title()
-            # Loose check
-            if title.lower() not in page_title.lower():
-                 # Some might have "AI" prefix or not
-                 pass
+                # Wait for title to ensure load
+                expect(page).not_to_have_title("")
 
-            # Take screenshot
-            screenshot_path = f"verification/{tool_id}.png"
-            page.screenshot(path=screenshot_path)
-            print(f"Screenshot saved to {screenshot_path}")
+                # Take screenshot
+                screenshot_path = f"verification/{tool}.png"
+                page.screenshot(path=screenshot_path)
+                print(f"Screenshot saved to {screenshot_path}")
 
-        except Exception as e:
-            print(f"Error verifying {tool_id}: {e}")
+            except Exception as e:
+                print(f"Error verifying {tool}: {e}")
 
-    browser.close()
+        browser.close()
 
-with sync_playwright() as playwright:
-    run(playwright)
+if __name__ == "__main__":
+    run()
