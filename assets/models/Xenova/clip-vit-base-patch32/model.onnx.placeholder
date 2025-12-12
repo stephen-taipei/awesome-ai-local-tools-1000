@@ -1,0 +1,7 @@
+PLACEHOLDER
+Please download the model files from:
+https://huggingface.co/Xenova/clip-vit-base-patch32/resolve/main/vision_model.onnx
+https://huggingface.co/Xenova/clip-vit-base-patch32/resolve/main/text_model.onnx
+https://huggingface.co/Xenova/clip-vit-base-patch32/resolve/main/logit_scale.npy (if needed)
+
+Save them to this directory.

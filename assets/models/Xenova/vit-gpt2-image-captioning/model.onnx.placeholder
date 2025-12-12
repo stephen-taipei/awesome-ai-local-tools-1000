@@ -1,0 +1,7 @@
+PLACEHOLDER
+Please download the model files from:
+https://huggingface.co/Xenova/vit-gpt2-image-captioning/resolve/main/encoder_model.onnx
+https://huggingface.co/Xenova/vit-gpt2-image-captioning/resolve/main/decoder_model.onnx
+https://huggingface.co/Xenova/vit-gpt2-image-captioning/resolve/main/decoder_with_past_model.onnx
+
+Save them to this directory.

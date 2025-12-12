@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Quality Assessment | 圖片品質評估</title>
+    <meta name="description" content="Analyze image quality (sharpness, exposure, noise) using local algorithms.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">圖片品質評估</h1>
+            <p class="subtitle" data-i18n="subtitle">AI 評估圖片品質分數（清晰度、曝光、構圖）</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">📊</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
+            </div>
+
+            <!-- Analysis Area -->
+            <div class="analysis-area" id="analysisArea" style="display: none;">
+                <div class="analysis-layout">
+                    <!-- Image Section -->
+                    <div class="image-section">
+                        <canvas id="previewCanvas"></canvas>
+                        <div class="image-info">
+                            <span data-i18n="resolution">解析度</span>: <span id="resolutionVal">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Scores Section -->
+                    <div class="scores-section">
+                        <div class="overall-score">
+                            <div class="score-circle">
+                                <span id="totalScore">0</span>
+                                <span class="score-label" data-i18n="overall">總分</span>
+                            </div>
+                            <div class="score-grade" id="scoreGrade">-</div>
+                        </div>
+
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <span class="metric-icon">👁️</span>
+                                    <span data-i18n="sharpness">清晰度</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="sharpnessBar" style="width: 0%"></div>
+                                </div>
+                                <span class="metric-value" id="sharpnessVal">0</span>
+                                <p class="metric-desc" id="sharpnessDesc">-</p>
+                            </div>
+
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <span class="metric-icon">☀️</span>
+                                    <span data-i18n="exposure">曝光度</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="exposureBar" style="width: 0%"></div>
+                                </div>
+                                <span class="metric-value" id="exposureVal">0</span>
+                                <p class="metric-desc" id="exposureDesc">-</p>
+                            </div>
+
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <span class="metric-icon">🌗</span>
+                                    <span data-i18n="contrast">對比度</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="contrastBar" style="width: 0%"></div>
+                                </div>
+                                <span class="metric-value" id="contrastVal">0</span>
+                                <p class="metric-desc" id="contrastDesc">-</p>
+                            </div>
+
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <span class="metric-icon">🎨</span>
+                                    <span data-i18n="saturation">飽和度</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="saturationBar" style="width: 0%"></div>
+                                </div>
+                                <span class="metric-value" id="saturationVal">0</span>
+                                <p class="metric-desc" id="saturationDesc">-</p>
+                            </div>
+                        </div>
+
+                        <!-- Recommendations -->
+                        <div class="recommendations">
+                            <h3 data-i18n="suggestions">改善建議</h3>
+                            <ul id="suggestionList">
+                                <!-- Generated via JS -->
+                            </ul>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="newImageBtn" class="btn btn-secondary" data-i18n="newImage">選擇新圖片</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #055</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <!-- OpenCV.js -->
+    <script async src="../../assets/js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

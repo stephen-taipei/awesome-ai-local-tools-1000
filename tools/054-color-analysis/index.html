@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Analysis | 顏色分析</title>
+    <meta name="description" content="Analyze image colors and generate palettes. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">顏色分析</h1>
+            <p class="subtitle" data-i18n="subtitle">分析圖片主要顏色、色調分布，生成配色方案</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">🎨</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
+            </div>
+
+            <!-- Analysis Area -->
+            <div class="analysis-area" id="analysisArea" style="display: none;">
+                <div class="analysis-layout">
+                    <!-- Image Section -->
+                    <div class="image-section">
+                        <img id="previewImage" alt="Preview">
+                        <div class="image-info">
+                            <span data-i18n="originalSize">原始尺寸</span>:
+                            <span id="originalSize">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Result Section -->
+                    <div class="result-section">
+                        <!-- Dominant Color -->
+                        <div class="result-group">
+                            <h3 data-i18n="dominantColor">主要顏色</h3>
+                            <div class="color-card" id="dominantColorCard">
+                                <div class="color-preview" id="dominantColorPreview"></div>
+                                <div class="color-info">
+                                    <span class="color-hex" id="dominantColorHex">#FFFFFF</span>
+                                    <span class="color-rgb" id="dominantColorRgb">rgb(255, 255, 255)</span>
+                                </div>
+                                <button class="copy-btn" data-target="dominantColorHex" title="Copy">📋</button>
+                            </div>
+                        </div>
+
+                        <!-- Palette -->
+                        <div class="result-group">
+                            <div class="group-header">
+                                <h3 data-i18n="palette">配色方案</h3>
+                                <select id="paletteCount" class="select-input">
+                                    <option value="5">5 Colors</option>
+                                    <option value="8">8 Colors</option>
+                                    <option value="12">12 Colors</option>
+                                </select>
+                            </div>
+                            <div class="palette-grid" id="paletteGrid">
+                                <!-- Palette items -->
+                            </div>
+                        </div>
+
+                        <!-- Histogram (Simplified) -->
+                        <div class="result-group">
+                            <h3 data-i18n="colorDistribution">色彩分布</h3>
+                            <div class="distribution-bars">
+                                <div class="dist-bar red" id="distRed" style="width: 33%"></div>
+                                <div class="dist-bar green" id="distGreen" style="width: 33%"></div>
+                                <div class="dist-bar blue" id="distBlue" style="width: 33%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="action-buttons">
+                            <button id="downloadPaletteBtn" class="btn btn-primary" data-i18n="downloadPalette">下載配色卡</button>
+                            <button id="newImageBtn" class="btn btn-secondary" data-i18n="newImage">選擇新圖片</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Use Cases -->
+        <section class="use-cases-section">
+            <h2 data-i18n="useCases">使用場景</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <span class="use-case-icon">🖌️</span>
+                    <span data-i18n="useCaseDesign">UI/UX 設計配色</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">👗</span>
+                    <span data-i18n="useCaseFashion">服裝搭配分析</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🖼️</span>
+                    <span data-i18n="useCaseArt">藝術風格研究</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #054</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <!-- Color Thief -->
+    <script src="../../assets/js/color-thief.umd.js"></script>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

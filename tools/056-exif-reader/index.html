@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXIF Info Reader | EXIF 資訊讀取</title>
+    <meta name="description" content="Read and display image EXIF metadata locally.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">EXIF 資訊讀取</h1>
+            <p class="subtitle" data-i18n="subtitle">讀取並顯示圖片 EXIF 後設資料，包含相機參數、GPS 等</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/jpeg,image/tiff,image/webp,image/heic" hidden>
+                <div class="upload-icon">ℹ️</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG, TIFF, WebP, HEIC</p>
+            </div>
+
+            <!-- Result Area -->
+            <div class="result-area" id="resultArea" style="display: none;">
+                <div class="result-layout">
+                    <!-- Image Preview -->
+                    <div class="image-preview">
+                        <img id="previewImage" alt="Preview">
+                        <div class="image-meta" id="basicMeta">
+                            <!-- Basic info -->
+                        </div>
+                    </div>
+
+                    <!-- EXIF Data -->
+                    <div class="exif-data">
+                        <div class="data-group">
+                            <h3 data-i18n="cameraInfo">相機資訊</h3>
+                            <table class="data-table" id="cameraTable">
+                                <!-- Generated -->
+                            </table>
+                        </div>
+
+                        <div class="data-group">
+                            <h3 data-i18n="shootInfo">拍攝參數</h3>
+                            <table class="data-table" id="shootTable">
+                                <!-- Generated -->
+                            </table>
+                        </div>
+
+                        <div class="data-group">
+                            <h3 data-i18n="gpsInfo">GPS 位置</h3>
+                            <table class="data-table" id="gpsTable">
+                                <!-- Generated -->
+                            </table>
+                            <div id="mapLink" class="map-link" style="display:none;">
+                                <a href="#" target="_blank" data-i18n="viewMap">在地圖上查看</a>
+                            </div>
+                        </div>
+
+                        <div class="data-group">
+                            <h3 data-i18n="otherInfo">其他資訊</h3>
+                             <table class="data-table" id="otherTable">
+                                <!-- Generated -->
+                            </table>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="downloadJsonBtn" class="btn btn-primary" data-i18n="downloadJson">下載 JSON</button>
+                            <button id="newImageBtn" class="btn btn-secondary" data-i18n="newImage">選擇新圖片</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #056</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

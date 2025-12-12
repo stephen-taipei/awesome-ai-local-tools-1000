@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Format Converter | 圖片格式轉換</title>
+    <meta name="description" content="Convert images between PNG, JPG, WebP formats locally.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">圖片格式轉換</h1>
+            <p class="subtitle" data-i18n="subtitle">在 PNG、JPG、WebP 等格式間轉換，完全本地處理</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <div class="upload-icon">🔄</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援多種圖片格式</p>
+            </div>
+
+            <!-- Result Area -->
+            <div class="result-area" id="resultArea" style="display: none;">
+                <div class="result-layout">
+                    <div class="image-box">
+                        <h3 data-i18n="preview">預覽</h3>
+                        <img id="previewImage" alt="Preview">
+                        <p id="fileInfo">-</p>
+                    </div>
+
+                    <div class="controls-box">
+                        <h3 data-i18n="settings">轉換設定</h3>
+
+                        <div class="control-group">
+                            <label data-i18n="format">目標格式</label>
+                            <div class="format-options">
+                                <button class="format-btn active" data-format="image/png">PNG</button>
+                                <button class="format-btn" data-format="image/jpeg">JPG</button>
+                                <button class="format-btn" data-format="image/webp">WebP</button>
+                            </div>
+                        </div>
+
+                        <div class="control-group" id="qualityGroup" style="display: none;">
+                            <label data-i18n="quality">品質</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="qualitySlider" min="1" max="100" value="92">
+                                <span id="qualityValue">92%</span>
+                            </div>
+                        </div>
+
+                        <button id="convertBtn" class="btn btn-primary" data-i18n="convert">下載轉換後的圖片</button>
+                        <button id="newImageBtn" class="btn btn-outline" data-i18n="newImage">選擇新圖片</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #061</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
