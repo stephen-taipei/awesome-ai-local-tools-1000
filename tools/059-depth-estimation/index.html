@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depth Estimation | 深度估計</title>
+    <meta name="description" content="Estimate depth map from a single image using AI. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">深度估計</h1>
+            <p class="subtitle" data-i18n="subtitle">從單張圖片估計深度資訊，生成深度圖</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Model Status -->
+            <div class="model-status">
+                <div class="status-indicator" id="statusIndicator"></div>
+                <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+                <button class="btn btn-sm" id="loadModelBtn" data-i18n="loadModel">載入模型</button>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="comparison-layout">
+                <div class="image-box">
+                    <h3 data-i18n="original">原圖</h3>
+                    <div class="upload-area small" id="uploadArea">
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                        <div class="preview-container" id="previewContainer">
+                            <span class="placeholder">+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-box">
+                    <div class="arrow">➡️</div>
+                    <button id="processBtn" class="btn btn-primary" disabled data-i18n="process">生成深度圖</button>
+                </div>
+
+                <div class="image-box">
+                    <h3 data-i18n="depthMap">深度圖</h3>
+                    <div class="result-container">
+                        <canvas id="resultCanvas"></canvas>
+                        <div class="download-overlay">
+                            <button id="downloadBtn" class="btn btn-sm" disabled data-i18n="download">下載</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Use Cases -->
+        <section class="use-cases-section">
+            <h2 data-i18n="useCases">使用場景</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <span class="use-case-icon">🧊</span>
+                    <span data-i18n="useCase3D">3D 重建輔助</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">📷</span>
+                    <span data-i18n="useCaseBokeh">人像景深模擬</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🎮</span>
+                    <span data-i18n="useCaseAR">AR 特效遮擋</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #059</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

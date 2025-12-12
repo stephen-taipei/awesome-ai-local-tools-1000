@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Attribute Analysis | 人臉屬性分析</title>
+    <meta name="description" content="Analyze age, gender, and expressions from photos locally.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">人臉屬性分析</h1>
+            <p class="subtitle" data-i18n="subtitle">分析人臉屬性（年齡、性別、情緒），完全本地運算</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Model Status -->
+            <div class="model-status">
+                <div class="status-indicator" id="statusIndicator"></div>
+                <span id="statusText" data-i18n="loadingModels">載入模型中...</span>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">😊</div>
+                <p class="upload-text" data-i18n="uploadText">上傳照片</p>
+                <p class="upload-hint" data-i18n="uploadHint">請確保照片中包含清晰的人臉</p>
+            </div>
+
+            <!-- Result Area -->
+            <div class="result-area" id="resultArea" style="display: none;">
+                <div class="canvas-wrapper">
+                    <img id="image" />
+                    <canvas id="overlay"></canvas>
+                </div>
+
+                <div class="attributes-list" id="attributesList">
+                    <!-- Results will be injected here -->
+                </div>
+
+                <div class="action-buttons">
+                    <button id="newImageBtn" class="btn btn-primary" data-i18n="newImage">選擇新圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Use Cases -->
+        <section class="use-cases-section">
+            <h2 data-i18n="useCases">使用場景</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <span class="use-case-icon">📊</span>
+                    <span data-i18n="useCaseDemographics">客群分析</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🎭</span>
+                    <span data-i18n="useCaseEmotion">情緒辨識研究</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🧪</span>
+                    <span data-i18n="useCaseFun">趣味年齡測試</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #057</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <!-- face-api.js -->
+    <script src="../../assets/js/face-api.min.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

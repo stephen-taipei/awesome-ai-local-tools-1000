@@ -1,0 +1,7 @@
+PLACEHOLDER
+Please download the model file from:
+https://huggingface.co/Xenova/depth-anything-small-hf/resolve/main/model.onnx
+or
+https://huggingface.co/Xenova/depth-anything-small-hf/resolve/main/model_quantized.onnx (rename to model.onnx if using that)
+
+Save it to this directory as 'model.onnx'.
