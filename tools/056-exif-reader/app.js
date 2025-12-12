@@ -148,7 +148,7 @@ async function processFile(file) {
 
     // Read EXIF
     try {
-        const { default: exifr } = await import('https://cdn.jsdelivr.net/npm/exifr/dist/full.esm.mjs');
+        const { default: exifr } = await import('../../assets/js/exifr.full.esm.mjs');
         exifData = await exifr.parse(file, { tiff: true, xmp: true, icc: true, iptc: true, jfif: true, ihdr: true });
 
         displayData(exifData, file);

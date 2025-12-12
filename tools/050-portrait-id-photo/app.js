@@ -198,15 +198,18 @@ async function loadModel() {
 
     try {
         const { AutoModel, AutoProcessor, env, RawImage } = await import(
-            'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2'
+            '../../assets/js/transformers.js'
         );
 
-        env.allowLocalModels = false;
-        env.useBrowserCache = true;
+        // Configure local environment
+        env.allowLocalModels = true;
+        env.useBrowserCache = false; // Local files don't need cache
+        env.backends.onnx.wasm.wasmPaths = '../../assets/js/';
 
         window.RawImage = RawImage;
 
-        const modelId = 'briaai/RMBG-1.4';
+        // Path to local model
+        const modelId = '../../assets/models/briaai/RMBG-1.4';
 
         state.processor = await AutoProcessor.from_pretrained(modelId, {
             progress_callback: (progress) => {

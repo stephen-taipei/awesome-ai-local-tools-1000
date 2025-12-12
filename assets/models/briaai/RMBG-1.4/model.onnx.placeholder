@@ -1,0 +1,5 @@
+PLACEHOLDER
+Please download the model file from:
+https://huggingface.co/briaai/RMBG-1.4/resolve/main/model.onnx
+and save it to this directory as 'model.onnx'.
+File size is approx 176MB.

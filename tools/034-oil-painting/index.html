@@ -1,81 +1,223 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oil Painting Effect - AI Local Tools</title>
-    <link rel="stylesheet" href="../style.css">
-    <style>
-        .preview-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-        .preview-box {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
-        }
-        canvas {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        .controls {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f5f5f5;
-            border-radius: 8px;
-        }
-        .control-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-    </style>
+    <title>Oil Painting Effect | 油畫效果</title>
+    <meta name="description" content="Turn your photos into oil paintings using local GPU acceleration.">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Oil Painting Effect</h1>
-            <p>Transform your photos into oil paintings entirely in your browser.</p>
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">油畫效果</h1>
+            <p class="subtitle" data-i18n="subtitle">將照片轉換為油畫風格，支援即時預覽與調整</p>
         </header>
 
-        <main>
-            <div class="upload-section">
-                <input type="file" id="imageInput" accept="image/*">
-                <label for="imageInput" class="button">Choose Image</label>
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <div class="upload-icon">🎨</div>
+                <p class="upload-text" data-i18n="uploadText">點擊或拖放圖片到這裡</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 JPG、PNG、WebP 格式</p>
             </div>
 
-            <div class="controls">
-                <div class="control-group">
-                    <label for="radius">Radius (Brush Size): <span id="radiusValue">4</span></label>
-                    <input type="range" id="radius" min="1" max="10" value="4">
-                </div>
-                <div class="control-group">
-                    <label for="intensity">Intensity Levels: <span id="intensityValue">30</span></label>
-                    <input type="range" id="intensity" min="5" max="255" value="30">
-                </div>
-                <button id="processBtn" class="button primary">Apply Oil Painting Effect</button>
-            </div>
+            <!-- Editor Area -->
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="editor-layout">
+                    <!-- Canvas Section -->
+                    <div class="canvas-section">
+                        <canvas id="previewCanvas"></canvas>
+                        <div class="canvas-info">
+                            <span data-i18n="resolution">解析度</span>: <span id="resolutionVal">-</span>
+                        </div>
+                    </div>
 
-            <div class="preview-container">
-                <div class="preview-box">
-                    <h3>Original</h3>
-                    <canvas id="originalCanvas"></canvas>
-                </div>
-                <div class="preview-box">
-                    <h3>Oil Painting</h3>
-                    <canvas id="outputCanvas"></canvas>
+                    <!-- Controls Section -->
+                    <div class="controls-section">
+                        <h3 data-i18n="settings">效果設定</h3>
+
+                        <!-- Radius -->
+                        <div class="control-group">
+                            <label data-i18n="radius">筆觸大小</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="radiusSlider" min="1" max="20" value="4">
+                                <span id="radiusValue">4</span>
+                            </div>
+                            <p class="help-text" data-i18n="radiusHelp">控制油畫筆觸的大小與細節程度</p>
+                        </div>
+
+                        <!-- Intensity -->
+                        <div class="control-group">
+                            <label data-i18n="intensity">色彩層次</label>
+                            <div class="slider-with-input">
+                                <input type="range" id="intensitySlider" min="1" max="50" value="10">
+                                <span id="intensityValue">10</span>
+                            </div>
+                            <p class="help-text" data-i18n="intensityHelp">控制色彩的豐富度與分層</p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">重設</button>
+                            <button id="downloadBtn" class="btn btn-primary" data-i18n="download">下載結果</button>
+                        </div>
+
+                        <button id="newImageBtn" class="btn btn-outline" data-i18n="newImage">選擇新圖片</button>
+                    </div>
                 </div>
             </div>
         </main>
+
+        <!-- Use Cases -->
+        <section class="use-cases-section">
+            <h2 data-i18n="useCases">使用場景</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <span class="use-case-icon">🖼️</span>
+                    <span data-i18n="useCaseArt">藝術創作</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">🎁</span>
+                    <span data-i18n="useCaseGift">個性化禮物</span>
+                </div>
+                <div class="use-case">
+                    <span class="use-case-icon">📱</span>
+                    <span data-i18n="useCaseSocial">社群分享</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../README.md" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #034</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
     </div>
-    <script src="app.js"></script>
+
+    <!-- Shaders -->
+    <script id="vs" type="x-shader/x-vertex">
+        attribute vec2 position;
+        attribute vec2 texCoord;
+        varying vec2 vTexCoord;
+        void main() {
+            gl_Position = vec4(position, 0.0, 1.0);
+            vTexCoord = texCoord;
+        }
+    </script>
+
+    <script id="fs" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform sampler2D uImage;
+        uniform vec2 uResolution;
+        uniform int uRadius;
+        uniform float uIntensityLevel; // Not strictly used in standard Kuwahara but can affect quantization
+
+        varying vec2 vTexCoord;
+
+        void main() {
+            vec2 src_size = uResolution;
+            vec2 uv = vTexCoord;
+            float n = float((uRadius + 1) * (uRadius + 1));
+            int i;
+            int j;
+            vec3 m[4];
+            vec3 s[4];
+            for (int k = 0; k < 4; ++k) {
+                m[k] = vec3(0.0);
+                s[k] = vec3(0.0);
+            }
+
+            // Kuwahara Filter
+            // Loop for 4 quadrants
+            // This is computationally expensive in WebGL for large radius
+
+            // Optimization: Unroll or simplified loops
+            // For radius 4, loop -4 to 0, 0 to 4
+
+            // Region 0: -radius, -radius to 0, 0
+            for (int j = -20; j <= 0; ++j)  {
+                if(j < -uRadius) continue;
+                for (int i = -20; i <= 0; ++i)  {
+                    if(i < -uRadius) continue;
+                    vec3 c = texture2D(uImage, uv + vec2(float(i),float(j)) / src_size).rgb;
+                    m[0] += c;
+                    s[0] += c * c;
+                }
+            }
+
+            // Region 1: 0, -radius to radius, 0
+            for (int j = -20; j <= 0; ++j)  {
+                if(j < -uRadius) continue;
+                for (int i = 0; i <= 20; ++i)  {
+                    if(i > uRadius) continue;
+                    vec3 c = texture2D(uImage, uv + vec2(float(i),float(j)) / src_size).rgb;
+                    m[1] += c;
+                    s[1] += c * c;
+                }
+            }
+
+            // Region 2: 0, 0 to radius, radius
+            for (int j = 0; j <= 20; ++j)  {
+                if(j > uRadius) continue;
+                for (int i = 0; i <= 20; ++i)  {
+                    if(i > uRadius) continue;
+                    vec3 c = texture2D(uImage, uv + vec2(float(i),float(j)) / src_size).rgb;
+                    m[2] += c;
+                    s[2] += c * c;
+                }
+            }
+
+            // Region 3: -radius, 0 to 0, radius
+            for (int j = 0; j <= 20; ++j)  {
+                if(j > uRadius) continue;
+                for (int i = -20; i <= 0; ++i)  {
+                    if(i < -uRadius) continue;
+                    vec3 c = texture2D(uImage, uv + vec2(float(i),float(j)) / src_size).rgb;
+                    m[3] += c;
+                    s[3] += c * c;
+                }
+            }
+
+            float min_sigma2 = 1e+2;
+            vec3 col = vec3(0.0);
+
+            // Find quadrant with min variance
+            for (int k = 0; k < 4; ++k) {
+                m[k] /= n;
+                s[k] = abs(s[k] / n - m[k] * m[k]);
+                float sigma2 = s[k].r + s[k].g + s[k].b;
+                if (sigma2 < min_sigma2) {
+                    min_sigma2 = sigma2;
+                    col = m[k];
+                }
+            }
+
+            // Simple quantization for "Intensity Level"
+            // col = floor(col * uIntensityLevel) / uIntensityLevel;
+
+            gl_FragColor = vec4(col, 1.0);
+        }
+    </script>
+
+    <script type="module" src="app.js"></script>
 </body>
 </html>
