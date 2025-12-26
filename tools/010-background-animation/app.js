@@ -762,7 +762,7 @@ async function exportAnimation() {
             quality: quality,
             width: previewCanvas.width,
             height: previewCanvas.height,
-            workerScript: 'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js'
+            workerScript: '/vendor/gif/gif.worker.js'
         });
 
         // Generate frames
