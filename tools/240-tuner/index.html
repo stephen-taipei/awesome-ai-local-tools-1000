@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuner | 調音器</title>
+    <meta name="description" content="Chromatic tuner for musicians. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>調音器</h1>
+            <p class="subtitle">精準半音階調音器</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="tuner-display">
+                <div class="note-display">
+                    <span id="noteOctave" class="note-octave">4</span>
+                    <span id="noteName" class="note-name">A</span>
+                    <span id="noteAccidental" class="note-accidental"></span>
+                </div>
+                <div class="frequency-display">
+                    <span id="frequency">440.0</span> Hz
+                </div>
+            </div>
+            <div class="meter-section">
+                <div class="meter-labels">
+                    <span>-50</span>
+                    <span>-25</span>
+                    <span>0</span>
+                    <span>+25</span>
+                    <span>+50</span>
+                </div>
+                <div class="meter">
+                    <div class="meter-center"></div>
+                    <div id="meterNeedle" class="meter-needle"></div>
+                </div>
+                <div class="meter-status">
+                    <span id="centsDisplay" class="cents">0 cents</span>
+                </div>
+            </div>
+            <div class="tuning-status" id="tuningStatus">
+                <span class="status-icon">🎯</span>
+                <span class="status-text">等待輸入...</span>
+            </div>
+            <div class="controls-section">
+                <div class="control-group">
+                    <label>A4 標準音高</label>
+                    <div class="a4-control">
+                        <button id="a4Decrease" class="small-btn">−</button>
+                        <span id="a4Value">440</span> Hz
+                        <button id="a4Increase" class="small-btn">+</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>樂器預設</label>
+                    <select id="instrumentSelect">
+                        <option value="chromatic">半音階</option>
+                        <option value="guitar">吉他</option>
+                        <option value="bass">貝斯</option>
+                        <option value="ukulele">烏克麗麗</option>
+                        <option value="violin">小提琴</option>
+                    </select>
+                </div>
+            </div>
+            <div class="action-section">
+                <button id="startBtn" class="btn btn-primary">🎤 開始調音</button>
+            </div>
+            <div class="reference-section">
+                <label>參考音</label>
+                <div class="reference-notes" id="referenceNotes">
+                    <button class="ref-btn" data-note="C4">C4</button>
+                    <button class="ref-btn" data-note="D4">D4</button>
+                    <button class="ref-btn" data-note="E4">E4</button>
+                    <button class="ref-btn" data-note="F4">F4</button>
+                    <button class="ref-btn" data-note="G4">G4</button>
+                    <button class="ref-btn" data-note="A4">A4</button>
+                    <button class="ref-btn" data-note="B4">B4</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #240</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

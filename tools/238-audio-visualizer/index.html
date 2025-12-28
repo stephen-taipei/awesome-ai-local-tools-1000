@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Visualizer | 音訊視覺化</title>
+    <meta name="description" content="Visualize audio with beautiful effects. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊視覺化</h1>
+            <p class="subtitle">將音訊轉化為視覺效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="visualizer-section">
+                <canvas id="visualizer" width="640" height="300"></canvas>
+            </div>
+            <div class="input-section">
+                <div class="input-tabs">
+                    <button id="micTab" class="tab-btn active">🎤 麥克風</button>
+                    <button id="fileTab" class="tab-btn">📁 音訊檔案</button>
+                </div>
+                <div id="micPanel" class="input-panel">
+                    <button id="micBtn" class="btn btn-primary">🎤 開始錄音</button>
+                </div>
+                <div id="filePanel" class="input-panel" style="display:none">
+                    <input type="file" id="audioInput" accept="audio/*" hidden>
+                    <button id="uploadBtn" class="btn btn-secondary">📁 選擇音訊檔案</button>
+                    <audio id="audioPlayer" controls style="display:none; width:100%; margin-top:1rem;"></audio>
+                </div>
+            </div>
+            <div class="controls-section">
+                <div class="control-group">
+                    <label>視覺效果</label>
+                    <select id="modeSelect">
+                        <option value="bars">頻譜條</option>
+                        <option value="wave">波形</option>
+                        <option value="circle">圓形</option>
+                        <option value="particles">粒子</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>顏色主題</label>
+                    <select id="colorSelect">
+                        <option value="rainbow">彩虹</option>
+                        <option value="blue">藍色</option>
+                        <option value="green">綠色</option>
+                        <option value="purple">紫色</option>
+                        <option value="fire">火焰</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>靈敏度</label>
+                    <input type="range" id="sensitivitySlider" min="1" max="10" value="5">
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #238</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

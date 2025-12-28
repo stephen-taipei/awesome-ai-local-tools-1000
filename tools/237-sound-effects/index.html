@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Effects Generator | 音效生成器</title>
+    <meta name="description" content="Generate sound effects locally. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音效生成器</h1>
+            <p class="subtitle">生成各種音效並下載</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="effects-grid" id="effectsGrid"></div>
+            <div class="custom-section">
+                <h3>自訂音效</h3>
+                <div class="custom-controls">
+                    <div class="control-group">
+                        <label>波形</label>
+                        <select id="waveformSelect">
+                            <option value="sine">正弦波</option>
+                            <option value="square">方波</option>
+                            <option value="sawtooth">鋸齒波</option>
+                            <option value="triangle">三角波</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>頻率 (Hz)</label>
+                        <input type="range" id="freqSlider" min="50" max="2000" value="440">
+                        <span id="freqValue">440</span>
+                    </div>
+                    <div class="control-group">
+                        <label>持續時間 (秒)</label>
+                        <input type="range" id="durationSlider" min="0.1" max="3" step="0.1" value="0.5">
+                        <span id="durationValue">0.5</span>
+                    </div>
+                    <div class="control-group">
+                        <label>音量</label>
+                        <input type="range" id="volumeSlider" min="0" max="100" value="50">
+                        <span id="volumeValue">50%</span>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="playCustomBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadCustomBtn" class="btn btn-primary">⬇️ 下載 WAV</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #237</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
