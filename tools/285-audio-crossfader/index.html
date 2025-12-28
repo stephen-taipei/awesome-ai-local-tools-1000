@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Crossfader | 音訊交叉淡化</title>
+    <meta name="description" content="Crossfade between two audio files. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊交叉淡化</h1>
+            <p class="subtitle">將兩個音訊檔案交叉淡化合併</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-row">
+                    <div class="upload-box">
+                        <input type="file" id="audioInput1" accept="audio/*" hidden>
+                        <div class="upload-area" id="uploadArea1">
+                            <div class="upload-icon">🎵</div>
+                            <div class="upload-text">音訊 A</div>
+                            <div class="upload-status" id="status1">點擊上傳</div>
+                        </div>
+                    </div>
+                    <div class="upload-box">
+                        <input type="file" id="audioInput2" accept="audio/*" hidden>
+                        <div class="upload-area" id="uploadArea2">
+                            <div class="upload-icon">🎶</div>
+                            <div class="upload-text">音訊 B</div>
+                            <div class="upload-status" id="status2">點擊上傳</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>淡化時間</label>
+                        <input type="range" id="crossfadeSlider" min="0.5" max="10" step="0.5" value="3">
+                        <span id="crossfadeValue">3.0 秒</span>
+                    </div>
+                    <div class="option-group">
+                        <label>淡化曲線</label>
+                        <select id="curveSelect">
+                            <option value="linear">線性</option>
+                            <option value="equalPower" selected>等功率</option>
+                            <option value="exponential">指數</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>淡化位置</label>
+                        <select id="positionSelect">
+                            <option value="end" selected>A結尾到B開頭</option>
+                            <option value="custom">自訂位置</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #285</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
