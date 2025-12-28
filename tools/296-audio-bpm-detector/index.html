@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio BPM Detector | 音訊節拍偵測</title>
+    <meta name="description" content="Detect BPM from audio files. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊節拍偵測</h1>
+            <p class="subtitle">偵測音訊的BPM（每分鐘節拍數）</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎵</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="bpm-display">
+                    <div class="bpm-label">BPM</div>
+                    <div class="bpm-value" id="bpmValue">---</div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">節奏類型</span>
+                        <span class="info-value" id="tempoType">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">適合舞蹈</span>
+                        <span class="info-value" id="danceType">-</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="playBtn" class="btn btn-secondary">▶️ 播放</button>
+                    <button id="tapBtn" class="btn btn-primary">👆 手動打拍</button>
+                </div>
+                <div class="tap-display" id="tapDisplay" style="display:none">
+                    <p>手動BPM: <span id="tapBpm">---</span></p>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #296</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
