@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Search | 表情符號搜尋</title>
+    <meta name="description" content="Search and copy emojis. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>表情符號搜尋</h1>
+            <p class="subtitle">快速搜尋並複製表情符號</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="search-section">
+                <input type="text" id="searchInput" placeholder="搜尋表情符號（輸入關鍵字如：笑、心、動物...）">
+            </div>
+            <div class="categories">
+                <button class="cat-btn active" data-cat="all">全部</button>
+                <button class="cat-btn" data-cat="smileys">表情</button>
+                <button class="cat-btn" data-cat="people">人物</button>
+                <button class="cat-btn" data-cat="animals">動物</button>
+                <button class="cat-btn" data-cat="food">食物</button>
+                <button class="cat-btn" data-cat="activities">活動</button>
+                <button class="cat-btn" data-cat="objects">物品</button>
+                <button class="cat-btn" data-cat="symbols">符號</button>
+            </div>
+            <div class="emoji-grid" id="emojiGrid"></div>
+            <div class="recent-section" id="recentSection" style="display: none;">
+                <h3>最近使用</h3>
+                <div id="recentEmojis" class="recent-grid"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #191</p>
+        </footer>
+    </div>
+    <div class="toast" id="toast">已複製！</div>
+    <script src="app.js"></script>
+</body>
+</html>

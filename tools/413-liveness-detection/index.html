@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liveness Detection | 活體偵測</title>
+    <meta name="description" content="Detect if face is live or spoofed. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>活體偵測</h1>
+            <p class="subtitle">偵測是否為真人活體</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始偵測</button>
+                <div class="video-container" style="display: none;">
+                    <video id="webcam" autoplay playsinline></video>
+                    <div class="status-overlay" id="statusOverlay">
+                        <div class="status-icon" id="statusIcon">⏳</div>
+                        <div class="status-text" id="statusText">準備中...</div>
+                    </div>
+                </div>
+            </div>
+            <div id="challengeSection" class="challenge-section" style="display: none;">
+                <h3>請完成以下動作</h3>
+                <div class="challenge-list" id="challengeList"></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            <div id="resultSection" class="result-section" style="display: none;">
+                <div class="result-card">
+                    <div class="result-icon" id="resultIcon">--</div>
+                    <div class="result-label" id="resultLabel">--</div>
+                    <div class="result-score" id="resultScore">--</div>
+                </div>
+                <div class="metrics-grid" id="metricsGrid"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #413</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

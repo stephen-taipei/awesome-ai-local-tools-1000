@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to SSML | 文字轉語音標記</title>
+    <meta name="description" content="Convert text to SSML format. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文字轉 SSML</h1>
+            <p class="subtitle">將文字轉換為語音合成標記語言</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入文字</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="textInput" placeholder="輸入要轉換的文字..."></textarea>
+            </div>
+            <div class="options-section">
+                <h3>SSML 選項</h3>
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label>語言</label>
+                        <select id="langSelect">
+                            <option value="zh-TW">繁體中文 (zh-TW)</option>
+                            <option value="zh-CN">簡體中文 (zh-CN)</option>
+                            <option value="en-US">英文 (en-US)</option>
+                            <option value="ja-JP">日文 (ja-JP)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>語速</label>
+                        <select id="rateSelect">
+                            <option value="x-slow">很慢 (x-slow)</option>
+                            <option value="slow">慢 (slow)</option>
+                            <option value="medium" selected>正常 (medium)</option>
+                            <option value="fast">快 (fast)</option>
+                            <option value="x-fast">很快 (x-fast)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>音量</label>
+                        <select id="volumeSelect">
+                            <option value="silent">靜音 (silent)</option>
+                            <option value="x-soft">很小聲 (x-soft)</option>
+                            <option value="soft">小聲 (soft)</option>
+                            <option value="medium" selected>正常 (medium)</option>
+                            <option value="loud">大聲 (loud)</option>
+                            <option value="x-loud">很大聲 (x-loud)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>音調</label>
+                        <select id="pitchSelect">
+                            <option value="x-low">很低 (x-low)</option>
+                            <option value="low">低 (low)</option>
+                            <option value="medium" selected>正常 (medium)</option>
+                            <option value="high">高 (high)</option>
+                            <option value="x-high">很高 (x-high)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="checkbox-options">
+                    <label><input type="checkbox" id="addBreaks"> 在句號後加入停頓</label>
+                    <label><input type="checkbox" id="addEmphasis"> 為引號內文字加強調</label>
+                </div>
+            </div>
+            <button id="convertBtn" class="btn btn-primary btn-block">轉換為 SSML</button>
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <div class="section-header">
+                    <h3>SSML 輸出</h3>
+                    <button id="copyBtn" class="small-btn">複製</button>
+                </div>
+                <pre id="ssmlOutput" class="code-output"></pre>
+                <button id="previewBtn" class="btn btn-secondary btn-block">預覽語音</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #192</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

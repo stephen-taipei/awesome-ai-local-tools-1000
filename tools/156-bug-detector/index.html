@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Detector | 錯誤偵測</title>
+    <meta name="description" content="Detect common bugs and issues in code. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>錯誤偵測</h1>
+            <p class="subtitle">偵測程式碼中的常見錯誤與問題</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>程式碼</label>
+                    <textarea id="codeInput" class="code-field" placeholder="貼上程式碼進行分析..."></textarea>
+                </div>
+                <button id="detectBtn" class="btn btn-primary btn-block">偵測錯誤</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="summary-bar">
+                    <div class="summary-item error">
+                        <span class="count" id="errorCount">0</span>
+                        <span class="label">錯誤</span>
+                    </div>
+                    <div class="summary-item warning">
+                        <span class="count" id="warningCount">0</span>
+                        <span class="label">警告</span>
+                    </div>
+                    <div class="summary-item info">
+                        <span class="count" id="infoCount">0</span>
+                        <span class="label">提示</span>
+                    </div>
+                </div>
+                <div class="bugs-list" id="bugsList"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #156</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

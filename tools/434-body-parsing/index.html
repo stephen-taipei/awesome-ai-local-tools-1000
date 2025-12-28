@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Parsing | 人體分割</title>
+    <meta name="description" content="Segment body parts from image. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>人體分割</h1>
+            <p class="subtitle">分割識別人體各部位</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🧍</div>
+                    <div class="upload-text">上傳人物照片</div>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                </div>
+            </div>
+            <div id="resultSection" class="result-section" style="display: none;">
+                <div class="image-compare">
+                    <div class="image-box">
+                        <h3>原圖</h3>
+                        <canvas id="originalCanvas"></canvas>
+                    </div>
+                    <div class="image-box">
+                        <h3>分割結果</h3>
+                        <canvas id="segmentCanvas"></canvas>
+                    </div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item"><span class="legend-color" style="background:#ff6b6b"></span><span>頭部</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background:#4ecdc4"></span><span>軀幹</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background:#45b7d1"></span><span>手臂</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background:#96ceb4"></span><span>腿部</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background:#ffeaa7"></span><span>手部</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background:#dfe6e9"></span><span>腳部</span></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #434</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

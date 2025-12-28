@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picture in Picture | 子母畫面</title>
+    <meta name="description" content="Create picture-in-picture video. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>子母畫面</h1>
+            <p class="subtitle">建立畫中畫效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-grid">
+                <div class="upload-box">
+                    <h3>主畫面</h3>
+                    <div class="upload-area" id="mainUpload">
+                        <div class="upload-icon">🎬</div>
+                        <div class="upload-text">上傳主影片</div>
+                        <input type="file" id="mainInput" accept="video/*" hidden>
+                    </div>
+                    <video id="mainVideo" style="display:none;" controls></video>
+                </div>
+                <div class="upload-box">
+                    <h3>子畫面</h3>
+                    <div class="upload-area" id="pipUpload">
+                        <div class="upload-icon">📹</div>
+                        <div class="upload-text">上傳子影片</div>
+                        <input type="file" id="pipInput" accept="video/*" hidden>
+                    </div>
+                    <video id="pipVideo" style="display:none;" controls></video>
+                </div>
+            </div>
+            <div class="settings-section" id="settingsSection" style="display: none;">
+                <h3>子畫面設定</h3>
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <label>位置</label>
+                        <div class="position-grid">
+                            <button class="pos-btn" data-pos="top-left">↖</button>
+                            <button class="pos-btn" data-pos="top-right">↗</button>
+                            <button class="pos-btn active" data-pos="bottom-right">↘</button>
+                            <button class="pos-btn" data-pos="bottom-left">↙</button>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label>大小</label>
+                        <select id="pipSize">
+                            <option value="small">小 (15%)</option>
+                            <option value="medium" selected>中 (25%)</option>
+                            <option value="large">大 (35%)</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label>邊框</label>
+                        <select id="pipBorder">
+                            <option value="none">無</option>
+                            <option value="thin" selected>細線</option>
+                            <option value="thick">粗線</option>
+                            <option value="rounded">圓角</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="preview-section" id="previewSection" style="display: none;">
+                <h3>預覽效果</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="previewCanvas"></canvas>
+                </div>
+                <div class="preview-controls">
+                    <button id="playPreviewBtn" class="btn btn-secondary">播放預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">下載畫面</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #309</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

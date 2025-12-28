@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doc Index | 文件索引</title>
+    <meta name="description" content="Generate index and table of contents. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文件索引</h1>
+            <p class="subtitle">自動生成目錄和關鍵詞索引</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入文件</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="textInput" placeholder="輸入 Markdown 格式的文件（使用 # 標記標題）..."></textarea>
+                <button id="generateBtn" class="btn btn-primary btn-block">生成索引</button>
+            </div>
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="toc">目錄</button>
+                    <button class="tab-btn" data-tab="keywords">關鍵詞索引</button>
+                </div>
+                <div class="tab-content active" id="toc-content">
+                    <div id="tocList" class="toc-list"></div>
+                </div>
+                <div class="tab-content" id="keywords-content">
+                    <div id="keywordsList" class="keywords-list"></div>
+                </div>
+                <button id="copyBtn" class="btn btn-secondary btn-block">複製目錄</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #190</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dance Analysis | 舞蹈分析</title>
+    <meta name="description" content="Analyze dance movements and rhythm. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>舞蹈分析</h1>
+            <p class="subtitle">分析舞蹈動作與節奏</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始分析</button>
+            </div>
+            <div id="danceSection" class="dance-section" style="display: none;">
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="danceCanvas"></canvas>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-icon">💃</span>
+                        <span class="stat-value" id="moveCount">0</span>
+                        <span class="stat-label">動作數</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">⚡</span>
+                        <span class="stat-value" id="energy">--</span>
+                        <span class="stat-label">能量</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">🎵</span>
+                        <span class="stat-value" id="tempo">--</span>
+                        <span class="stat-label">BPM</span>
+                    </div>
+                </div>
+                <div class="motion-timeline">
+                    <h3>動作軌跡</h3>
+                    <canvas id="timelineCanvas"></canvas>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #431</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

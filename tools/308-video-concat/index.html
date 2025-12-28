@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Concat | 影片合併</title>
+    <meta name="description" content="Concatenate multiple videos. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>影片合併</h1>
+            <p class="subtitle">將多個影片合併為一個</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎬</div>
+                    <div class="upload-text">拖放影片或點擊上傳</div>
+                    <div class="upload-hint">支援 MP4, WebM 格式</div>
+                    <input type="file" id="fileInput" accept="video/mp4,video/webm" multiple hidden>
+                </div>
+            </div>
+            <div id="videoList" class="video-list" style="display: none;">
+                <div class="section-header">
+                    <h3>影片列表</h3>
+                    <span class="total-duration">總時長: <span id="totalDuration">0:00</span></span>
+                </div>
+                <div id="sortableList" class="sortable-list"></div>
+                <div class="list-hint">拖動調整順序</div>
+            </div>
+            <div id="previewSection" class="preview-section" style="display: none;">
+                <h3>預覽</h3>
+                <video id="previewVideo" controls></video>
+            </div>
+            <div class="actions" id="actions" style="display: none;">
+                <button id="concatBtn" class="btn btn-primary">合併影片</button>
+                <button id="clearBtn" class="btn btn-secondary">清除全部</button>
+            </div>
+            <div id="progressSection" class="progress-section" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">處理中...</div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #308</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Similarity | 人臉相似度</title>
+    <meta name="description" content="Compare face similarity. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>人臉相似度</h1>
+            <p class="subtitle">比較兩張人臉的相似程度</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-grid">
+                <div class="upload-box">
+                    <h3>人臉 A</h3>
+                    <div class="upload-area" id="uploadA">
+                        <div class="upload-icon">👤</div>
+                        <div class="upload-text">上傳照片</div>
+                        <input type="file" id="inputA" accept="image/*" hidden>
+                    </div>
+                    <canvas id="canvasA" style="display: none;"></canvas>
+                </div>
+                <div class="vs-divider">VS</div>
+                <div class="upload-box">
+                    <h3>人臉 B</h3>
+                    <div class="upload-area" id="uploadB">
+                        <div class="upload-icon">👤</div>
+                        <div class="upload-text">上傳照片</div>
+                        <input type="file" id="inputB" accept="image/*" hidden>
+                    </div>
+                    <canvas id="canvasB" style="display: none;"></canvas>
+                </div>
+            </div>
+            <div id="compareBtn" class="compare-btn" style="display: none;">
+                <button id="analyzeBtn" class="btn btn-primary">分析相似度</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display: none;">
+                <div class="similarity-display">
+                    <div class="similarity-circle">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#334155" stroke-width="8"/>
+                            <circle id="progressCircle" cx="50" cy="50" r="45" fill="none" stroke="url(#gradient)" stroke-width="8" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" transform="rotate(-90 50 50)"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#ec4899"/>
+                                    <stop offset="100%" stop-color="#f472b6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="similarity-value" id="similarityValue">0%</div>
+                    </div>
+                    <div class="similarity-label" id="similarityLabel">--</div>
+                </div>
+                <div class="features-comparison" id="featuresComparison"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #415</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

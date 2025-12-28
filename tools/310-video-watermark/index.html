@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Watermark | 影片浮水印</title>
+    <meta name="description" content="Add watermark to video. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>影片浮水印</h1>
+            <p class="subtitle">為影片添加文字或圖片浮水印</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎬</div>
+                    <div class="upload-text">上傳影片</div>
+                    <input type="file" id="videoInput" accept="video/*" hidden>
+                </div>
+                <video id="sourceVideo" style="display:none;"></video>
+            </div>
+            <div id="settingsSection" class="settings-section" style="display: none;">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="text">文字浮水印</button>
+                    <button class="tab-btn" data-tab="image">圖片浮水印</button>
+                </div>
+                <div class="tab-content active" id="text-content">
+                    <div class="setting-row">
+                        <label>浮水印文字</label>
+                        <input type="text" id="watermarkText" value="© 2024" placeholder="輸入文字...">
+                    </div>
+                    <div class="setting-row">
+                        <label>字體大小</label>
+                        <input type="range" id="fontSize" min="12" max="72" value="24">
+                        <span id="fontSizeValue">24px</span>
+                    </div>
+                    <div class="setting-row">
+                        <label>顏色</label>
+                        <input type="color" id="fontColor" value="#ffffff">
+                    </div>
+                </div>
+                <div class="tab-content" id="image-content">
+                    <div class="image-upload" id="imageUpload">
+                        <span>上傳浮水印圖片</span>
+                        <input type="file" id="imageInput" accept="image/*" hidden>
+                    </div>
+                    <img id="watermarkImage" style="display:none;">
+                </div>
+                <div class="common-settings">
+                    <div class="setting-row">
+                        <label>位置</label>
+                        <div class="position-grid">
+                            <button class="pos-btn" data-pos="top-left">↖</button>
+                            <button class="pos-btn" data-pos="top-center">↑</button>
+                            <button class="pos-btn" data-pos="top-right">↗</button>
+                            <button class="pos-btn" data-pos="center-left">←</button>
+                            <button class="pos-btn" data-pos="center">⊙</button>
+                            <button class="pos-btn" data-pos="center-right">→</button>
+                            <button class="pos-btn" data-pos="bottom-left">↙</button>
+                            <button class="pos-btn" data-pos="bottom-center">↓</button>
+                            <button class="pos-btn active" data-pos="bottom-right">↘</button>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <label>透明度</label>
+                        <input type="range" id="opacity" min="0.1" max="1" step="0.1" value="0.7">
+                        <span id="opacityValue">70%</span>
+                    </div>
+                </div>
+            </div>
+            <div id="previewSection" class="preview-section" style="display: none;">
+                <h3>預覽</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="previewCanvas"></canvas>
+                </div>
+                <div class="preview-controls">
+                    <button id="playBtn" class="btn btn-secondary">播放</button>
+                    <button id="downloadBtn" class="btn btn-primary">下載畫面</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #310</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

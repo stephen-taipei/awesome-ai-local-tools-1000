@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter | JSON 格式化</title>
+    <meta name="description" content="Format, validate and beautify JSON. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>JSON 格式化</h1>
+            <p class="subtitle">美化、壓縮和驗證 JSON 資料</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="toolbar">
+                <button id="formatBtn" class="tool-btn primary">格式化</button>
+                <button id="minifyBtn" class="tool-btn">壓縮</button>
+                <button id="validateBtn" class="tool-btn">驗證</button>
+                <div class="indent-selector">
+                    <label>縮排:</label>
+                    <select id="indentSize">
+                        <option value="2">2 空格</option>
+                        <option value="4">4 空格</option>
+                        <option value="tab">Tab</option>
+                    </select>
+                </div>
+                <div class="toolbar-spacer"></div>
+                <button id="copyBtn" class="tool-btn">複製</button>
+                <button id="clearBtn" class="tool-btn">清除</button>
+            </div>
+            <div class="editor-section">
+                <textarea id="jsonInput" placeholder="貼上 JSON 資料..."></textarea>
+                <div class="status-bar" id="statusBar">
+                    <span class="status-text" id="statusText">等待輸入...</span>
+                    <span class="stats" id="stats"></span>
+                </div>
+            </div>
+            <div class="tree-section" id="treeSection" style="display: none;">
+                <div class="section-header">
+                    <h3>結構視圖</h3>
+                    <button id="collapseAll" class="small-btn">全部收起</button>
+                    <button id="expandAll" class="small-btn">全部展開</button>
+                </div>
+                <div id="jsonTree" class="json-tree"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #175</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

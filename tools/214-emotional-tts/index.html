@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotional TTS | 情感語音合成</title>
+    <meta name="description" content="Emotional text to speech. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>情感語音合成</h1>
+            <p class="subtitle">為語音添加情感表達</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入文字</h3>
+                </div>
+                <textarea id="inputText" placeholder="輸入要轉換的文字..."></textarea>
+            </div>
+            <div class="emotion-section">
+                <h3>選擇情感</h3>
+                <div class="emotion-grid">
+                    <button class="emotion-btn active" data-emotion="neutral" data-rate="1" data-pitch="1">
+                        <span class="emotion-icon">😐</span>
+                        <span class="emotion-label">平靜</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="happy" data-rate="1.1" data-pitch="1.2">
+                        <span class="emotion-icon">😊</span>
+                        <span class="emotion-label">開心</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="sad" data-rate="0.85" data-pitch="0.8">
+                        <span class="emotion-icon">😢</span>
+                        <span class="emotion-label">悲傷</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="angry" data-rate="1.2" data-pitch="1.1">
+                        <span class="emotion-icon">😠</span>
+                        <span class="emotion-label">生氣</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="excited" data-rate="1.3" data-pitch="1.3">
+                        <span class="emotion-icon">🤩</span>
+                        <span class="emotion-label">興奮</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="calm" data-rate="0.9" data-pitch="0.95">
+                        <span class="emotion-icon">😌</span>
+                        <span class="emotion-label">放鬆</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="whisper" data-rate="0.8" data-pitch="0.9">
+                        <span class="emotion-icon">🤫</span>
+                        <span class="emotion-label">輕聲</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="serious" data-rate="0.95" data-pitch="0.85">
+                        <span class="emotion-icon">🧐</span>
+                        <span class="emotion-label">嚴肅</span>
+                    </button>
+                </div>
+            </div>
+            <div class="options-section">
+                <div class="option-group">
+                    <label>語音</label>
+                    <select id="voiceSelect"></select>
+                </div>
+                <div class="option-group">
+                    <label>情感強度</label>
+                    <input type="range" id="intensity" min="0.5" max="1.5" step="0.1" value="1">
+                    <span id="intensityValue">100%</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="playBtn" class="btn btn-primary">播放</button>
+                <button id="stopBtn" class="btn btn-secondary" disabled>停止</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #214</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Tracking | 人物追蹤</title>
+    <meta name="description" content="Track person movement in video. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>人物追蹤</h1>
+            <p class="subtitle">即時追蹤人物移動軌跡</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始追蹤</button>
+            </div>
+            <div id="trackSection" class="track-section" style="display: none;">
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="trackCanvas"></canvas>
+                </div>
+                <div class="track-info">
+                    <div class="info-item">
+                        <span class="info-label">追蹤目標</span>
+                        <span class="info-value" id="targetCount">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">軌跡點數</span>
+                        <span class="info-value" id="trailCount">0</span>
+                    </div>
+                </div>
+                <div class="controls">
+                    <button id="clearBtn" class="btn btn-secondary">清除軌跡</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #436</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

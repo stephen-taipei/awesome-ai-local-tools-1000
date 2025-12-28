@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garbled Text Fix | 亂碼修復</title>
+    <meta name="description" content="Fix garbled text encoding issues. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>亂碼修復</h1>
+            <p class="subtitle">修復文字編碼問題</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入亂碼文字</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="inputText" placeholder="貼上亂碼文字..."></textarea>
+            </div>
+            <div class="options-section">
+                <h3>編碼轉換選項</h3>
+                <div class="encoding-grid">
+                    <div class="option-group">
+                        <label>來源編碼</label>
+                        <select id="sourceEncoding">
+                            <option value="auto">自動偵測</option>
+                            <option value="utf8">UTF-8</option>
+                            <option value="big5">Big5 (繁體中文)</option>
+                            <option value="gbk">GBK (簡體中文)</option>
+                            <option value="iso8859">ISO-8859-1</option>
+                            <option value="shift_jis">Shift-JIS (日文)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>目標編碼</label>
+                        <select id="targetEncoding">
+                            <option value="utf8">UTF-8</option>
+                            <option value="big5">Big5 (繁體中文)</option>
+                            <option value="gbk">GBK (簡體中文)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="common-fixes">
+                    <h4>常見問題快速修復</h4>
+                    <div class="fix-buttons">
+                        <button class="fix-btn" data-fix="utf8-big5">UTF-8 誤讀為 Big5</button>
+                        <button class="fix-btn" data-fix="big5-utf8">Big5 誤讀為 UTF-8</button>
+                        <button class="fix-btn" data-fix="gbk-utf8">GBK 誤讀為 UTF-8</button>
+                        <button class="fix-btn" data-fix="double-encode">雙重編碼修復</button>
+                    </div>
+                </div>
+            </div>
+            <button id="convertBtn" class="btn btn-primary btn-block">修復亂碼</button>
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <div class="section-header">
+                    <h3>修復結果</h3>
+                    <button id="copyBtn" class="small-btn">複製</button>
+                </div>
+                <div id="outputText" class="output-area"></div>
+                <div id="alternativeResults" class="alternative-section" style="display: none;">
+                    <h4>其他可能的結果</h4>
+                    <div id="alternatives" class="alternatives-list"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #196</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Pose | 瑜伽姿勢</title>
+    <meta name="description" content="Guide and evaluate yoga poses. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>瑜伽姿勢</h1>
+            <p class="subtitle">瑜伽姿勢指導與評估</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="pose-select" id="poseSelect">
+                <h3>選擇瑜伽姿勢</h3>
+                <div class="pose-grid">
+                    <button class="pose-btn" data-pose="mountain">🧘 山式</button>
+                    <button class="pose-btn" data-pose="tree">🌳 樹式</button>
+                    <button class="pose-btn" data-pose="warrior">⚔️ 戰士式</button>
+                    <button class="pose-btn" data-pose="triangle">📐 三角式</button>
+                </div>
+            </div>
+            <div id="practiceSection" class="practice-section" style="display: none;">
+                <div class="practice-header">
+                    <span class="current-pose-icon" id="currentPoseIcon">🧘</span>
+                    <span class="current-pose-name" id="currentPoseName">山式</span>
+                </div>
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="yogaCanvas"></canvas>
+                </div>
+                <div class="score-section">
+                    <div class="accuracy-display">
+                        <div class="accuracy-circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" class="accuracy-bg"/>
+                                <circle cx="50" cy="50" r="45" class="accuracy-fill" id="accuracyFill"/>
+                            </svg>
+                            <div class="accuracy-text">
+                                <span class="accuracy-value" id="accuracyValue">--</span>
+                                <span class="accuracy-label">%</span>
+                            </div>
+                        </div>
+                        <div class="accuracy-status" id="accuracyStatus">準備中...</div>
+                    </div>
+                    <div class="feedback-box" id="feedbackBox"></div>
+                </div>
+                <button id="changePoseBtn" class="btn btn-secondary">更換姿勢</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #430</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

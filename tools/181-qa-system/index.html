@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA System | 問答系統</title>
+    <meta name="description" content="Ask questions about your documents. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>問答系統</h1>
+            <p class="subtitle">根據文件內容回答問題</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="doc-section">
+                <div class="section-header">
+                    <h3>📄 文件內容</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="docText" placeholder="貼上或輸入文件內容..."></textarea>
+            </div>
+            <div class="qa-section">
+                <div class="section-header">
+                    <h3>❓ 提問</h3>
+                </div>
+                <div class="question-input">
+                    <input type="text" id="questionInput" placeholder="輸入您的問題...">
+                    <button id="askBtn" class="btn btn-primary">詢問</button>
+                </div>
+                <div class="answer-box" id="answerBox" style="display: none;">
+                    <div class="answer-label">回答</div>
+                    <div class="answer-text" id="answerText"></div>
+                    <div class="confidence" id="confidence"></div>
+                    <div class="source-label">相關段落</div>
+                    <div class="source-text" id="sourceText"></div>
+                </div>
+            </div>
+            <div class="history-section" id="historySection" style="display: none;">
+                <h3>歷史問答</h3>
+                <div id="historyList" class="history-list"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #181</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

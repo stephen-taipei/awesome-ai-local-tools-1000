@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwriting OCR | 手寫辨識</title>
+    <meta name="description" content="Recognize handwritten text from images. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>手寫文字辨識</h1>
+            <p class="subtitle">辨識手寫筆記、信件的文字內容</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="tips-card">
+                    <h4>📝 手寫辨識提示</h4>
+                    <ul>
+                        <li>確保圖片清晰、光線充足</li>
+                        <li>手寫字跡盡量工整</li>
+                        <li>避免紙張有過多摺痕</li>
+                    </ul>
+                </div>
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">✍️</div>
+                    <p>拖放手寫圖片或點擊上傳</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="preview-section" id="previewSection" style="display: none;">
+                    <img id="previewImage" class="preview-image">
+                </div>
+                <button id="recognizeBtn" class="btn btn-primary btn-block" disabled>辨識手寫</button>
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p class="progress-text" id="progressText">載入中...</p>
+                </div>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-header">
+                    <h3>辨識結果</h3>
+                    <button id="copyBtn" class="copy-btn">複製</button>
+                </div>
+                <div class="result-text" id="resultText"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #162</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

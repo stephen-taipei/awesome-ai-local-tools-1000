@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Generator | SQL 查詢產生器</title>
+    <meta name="description" content="Generate SQL queries with visual builder. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>SQL 查詢產生器</h1>
+            <p class="subtitle">視覺化建立 SQL 查詢語句</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="select">SELECT</button>
+                <button class="tab-btn" data-tab="insert">INSERT</button>
+                <button class="tab-btn" data-tab="update">UPDATE</button>
+                <button class="tab-btn" data-tab="delete">DELETE</button>
+                <button class="tab-btn" data-tab="create">CREATE</button>
+            </div>
+            <div class="input-section">
+                <!-- SELECT Tab -->
+                <div class="tab-content active" id="tab-select">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>資料表名稱</label>
+                            <input type="text" id="selectTable" class="text-field" placeholder="users">
+                        </div>
+                        <div class="form-group">
+                            <label>欄位 (逗號分隔，* 表示全部)</label>
+                            <input type="text" id="selectColumns" class="text-field" placeholder="id, name, email" value="*">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>WHERE 條件 (可選)</label>
+                        <input type="text" id="selectWhere" class="text-field" placeholder="status = 'active'">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ORDER BY</label>
+                            <input type="text" id="selectOrder" class="text-field" placeholder="created_at DESC">
+                        </div>
+                        <div class="form-group">
+                            <label>LIMIT</label>
+                            <input type="number" id="selectLimit" class="text-field" placeholder="100">
+                        </div>
+                    </div>
+                </div>
+                <!-- INSERT Tab -->
+                <div class="tab-content" id="tab-insert">
+                    <div class="form-group">
+                        <label>資料表名稱</label>
+                        <input type="text" id="insertTable" class="text-field" placeholder="users">
+                    </div>
+                    <div class="form-group">
+                        <label>欄位 (逗號分隔)</label>
+                        <input type="text" id="insertColumns" class="text-field" placeholder="name, email, password">
+                    </div>
+                    <div class="form-group">
+                        <label>值 (逗號分隔)</label>
+                        <input type="text" id="insertValues" class="text-field" placeholder="'John', 'john@example.com', 'hash'">
+                    </div>
+                </div>
+                <!-- UPDATE Tab -->
+                <div class="tab-content" id="tab-update">
+                    <div class="form-group">
+                        <label>資料表名稱</label>
+                        <input type="text" id="updateTable" class="text-field" placeholder="users">
+                    </div>
+                    <div class="form-group">
+                        <label>SET (欄位=值，逗號分隔)</label>
+                        <input type="text" id="updateSet" class="text-field" placeholder="name='John', status='active'">
+                    </div>
+                    <div class="form-group">
+                        <label>WHERE 條件</label>
+                        <input type="text" id="updateWhere" class="text-field" placeholder="id = 1">
+                    </div>
+                </div>
+                <!-- DELETE Tab -->
+                <div class="tab-content" id="tab-delete">
+                    <div class="form-group">
+                        <label>資料表名稱</label>
+                        <input type="text" id="deleteTable" class="text-field" placeholder="users">
+                    </div>
+                    <div class="form-group">
+                        <label>WHERE 條件</label>
+                        <input type="text" id="deleteWhere" class="text-field" placeholder="id = 1">
+                    </div>
+                </div>
+                <!-- CREATE Tab -->
+                <div class="tab-content" id="tab-create">
+                    <div class="form-group">
+                        <label>資料表名稱</label>
+                        <input type="text" id="createTable" class="text-field" placeholder="users">
+                    </div>
+                    <div class="columns-builder" id="columnsBuilder">
+                        <div class="column-row">
+                            <input type="text" class="col-name" placeholder="欄位名稱">
+                            <select class="col-type">
+                                <option value="INT">INT</option>
+                                <option value="VARCHAR(255)" selected>VARCHAR(255)</option>
+                                <option value="TEXT">TEXT</option>
+                                <option value="BOOLEAN">BOOLEAN</option>
+                                <option value="DATE">DATE</option>
+                                <option value="DATETIME">DATETIME</option>
+                                <option value="DECIMAL(10,2)">DECIMAL(10,2)</option>
+                            </select>
+                            <label><input type="checkbox" class="col-pk"> PK</label>
+                            <label><input type="checkbox" class="col-nn" checked> NOT NULL</label>
+                        </div>
+                    </div>
+                    <button id="addColumnBtn" class="btn btn-secondary btn-small">+ 新增欄位</button>
+                </div>
+                <button id="generateBtn" class="btn btn-primary btn-block">產生 SQL</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-header">
+                    <h3>產生的 SQL</h3>
+                    <button id="copyBtn" class="copy-btn">複製</button>
+                </div>
+                <pre class="sql-output"><code id="sqlOutput"></code></pre>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #159</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

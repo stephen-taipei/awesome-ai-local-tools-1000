@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Recognition | 動作識別</title>
+    <meta name="description" content="Recognize human actions and activities. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>動作識別</h1>
+            <p class="subtitle">識別人體動作與活動</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始識別</button>
+            </div>
+            <div id="actionSection" class="action-section" style="display: none;">
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="actionCanvas"></canvas>
+                </div>
+                <div class="action-display">
+                    <div class="current-action">
+                        <span class="action-icon" id="actionIcon">🧍</span>
+                        <span class="action-name" id="actionName">偵測中...</span>
+                    </div>
+                    <div class="action-confidence">
+                        <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill"></div></div>
+                        <span id="confidenceValue">0%</span>
+                    </div>
+                </div>
+                <div class="action-history">
+                    <h3>動作歷史</h3>
+                    <div id="historyList" class="history-list"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #426</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

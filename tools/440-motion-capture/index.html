@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Capture | 動作捕捉</title>
+    <meta name="description" content="Capture and record body motion data. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>動作捕捉</h1>
+            <p class="subtitle">即時捕捉並記錄身體動作數據</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始捕捉</button>
+            </div>
+            <div id="captureSection" class="capture-section" style="display:none">
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="skeletonCanvas"></canvas>
+                </div>
+                <div class="control-bar">
+                    <button id="recordBtn" class="btn btn-record">
+                        <span class="record-icon"></span>
+                        <span class="record-text">開始錄製</span>
+                    </button>
+                    <div class="record-timer" id="recordTimer">00:00</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">幀數</span>
+                        <span id="frameCount" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">關節點</span>
+                        <span id="jointCount" class="stat-value">17</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">FPS</span>
+                        <span id="fpsValue" class="stat-value">0</span>
+                    </div>
+                </div>
+                <div id="dataSection" class="data-section" style="display:none">
+                    <h3>動作數據</h3>
+                    <div class="data-preview" id="dataPreview"></div>
+                    <button id="exportBtn" class="btn btn-secondary">匯出 JSON</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #440</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doc Clustering | 文件分群</title>
+    <meta name="description" content="Cluster documents by similarity. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文件分群</h1>
+            <p class="subtitle">根據內容相似度將文件分組</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入多段文本</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <p class="hint">每段文本用空行分隔</p>
+                <textarea id="textInput" placeholder="輸入多段文本，用空行分隔..."></textarea>
+                <div class="options">
+                    <label>分群數量: <input type="number" id="clusterCount" min="2" max="10" value="3"></label>
+                </div>
+                <button id="clusterBtn" class="btn btn-primary btn-block">開始分群</button>
+            </div>
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="section-header">
+                    <h3>分群結果</h3>
+                </div>
+                <div id="clustersList" class="clusters-list"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #187</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

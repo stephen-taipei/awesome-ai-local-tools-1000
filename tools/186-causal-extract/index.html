@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Causal Extract | 因果關係提取</title>
+    <meta name="description" content="Extract cause-effect relationships. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>因果關係提取</h1>
+            <p class="subtitle">從文本中提取因果關係</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入文本</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="textInput" placeholder="輸入包含因果關係的文本..."></textarea>
+                <button id="extractBtn" class="btn btn-primary btn-block">提取因果關係</button>
+            </div>
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="section-header">
+                    <h3>因果關係</h3>
+                    <span id="relationCount" class="relation-count">0 組關係</span>
+                </div>
+                <div id="relationsList" class="relations-list"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #186</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

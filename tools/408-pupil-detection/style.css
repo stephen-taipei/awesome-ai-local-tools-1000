@@ -1,0 +1,42 @@
+/* Pupil Detection - Tool #408 */
+:root { --primary-color: #6366f1; --success-color: #22c55e; --bg-color: #0f172a; --card-bg: #1e293b; --border-color: #334155; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --radius: 12px; --radius-sm: 8px; --transition: all 0.2s ease; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-color); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+.container { max-width: 800px; margin: 0 auto; padding: 1.5rem; }
+.lang-switcher { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; }
+.lang-btn { padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: transparent; color: var(--text-secondary); border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); }
+.lang-btn:hover { border-color: var(--primary-color); }
+.lang-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+.header { text-align: center; margin-bottom: 1.5rem; }
+.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--primary-color), #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.subtitle { color: var(--text-secondary); font-size: 1rem; }
+.privacy-badge { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.875rem; color: var(--success-color); margin: 0 auto 1.5rem; width: fit-content; }
+.upload-section { margin-bottom: 1.5rem; }
+.upload-area { background: var(--card-bg); border: 2px dashed var(--border-color); border-radius: var(--radius); padding: 3rem; text-align: center; cursor: pointer; transition: var(--transition); }
+.upload-area:hover { border-color: var(--primary-color); }
+.upload-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+.upload-text { color: var(--text-secondary); }
+.preview-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+#previewCanvas { max-width: 100%; border-radius: var(--radius-sm); }
+.result-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; }
+.result-section h3 { text-align: center; margin-bottom: 1.5rem; }
+.pupil-display { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-bottom: 1.5rem; }
+.pupil-item { text-align: center; }
+.pupil-visual { width: 120px; height: 120px; margin: 0 auto 1rem; background: radial-gradient(circle, #8b5a2b 0%, #4a3520 50%, #2c1f14 70%, white 71%, white 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; }
+.pupil-circle { width: 40px; height: 40px; background: #000; border-radius: 50%; transition: width 0.3s, height 0.3s; position: relative; }
+.pupil-circle::after { content: ''; position: absolute; top: 20%; left: 20%; width: 30%; height: 30%; background: rgba(255,255,255,0.5); border-radius: 50%; }
+.pupil-label { font-size: 1rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+.pupil-size { font-size: 1.5rem; font-weight: 600; color: var(--primary-color); }
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+.metric-item { text-align: center; padding: 1rem; background: var(--bg-color); border-radius: var(--radius-sm); }
+.metric-label { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+.metric-value { font-size: 1.25rem; font-weight: 600; color: var(--primary-color); }
+.webcam-section { text-align: center; margin-top: 1.5rem; }
+#webcam { width: 100%; max-width: 400px; border-radius: var(--radius); margin: 1rem 0; }
+.btn { padding: 0.75rem 1.5rem; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 500; cursor: pointer; transition: var(--transition); margin: 0.25rem; }
+.btn-primary { background: linear-gradient(135deg, var(--primary-color), #818cf8); color: white; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); }
+.btn-secondary { background: var(--border-color); color: var(--text-primary); }
+.btn-secondary:hover { background: #475569; }
+.footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 0.875rem; }
+.footer a { color: var(--primary-color); text-decoration: none; }

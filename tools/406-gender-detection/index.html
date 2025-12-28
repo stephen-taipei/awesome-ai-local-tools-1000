@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gender Detection | 性別偵測</title>
+    <meta name="description" content="Detect gender from face. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>性別偵測</h1>
+            <p class="subtitle">從人臉特徵分析性別</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">👤</div>
+                    <div class="upload-text">上傳人臉照片</div>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                </div>
+            </div>
+            <div id="previewSection" class="preview-section" style="display: none;">
+                <canvas id="previewCanvas"></canvas>
+            </div>
+            <div id="resultSection" class="result-section" style="display: none;">
+                <div class="gender-display" id="genderDisplay">
+                    <div class="gender-icon" id="genderIcon">--</div>
+                    <div class="gender-label" id="genderLabel">分析中...</div>
+                </div>
+                <div class="probability-bars">
+                    <div class="prob-item">
+                        <span class="prob-label">男性</span>
+                        <div class="prob-bar">
+                            <div class="prob-fill male" id="maleFill"></div>
+                        </div>
+                        <span class="prob-value" id="maleValue">0%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">女性</span>
+                        <div class="prob-bar">
+                            <div class="prob-fill female" id="femaleFill"></div>
+                        </div>
+                        <span class="prob-value" id="femaleValue">0%</span>
+                    </div>
+                </div>
+                <div class="feature-analysis" id="featureAnalysis"></div>
+            </div>
+            <div class="webcam-section">
+                <button id="webcamBtn" class="btn btn-secondary">使用攝影機</button>
+                <video id="webcam" autoplay playsinline style="display: none;"></video>
+                <button id="captureBtn" class="btn btn-primary" style="display: none;">拍攝</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #406</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

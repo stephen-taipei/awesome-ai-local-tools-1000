@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection | 物件偵測</title>
+    <meta name="description" content="Detect and identify objects in images. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>物件偵測</h1>
+            <p class="subtitle">AI 偵測並識別圖片中的物件</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔍</div>
+                    <div class="upload-text">上傳圖片進行物件偵測</div>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="detectionCanvas"></canvas>
+                </div>
+            </div>
+            <button id="detectBtn" class="btn btn-primary" style="display:none">開始偵測</button>
+            <div id="resultSection" class="result-section" style="display:none">
+                <h3>偵測結果</h3>
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-label">偵測物件</span>
+                        <span id="objectCount" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">類別數</span>
+                        <span id="categoryCount" class="stat-value">0</span>
+                    </div>
+                </div>
+                <div id="objectList" class="object-list"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #441</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

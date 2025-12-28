@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Editor | Markdown 編輯器</title>
+    <meta name="description" content="Write and preview Markdown. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>Markdown 編輯器</h1>
+            <p class="subtitle">即時預覽的 Markdown 編輯器</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="toolbar">
+                <button class="tool-btn" data-action="bold" title="粗體">B</button>
+                <button class="tool-btn" data-action="italic" title="斜體">I</button>
+                <button class="tool-btn" data-action="heading" title="標題">H</button>
+                <button class="tool-btn" data-action="link" title="連結">🔗</button>
+                <button class="tool-btn" data-action="image" title="圖片">🖼️</button>
+                <button class="tool-btn" data-action="code" title="程式碼">&lt;/&gt;</button>
+                <button class="tool-btn" data-action="list" title="列表">•</button>
+                <button class="tool-btn" data-action="quote" title="引用">"</button>
+                <div class="toolbar-spacer"></div>
+                <button id="exportHtml" class="tool-btn">HTML</button>
+                <button id="exportMd" class="tool-btn">下載</button>
+            </div>
+            <div class="editor-container">
+                <div class="editor-panel">
+                    <div class="panel-header">Markdown</div>
+                    <textarea id="markdownInput" placeholder="在這裡輸入 Markdown..."></textarea>
+                </div>
+                <div class="preview-panel">
+                    <div class="panel-header">預覽</div>
+                    <div id="preview" class="preview-content"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #174</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

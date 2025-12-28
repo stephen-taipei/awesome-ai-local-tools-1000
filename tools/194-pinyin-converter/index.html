@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinyin Converter | 拼音轉換</title>
+    <meta name="description" content="Convert Chinese to Pinyin. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>拼音轉換</h1>
+            <p class="subtitle">中文轉拼音工具</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入中文</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="inputText" placeholder="輸入中文文字..."></textarea>
+            </div>
+            <div class="options-section">
+                <div class="option-group">
+                    <label>輸出格式</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="format" value="tone" checked> 帶聲調 (nǐ hǎo)</label>
+                        <label><input type="radio" name="format" value="number"> 數字聲調 (ni3 hao3)</label>
+                        <label><input type="radio" name="format" value="none"> 無聲調 (ni hao)</label>
+                    </div>
+                </div>
+                <div class="option-group">
+                    <label>分隔符號</label>
+                    <select id="separator">
+                        <option value=" ">空格</option>
+                        <option value="-">連字號 (-)</option>
+                        <option value="">無分隔</option>
+                    </select>
+                </div>
+                <label class="checkbox-label"><input type="checkbox" id="capitalize"> 首字母大寫</label>
+            </div>
+            <button id="convertBtn" class="btn btn-primary btn-block">轉換</button>
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <div class="section-header">
+                    <h3>拼音結果</h3>
+                    <button id="copyBtn" class="small-btn">複製</button>
+                </div>
+                <div id="pinyinOutput" class="pinyin-output"></div>
+                <div class="annotation-view" id="annotationView"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #194</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
