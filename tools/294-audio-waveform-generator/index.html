@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Waveform Generator | 音訊波形產生器</title>
+    <meta name="description" content="Generate waveform visualization from audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊波形產生器</h1>
+            <p class="subtitle">從音訊生成波形圖像</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📊</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="waveform-container">
+                    <canvas id="waveformCanvas" width="800" height="200"></canvas>
+                </div>
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>波形顏色</label>
+                        <input type="color" id="waveColor" value="#3b82f6">
+                    </div>
+                    <div class="option-group">
+                        <label>背景顏色</label>
+                        <input type="color" id="bgColor" value="#0f172a">
+                    </div>
+                    <div class="option-group">
+                        <label>樣式</label>
+                        <select id="styleSelect">
+                            <option value="bars">條形</option>
+                            <option value="mirror">鏡像</option>
+                            <option value="line">線條</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>條形寬度</label>
+                        <input type="range" id="barWidthSlider" min="1" max="10" step="1" value="3">
+                        <span id="barWidthValue">3 px</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 播放</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載圖片</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #294</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
