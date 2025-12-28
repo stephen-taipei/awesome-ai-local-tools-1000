@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitch Shifter | 音高調整</title>
+    <meta name="description" content="Shift audio pitch without changing speed. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音高調整</h1>
+            <p class="subtitle">調整音高而不改變速度</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎵</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="audio-player">
+                    <audio id="audioPlayer" controls></audio>
+                </div>
+                <div class="pitch-control">
+                    <label>音高調整</label>
+                    <div class="pitch-display">
+                        <span id="pitchValue">0</span>
+                        <span class="pitch-unit">半音</span>
+                    </div>
+                    <input type="range" id="pitchSlider" min="-12" max="12" value="0" step="1">
+                    <div class="pitch-labels">
+                        <span>-12</span>
+                        <span>0</span>
+                        <span>+12</span>
+                    </div>
+                </div>
+                <div class="preset-section">
+                    <label>快速預設</label>
+                    <div class="presets">
+                        <button class="preset-btn" data-pitch="-5">-5 半音</button>
+                        <button class="preset-btn" data-pitch="-3">-3 半音</button>
+                        <button class="preset-btn" data-pitch="0">原調</button>
+                        <button class="preset-btn" data-pitch="3">+3 半音</button>
+                        <button class="preset-btn" data-pitch="5">+5 半音</button>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽效果</button>
+                    <button id="processBtn" class="btn btn-primary">⬇️ 處理並下載</button>
+                </div>
+                <div id="progressSection" class="progress-section" style="display:none">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <span id="progressText" class="progress-text">處理中...</span>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #241</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Merger | 音訊合併</title>
+    <meta name="description" content="Merge multiple audio files. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊合併</h1>
+            <p class="subtitle">將多個音訊檔案合併為一個</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" multiple hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔗</div>
+                    <div class="upload-text">點擊或拖放多個音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="filesSection" class="files-section" style="display:none">
+                <div class="files-header">
+                    <h3>音訊列表</h3>
+                    <span class="file-count" id="fileCount">0 個檔案</span>
+                </div>
+                <div class="files-list" id="filesList"></div>
+                <div class="add-more">
+                    <button id="addMoreBtn" class="btn-link">+ 新增更多檔案</button>
+                </div>
+            </div>
+            <div id="optionsSection" class="options-section" style="display:none">
+                <div class="option-group">
+                    <label>合併模式</label>
+                    <select id="mergeMode">
+                        <option value="sequence">順序連接</option>
+                        <option value="crossfade">淡入淡出</option>
+                    </select>
+                </div>
+                <div class="option-group" id="crossfadeOption" style="display:none">
+                    <label>淡入淡出時長</label>
+                    <input type="range" id="crossfadeSlider" min="0.5" max="5" step="0.5" value="2">
+                    <span id="crossfadeValue">2 秒</span>
+                </div>
+                <div class="info-section">
+                    <div class="info-item">
+                        <span class="info-label">總時長</span>
+                        <span id="totalDuration" class="info-value">0:00</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="mergeBtn" class="btn btn-primary">🔗 合併並下載</button>
+                </div>
+                <div id="progressSection" class="progress-section" style="display:none">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <span id="progressText" class="progress-text">處理中...</span>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #245</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
