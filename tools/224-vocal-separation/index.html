@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocal Separation | 人聲分離</title>
+    <meta name="description" content="Separate vocals from instrumental tracks. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>人聲分離</h1>
+            <p class="subtitle">從混合音訊中分離人聲與伴奏</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎵</div>
+                    <div class="upload-text">點擊或拖放音樂檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG, M4A（建議使用立體聲音訊）</div>
+                    <input type="file" id="audioInput" accept="audio/*" hidden>
+                </div>
+            </div>
+            <div id="processingSection" class="processing-section" style="display:none">
+                <div class="file-info">
+                    <span class="file-icon">🎵</span>
+                    <span id="fileName" class="file-name"></span>
+                    <span id="channelInfo" class="channel-info"></span>
+                </div>
+                <div class="separation-mode">
+                    <h3>分離模式</h3>
+                    <div class="mode-options">
+                        <button class="mode-btn active" data-mode="vocal">
+                            <span class="mode-icon">🎤</span>
+                            <span class="mode-label">提取人聲</span>
+                        </button>
+                        <button class="mode-btn" data-mode="instrumental">
+                            <span class="mode-icon">🎸</span>
+                            <span class="mode-label">提取伴奏</span>
+                        </button>
+                        <button class="mode-btn" data-mode="both">
+                            <span class="mode-icon">✂️</span>
+                            <span class="mode-label">兩者都要</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="controls-panel">
+                    <div class="control-item">
+                        <label>分離強度</label>
+                        <input type="range" id="strength" min="0" max="100" value="80">
+                        <span id="strengthValue">80%</span>
+                    </div>
+                    <div class="control-item">
+                        <label>人聲頻率範圍 (Hz)</label>
+                        <div class="dual-range">
+                            <input type="number" id="freqLow" value="200" min="80" max="500">
+                            <span>-</span>
+                            <input type="number" id="freqHigh" value="4000" min="2000" max="8000">
+                        </div>
+                    </div>
+                </div>
+                <div class="player-section">
+                    <div class="player-row">
+                        <span class="player-label">原始音訊</span>
+                        <audio id="originalAudio" controls></audio>
+                    </div>
+                    <div class="player-row" id="vocalRow" style="display:none">
+                        <span class="player-label">人聲</span>
+                        <audio id="vocalAudio" controls></audio>
+                        <button class="download-single" data-type="vocal">⬇️</button>
+                    </div>
+                    <div class="player-row" id="instrumentalRow" style="display:none">
+                        <span class="player-label">伴奏</span>
+                        <audio id="instrumentalAudio" controls></audio>
+                        <button class="download-single" data-type="instrumental">⬇️</button>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="processBtn" class="btn btn-primary">開始分離</button>
+                </div>
+                <div id="processingStatus" class="processing-status"></div>
+                <div id="progressBar" class="progress-bar" style="display:none">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #224</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
