@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silence Remover | 靜音移除</title>
+    <meta name="description" content="Remove silence from audio files. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>靜音移除</h1>
+            <p class="subtitle">自動偵測並移除音訊中的靜音片段</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔇</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="waveform-section">
+                    <div class="waveform-label">原始波形 <span class="silence-indicator">(紅色區域為靜音)</span></div>
+                    <div class="waveform-container">
+                        <canvas id="originalCanvas"></canvas>
+                        <div id="silenceOverlay" class="silence-overlay"></div>
+                    </div>
+                </div>
+                <div class="waveform-section">
+                    <div class="waveform-label">處理後波形</div>
+                    <canvas id="processedCanvas"></canvas>
+                </div>
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>靜音閾值</label>
+                        <input type="range" id="thresholdSlider" min="-60" max="-20" step="1" value="-40">
+                        <span id="thresholdValue">-40 dB</span>
+                    </div>
+                    <div class="option-group">
+                        <label>最短靜音</label>
+                        <input type="range" id="minSilenceSlider" min="100" max="2000" step="100" value="500">
+                        <span id="minSilenceValue">500 ms</span>
+                    </div>
+                    <div class="option-group">
+                        <label>保留邊距</label>
+                        <input type="range" id="paddingSlider" min="0" max="500" step="50" value="100">
+                        <span id="paddingValue">100 ms</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-item">
+                        <span class="info-label">原始時長</span>
+                        <span id="originalDuration" class="info-value">0:00</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">處理後時長</span>
+                        <span id="processedDuration" class="info-value">0:00</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">移除時間</span>
+                        <span id="removedDuration" class="info-value">0:00</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #255</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

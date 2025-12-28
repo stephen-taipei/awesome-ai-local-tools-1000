@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Channel Mixer | 聲道混合器</title>
+    <meta name="description" content="Mix and swap audio channels. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>聲道混合器</h1>
+            <p class="subtitle">混合、交換或調整左右聲道</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎚️</div>
+                    <div class="upload-text">點擊或拖放立體聲音訊</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="mixer-section">
+                    <div class="channel-control">
+                        <div class="channel-header">
+                            <span class="channel-name">左聲道輸出</span>
+                        </div>
+                        <div class="slider-group">
+                            <label>左聲道輸入</label>
+                            <input type="range" id="leftToLeft" min="0" max="100" value="100">
+                            <span id="leftToLeftValue">100%</span>
+                        </div>
+                        <div class="slider-group">
+                            <label>右聲道輸入</label>
+                            <input type="range" id="rightToLeft" min="0" max="100" value="0">
+                            <span id="rightToLeftValue">0%</span>
+                        </div>
+                        <canvas id="leftOutputCanvas"></canvas>
+                    </div>
+                    <div class="channel-control">
+                        <div class="channel-header">
+                            <span class="channel-name">右聲道輸出</span>
+                        </div>
+                        <div class="slider-group">
+                            <label>左聲道輸入</label>
+                            <input type="range" id="leftToRight" min="0" max="100" value="0">
+                            <span id="leftToRightValue">0%</span>
+                        </div>
+                        <div class="slider-group">
+                            <label>右聲道輸入</label>
+                            <input type="range" id="rightToRight" min="0" max="100" value="100">
+                            <span id="rightToRightValue">100%</span>
+                        </div>
+                        <canvas id="rightOutputCanvas"></canvas>
+                    </div>
+                </div>
+                <div class="presets-section">
+                    <label>快速預設</label>
+                    <div class="presets">
+                        <button class="preset-btn active" data-preset="normal">正常</button>
+                        <button class="preset-btn" data-preset="swap">交換聲道</button>
+                        <button class="preset-btn" data-preset="mono">混合為單聲道</button>
+                        <button class="preset-btn" data-preset="leftOnly">僅左聲道</button>
+                        <button class="preset-btn" data-preset="rightOnly">僅右聲道</button>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #254</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

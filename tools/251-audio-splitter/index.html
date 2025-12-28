@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Splitter | 音訊分割</title>
+    <meta name="description" content="Split audio into multiple segments. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊分割</h1>
+            <p class="subtitle">將音訊分割成多個片段</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">✂️</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="waveform-section">
+                    <canvas id="waveformCanvas"></canvas>
+                    <div class="markers" id="markers"></div>
+                </div>
+                <div class="split-options">
+                    <div class="option-group">
+                        <label>分割模式</label>
+                        <select id="splitMode">
+                            <option value="equal">平均分割</option>
+                            <option value="duration">按時長分割</option>
+                            <option value="manual">手動標記</option>
+                        </select>
+                    </div>
+                    <div class="option-group" id="equalOption">
+                        <label>分割數量</label>
+                        <input type="number" id="splitCount" min="2" max="20" value="2">
+                    </div>
+                    <div class="option-group" id="durationOption" style="display:none">
+                        <label>每段時長</label>
+                        <input type="number" id="segmentDuration" min="1" max="300" value="30">
+                        <span>秒</span>
+                    </div>
+                </div>
+                <div class="segments-list" id="segmentsList"></div>
+                <div class="info-section">
+                    <div class="info-item">
+                        <span class="info-label">總時長</span>
+                        <span id="totalDuration" class="info-value">0:00</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">片段數</span>
+                        <span id="segmentCount" class="info-value">0</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="splitBtn" class="btn btn-primary">✂️ 分割並下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #251</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
