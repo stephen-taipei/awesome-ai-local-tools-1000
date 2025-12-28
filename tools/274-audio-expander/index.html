@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Expander | 音訊擴展器</title>
+    <meta name="description" content="Expand dynamic range of audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊擴展器</h1>
+            <p class="subtitle">擴展音訊的動態範圍</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📈</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>臨界值</label>
+                        <input type="range" id="thresholdSlider" min="-50" max="-10" step="1" value="-30">
+                        <span id="thresholdValue">-30 dB</span>
+                    </div>
+                    <div class="option-group">
+                        <label>擴展比</label>
+                        <input type="range" id="ratioSlider" min="1" max="4" step="0.1" value="2">
+                        <span id="ratioValue">1:2</span>
+                    </div>
+                    <div class="option-group">
+                        <label>起音時間</label>
+                        <input type="range" id="attackSlider" min="0.5" max="50" step="0.5" value="10">
+                        <span id="attackValue">10 ms</span>
+                    </div>
+                    <div class="option-group">
+                        <label>釋放時間</label>
+                        <input type="range" id="releaseSlider" min="50" max="500" step="10" value="200">
+                        <span id="releaseValue">200 ms</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #274</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
