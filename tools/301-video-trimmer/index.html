@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Trimmer | 影片裁剪工具</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Video Trimmer</h1>
+            <p class="subtitle" data-i18n="subtitle">Trim and cut your videos locally in the browser</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - No Upload Required</span>
+        </div>
+
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="videoInput" accept="video/*" hidden>
+                <div class="upload-icon">🎬</div>
+                <p class="upload-text" data-i18n="uploadText">Drop video here or click to upload</p>
+                <p class="upload-hint" data-i18n="uploadHint">Supports MP4, WebM, MOV, AVI</p>
+            </div>
+
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="video-container">
+                    <video id="videoPlayer" controls></video>
+                </div>
+
+                <div class="timeline-container">
+                    <div class="timeline" id="timeline">
+                        <div class="timeline-track" id="timelineTrack">
+                            <div class="trim-handle left" id="trimLeft"></div>
+                            <div class="trim-region" id="trimRegion"></div>
+                            <div class="trim-handle right" id="trimRight"></div>
+                            <div class="playhead" id="playhead"></div>
+                        </div>
+                    </div>
+                    <div class="time-display">
+                        <span id="startTime">00:00.000</span>
+                        <span id="duration">Duration: 00:00.000</span>
+                        <span id="endTime">00:00.000</span>
+                    </div>
+                </div>
+
+                <div class="trim-controls">
+                    <div class="input-group">
+                        <label data-i18n="startLabel">Start Time:</label>
+                        <input type="text" id="startInput" value="00:00.000" placeholder="00:00.000">
+                    </div>
+                    <div class="input-group">
+                        <label data-i18n="endLabel">End Time:</label>
+                        <input type="text" id="endInput" value="00:00.000" placeholder="00:00.000">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="previewBtn" class="btn btn-secondary" data-i18n="preview">Preview Selection</button>
+                    <button id="trimBtn" class="btn btn-primary" data-i18n="trim">Trim Video</button>
+                    <button id="resetBtn" class="btn btn-outline" data-i18n="reset">Upload New Video</button>
+                </div>
+
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="processing">Processing...</p>
+                </div>
+
+                <div class="download-area" id="downloadArea" style="display: none;">
+                    <video id="resultVideo" controls></video>
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download Trimmed Video</button>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">How It Works</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📤</div>
+                    <h3 data-i18n="step1Title">Upload Video</h3>
+                    <p data-i18n="step1Desc">Select or drag a video file to the upload area</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✂️</div>
+                    <h3 data-i18n="step2Title">Select Range</h3>
+                    <p data-i18n="step2Desc">Drag the handles or enter precise times to select the portion to keep</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💾</div>
+                    <h3 data-i18n="step3Title">Export</h3>
+                    <p data-i18n="step3Desc">Process and download the trimmed video</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../index.html" data-i18n="backToHome">Back to Home</a> |
+                <span data-i18n="toolNumber">Tool #301</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+    <script src="app.js"></script>
+</body>
+</html>

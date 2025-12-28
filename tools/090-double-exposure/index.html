@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Exposure | 雙重曝光 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box canvas, .preview-box img { max-width: 100%; max-height: 400px; border-radius: 12px; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 100px; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #d76d77; background: #fff8f5; padding: 30px; text-align: center; border-radius: 12px; cursor: pointer; margin: 10px; flex: 1; min-width: 200px; }
+        .drop-zone:hover { background: #fff0eb; }
+        .drop-zones { display: flex; flex-wrap: wrap; gap: 10px; }
+        select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; }
+        .thumb { max-width: 150px; max-height: 100px; border-radius: 8px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Double Exposure | 雙重曝光</h1>
+            <p>Create double exposure photo effects | 創建雙重曝光照片效果</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zones">
+                <div class="drop-zone" id="dropZone1">
+                    <input type="file" id="imageInput1" accept="image/*" hidden>
+                    <label for="imageInput1" class="button" style="background:linear-gradient(135deg,#3a1c71,#d76d77);cursor:pointer;">Base Image | 基礎圖片</label>
+                    <p style="margin-top:10px;color:#666;font-size:14px;">Portrait works best</p>
+                    <img id="thumb1" class="thumb" style="display:none;">
+                </div>
+                <div class="drop-zone" id="dropZone2">
+                    <input type="file" id="imageInput2" accept="image/*" hidden>
+                    <label for="imageInput2" class="button" style="background:linear-gradient(135deg,#d76d77,#ffaf7b);cursor:pointer;">Overlay Image | 疊加圖片</label>
+                    <p style="margin-top:10px;color:#666;font-size:14px;">Landscape or texture</p>
+                    <img id="thumb2" class="thumb" style="display:none;">
+                </div>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Blend Mode:
+                    <select id="blendMode">
+                        <option value="screen">Screen | 濾色</option>
+                        <option value="multiply">Multiply | 正片疊底</option>
+                        <option value="overlay">Overlay | 疊加</option>
+                        <option value="lighten">Lighten | 變亮</option>
+                        <option value="darken">Darken | 變暗</option>
+                    </select>
+                </label>
+                <label>Opacity: <input type="range" id="opacity" min="0" max="100" value="70"> <span id="opacityVal">70%</span></label>
+                <label>Contrast: <input type="range" id="contrast" min="50" max="150" value="100"> <span id="contrastVal">100%</span></label>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box"><canvas id="canvas"></canvas></div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #090
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

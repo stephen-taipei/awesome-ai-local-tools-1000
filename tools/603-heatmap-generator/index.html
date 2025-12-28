@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heatmap Generator | 熱力圖生成器</title>
+    <meta name="description" content="Create beautiful heatmaps from your data matrix. Supports CSV/JSON with customizable color schemes.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+        <header class="header">
+            <h1 data-i18n="title">Heatmap Generator</h1>
+            <p class="subtitle" data-i18n="subtitle">Visualize data intensity with color gradients</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".csv,.json" hidden>
+                <div class="upload-icon">🌡️</div>
+                <p class="upload-text" data-i18n="uploadText">Drag & drop CSV/JSON file or click to upload</p>
+                <p class="upload-hint" data-i18n="uploadHint">Matrix data with numeric values</p>
+            </div>
+            <div class="controls-section" id="controlsSection" style="display: none;">
+                <div class="control-row">
+                    <div class="control-group">
+                        <label data-i18n="colorScheme">Color Scheme:</label>
+                        <select id="colorScheme">
+                            <option value="heat">Heat (Red-Yellow)</option>
+                            <option value="cool">Cool (Blue-Cyan)</option>
+                            <option value="viridis">Viridis</option>
+                            <option value="plasma">Plasma</option>
+                            <option value="grayscale">Grayscale</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="showValues">Show Values:</label>
+                        <input type="checkbox" id="showValues" checked>
+                    </div>
+                </div>
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">Generate Heatmap</button>
+            </div>
+            <div class="heatmap-section" id="heatmapSection" style="display: none;">
+                <div class="heatmap-container">
+                    <canvas id="heatmapCanvas"></canvas>
+                </div>
+                <div class="legend" id="legend"></div>
+                <div class="chart-actions">
+                    <button id="downloadPng" class="btn btn-success" data-i18n="downloadPng">Download PNG</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #603</span></p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

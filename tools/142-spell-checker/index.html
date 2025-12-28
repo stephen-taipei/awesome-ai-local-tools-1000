@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spell Checker | 拼寫檢查</title>
+    <meta name="description" content="Check spelling errors in text locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>拼寫檢查</h1>
+            <p class="subtitle">檢測英文拼寫錯誤與常見別字</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要檢查拼寫的文字..."></textarea>
+                </div>
+                <button id="checkBtn" class="btn btn-primary btn-block">檢查拼寫</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="summary-bar">
+                    <div class="summary-item">
+                        <span class="summary-icon">🔤</span>
+                        <span class="summary-value" id="wordCount">0</span>
+                        <span class="summary-label">總詞數</span>
+                    </div>
+                    <div class="summary-item error">
+                        <span class="summary-icon">❌</span>
+                        <span class="summary-value" id="errorCount">0</span>
+                        <span class="summary-label">拼寫錯誤</span>
+                    </div>
+                    <div class="summary-item success">
+                        <span class="summary-icon">✓</span>
+                        <span class="summary-value" id="accuracy">100%</span>
+                        <span class="summary-label">正確率</span>
+                    </div>
+                </div>
+                <div class="corrected-section">
+                    <h4>標記文本</h4>
+                    <div class="corrected-text" id="correctedText"></div>
+                </div>
+                <div class="errors-section" id="errorsSection">
+                    <h4>拼寫問題</h4>
+                    <div class="errors-list" id="errorsList"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="I recieved your mesage yesterday. Thankyou for the informaton. I will definately look into it.">常見錯誤</button>
+                <button class="example-btn" data-text="The accomodation was excelent and the resturant had delicous food.">旅遊評論</button>
+                <button class="example-btn" data-text="The development enviroment is configured correctly with all the neccessary dependancies.">技術文件</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>功能特點</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🔍</div>
+                    <h3>錯誤檢測</h3>
+                    <p>識別拼寫錯誤</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💡</div>
+                    <h3>建議修正</h3>
+                    <p>提供正確拼寫</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>正確率統計</h3>
+                    <p>計算準確度</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3>視覺標記</h3>
+                    <p>高亮顯示錯誤</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #142</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

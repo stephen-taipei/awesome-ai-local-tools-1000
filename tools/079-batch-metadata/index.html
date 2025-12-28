@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Metadata | 批量元數據 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .file-list { margin-top: 20px; }
+        .file-item { background: #f9f9f9; border-radius: 12px; padding: 15px; margin-bottom: 10px; }
+        .file-header { display: flex; gap: 15px; align-items: center; margin-bottom: 10px; }
+        .file-header img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .file-header h4 { flex: 1; color: #333; }
+        .metadata-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; font-size: 12px; }
+        .metadata-item { background: white; padding: 8px 12px; border-radius: 6px; }
+        .metadata-item label { color: #888; display: block; margin-bottom: 3px; }
+        .metadata-item span { color: #333; font-weight: bold; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; border: none; border-radius: 8px; cursor: pointer; margin: 5px; }
+        .drop-zone { border: 3px dashed #4facfe; background: #f0f9ff; padding: 40px; text-align: center; border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Batch Metadata | 批量元數據</h1>
+            <p>View and strip metadata from images | 查看並移除圖片元數據</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">Select Images</label>
+            </div>
+            <div style="text-align:center;margin-top:20px;" id="actions" style="display:none;">
+                <button class="action-btn" id="stripBtn" style="display:none;">Strip All Metadata | 移除所有元數據</button>
+                <button class="action-btn" id="exportBtn" style="display:none;">Export to CSV | 匯出 CSV</button>
+            </div>
+            <div class="file-list" id="fileList"></div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #079
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

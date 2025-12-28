@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portrait Beauty | AI 人像美化 - AI Local Tools</title>
+    <meta name="description" content="AI-powered portrait beautification with skin smoothing, whitening, and face slimming. 100% local processing.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .preview-box {
+            flex: 1;
+            min-width: 280px;
+            text-align: center;
+        }
+        .preview-box h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 12px;
+        }
+        .controls h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .slider-group {
+            margin: 15px 0;
+            background: rgba(255,255,255,0.8);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .slider-group label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        .slider-group input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            border-radius: 3px;
+            outline: none;
+        }
+        .slider-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border: 2px solid #ff6b6b;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .preset-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #ff6b6b;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            color: #333;
+        }
+        .preset-btn:hover, .preset-btn.active {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            color: white;
+            border-color: transparent;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .action-buttons button {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .compare-slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .compare-label {
+            position: absolute;
+            padding: 4px 8px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 12px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+        .compare-label.before {
+            top: 10px;
+            left: 10px;
+        }
+        .compare-label.after {
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Portrait Beauty | AI 人像美化</h1>
+            <p>Smart beautification with skin smoothing, whitening, and face enhancement</p>
+            <p>智慧美顏：磨皮、美白、瘦臉等功能</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span>🔒</span>
+            <span>100% Local AI Processing | 完全本地 AI 處理</span>
+        </div>
+
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <label for="imageInput" class="button">Choose Portrait | 選擇人像照片</label>
+                <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                    For best results, use a clear front-facing portrait<br>
+                    建議使用清晰的正面人像照片
+                </p>
+            </div>
+
+            <div class="controls" id="controlsSection" style="display: none;">
+                <h3>Beauty Presets | 美顏預設</h3>
+                <div class="preset-buttons">
+                    <button class="preset-btn" data-preset="natural">Natural | 自然</button>
+                    <button class="preset-btn" data-preset="light">Light | 輕度</button>
+                    <button class="preset-btn" data-preset="moderate">Moderate | 中度</button>
+                    <button class="preset-btn" data-preset="glamour">Glamour | 魅力</button>
+                    <button class="preset-btn" data-preset="custom">Custom | 自訂</button>
+                </div>
+
+                <div class="slider-group">
+                    <label>
+                        <span>Skin Smoothing | 磨皮</span>
+                        <span id="smoothValue">30%</span>
+                    </label>
+                    <input type="range" id="smoothSlider" min="0" max="100" value="30">
+                </div>
+
+                <div class="slider-group">
+                    <label>
+                        <span>Skin Whitening | 美白</span>
+                        <span id="whitenValue">20%</span>
+                    </label>
+                    <input type="range" id="whitenSlider" min="0" max="100" value="20">
+                </div>
+
+                <div class="slider-group">
+                    <label>
+                        <span>Face Slimming | 瘦臉</span>
+                        <span id="slimValue">0%</span>
+                    </label>
+                    <input type="range" id="slimSlider" min="0" max="50" value="0">
+                </div>
+
+                <div class="slider-group">
+                    <label>
+                        <span>Eye Enlargement | 大眼</span>
+                        <span id="eyeValue">0%</span>
+                    </label>
+                    <input type="range" id="eyeSlider" min="0" max="50" value="0">
+                </div>
+
+                <div class="slider-group">
+                    <label>
+                        <span>Brightness | 亮度</span>
+                        <span id="brightnessValue">0%</span>
+                    </label>
+                    <input type="range" id="brightnessSlider" min="-50" max="50" value="0">
+                </div>
+
+                <div class="slider-group">
+                    <label>
+                        <span>Contrast | 對比度</span>
+                        <span id="contrastValue">0%</span>
+                    </label>
+                    <input type="range" id="contrastSlider" min="-50" max="50" value="0">
+                </div>
+            </div>
+
+            <div class="preview-container" id="previewSection" style="display: none;">
+                <div class="preview-box">
+                    <h3>Original | 原圖</h3>
+                    <canvas id="originalCanvas"></canvas>
+                </div>
+                <div class="preview-box">
+                    <h3>Enhanced | 美化後</h3>
+                    <canvas id="outputCanvas"></canvas>
+                </div>
+            </div>
+
+            <div class="action-buttons" id="actionButtons" style="display: none;">
+                <button class="btn-primary" id="downloadBtn">Download | 下載</button>
+                <button class="btn-secondary" id="resetBtn">Reset | 重置</button>
+            </div>
+        </main>
+
+        <section class="info-section" style="margin-top: 40px;">
+            <h2>Features | 功能特色</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div style="background: #fff5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">✨</div>
+                    <h4>Smart Smoothing</h4>
+                    <p style="font-size: 14px; color: #666;">Preserve skin texture while removing blemishes</p>
+                </div>
+                <div style="background: #fff5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🌟</div>
+                    <h4>Natural Whitening</h4>
+                    <p style="font-size: 14px; color: #666;">Brighten skin tone naturally</p>
+                </div>
+                <div style="background: #fff5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">👤</div>
+                    <h4>Face Reshape</h4>
+                    <p style="font-size: 14px; color: #666;">Subtle face slimming effect</p>
+                </div>
+                <div style="background: #fff5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🔒</div>
+                    <h4>100% Private</h4>
+                    <p style="font-size: 14px; color: #666;">All processing in your browser</p>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #666;">
+            <p>
+                <a href="../../README.md">Back to Home | 返回首頁</a> ·
+                Tool #041 | 工具 #041 ·
+                <a href="https://github.com" target="_blank">Source Code | 原始碼</a>
+            </p>
+            <p>Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

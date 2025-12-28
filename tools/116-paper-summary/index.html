@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Summary | 論文摘要</title>
+    <meta name="description" content="Generate structured academic paper summaries locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>論文摘要生成</h1>
+            <p class="subtitle">為學術論文生成結構化摘要</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>貼上論文內容</label>
+                    <textarea id="paperInput" class="textarea-field" rows="14" placeholder="貼上論文的摘要、引言、方法、結果或結論..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>摘要結構</label>
+                        <select id="structureSelect" class="select-field">
+                            <option value="imrad">IMRAD 格式</option>
+                            <option value="abstract">傳統摘要</option>
+                            <option value="highlights">研究亮點</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>詳細程度</label>
+                        <select id="detailSelect" class="select-field">
+                            <option value="brief">簡要</option>
+                            <option value="standard" selected>標準</option>
+                            <option value="detailed">詳細</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">生成摘要</button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3>論文摘要</h3>
+                    <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                </div>
+                <div class="summary-content" id="summaryContent"></div>
+                <div class="stats" id="stats"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📄</div>
+                    <h3>學術格式</h3>
+                    <p>支援 IMRAD 結構</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔬</div>
+                    <h3>研究重點</h3>
+                    <p>提取核心發現</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>方法論</h3>
+                    <p>識別研究方法</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #116</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

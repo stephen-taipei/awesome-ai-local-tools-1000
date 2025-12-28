@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Similarity | 語義相似度</title>
+    <meta name="description" content="Compare semantic similarity between texts locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>語義相似度</h1>
+            <p class="subtitle">比較兩段文字的語義相似程度</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="text-inputs">
+                    <div class="form-group">
+                        <label>文字 A</label>
+                        <textarea id="textA" class="textarea-field" placeholder="輸入第一段文字..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>文字 B</label>
+                        <textarea id="textB" class="textarea-field" placeholder="輸入第二段文字..."></textarea>
+                    </div>
+                </div>
+                <button id="compareBtn" class="btn btn-primary btn-block">計算相似度</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>分析結果</h3>
+                <div class="similarity-score" id="similarityScore">
+                    <div class="score-circle">
+                        <svg viewBox="0 0 100 100">
+                            <circle class="score-bg" cx="50" cy="50" r="45"/>
+                            <circle class="score-progress" cx="50" cy="50" r="45" id="scoreCircle"/>
+                        </svg>
+                        <div class="score-value" id="scoreValue">0%</div>
+                    </div>
+                    <div class="score-label" id="scoreLabel">相似度</div>
+                </div>
+                <div class="metrics-grid" id="metricsGrid"></div>
+                <div class="common-words-section">
+                    <h4>共同詞彙</h4>
+                    <div class="common-words" id="commonWords"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例比較</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text-a="人工智慧正在改變醫療診斷的方式，深度學習可以幫助醫生更準確地識別疾病。" data-text-b="AI 技術在醫療領域的應用越來越廣泛，機器學習演算法能協助進行疾病檢測。">相似文本</button>
+                <button class="example-btn" data-text-a="今天天氣晴朗，適合出門踏青。" data-text-b="股市今日大漲，投資人信心回升。">不同主題</button>
+                <button class="example-btn" data-text-a="The quick brown fox jumps over the lazy dog." data-text-b="A fast brown fox leaps over a sleepy dog.">English Similar</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>功能特點</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>多維度分析</h3>
+                    <p>詞彙、語義、結構</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3>精確評分</h3>
+                    <p>0-100% 相似度</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📝</div>
+                    <h3>共同詞彙</h3>
+                    <p>顯示重疊內容</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌐</div>
+                    <h3>雙語支援</h3>
+                    <p>中英文皆可</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #136</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

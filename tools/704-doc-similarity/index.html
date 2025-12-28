@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Similarity | 文件相似度分析 - AI Local Tools</title>
+    <meta name="description" content="Compare and analyze document similarity locally. 100% private.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-container { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); min-height: 100vh; padding: 20px; }
+        .tool-card { background: white; border-radius: 20px; padding: 40px; max-width: 1000px; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .tool-header { text-align: center; margin-bottom: 30px; }
+        .tool-header h1 { font-size: 2.5em; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .lang-switch { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .lang-btn { padding: 8px 20px; border: 2px solid #4facfe; background: white; border-radius: 20px; cursor: pointer; }
+        .lang-btn.active { background: #4facfe; color: white; }
+        .privacy-badge { display: inline-flex; align-items: center; gap: 8px; background: #e3f2fd; color: #1565c0; padding: 10px 20px; border-radius: 25px; font-size: 14px; margin-bottom: 20px; }
+        .doc-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .doc-box { border: 2px solid #e0e0e0; border-radius: 12px; padding: 20px; }
+        .doc-box h3 { margin-bottom: 15px; color: #4facfe; }
+        .doc-box textarea { width: 100%; height: 200px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; resize: vertical; }
+        .upload-btn { display: inline-block; padding: 10px 20px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; margin-bottom: 10px; }
+        .upload-btn:hover { background: #e0e0e0; }
+        .btn { padding: 14px 28px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600; }
+        .btn-primary { background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; }
+        .results { background: #f8f9fa; border-radius: 12px; padding: 25px; display: none; margin-top: 20px; }
+        .results.visible { display: block; }
+        .similarity-score { text-align: center; padding: 30px; background: white; border-radius: 15px; margin-bottom: 20px; }
+        .score-value { font-size: 72px; font-weight: bold; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .score-label { font-size: 18px; color: #666; }
+        .similarity-bar { background: #e0e0e0; border-radius: 10px; height: 30px; overflow: hidden; margin: 20px 0; }
+        .similarity-fill { background: linear-gradient(135deg, #4facfe, #00f2fe); height: 100%; transition: width 1s; }
+        .analysis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+        .analysis-card { background: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .analysis-value { font-size: 24px; font-weight: bold; color: #4facfe; }
+        .analysis-label { font-size: 12px; color: #666; margin-top: 5px; }
+        .common-words { background: white; padding: 20px; border-radius: 12px; margin-top: 20px; }
+        .word-tag { display: inline-block; padding: 5px 12px; background: #e3f2fd; color: #1565c0; border-radius: 15px; margin: 3px; font-size: 13px; }
+        .loading { display: none; text-align: center; padding: 40px; }
+        .loading.visible { display: block; }
+        .spinner { width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #4facfe; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        footer { text-align: center; margin-top: 40px; padding: 20px; color: #666; }
+        footer a { color: #4facfe; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="tool-container">
+        <div class="tool-card">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
+            <div class="tool-header">
+                <h1><span class="en">Document Similarity</span><span class="zh" style="display:none;">文件相似度分析</span></h1>
+                <p><span class="en">Compare two documents and analyze their similarity</span><span class="zh" style="display:none;">比較兩份文件並分析相似度</span></p>
+            </div>
+            <div class="privacy-badge">
+                <span>🔒</span>
+                <span class="en">100% Local Processing - No Data Upload</span>
+                <span class="zh" style="display:none;">100% 本地處理 - 無需上傳資料</span>
+            </div>
+            <div class="doc-compare">
+                <div class="doc-box">
+                    <h3><span class="en">Document 1</span><span class="zh" style="display:none;">文件 1</span></h3>
+                    <label class="upload-btn"><input type="file" id="file1" accept=".txt,.md" hidden>📄 <span class="en">Upload File</span><span class="zh" style="display:none;">上傳文件</span></label>
+                    <textarea id="text1" placeholder="Or paste text here..."></textarea>
+                </div>
+                <div class="doc-box">
+                    <h3><span class="en">Document 2</span><span class="zh" style="display:none;">文件 2</span></h3>
+                    <label class="upload-btn"><input type="file" id="file2" accept=".txt,.md" hidden>📄 <span class="en">Upload File</span><span class="zh" style="display:none;">上傳文件</span></label>
+                    <textarea id="text2" placeholder="Or paste text here..."></textarea>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="compareBtn" style="width:100%;">
+                <span class="en">Compare Documents</span><span class="zh" style="display:none;">比較文件</span>
+            </button>
+            <div class="loading" id="loading"><div class="spinner"></div><p><span class="en">Analyzing...</span><span class="zh" style="display:none;">分析中...</span></p></div>
+            <div class="results" id="results">
+                <div class="similarity-score">
+                    <div class="score-value" id="scoreValue">0%</div>
+                    <div class="score-label"><span class="en">Similarity Score</span><span class="zh" style="display:none;">相似度分數</span></div>
+                    <div class="similarity-bar"><div class="similarity-fill" id="similarityFill"></div></div>
+                </div>
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <div class="analysis-value" id="doc1Words">0</div>
+                        <div class="analysis-label"><span class="en">Doc 1 Words</span><span class="zh" style="display:none;">文件1字數</span></div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-value" id="doc2Words">0</div>
+                        <div class="analysis-label"><span class="en">Doc 2 Words</span><span class="zh" style="display:none;">文件2字數</span></div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-value" id="commonCount">0</div>
+                        <div class="analysis-label"><span class="en">Common Words</span><span class="zh" style="display:none;">共同詞彙</span></div>
+                    </div>
+                </div>
+                <div class="common-words">
+                    <h4><span class="en">Common Keywords</span><span class="zh" style="display:none;">共同關鍵詞</span></h4>
+                    <div id="commonWords"></div>
+                </div>
+            </div>
+            <footer>
+                <p><a href="../../index.html"><span class="en">Back to Home</span><span class="zh" style="display:none;">返回首頁</span></a> · <span class="en">Tool #704</span><span class="zh" style="display:none;">工具 #704</span></p>
+                <p>Awesome AI Local Tools © 2024</p>
+            </footer>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Diff | 圖片差異比較 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; flex: 1; min-width: 250px; }
+        .preview-box canvas { max-width: 100%; border-radius: 12px; border: 2px solid #eee; }
+        .preview-box h3 { margin-bottom: 10px; color: #333; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 100px; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #f093fb, #f5576c); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #f093fb; background: #fdf5ff; padding: 30px; text-align: center; border-radius: 12px; cursor: pointer; margin: 10px; flex: 1; min-width: 200px; }
+        .drop-zone:hover { background: #faeaff; }
+        .drop-zones { display: flex; flex-wrap: wrap; gap: 10px; }
+        select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; }
+        .stats { background: #f8f8f8; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: left; }
+        .stats span { display: block; margin: 5px 0; }
+        .diff-high { color: #f5576c; font-weight: bold; }
+        .diff-low { color: #2e7d32; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Image Diff | 圖片差異比較</h1>
+            <p>Compare two images and highlight differences | 比較兩張圖片並突顯差異</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zones">
+                <div class="drop-zone" id="dropZone1">
+                    <input type="file" id="imageInput1" accept="image/*" hidden>
+                    <label for="imageInput1" class="button" style="background:linear-gradient(135deg,#f093fb,#f5576c);cursor:pointer;">Image A | 圖片 A</label>
+                    <p style="margin-top:10px;color:#666;font-size:14px;">Original / Before</p>
+                </div>
+                <div class="drop-zone" id="dropZone2">
+                    <input type="file" id="imageInput2" accept="image/*" hidden>
+                    <label for="imageInput2" class="button" style="background:linear-gradient(135deg,#f5576c,#f093fb);cursor:pointer;">Image B | 圖片 B</label>
+                    <p style="margin-top:10px;color:#666;font-size:14px;">Modified / After</p>
+                </div>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Mode:
+                    <select id="mode">
+                        <option value="difference">Difference | 差異</option>
+                        <option value="highlight">Highlight | 突顯</option>
+                        <option value="sideBySide">Side by Side | 並排</option>
+                        <option value="overlay">Overlay | 疊加</option>
+                    </select>
+                </label>
+                <label>Threshold: <input type="range" id="threshold" min="0" max="100" value="10"> <span id="thresholdVal">10</span></label>
+                <label>Opacity: <input type="range" id="opacity" min="0" max="100" value="50"> <span id="opacityVal">50%</span></label>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box">
+                    <h3>Comparison Result | 比較結果</h3>
+                    <canvas id="canvas"></canvas>
+                    <div class="stats" id="stats"></div>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #094
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

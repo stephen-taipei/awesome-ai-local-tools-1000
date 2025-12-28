@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Extraction | 關鍵字提取</title>
+    <meta name="description" content="Extract keywords from text locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>關鍵字提取</h1>
+            <p class="subtitle">自動提取文章關鍵字</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文章</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="貼上要提取關鍵字的文章..."></textarea>
+                </div>
+
+                <div class="options-row">
+                    <div class="form-group">
+                        <label>關鍵字數量</label>
+                        <select id="countSelect" class="select-field">
+                            <option value="5">5 個</option>
+                            <option value="10" selected>10 個</option>
+                            <option value="15">15 個</option>
+                            <option value="20">20 個</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>最小詞長</label>
+                        <select id="minLengthSelect" class="select-field">
+                            <option value="1">1 字</option>
+                            <option value="2" selected>2 字</option>
+                            <option value="3">3 字</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="extractBtn" class="btn btn-primary btn-block">提取關鍵字</button>
+            </div>
+
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-header">
+                    <h3>提取結果</h3>
+                    <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                </div>
+
+                <div class="keywords-cloud" id="keywordsCloud"></div>
+
+                <div class="keywords-list">
+                    <h4>關鍵字列表</h4>
+                    <div id="keywordsList"></div>
+                </div>
+
+                <div class="stats" id="stats"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🔑</div>
+                    <h3>智能提取</h3>
+                    <p>TF-IDF 演算法</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>詞頻統計</h3>
+                    <p>顯示關鍵字權重</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">☁️</div>
+                    <h3>文字雲</h3>
+                    <p>視覺化呈現</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #132</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

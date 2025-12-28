@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Format Conversion | 格式轉換 - AI Local Tools</title>
+    <meta name="description" content="Convert documents between different formats locally. 100% private.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-container { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); min-height: 100vh; padding: 20px; }
+        .tool-card { background: white; border-radius: 20px; padding: 40px; max-width: 900px; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        .tool-header { text-align: center; margin-bottom: 30px; }
+        .tool-header h1 { font-size: 2.5em; background: linear-gradient(135deg, #fa709a, #fee140); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .lang-switch { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .lang-btn { padding: 8px 20px; border: 2px solid #fa709a; background: white; border-radius: 20px; cursor: pointer; }
+        .lang-btn.active { background: #fa709a; color: white; }
+        .privacy-badge { display: inline-flex; align-items: center; gap: 8px; background: #fff3e0; color: #e65100; padding: 10px 20px; border-radius: 25px; font-size: 14px; margin-bottom: 20px; }
+        .format-selector { display: flex; gap: 20px; align-items: center; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .format-box { text-align: center; }
+        .format-box label { display: block; margin-bottom: 8px; font-weight: 600; }
+        .format-box select { padding: 12px 20px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; min-width: 150px; }
+        .arrow { font-size: 30px; color: #fa709a; }
+        .input-area textarea { width: 100%; height: 250px; padding: 15px; border: 2px solid #e0e0e0; border-radius: 12px; font-family: monospace; font-size: 14px; margin-bottom: 20px; }
+        .btn { padding: 14px 28px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600; }
+        .btn-primary { background: linear-gradient(135deg, #fa709a, #fee140); color: white; }
+        .output-area { background: #f8f9fa; border-radius: 12px; padding: 20px; display: none; margin-top: 20px; }
+        .output-area.visible { display: block; }
+        .output-area textarea { width: 100%; height: 250px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-family: monospace; font-size: 14px; }
+        .action-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-success { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        footer { text-align: center; margin-top: 40px; padding: 20px; color: #666; }
+        footer a { color: #fa709a; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="tool-container">
+        <div class="tool-card">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
+            <div class="tool-header">
+                <h1><span class="en">Format Conversion</span><span class="zh" style="display:none;">格式轉換</span></h1>
+                <p><span class="en">Convert text between different formats</span><span class="zh" style="display:none;">在不同格式之間轉換文本</span></p>
+            </div>
+            <div class="privacy-badge">
+                <span>🔒</span>
+                <span class="en">100% Local Processing</span>
+                <span class="zh" style="display:none;">100% 本地處理</span>
+            </div>
+            <div class="format-selector">
+                <div class="format-box">
+                    <label><span class="en">From</span><span class="zh" style="display:none;">從</span></label>
+                    <select id="fromFormat">
+                        <option value="markdown">Markdown</option>
+                        <option value="html">HTML</option>
+                        <option value="json">JSON</option>
+                        <option value="csv">CSV</option>
+                        <option value="yaml">YAML</option>
+                        <option value="text">Plain Text</option>
+                    </select>
+                </div>
+                <div class="arrow">→</div>
+                <div class="format-box">
+                    <label><span class="en">To</span><span class="zh" style="display:none;">到</span></label>
+                    <select id="toFormat">
+                        <option value="html">HTML</option>
+                        <option value="markdown">Markdown</option>
+                        <option value="json">JSON</option>
+                        <option value="csv">CSV</option>
+                        <option value="yaml">YAML</option>
+                        <option value="text">Plain Text</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-area">
+                <label><span class="en">Input:</span><span class="zh" style="display:none;">輸入：</span></label>
+                <textarea id="inputText" placeholder="Paste your content here..."></textarea>
+            </div>
+            <button class="btn btn-primary" id="convertBtn" style="width:100%;">
+                <span class="en">Convert</span><span class="zh" style="display:none;">轉換</span>
+            </button>
+            <div class="output-area" id="outputArea">
+                <label><span class="en">Output:</span><span class="zh" style="display:none;">輸出：</span></label>
+                <textarea id="outputText" readonly></textarea>
+                <div class="action-buttons">
+                    <button class="btn btn-success" id="copyBtn">Copy</button>
+                    <button class="btn btn-primary" id="downloadBtn">Download</button>
+                </div>
+            </div>
+            <footer>
+                <p><a href="../../index.html">Back to Home</a> · Tool #709</p>
+                <p>Awesome AI Local Tools © 2024</p>
+            </footer>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

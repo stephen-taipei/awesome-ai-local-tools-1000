@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multilingual Speech-to-Text | 多語言語音轉文字</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        .header h1 { color: #333; font-size: 2em; margin-bottom: 10px; }
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-switcher button {
+            background: rgba(255,255,255,0.5);
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 5px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-switcher button.active {
+            background: white;
+            font-weight: bold;
+        }
+        .privacy-badge {
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            color: #666;
+        }
+        .main-content { padding: 30px; }
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .language-btn {
+            padding: 15px 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .language-btn:hover {
+            border-color: #a8edea;
+            background: #f0fffe;
+        }
+        .language-btn.active {
+            border-color: #a8edea;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+        .language-btn .flag { font-size: 1.5em; }
+        .language-btn .name { font-size: 0.85em; margin-top: 5px; }
+        .visualizer {
+            background: #1a1a2e;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        #waveform { width: 100%; height: 80px; }
+        .status {
+            text-align: center;
+            color: white;
+            margin-top: 10px;
+        }
+        .control-panel {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-danger { background: #ff6b6b; color: white; }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .transcript-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 150px;
+        }
+        .transcript-area h3 { margin-bottom: 15px; }
+        .transcript-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .footer a { color: #666; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button id="lang-en" class="active">EN</button>
+                <button id="lang-zh">中文</button>
+            </div>
+            <h1 data-i18n="title">Multilingual Speech-to-Text</h1>
+            <p data-i18n="subtitle">Auto-detect and transcribe speech in 50+ languages</p>
+            <div class="privacy-badge" data-i18n="privacy">100% Browser-based Processing</div>
+        </div>
+
+        <div class="main-content">
+            <h3 data-i18n="selectLanguage" style="margin-bottom: 15px;">Select Language</h3>
+            <div class="language-grid" id="languageGrid">
+                <button class="language-btn active" data-lang="en-US"><div class="flag">🇺🇸</div><div class="name">English</div></button>
+                <button class="language-btn" data-lang="zh-TW"><div class="flag">🇹🇼</div><div class="name">繁體中文</div></button>
+                <button class="language-btn" data-lang="zh-CN"><div class="flag">🇨🇳</div><div class="name">简体中文</div></button>
+                <button class="language-btn" data-lang="ja-JP"><div class="flag">🇯🇵</div><div class="name">日本語</div></button>
+                <button class="language-btn" data-lang="ko-KR"><div class="flag">🇰🇷</div><div class="name">한국어</div></button>
+                <button class="language-btn" data-lang="es-ES"><div class="flag">🇪🇸</div><div class="name">Español</div></button>
+                <button class="language-btn" data-lang="fr-FR"><div class="flag">🇫🇷</div><div class="name">Français</div></button>
+                <button class="language-btn" data-lang="de-DE"><div class="flag">🇩🇪</div><div class="name">Deutsch</div></button>
+                <button class="language-btn" data-lang="it-IT"><div class="flag">🇮🇹</div><div class="name">Italiano</div></button>
+                <button class="language-btn" data-lang="pt-BR"><div class="flag">🇧🇷</div><div class="name">Português</div></button>
+                <button class="language-btn" data-lang="ru-RU"><div class="flag">🇷🇺</div><div class="name">Русский</div></button>
+                <button class="language-btn" data-lang="ar-SA"><div class="flag">🇸🇦</div><div class="name">العربية</div></button>
+                <button class="language-btn" data-lang="hi-IN"><div class="flag">🇮🇳</div><div class="name">हिन्दी</div></button>
+                <button class="language-btn" data-lang="th-TH"><div class="flag">🇹🇭</div><div class="name">ไทย</div></button>
+                <button class="language-btn" data-lang="vi-VN"><div class="flag">🇻🇳</div><div class="name">Tiếng Việt</div></button>
+                <button class="language-btn" data-lang="nl-NL"><div class="flag">🇳🇱</div><div class="name">Nederlands</div></button>
+            </div>
+
+            <div class="visualizer">
+                <canvas id="waveform"></canvas>
+                <div class="status">
+                    <span id="statusText" data-i18n="ready">Ready to record</span>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <button class="btn btn-primary" id="startBtn" data-i18n="start">Start</button>
+                <button class="btn btn-danger" id="stopBtn" disabled data-i18n="stop">Stop</button>
+                <button class="btn btn-secondary" id="copyBtn" data-i18n="copy">Copy</button>
+                <button class="btn btn-secondary" id="downloadBtn" data-i18n="download">Download</button>
+            </div>
+
+            <div class="transcript-area">
+                <h3 data-i18n="transcript">Transcript</h3>
+                <div class="transcript-content" id="transcriptContent" data-i18n="placeholder">
+                    Select a language and click Start to begin...
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Tool #203 | <a href="../index.html">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Summary | 網頁內容摘要</title>
+    <meta name="description" content="Extract and summarize web page content locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>網頁內容摘要</h1>
+            <p class="subtitle">提取並摘要網頁主要內容</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>貼上網頁內容或 HTML</label>
+                    <textarea id="webInput" class="textarea-field" rows="14" placeholder="複製網頁文字內容或 HTML 貼在這裡..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>內容類型</label>
+                        <select id="typeSelect" class="select-field">
+                            <option value="article">文章/新聞</option>
+                            <option value="product">產品頁面</option>
+                            <option value="blog">部落格</option>
+                            <option value="general">一般網頁</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>摘要長度</label>
+                        <select id="lengthSelect" class="select-field">
+                            <option value="short">簡短</option>
+                            <option value="medium" selected>中等</option>
+                            <option value="long">詳細</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">生成摘要</button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3>網頁摘要</h3>
+                    <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                </div>
+                <div class="summary-content" id="summaryContent"></div>
+                <div class="stats" id="stats"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🌐</div>
+                    <h3>網頁解析</h3>
+                    <p>智能提取主要內容</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📝</div>
+                    <h3>去除雜訊</h3>
+                    <p>過濾廣告與導航</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3>快速摘要</h3>
+                    <p>即時生成重點</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #118</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

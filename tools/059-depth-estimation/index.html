@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depth Estimation | 深度估計 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box h3 { margin-bottom: 10px; color: #667eea; }
+        .preview-box canvas { border: 2px solid #ddd; border-radius: 8px; max-width: 100%; }
+        .controls { display: flex; flex-wrap: wrap; gap: 15px; margin: 20px 0; justify-content: center; align-items: center; }
+        .control-group { display: flex; align-items: center; gap: 8px; }
+        .control-group label { font-size: 14px; color: #666; }
+        select, input[type="range"] { padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; }
+        .colormap-preview { display: flex; gap: 5px; margin-top: 10px; justify-content: center; }
+        .colormap-sample { width: 30px; height: 20px; border-radius: 3px; }
+        .depth-info { background: #f8f5ff; padding: 20px; border-radius: 12px; margin-top: 20px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
+        .info-item { text-align: center; padding: 15px; background: white; border-radius: 8px; }
+        .info-value { font-size: 24px; font-weight: bold; color: #667eea; }
+        .info-label { font-size: 12px; color: #888; }
+        .download-btn { display: inline-block; margin-top: 20px; padding: 12px 24px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Depth Estimation | 深度估計</h1>
+            <p>Generate depth maps from images | 從圖片生成深度圖</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button">Upload Image | 上傳圖片</label>
+                <p style="margin-top:10px;color:#888;">Supports JPG, PNG, WebP</p>
+            </div>
+
+            <div class="controls" id="controls" style="display:none;">
+                <div class="control-group">
+                    <label>Colormap | 色彩映射:</label>
+                    <select id="colormap">
+                        <option value="magma">Magma (熔岩)</option>
+                        <option value="viridis">Viridis (翠綠)</option>
+                        <option value="plasma">Plasma (等離子)</option>
+                        <option value="inferno">Inferno (地獄)</option>
+                        <option value="grayscale">Grayscale (灰階)</option>
+                        <option value="rainbow">Rainbow (彩虹)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Contrast | 對比:</label>
+                    <input type="range" id="contrast" min="0.5" max="2" step="0.1" value="1">
+                </div>
+                <div class="control-group">
+                    <label>Invert | 反轉:</label>
+                    <input type="checkbox" id="invert">
+                </div>
+            </div>
+
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box">
+                    <h3>Original | 原圖</h3>
+                    <canvas id="originalCanvas"></canvas>
+                </div>
+                <div class="preview-box">
+                    <h3>Depth Map | 深度圖</h3>
+                    <canvas id="depthCanvas"></canvas>
+                </div>
+            </div>
+
+            <div class="depth-info" id="depthInfo" style="display:none;">
+                <h3 style="text-align:center;">Depth Analysis | 深度分析</h3>
+                <div class="info-grid" id="infoGrid"></div>
+                <div style="text-align:center;">
+                    <button class="download-btn" id="downloadBtn">Download Depth Map | 下載深度圖</button>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #059
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

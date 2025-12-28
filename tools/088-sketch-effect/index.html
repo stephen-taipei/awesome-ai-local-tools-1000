@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketch Effect | 素描效果 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box canvas { max-width: 100%; border-radius: 12px; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 100px; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #434343, #000000); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #434343; background: #f9f9f9; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+        .drop-zone:hover { background: #f0f0f0; }
+        select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sketch Effect | 素描效果</h1>
+            <p>Transform photos into pencil sketch style | 將照片轉換為鉛筆素描風格</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#434343,#000000);cursor:pointer;">Upload Image | 上傳圖片</label>
+                <p style="margin-top:15px;color:#666;">Or drag and drop an image here</p>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Style:
+                    <select id="style">
+                        <option value="pencil">Pencil | 鉛筆</option>
+                        <option value="charcoal">Charcoal | 炭筆</option>
+                        <option value="color">Color Pencil | 彩鉛</option>
+                    </select>
+                </label>
+                <label>Line Strength: <input type="range" id="lineStrength" min="1" max="100" value="50"> <span id="lineVal">50</span></label>
+                <label>Brightness: <input type="range" id="brightness" min="0" max="100" value="50"> <span id="brightVal">50</span></label>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box"><canvas id="canvas"></canvas></div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #088
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

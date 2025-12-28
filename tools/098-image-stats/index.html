@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Stats | 圖片統計 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box img { max-width: 300px; max-height: 300px; border-radius: 12px; border: 2px solid #eee; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #00b09b, #96c93d); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #00b09b; background: #f0fff8; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+        .drop-zone:hover { background: #e0fff0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+        .stat-card { background: #f8f9fa; border-radius: 12px; padding: 20px; }
+        .stat-card h3 { color: #00b09b; margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #00b09b; padding-bottom: 8px; }
+        .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .stat-row:last-child { border-bottom: none; }
+        .stat-label { color: #666; }
+        .stat-value { font-weight: bold; color: #333; }
+        .color-bar { height: 20px; border-radius: 4px; margin: 5px 0; }
+        .channel-bars { display: flex; gap: 10px; margin-top: 10px; }
+        .channel-bar { flex: 1; text-align: center; }
+        .channel-bar .bar { height: 100px; border-radius: 4px; position: relative; }
+        .channel-bar .bar span { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); color: white; font-size: 11px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Image Stats | 圖片統計</h1>
+            <p>Analyze image statistics and properties | 分析圖片統計數據和屬性</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#00b09b,#96c93d);cursor:pointer;">Upload Image | 上傳圖片</label>
+                <p style="margin-top:15px;color:#666;">Or drag and drop an image here</p>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box">
+                    <img id="imagePreview">
+                </div>
+            </div>
+            <div class="stats-grid" id="statsGrid" style="display:none;"></div>
+            <canvas id="canvas" style="display:none;"></canvas>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #098
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

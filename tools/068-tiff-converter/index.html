@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIFF Converter | TIFF 轉換器 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .preview-item { background: #f9f9f9; border-radius: 12px; padding: 15px; text-align: center; }
+        .preview-item img { max-width: 100%; max-height: 150px; border-radius: 8px; margin-bottom: 10px; }
+        .file-info { font-size: 12px; color: #666; margin-bottom: 10px; }
+        .download-btn { padding: 8px 16px; background: linear-gradient(135deg, #a1c4fd, #c2e9fb); color: #333; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .batch-actions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        .batch-btn { padding: 12px 24px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .drop-zone { border: 3px dashed #a1c4fd; background: #f5f9ff; padding: 40px; text-align: center; border-radius: 12px; }
+        .drop-zone.dragover { background: #e0edff; }
+        .note { background: #fff3cd; padding: 10px 15px; border-radius: 8px; color: #856404; font-size: 13px; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TIFF Converter | TIFF 轉換器</h1>
+            <p>Convert images to TIFF format | 將圖片轉換為 TIFF 格式</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#a1c4fd,#c2e9fb);color:#333;">Select Images | 選擇圖片</label>
+                <p style="margin-top:15px;color:#888;">Supports PNG, JPG, WebP, BMP</p>
+            </div>
+            <div class="note">Note: Browser TIFF support is limited. Downloads as high-quality PNG with TIFF metadata.</div>
+            <div id="converterSection" style="display:none;">
+                <div class="preview-grid" id="previewGrid"></div>
+                <div class="batch-actions">
+                    <button class="batch-btn" id="downloadAll">Download All | 下載全部</button>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #068
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

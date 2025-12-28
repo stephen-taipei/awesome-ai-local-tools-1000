@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Filter | 批量濾鏡 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+        .preview-item { background: #f9f9f9; border-radius: 12px; padding: 10px; text-align: center; }
+        .preview-item canvas { width: 100%; height: 100px; object-fit: contain; border-radius: 8px; }
+        .filters { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 20px 0; }
+        .filter-btn { padding: 8px 16px; background: #f0f0f0; border: 2px solid transparent; border-radius: 6px; cursor: pointer; }
+        .filter-btn.active { border-color: #667eea; background: #f8f5ff; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .drop-zone { border: 3px dashed #667eea; background: #f8f5ff; padding: 40px; text-align: center; border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Batch Filter | 批量濾鏡</h1>
+            <p>Apply filters to multiple images | 為多張圖片套用濾鏡</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button">Select Images</label>
+            </div>
+            <div class="filters" id="filters" style="display:none;">
+                <button class="filter-btn active" data-filter="none">Original</button>
+                <button class="filter-btn" data-filter="grayscale">Grayscale</button>
+                <button class="filter-btn" data-filter="sepia">Sepia</button>
+                <button class="filter-btn" data-filter="invert">Invert</button>
+                <button class="filter-btn" data-filter="brightness">Bright</button>
+                <button class="filter-btn" data-filter="contrast">Contrast</button>
+                <button class="filter-btn" data-filter="blur">Blur</button>
+                <button class="filter-btn" data-filter="vintage">Vintage</button>
+            </div>
+            <div style="text-align:center;margin:20px 0;" id="actionSection" style="display:none;">
+                <button class="action-btn" id="processBtn" style="display:none;">Apply & Download</button>
+            </div>
+            <div class="preview-grid" id="previewGrid"></div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #077
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

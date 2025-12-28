@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis | 情感分析器</title>
+    <meta name="description" content="Analyze text sentiment locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>情感分析器</h1>
+            <p class="subtitle">分析文字的情感傾向</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要分析的文字..."></textarea>
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary btn-block">分析情感</button>
+            </div>
+
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>分析結果</h3>
+
+                <div class="sentiment-display">
+                    <div class="sentiment-icon" id="sentimentIcon">😐</div>
+                    <div class="sentiment-label" id="sentimentLabel">中性</div>
+                </div>
+
+                <div class="score-bars">
+                    <div class="score-bar">
+                        <span class="score-label">正面</span>
+                        <div class="bar-container">
+                            <div class="bar positive" id="positiveBar" style="width: 0%"></div>
+                        </div>
+                        <span class="score-value" id="positiveScore">0%</span>
+                    </div>
+                    <div class="score-bar">
+                        <span class="score-label">中性</span>
+                        <div class="bar-container">
+                            <div class="bar neutral" id="neutralBar" style="width: 0%"></div>
+                        </div>
+                        <span class="score-value" id="neutralScore">0%</span>
+                    </div>
+                    <div class="score-bar">
+                        <span class="score-label">負面</span>
+                        <div class="bar-container">
+                            <div class="bar negative" id="negativeBar" style="width: 0%"></div>
+                        </div>
+                        <span class="score-value" id="negativeScore">0%</span>
+                    </div>
+                </div>
+
+                <div class="keywords-section">
+                    <h4>情感關鍵詞</h4>
+                    <div id="keywordsDisplay" class="keywords-display"></div>
+                </div>
+            </div>
+
+            <div class="examples-section">
+                <h3>試試這些範例</h3>
+                <div class="example-list">
+                    <button class="example-btn" data-text="今天天氣真好，心情很愉快！">😊 正面範例</button>
+                    <button class="example-btn" data-text="這個產品還可以，沒什麼特別的感覺。">😐 中性範例</button>
+                    <button class="example-btn" data-text="服務態度太差了，非常失望！">😠 負面範例</button>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>情感分數</h3>
+                    <p>量化情感傾向</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🏷️</div>
+                    <h3>關鍵詞標記</h3>
+                    <p>識別情感詞彙</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌐</div>
+                    <h3>多語言</h3>
+                    <p>支援中英文分析</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #131</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

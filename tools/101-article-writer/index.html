@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Writer | AI 文章撰寫</title>
+    <meta name="description" content="Generate articles locally in your browser with AI assistance. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 文章撰寫</h1>
+            <p class="subtitle" data-i18n="subtitle">智能文章生成，本地處理保護隱私</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-group">
+                    <label data-i18n="topicLabel">文章主題</label>
+                    <input type="text" id="topicInput" class="input-field" data-i18n-placeholder="topicPlaceholder" placeholder="輸入您想撰寫的主題...">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="styleLabel">文章風格</label>
+                        <select id="styleSelect" class="select-field">
+                            <option value="formal" data-i18n="styleFormal">正式</option>
+                            <option value="casual" data-i18n="styleCasual">輕鬆</option>
+                            <option value="professional" data-i18n="styleProfessional">專業</option>
+                            <option value="creative" data-i18n="styleCreative">創意</option>
+                            <option value="academic" data-i18n="styleAcademic">學術</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="lengthLabel">文章長度</label>
+                        <select id="lengthSelect" class="select-field">
+                            <option value="short" data-i18n="lengthShort">短篇 (300字)</option>
+                            <option value="medium" data-i18n="lengthMedium">中篇 (600字)</option>
+                            <option value="long" data-i18n="lengthLong">長篇 (1000字)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="keywordsLabel">關鍵字 (選填)</label>
+                    <input type="text" id="keywordsInput" class="input-field" data-i18n-placeholder="keywordsPlaceholder" placeholder="用逗號分隔關鍵字...">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="outlineLabel">大綱要點 (選填)</label>
+                    <textarea id="outlineInput" class="textarea-field" rows="3" data-i18n-placeholder="outlinePlaceholder" placeholder="每行一個要點..."></textarea>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成文章</span>
+                </button>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成結果</h3>
+                    <div class="output-actions">
+                        <button id="copyBtn" class="btn btn-secondary btn-sm" data-i18n="copyBtn">複製</button>
+                        <button id="downloadBtn" class="btn btn-secondary btn-sm" data-i18n="downloadBtn">下載</button>
+                    </div>
+                </div>
+                <div class="output-content" id="outputContent"></div>
+                <div class="output-stats" id="outputStats"></div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📝</div>
+                    <h3 data-i18n="feature1">多種風格</h3>
+                    <p data-i18n="feature1Desc">支援正式、輕鬆、專業等多種寫作風格</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3 data-i18n="feature2">關鍵字優化</h3>
+                    <p data-i18n="feature2Desc">可指定關鍵字，優化SEO效果</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="feature4">即時生成</h3>
+                    <p data-i18n="feature4Desc">快速生成高品質文章內容</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #101</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

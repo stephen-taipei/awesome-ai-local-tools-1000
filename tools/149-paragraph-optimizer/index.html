@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paragraph Optimizer | 段落優化</title>
+    <meta name="description" content="Optimize paragraph structure locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>段落優化</h1>
+            <p class="subtitle">優化段落結構，提升文章可讀性</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入段落</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要優化的段落..."></textarea>
+                </div>
+                <button id="optimizeBtn" class="btn btn-primary btn-block">優化段落</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>優化結果</h3>
+                <div class="stats-bar" id="statsBar"></div>
+                <div class="result-content" id="resultContent"></div>
+                <div class="suggestions" id="suggestions"></div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例段落</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="這是一段很長的文字沒有任何標點符號也沒有分段所以讀起來非常困難讓人很難理解內容到底在說什麼希望能夠優化一下讓它變得更容易閱讀">中文範例</button>
+                <button class="example-btn" data-text="This is a very long paragraph without any breaks it just keeps going and going which makes it very hard to read and understand we should add some paragraph breaks to make it easier to follow the content.">English Example</button>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #149</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

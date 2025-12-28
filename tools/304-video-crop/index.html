@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Crop | 影片裁切工具</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Video Crop</h1>
+            <p class="subtitle" data-i18n="subtitle">Crop and resize your videos with precision</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - No Upload Required</span>
+        </div>
+
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="videoInput" accept="video/*" hidden>
+                <div class="upload-icon">🎥</div>
+                <p class="upload-text" data-i18n="uploadText">Drop video here or click to upload</p>
+                <p class="upload-hint" data-i18n="uploadHint">Supports MP4, WebM, MOV formats</p>
+            </div>
+
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="crop-container">
+                    <video id="videoPlayer" muted></video>
+                    <div class="crop-overlay" id="cropOverlay">
+                        <div class="crop-box" id="cropBox">
+                            <div class="crop-handle nw" data-handle="nw"></div>
+                            <div class="crop-handle ne" data-handle="ne"></div>
+                            <div class="crop-handle sw" data-handle="sw"></div>
+                            <div class="crop-handle se" data-handle="se"></div>
+                            <div class="crop-handle n" data-handle="n"></div>
+                            <div class="crop-handle s" data-handle="s"></div>
+                            <div class="crop-handle w" data-handle="w"></div>
+                            <div class="crop-handle e" data-handle="e"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="aspect-ratios">
+                        <label data-i18n="aspectRatio">Aspect Ratio:</label>
+                        <div class="ratio-buttons">
+                            <button class="ratio-btn active" data-ratio="free" data-i18n="free">Free</button>
+                            <button class="ratio-btn" data-ratio="1:1">1:1</button>
+                            <button class="ratio-btn" data-ratio="16:9">16:9</button>
+                            <button class="ratio-btn" data-ratio="9:16">9:16</button>
+                            <button class="ratio-btn" data-ratio="4:3">4:3</button>
+                            <button class="ratio-btn" data-ratio="3:4">3:4</button>
+                        </div>
+                    </div>
+
+                    <div class="dimensions">
+                        <div class="dim-input">
+                            <label data-i18n="width">Width:</label>
+                            <input type="number" id="cropWidth" min="1">
+                        </div>
+                        <span class="dim-separator">x</span>
+                        <div class="dim-input">
+                            <label data-i18n="height">Height:</label>
+                            <input type="number" id="cropHeight" min="1">
+                        </div>
+                    </div>
+
+                    <div class="position">
+                        <div class="dim-input">
+                            <label data-i18n="posX">X:</label>
+                            <input type="number" id="cropX" min="0">
+                        </div>
+                        <div class="dim-input">
+                            <label data-i18n="posY">Y:</label>
+                            <input type="number" id="cropY" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="previewBtn" class="btn btn-secondary" data-i18n="preview">Preview</button>
+                    <button id="cropBtn" class="btn btn-primary" data-i18n="crop">Crop Video</button>
+                    <button id="resetBtn" class="btn btn-outline" data-i18n="reset">Upload New Video</button>
+                </div>
+
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="processing">Processing...</p>
+                </div>
+
+                <div class="download-area" id="downloadArea" style="display: none;">
+                    <video id="resultVideo" controls></video>
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download Cropped Video</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p><a href="../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #304</span></p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+    <script src="app.js"></script>
+</body>
+</html>

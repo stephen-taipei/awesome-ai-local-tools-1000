@@ -1,0 +1,39 @@
+/* Paragraph Optimizer - Tool #149 */
+:root { --primary-color: #3b82f6; --success-color: #22c55e; --bg-color: #0f172a; --card-bg: #1e293b; --border-color: #334155; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --radius: 12px; --radius-sm: 8px; --transition: all 0.2s ease; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-color); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+.container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+.lang-switcher { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; }
+.lang-btn { padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: transparent; color: var(--text-secondary); border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); }
+.lang-btn:hover { border-color: var(--primary-color); }
+.lang-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+.header { text-align: center; margin-bottom: 2rem; }
+.header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--primary-color), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.subtitle { color: var(--text-secondary); font-size: 1.1rem; }
+.privacy-badge { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.875rem; color: var(--success-color); margin: 0 auto 2rem; width: fit-content; }
+.input-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+.textarea-field { width: 100%; min-height: 150px; padding: 1rem; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 1rem; line-height: 1.6; font-family: inherit; resize: vertical; }
+.textarea-field:focus { outline: none; border-color: var(--primary-color); }
+.textarea-field::placeholder { color: var(--text-secondary); }
+.btn { padding: 0.875rem 1.5rem; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
+.btn-primary { background: linear-gradient(135deg, var(--primary-color), #8b5cf6); color: white; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); }
+.btn-block { width: 100%; }
+.result-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; margin-top: 2rem; }
+.result-section h3 { margin-bottom: 1rem; text-align: center; }
+.stats-bar { display: flex; justify-content: center; gap: 2rem; padding: 1rem; background: var(--bg-color); border-radius: var(--radius-sm); margin-bottom: 1rem; }
+.stat-item { text-align: center; }
+.stat-value { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
+.stat-label { font-size: 0.75rem; color: var(--text-secondary); }
+.result-content { background: var(--bg-color); border-radius: var(--radius-sm); padding: 1rem; line-height: 1.8; white-space: pre-wrap; }
+.suggestions { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.suggestion-tag { padding: 0.25rem 0.75rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 100px; font-size: 0.875rem; color: var(--primary-color); }
+.examples-section { margin-top: 2rem; }
+.examples-section h3 { margin-bottom: 1rem; }
+.example-list { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.example-btn { padding: 0.75rem 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); cursor: pointer; transition: var(--transition); }
+.example-btn:hover { border-color: var(--primary-color); }
+.footer { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 0.875rem; }
+.footer a { color: var(--primary-color); text-decoration: none; }

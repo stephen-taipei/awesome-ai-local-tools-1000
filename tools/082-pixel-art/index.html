@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Art | 像素藝術 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box canvas { max-width: 100%; border-radius: 12px; image-rendering: pixelated; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 120px; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .drop-zone { border: 3px dashed #667eea; background: #f8f5ff; padding: 40px; text-align: center; border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pixel Art | 像素藝術</h1>
+            <p>Convert images to pixel art style | 將圖片轉換為像素風格</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button">Upload Image</label>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Pixel Size: <input type="range" id="pixelSize" min="2" max="32" value="8"> <span id="sizeVal">8px</span></label>
+                <label>Colors: <input type="range" id="colorCount" min="2" max="64" value="16"> <span id="colorVal">16</span></label>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box"><canvas id="canvas"></canvas></div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #082
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

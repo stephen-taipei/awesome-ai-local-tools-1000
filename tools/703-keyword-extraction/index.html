@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Extraction | 關鍵詞提取 - AI Local Tools</title>
+    <meta name="description" content="Extract keywords and key phrases from documents locally. 100% private.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-container {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tool-header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .lang-switch {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .lang-btn {
+            padding: 8px 20px;
+            border: 2px solid #f093fb;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn.active { background: #f093fb; color: white; }
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fce4ec;
+            color: #c2185b;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        .upload-area:hover { border-color: #f093fb; background: #fff5f8; }
+        .upload-icon { font-size: 48px; margin-bottom: 15px; }
+        .controls {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .control-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .control-group { margin-bottom: 15px; }
+        .control-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+        .control-group select, .control-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(240, 147, 251, 0.4);
+        }
+        .results { background: #f8f9fa; border-radius: 12px; padding: 25px; display: none; }
+        .results.visible { display: block; }
+        .keyword-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .keyword-tag {
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .keyword-tag:hover { transform: scale(1.1); }
+        .keyword-list {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .keyword-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .keyword-item:last-child { border-bottom: none; }
+        .keyword-rank {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .keyword-text { flex: 1; margin-left: 15px; font-weight: 500; }
+        .keyword-score {
+            background: #fce4ec;
+            color: #c2185b;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+        }
+        .loading { display: none; text-align: center; padding: 40px; }
+        .loading.visible { display: block; }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #f093fb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .action-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-success { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        footer { text-align: center; margin-top: 40px; padding: 20px; color: #666; }
+        footer a { color: #f093fb; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="tool-container">
+        <div class="tool-card">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
+
+            <div class="tool-header">
+                <h1><span class="en">Keyword Extraction</span><span class="zh" style="display:none;">關鍵詞提取</span></h1>
+                <p><span class="en">Extract important keywords and phrases from text</span><span class="zh" style="display:none;">從文本中提取重要關鍵詞和短語</span></p>
+            </div>
+
+            <div class="privacy-badge">
+                <span>🔒</span>
+                <span class="en">100% Local Processing - No Data Upload</span>
+                <span class="zh" style="display:none;">100% 本地處理 - 無需上傳資料</span>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".txt,.md,.html" hidden>
+                <div class="upload-icon">🔑</div>
+                <p><span class="en">Drag & drop document or click to upload</span><span class="zh" style="display:none;">拖放文件或點擊上傳</span></p>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label><span class="en">Or paste text:</span><span class="zh" style="display:none;">或貼上文字：</span></label>
+                    <textarea id="textInput" rows="5" style="width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;"></textarea>
+                </div>
+                <div class="control-row">
+                    <div class="control-group">
+                        <label><span class="en">Number of Keywords</span><span class="zh" style="display:none;">關鍵詞數量</span></label>
+                        <select id="keywordCount">
+                            <option value="10">10 keywords</option>
+                            <option value="20" selected>20 keywords</option>
+                            <option value="30">30 keywords</option>
+                            <option value="50">50 keywords</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label><span class="en">Extraction Mode</span><span class="zh" style="display:none;">提取模式</span></label>
+                        <select id="extractionMode">
+                            <option value="single">Single Words | 單詞</option>
+                            <option value="phrases" selected>Phrases (2-3 words) | 短語</option>
+                            <option value="both">Both | 兩者</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="extractBtn" style="width:100%;">
+                <span class="en">Extract Keywords</span><span class="zh" style="display:none;">提取關鍵詞</span>
+            </button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p><span class="en">Extracting keywords...</span><span class="zh" style="display:none;">正在提取關鍵詞...</span></p>
+            </div>
+
+            <div class="results" id="results">
+                <h3><span class="en">Keyword Cloud</span><span class="zh" style="display:none;">關鍵詞雲</span></h3>
+                <div class="keyword-cloud" id="keywordCloud"></div>
+
+                <h3><span class="en">Ranked Keywords</span><span class="zh" style="display:none;">關鍵詞排名</span></h3>
+                <div class="keyword-list" id="keywordList"></div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-success" id="copyBtn">
+                        <span class="en">Copy Keywords</span><span class="zh" style="display:none;">複製關鍵詞</span>
+                    </button>
+                    <button class="btn btn-primary" id="exportBtn">
+                        <span class="en">Export CSV</span><span class="zh" style="display:none;">匯出 CSV</span>
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <span class="en">Reset</span><span class="zh" style="display:none;">重置</span>
+                    </button>
+                </div>
+            </div>
+
+            <footer>
+                <p>
+                    <a href="../../index.html"><span class="en">Back to Home</span><span class="zh" style="display:none;">返回首頁</span></a> ·
+                    <span class="en">Tool #703</span><span class="zh" style="display:none;">工具 #703</span>
+                </p>
+                <p>Awesome AI Local Tools © 2024</p>
+            </footer>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Summary | 會議紀錄摘要</title>
+    <meta name="description" content="Summarize meeting transcripts locally. Extract action items and key decisions. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">會議紀錄摘要</h1>
+            <p class="subtitle" data-i18n="subtitle">從會議逐字稿生成重點摘要</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label data-i18n="inputLabel">貼上會議逐字稿</label>
+                    <textarea id="meetingInput" class="textarea-field" rows="12" placeholder="將您的會議記錄或逐字稿貼在這裡..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="formatLabel">輸出格式</label>
+                        <select id="formatSelect" class="select-field">
+                            <option value="summary">重點摘要</option>
+                            <option value="actions">待辦事項</option>
+                            <option value="decisions">決議事項</option>
+                            <option value="full">完整報告</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="detailLabel">詳細程度</label>
+                        <select id="detailSelect" class="select-field">
+                            <option value="brief">簡潔</option>
+                            <option value="standard" selected>標準</option>
+                            <option value="detailed">詳細</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成摘要</span>
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">會議摘要</h3>
+                    <div class="output-actions">
+                        <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                        <button id="downloadBtn" class="btn btn-secondary btn-sm">下載</button>
+                    </div>
+                </div>
+                <div class="summary-content" id="summaryContent"></div>
+                <div class="stats" id="stats"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📋</div>
+                    <h3>會議摘要</h3>
+                    <p>自動提取會議重點</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✅</div>
+                    <h3>待辦事項</h3>
+                    <p>識別行動項目</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>決議追蹤</h3>
+                    <p>記錄重要決定</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #113</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

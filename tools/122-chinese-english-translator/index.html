@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese-English Translator | 中英翻譯專家</title>
+    <meta name="description" content="High-quality Chinese-English translation locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>中英翻譯專家</h1>
+            <p class="subtitle">高品質中英互譯</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="direction-tabs">
+                <button class="tab-btn active" data-dir="zh-en">中文 → 英文</button>
+                <button class="tab-btn" data-dir="en-zh">英文 → 中文</button>
+            </div>
+
+            <div class="translator-box">
+                <div class="input-area">
+                    <textarea id="sourceText" class="text-input" placeholder="輸入中文或英文..."></textarea>
+                    <div class="input-footer">
+                        <span id="charCount">0 字</span>
+                        <button id="clearBtn" class="text-btn">清除</button>
+                    </div>
+                </div>
+
+                <div class="translate-actions">
+                    <button id="translateBtn" class="btn btn-primary">翻譯</button>
+                </div>
+
+                <div class="output-area">
+                    <div id="targetText" class="text-output"></div>
+                    <div class="output-footer">
+                        <span id="resultCount">0 字</span>
+                        <button id="copyBtn" class="text-btn">複製</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="options-panel">
+                <h3>翻譯選項</h3>
+                <div class="options-grid">
+                    <label class="option-item">
+                        <input type="checkbox" id="formalMode" checked>
+                        <span>正式語氣</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="keepFormat">
+                        <span>保留格式</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="showPinyin">
+                        <span>顯示拼音</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="traditionalChinese" checked>
+                        <span>繁體中文</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="examples-section">
+                <h3>範例句子</h3>
+                <div class="example-list">
+                    <div class="example-item" data-text="今天天氣很好" data-dir="zh-en">
+                        <span class="example-source">今天天氣很好</span>
+                        <span class="example-arrow">→</span>
+                        <span class="example-target">The weather is nice today</span>
+                    </div>
+                    <div class="example-item" data-text="I love programming" data-dir="en-zh">
+                        <span class="example-source">I love programming</span>
+                        <span class="example-arrow">→</span>
+                        <span class="example-target">我喜歡程式設計</span>
+                    </div>
+                    <div class="example-item" data-text="學習永遠不嫌晚" data-dir="zh-en">
+                        <span class="example-source">學習永遠不嫌晚</span>
+                        <span class="example-arrow">→</span>
+                        <span class="example-target">It's never too late to learn</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3>精準翻譯</h3>
+                    <p>專為中英互譯優化</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📝</div>
+                    <h3>多種語氣</h3>
+                    <p>正式與非正式切換</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔤</div>
+                    <h3>拼音支援</h3>
+                    <p>可顯示中文拼音</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #122</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

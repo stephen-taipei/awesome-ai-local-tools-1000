@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Glow | 霓虹發光 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box canvas { max-width: 100%; border-radius: 12px; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 100px; }
+        input[type="color"] { width: 40px; height: 30px; border: none; cursor: pointer; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #ff00ff, #00ffff); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 0 20px rgba(255,0,255,0.5); }
+        .drop-zone { border: 3px dashed #ff00ff; background: #1a0a1a; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+        .drop-zone:hover { background: #2a1a2a; box-shadow: 0 0 30px rgba(255,0,255,0.3); }
+        .drop-zone p { color: #ff00ff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Neon Glow | 霓虹發光</h1>
+            <p>Add neon glow effects to images | 為圖片添加霓虹發光效果</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#ff00ff,#00ffff);cursor:pointer;">Upload Image | 上傳圖片</label>
+                <p style="margin-top:15px;">Or drag and drop an image here</p>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Glow Intensity: <input type="range" id="intensity" min="0" max="100" value="50"> <span id="intensityVal">50</span></label>
+                <label>Glow Size: <input type="range" id="glowSize" min="5" max="50" value="20"> <span id="sizeVal">20</span></label>
+                <label>Color 1: <input type="color" id="color1" value="#ff00ff"></label>
+                <label>Color 2: <input type="color" id="color2" value="#00ffff"></label>
+                <label><input type="checkbox" id="edgesOnly"> Edges Only</label>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box"><canvas id="canvas"></canvas></div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #089
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

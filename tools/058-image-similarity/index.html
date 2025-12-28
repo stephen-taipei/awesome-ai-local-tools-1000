@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Similarity | 圖片相似度比對 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .compare-container { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .image-slot { text-align: center; }
+        .image-slot canvas { border: 2px dashed #ddd; border-radius: 8px; cursor: pointer; background: #f9f9f9; }
+        .image-slot canvas.has-image { border-style: solid; border-color: #27ae60; }
+        .similarity-result { text-align: center; margin-top: 30px; padding: 30px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 16px; color: white; }
+        .similarity-score { font-size: 72px; font-weight: bold; }
+        .similarity-label { font-size: 18px; opacity: 0.9; }
+        .details { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+        .detail-item { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; }
+        .detail-value { font-size: 24px; font-weight: bold; }
+        .detail-label { font-size: 12px; opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Image Similarity | 圖片相似度比對</h1>
+            <p>Compare two images and measure similarity | 比較兩張圖片的相似程度</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="compare-container">
+                <div class="image-slot">
+                    <h3>Image 1 | 圖片 1</h3>
+                    <canvas id="canvas1" width="250" height="250"></canvas>
+                    <input type="file" id="input1" accept="image/*" hidden>
+                    <label for="input1" class="button" style="margin-top:10px;display:inline-block;">Choose | 選擇</label>
+                </div>
+                <div class="image-slot">
+                    <h3>Image 2 | 圖片 2</h3>
+                    <canvas id="canvas2" width="250" height="250"></canvas>
+                    <input type="file" id="input2" accept="image/*" hidden>
+                    <label for="input2" class="button" style="margin-top:10px;display:inline-block;">Choose | 選擇</label>
+                </div>
+            </div>
+            <div id="result" class="similarity-result" style="display:none;">
+                <div class="similarity-score" id="score">--</div>
+                <div class="similarity-label" id="label">Similarity Score | 相似度分數</div>
+                <div class="details" id="details"></div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #058
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

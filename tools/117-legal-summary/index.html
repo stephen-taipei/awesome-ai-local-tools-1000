@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Summary | 法律文件摘要</title>
+    <meta name="description" content="Summarize legal documents locally. Extract key clauses. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>法律文件摘要</h1>
+            <p class="subtitle">摘要法律文件重點條款</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>貼上法律文件內容</label>
+                    <textarea id="legalInput" class="textarea-field" rows="14" placeholder="貼上合約、條款或法律文件..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>文件類型</label>
+                        <select id="typeSelect" class="select-field">
+                            <option value="contract">合約/契約</option>
+                            <option value="terms">服務條款</option>
+                            <option value="privacy">隱私政策</option>
+                            <option value="general">一般法律文件</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>重點提取</label>
+                        <select id="focusSelect" class="select-field">
+                            <option value="all">全部重點</option>
+                            <option value="obligations">義務責任</option>
+                            <option value="rights">權利條款</option>
+                            <option value="risks">風險警示</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">生成摘要</button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3>法律摘要</h3>
+                    <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                </div>
+                <div class="summary-content" id="summaryContent"></div>
+                <div class="stats" id="stats"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">⚖️</div>
+                    <h3>條款摘要</h3>
+                    <p>提取重要條款</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚠️</div>
+                    <h3>風險識別</h3>
+                    <p>標示潛在風險</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📋</div>
+                    <h3>義務清單</h3>
+                    <p>列出各方責任</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #117</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

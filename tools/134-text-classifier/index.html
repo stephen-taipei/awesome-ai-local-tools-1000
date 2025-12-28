@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Classifier | 文字分類器</title>
+    <meta name="description" content="Classify text into categories locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文字分類器</h1>
+            <p class="subtitle">自動分類文字內容類別</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要分類的文字..."></textarea>
+                </div>
+                <button id="classifyBtn" class="btn btn-primary btn-block">分類文字</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>分類結果</h3>
+                <div class="primary-category" id="primaryCategory"></div>
+                <div class="category-scores" id="categoryScores"></div>
+            </div>
+        </main>
+        <section class="info-section">
+            <h2>支援類別</h2>
+            <div class="info-grid">
+                <div class="info-card"><div class="info-icon">📰</div><h3>新聞</h3></div>
+                <div class="info-card"><div class="info-icon">💼</div><h3>商業</h3></div>
+                <div class="info-card"><div class="info-icon">🔬</div><h3>科技</h3></div>
+                <div class="info-card"><div class="info-icon">⚽</div><h3>體育</h3></div>
+                <div class="info-card"><div class="info-icon">🎬</div><h3>娛樂</h3></div>
+                <div class="info-card"><div class="info-icon">🏥</div><h3>健康</h3></div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #134</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

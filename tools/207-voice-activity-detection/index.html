@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Activity Detection | 語音活動偵測</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-switcher button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+        .lang-switcher button.active { background: white; color: #11998e; }
+        .main-content { padding: 30px; }
+        .vad-display {
+            background: #1a1a2e;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .vad-indicator {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            transition: all 0.3s;
+        }
+        .vad-indicator.silent {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a5568 100%);
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+        }
+        .vad-indicator.speaking {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            box-shadow: 0 0 50px rgba(56, 239, 125, 0.5);
+            animation: pulse 0.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .status-text {
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .volume-meter {
+            width: 100%;
+            height: 30px;
+            background: #2c3e50;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .volume-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+            width: 0%;
+            transition: width 0.1s;
+        }
+        #waveform {
+            width: 100%;
+            height: 100px;
+            background: #16213e;
+            border-radius: 10px;
+        }
+        .settings {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .setting-row input[type="range"] {
+            width: 200px;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-value { font-size: 1.5em; font-weight: bold; color: #11998e; }
+        .stat-label { font-size: 0.85em; color: #666; }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .footer a { color: #11998e; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button id="lang-en" class="active">EN</button>
+                <button id="lang-zh">中文</button>
+            </div>
+            <h1 data-i18n="title">Voice Activity Detection</h1>
+            <p data-i18n="subtitle">Real-time speech detection using Web Audio API</p>
+        </div>
+
+        <div class="main-content">
+            <div class="vad-display">
+                <div class="vad-indicator silent" id="vadIndicator">🎤</div>
+                <div class="status-text" id="statusText" data-i18n="silent">Silent</div>
+                <div class="volume-meter">
+                    <div class="volume-fill" id="volumeFill"></div>
+                </div>
+                <canvas id="waveform"></canvas>
+            </div>
+
+            <div class="settings">
+                <h3 data-i18n="settings" style="margin-bottom:15px;">Settings</h3>
+                <div class="setting-row">
+                    <label data-i18n="threshold">Detection Threshold:</label>
+                    <input type="range" id="thresholdSlider" min="0" max="100" value="30">
+                    <span id="thresholdValue">30</span>
+                </div>
+                <div class="setting-row">
+                    <label data-i18n="smoothing">Smoothing:</label>
+                    <input type="range" id="smoothingSlider" min="0" max="100" value="50">
+                    <span id="smoothingValue">50</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="startBtn" data-i18n="start">Start Detection</button>
+                <button class="btn btn-secondary" id="stopBtn" disabled data-i18n="stop">Stop</button>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="speakingTime">0:00</div>
+                    <div class="stat-label" data-i18n="speakingTime">Speaking Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="silentTime">0:00</div>
+                    <div class="stat-label" data-i18n="silentTime">Silent Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="speakingRatio">0%</div>
+                    <div class="stat-label" data-i18n="ratio">Speaking Ratio</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Tool #207 | <a href="../index.html">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNG Converter | PNG 轉換器 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .converter-section { margin-top: 20px; }
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .preview-item { background: #f9f9f9; border-radius: 12px; padding: 15px; text-align: center; }
+        .preview-item img { max-width: 100%; max-height: 150px; border-radius: 8px; margin-bottom: 10px; }
+        .file-info { font-size: 12px; color: #666; margin-bottom: 10px; }
+        .download-btn { padding: 8px 16px; background: linear-gradient(135deg, #11998e, #38ef7d); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+        .download-btn:hover { opacity: 0.9; }
+        .batch-actions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+        .batch-btn { padding: 12px 24px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .options { display: flex; gap: 20px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        .option-group { display: flex; align-items: center; gap: 8px; }
+        .option-group label { font-size: 14px; color: #666; }
+        select { padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; }
+        .drop-zone { border: 3px dashed #11998e; background: #f0fff4; padding: 40px; text-align: center; border-radius: 12px; transition: all 0.3s; }
+        .drop-zone.dragover { background: #d0f7df; border-color: #38ef7d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PNG Converter | PNG 轉換器</h1>
+            <p>Convert images to PNG format | 將圖片轉換為 PNG 格式</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#11998e,#38ef7d);">Select Images | 選擇圖片</label>
+                <p style="margin-top:15px;color:#888;">Or drag and drop images here | 或拖放圖片到此處</p>
+                <p style="margin-top:10px;color:#aaa;font-size:12px;">Supports: JPG, WebP, BMP, GIF, TIFF</p>
+            </div>
+
+            <div class="options" id="options" style="display:none;">
+                <div class="option-group">
+                    <label>Background | 背景:</label>
+                    <select id="background">
+                        <option value="transparent">Transparent 透明</option>
+                        <option value="white">White 白色</option>
+                        <option value="black">Black 黑色</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="converter-section" id="converterSection" style="display:none;">
+                <div class="preview-grid" id="previewGrid"></div>
+                <div class="batch-actions">
+                    <button class="batch-btn" id="downloadAll">Download All | 下載全部</button>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #061
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

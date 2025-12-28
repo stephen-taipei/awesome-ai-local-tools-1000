@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readability Analysis | 可讀性分析</title>
+    <meta name="description" content="Analyze text readability and complexity locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>可讀性分析</h1>
+            <p class="subtitle">分析文章的閱讀難度與複雜度</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要分析可讀性的文字..."></textarea>
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary btn-block">分析可讀性</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>分析結果</h3>
+                <div class="readability-score" id="readabilityScore">
+                    <div class="score-display">
+                        <div class="score-number" id="scoreNumber">0</div>
+                        <div class="score-label" id="scoreLabel">可讀性分數</div>
+                    </div>
+                    <div class="level-badge" id="levelBadge">
+                        <span class="level-icon">📖</span>
+                        <span class="level-text" id="levelText">適合程度</span>
+                    </div>
+                </div>
+                <div class="metrics-grid" id="metricsGrid"></div>
+                <div class="suggestions-section">
+                    <h4>改善建議</h4>
+                    <div class="suggestions-list" id="suggestionsList"></div>
+                </div>
+                <div class="stats-section">
+                    <h4>文本統計</h4>
+                    <div class="stats-grid" id="statsGrid"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="今天天氣很好。我去公園玩。看到很多小鳥。">簡單文本</button>
+                <button class="example-btn" data-text="人工智慧技術的發展正在深刻改變人類社會的運作方式。從自然語言處理到電腦視覺，從機器學習到深度神經網路，各種AI技術正在被廣泛應用於醫療診斷、自動駕駛、金融分析等領域，為人類帶來前所未有的便利與效率提升。">中等難度</button>
+                <button class="example-btn" data-text="The quick brown fox jumps over the lazy dog. This is a simple sentence. It is easy to read and understand.">Simple English</button>
+                <button class="example-btn" data-text="The implementation of sophisticated machine learning algorithms necessitates comprehensive understanding of mathematical foundations, including linear algebra, calculus, probability theory, and optimization techniques, which collectively constitute the theoretical underpinnings of contemporary artificial intelligence systems.">Complex English</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>分析指標</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>可讀性分數</h3>
+                    <p>綜合評估閱讀難度</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📝</div>
+                    <h3>句子複雜度</h3>
+                    <p>平均句長與結構</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔤</div>
+                    <h3>詞彙難度</h3>
+                    <p>用詞複雜程度</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💡</div>
+                    <h3>改善建議</h3>
+                    <p>提升可讀性提示</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #139</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

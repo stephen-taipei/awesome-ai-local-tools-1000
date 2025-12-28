@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo Data Map | 地理數據地圖</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+        <header class="header">
+            <h1 data-i18n="title">Geo Data Map</h1>
+            <p class="subtitle" data-i18n="subtitle">Visualize geographic data on interactive maps</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".csv,.json,.geojson" hidden>
+                <div class="upload-icon">🗺️</div>
+                <p class="upload-text" data-i18n="uploadText">Drag & drop CSV/JSON/GeoJSON file</p>
+                <p class="upload-hint" data-i18n="uploadHint">Data with latitude/longitude columns</p>
+            </div>
+            <div class="controls-section" id="controlsSection" style="display: none;">
+                <div class="control-row">
+                    <div class="control-group">
+                        <label data-i18n="latCol">Latitude:</label>
+                        <select id="latCol"></select>
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="lngCol">Longitude:</label>
+                        <select id="lngCol"></select>
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="labelCol">Label:</label>
+                        <select id="labelCol"></select>
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="markerType">Marker:</label>
+                        <select id="markerType">
+                            <option value="marker">Pin</option>
+                            <option value="circle">Circle</option>
+                            <option value="heat">Heatmap</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">Generate Map</button>
+            </div>
+            <div class="map-section" id="mapSection" style="display: none;">
+                <div id="map"></div>
+                <div class="stats-bar">
+                    <span data-i18n="points">Points:</span> <span id="pointCount">0</span>
+                </div>
+                <div class="chart-actions">
+                    <button id="fitBounds" class="btn btn-info" data-i18n="fitBounds">Fit All Points</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #605</span></p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

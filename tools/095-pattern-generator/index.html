@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Generator | 圖案生成 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box canvas { max-width: 100%; border-radius: 12px; border: 2px solid #eee; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 80px; }
+        input[type="color"] { width: 40px; height: 30px; border: none; cursor: pointer; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; }
+        .pattern-presets { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 20px 0; }
+        .preset { width: 60px; height: 60px; border-radius: 8px; cursor: pointer; border: 3px solid transparent; transition: all 0.2s; }
+        .preset:hover, .preset.active { border-color: #667eea; transform: scale(1.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pattern Generator | 圖案生成</h1>
+            <p>Generate seamless patterns and textures | 生成無縫圖案和紋理</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="pattern-presets" id="presets"></div>
+            <div class="controls">
+                <label>Pattern:
+                    <select id="pattern">
+                        <option value="stripes">Stripes | 條紋</option>
+                        <option value="dots">Polka Dots | 圓點</option>
+                        <option value="checkers">Checkers | 棋盤</option>
+                        <option value="triangles">Triangles | 三角形</option>
+                        <option value="hexagons">Hexagons | 六邊形</option>
+                        <option value="waves">Waves | 波浪</option>
+                        <option value="zigzag">Zigzag | 鋸齒</option>
+                        <option value="diamonds">Diamonds | 菱形</option>
+                        <option value="noise">Noise | 雜訊</option>
+                    </select>
+                </label>
+                <label>Size: <input type="range" id="size" min="10" max="100" value="30"> <span id="sizeVal">30</span></label>
+                <label>Color 1: <input type="color" id="color1" value="#667eea"></label>
+                <label>Color 2: <input type="color" id="color2" value="#ffffff"></label>
+                <label>Rotation: <input type="range" id="rotation" min="0" max="360" value="0"> <span id="rotVal">0</span>°</label>
+            </div>
+            <div class="controls">
+                <label>Width: <input type="number" id="width" value="400" min="100" max="2000" style="width:70px;padding:5px;"></label>
+                <label>Height: <input type="number" id="height" value="400" min="100" max="2000" style="width:70px;padding:5px;"></label>
+                <button class="action-btn" id="randomBtn">Random | 隨機</button>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+                <button class="action-btn" id="downloadTileBtn">Download Tile | 下載磁貼</button>
+            </div>
+            <div class="preview-container">
+                <div class="preview-box">
+                    <h3 style="margin-bottom:10px;">Pattern Preview | 圖案預覽</h3>
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #095
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Transcription | 即時語音轉文字</title>
+    <meta name="description" content="Real-time speech-to-text transcription in your browser. 100% local, private processing.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-switcher button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-switcher button:hover, .lang-switcher button.active {
+            background: white;
+            color: #667eea;
+        }
+        .privacy-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .main-content {
+            padding: 30px;
+        }
+        .control-panel {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+            color: white;
+        }
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .visualizer-container {
+            background: #1a1a2e;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        #waveform {
+            width: 100%;
+            height: 100px;
+            background: #16213e;
+            border-radius: 10px;
+        }
+        .status {
+            text-align: center;
+            color: white;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-indicator.ready { background: #00d4aa; }
+        .status-indicator.recording { background: #f5576c; animation: pulse 1s infinite; }
+        .status-indicator.processing { background: #ffd93d; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .transcript-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .transcript-area h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .transcript-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #444;
+        }
+        .transcript-content .interim {
+            color: #999;
+            font-style: italic;
+        }
+        .options-panel {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .options-panel h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .option-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .option-row select {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+        .info-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        .info-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .info-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .info-card .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button id="lang-en" class="active">EN</button>
+                <button id="lang-zh">中文</button>
+            </div>
+            <h1 data-i18n="title">Real-time Transcription</h1>
+            <p data-i18n="subtitle">Convert speech to text in real-time, entirely in your browser</p>
+            <div class="privacy-badge">
+                <span data-i18n="privacy">100% Local Processing - No Data Upload</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="options-panel">
+                <h3 data-i18n="options">Options</h3>
+                <div class="option-row">
+                    <label data-i18n="language">Language:</label>
+                    <select id="languageSelect">
+                        <option value="en-US">English (US)</option>
+                        <option value="en-GB">English (UK)</option>
+                        <option value="zh-TW">中文 (繁體)</option>
+                        <option value="zh-CN">中文 (简体)</option>
+                        <option value="ja-JP">日本語</option>
+                        <option value="ko-KR">한국어</option>
+                        <option value="es-ES">Español</option>
+                        <option value="fr-FR">Français</option>
+                        <option value="de-DE">Deutsch</option>
+                    </select>
+                </div>
+                <div class="option-row">
+                    <label data-i18n="continuous">Continuous Recognition:</label>
+                    <input type="checkbox" id="continuousCheck" checked>
+                </div>
+            </div>
+
+            <div class="visualizer-container">
+                <canvas id="waveform"></canvas>
+                <div class="status">
+                    <span class="status-indicator ready" id="statusIndicator"></span>
+                    <span id="statusText" data-i18n="statusReady">Ready to record</span>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <button class="btn btn-primary" id="startBtn" data-i18n="start">Start Recording</button>
+                <button class="btn btn-danger" id="stopBtn" disabled data-i18n="stop">Stop</button>
+                <button class="btn btn-secondary" id="clearBtn" data-i18n="clear">Clear</button>
+                <button class="btn btn-secondary" id="copyBtn" data-i18n="copy">Copy Text</button>
+                <button class="btn btn-secondary" id="downloadBtn" data-i18n="download">Download</button>
+            </div>
+
+            <div class="transcript-area">
+                <h3>
+                    <span data-i18n="transcript">Transcript</span>
+                    <span id="wordCount">0 words</span>
+                </h3>
+                <div class="transcript-content" id="transcriptContent">
+                    <p class="placeholder" data-i18n="placeholder">Click "Start Recording" and speak into your microphone...</p>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h2 data-i18n="howItWorks">How It Works</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="icon">🎙️</div>
+                        <h4 data-i18n="feature1">Web Speech API</h4>
+                        <p data-i18n="feature1Desc">Uses browser's built-in speech recognition</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon">🔒</div>
+                        <h4 data-i18n="feature2">Privacy First</h4>
+                        <p data-i18n="feature2Desc">Audio processed locally in your browser</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon">⚡</div>
+                        <h4 data-i18n="feature3">Real-time</h4>
+                        <p data-i18n="feature3Desc">Instant transcription as you speak</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon">🌍</div>
+                        <h4 data-i18n="feature4">Multi-language</h4>
+                        <p data-i18n="feature4Desc">Supports multiple languages</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Tool #201 | <a href="../index.html" data-i18n="backHome">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

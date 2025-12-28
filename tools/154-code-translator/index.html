@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Translator | 程式碼轉換</title>
+    <meta name="description" content="Convert code between programming languages. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>程式碼轉換</h1>
+            <p class="subtitle">將程式碼語法轉換為其他語言</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="lang-selectors">
+                    <div class="form-group">
+                        <label>來源語言</label>
+                        <select id="sourceLang" class="select-field">
+                            <option value="javascript">JavaScript</option>
+                            <option value="python">Python</option>
+                            <option value="typescript">TypeScript</option>
+                            <option value="java">Java</option>
+                        </select>
+                    </div>
+                    <div class="swap-btn" id="swapBtn">⇄</div>
+                    <div class="form-group">
+                        <label>目標語言</label>
+                        <select id="targetLang" class="select-field">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="typescript">TypeScript</option>
+                            <option value="java">Java</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="code-panels">
+                    <div class="code-panel">
+                        <div class="panel-header">來源程式碼</div>
+                        <textarea id="sourceCode" class="code-field" placeholder="貼上程式碼..."></textarea>
+                    </div>
+                    <div class="code-panel">
+                        <div class="panel-header">
+                            <span>轉換結果</span>
+                            <button id="copyBtn" class="copy-btn">複製</button>
+                        </div>
+                        <pre class="code-output"><code id="targetCode"></code></pre>
+                    </div>
+                </div>
+                <button id="translateBtn" class="btn btn-primary btn-block">轉換程式碼</button>
+            </div>
+            <div class="notice-section">
+                <p>⚠️ 此工具提供基本語法轉換，複雜邏輯可能需要手動調整</p>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例</h3>
+            <div class="example-list">
+                <button class="example-btn" data-source="javascript" data-target="python" data-code="function add(a, b) {\n  return a + b;\n}">JS → Python</button>
+                <button class="example-btn" data-source="python" data-target="javascript" data-code="def greet(name):\n    return f'Hello, {name}'">Python → JS</button>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #154</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Quality Assessment | 圖片品質評估 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .quality-score { font-size: 72px; font-weight: bold; text-align: center; margin: 20px 0; }
+        .quality-score.excellent { color: #27ae60; }
+        .quality-score.good { color: #3498db; }
+        .quality-score.fair { color: #f39c12; }
+        .quality-score.poor { color: #e74c3c; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .metric-card { background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center; }
+        .metric-value { font-size: 28px; font-weight: bold; color: #333; }
+        .metric-label { color: #666; font-size: 14px; margin-top: 5px; }
+        .metric-bar { height: 8px; background: #eee; border-radius: 4px; margin-top: 10px; overflow: hidden; }
+        .metric-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+        canvas { max-width: 100%; border-radius: 8px; }
+        .suggestions { margin-top: 20px; padding: 20px; background: #fff3cd; border-radius: 8px; }
+        .suggestions h4 { margin-bottom: 10px; }
+        .suggestions ul { margin-left: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Image Quality Assessment | 圖片品質評估</h1>
+            <p>AI-powered image quality analysis | AI 評估圖片品質分數</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button">Choose Image | 選擇圖片</label>
+            </div>
+            <div id="results" style="display:none;">
+                <div style="text-align:center;margin:20px 0;"><canvas id="preview"></canvas></div>
+                <div class="quality-score" id="overallScore">--</div>
+                <p style="text-align:center;color:#666;" id="scoreLabel">Overall Quality | 整體品質</p>
+                <div class="metrics-grid" id="metricsGrid"></div>
+                <div class="suggestions" id="suggestions" style="display:none;"><h4>Suggestions | 建議</h4><ul id="suggestionsList"></ul></div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #055
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

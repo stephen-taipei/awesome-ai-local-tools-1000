@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio File Transcription | 音訊檔案轉錄</title>
+    <meta name="description" content="Transcribe audio files to text locally in your browser.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-switcher button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-switcher button:hover, .lang-switcher button.active {
+            background: white;
+            color: #4facfe;
+        }
+        .privacy-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .main-content { padding: 30px; }
+        .upload-area {
+            border: 3px dashed #4facfe;
+            border-radius: 15px;
+            padding: 60px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        .upload-area:hover {
+            background: #f0f9ff;
+            border-color: #00f2fe;
+        }
+        .upload-area.dragover {
+            background: #e0f4ff;
+            border-color: #00f2fe;
+        }
+        .upload-icon { font-size: 4em; margin-bottom: 15px; }
+        .file-info {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .audio-player {
+            width: 100%;
+            margin: 15px 0;
+        }
+        .waveform-container {
+            background: #1a1a2e;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        #waveform { width: 100%; height: 100px; }
+        .progress-container {
+            margin: 20px 0;
+            display: none;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .progress-text { text-align: center; margin-top: 10px; color: #666; }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
+        }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .control-panel {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .transcript-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .transcript-area h3 {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .transcript-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #444;
+            white-space: pre-wrap;
+        }
+        .options-panel {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .option-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .option-row select {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .info-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .info-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .info-card .icon { font-size: 2em; margin-bottom: 10px; }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+        .footer a { color: #4facfe; text-decoration: none; }
+        #fileInput { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button id="lang-en" class="active">EN</button>
+                <button id="lang-zh">中文</button>
+            </div>
+            <h1 data-i18n="title">Audio File Transcription</h1>
+            <p data-i18n="subtitle">Upload audio files and convert to text</p>
+            <div class="privacy-badge" data-i18n="privacy">100% Local Processing</div>
+        </div>
+
+        <div class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">🎵</div>
+                <p data-i18n="uploadText">Drag & drop audio file or click to upload</p>
+                <p style="color: #888; margin-top: 10px;" data-i18n="uploadHint">Supports MP3, WAV, OGG, M4A</p>
+                <input type="file" id="fileInput" accept="audio/*">
+            </div>
+
+            <div class="file-info" id="fileInfo">
+                <p><strong data-i18n="fileName">File:</strong> <span id="fileName"></span></p>
+                <audio id="audioPlayer" class="audio-player" controls></audio>
+            </div>
+
+            <div class="waveform-container" id="waveformContainer">
+                <canvas id="waveform"></canvas>
+            </div>
+
+            <div class="options-panel">
+                <h3 data-i18n="options">Options</h3>
+                <div class="option-row">
+                    <label data-i18n="language">Language:</label>
+                    <select id="languageSelect">
+                        <option value="en-US">English (US)</option>
+                        <option value="zh-TW">中文 (繁體)</option>
+                        <option value="zh-CN">中文 (简体)</option>
+                        <option value="ja-JP">日本語</option>
+                        <option value="ko-KR">한국어</option>
+                        <option value="es-ES">Español</option>
+                        <option value="fr-FR">Français</option>
+                        <option value="de-DE">Deutsch</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Processing...</p>
+            </div>
+
+            <div class="control-panel">
+                <button class="btn btn-primary" id="transcribeBtn" disabled data-i18n="transcribe">Transcribe</button>
+                <button class="btn btn-secondary" id="clearBtn" data-i18n="clear">Clear</button>
+                <button class="btn btn-secondary" id="copyBtn" data-i18n="copy">Copy</button>
+                <button class="btn btn-secondary" id="downloadBtn" data-i18n="download">Download</button>
+            </div>
+
+            <div class="transcript-area">
+                <h3>
+                    <span data-i18n="transcript">Transcript</span>
+                    <span id="wordCount">0 words</span>
+                </h3>
+                <div class="transcript-content" id="transcriptContent" data-i18n="placeholder">
+                    Upload an audio file to begin transcription...
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h2 data-i18n="howItWorks">How It Works</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="icon">📁</div>
+                        <h4 data-i18n="feature1">Upload Audio</h4>
+                        <p data-i18n="feature1Desc">Support multiple audio formats</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon">🔄</div>
+                        <h4 data-i18n="feature2">Process Locally</h4>
+                        <p data-i18n="feature2Desc">Using Web Speech API</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon">📝</div>
+                        <h4 data-i18n="feature3">Get Text</h4>
+                        <p data-i18n="feature3Desc">Download or copy result</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon">🔒</div>
+                        <h4 data-i18n="feature4">Private</h4>
+                        <p data-i18n="feature4Desc">No data leaves your device</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Tool #202 | <a href="../index.html">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

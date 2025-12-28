@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Translation | 即時翻譯</title>
+    <meta name="description" content="Real-time translation as you type. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>即時翻譯</h1>
+            <p class="subtitle">邊打字邊翻譯</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="lang-selector">
+                <div class="lang-option">
+                    <label>來源語言</label>
+                    <select id="sourceLang" class="select-field">
+                        <option value="auto">自動偵測</option>
+                        <option value="zh">中文</option>
+                        <option value="en">English</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
+                    </select>
+                </div>
+                <button id="swapBtn" class="swap-btn">⇄</button>
+                <div class="lang-option">
+                    <label>目標語言</label>
+                    <select id="targetLang" class="select-field">
+                        <option value="en">English</option>
+                        <option value="zh">中文</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="translation-container">
+                <div class="translation-panel">
+                    <div class="panel-label">輸入文字</div>
+                    <textarea id="sourceText" class="text-area" placeholder="開始輸入文字..."></textarea>
+                    <div class="panel-footer">
+                        <span id="sourceCount">0</span>
+                        <button id="clearBtn" class="icon-btn">✕</button>
+                    </div>
+                </div>
+
+                <div class="translation-panel">
+                    <div class="panel-label">
+                        <span>翻譯結果</span>
+                        <span id="statusIndicator" class="status-indicator"></span>
+                    </div>
+                    <div id="targetText" class="text-output"></div>
+                    <div class="panel-footer">
+                        <span id="targetCount">0</span>
+                        <button id="copyBtn" class="icon-btn">📋</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-panel">
+                <label class="setting-item">
+                    <span>翻譯延遲</span>
+                    <select id="delaySelect" class="select-sm">
+                        <option value="0">即時</option>
+                        <option value="300" selected>300ms</option>
+                        <option value="500">500ms</option>
+                        <option value="1000">1秒</option>
+                    </select>
+                </label>
+                <label class="setting-item">
+                    <input type="checkbox" id="autoDetect" checked>
+                    <span>自動偵測語言</span>
+                </label>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3>即時翻譯</h3>
+                    <p>輸入即翻譯</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔄</div>
+                    <h3>自動偵測</h3>
+                    <p>自動識別語言</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⏱️</div>
+                    <h3>可調延遲</h3>
+                    <p>自訂翻譯延遲</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #126</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

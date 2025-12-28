@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Rotate | 批量旋轉 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+        .preview-item { background: #f9f9f9; border-radius: 12px; padding: 10px; text-align: center; }
+        .preview-item canvas { width: 100%; height: 100px; object-fit: contain; border-radius: 8px; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        .rotate-btn { padding: 10px 20px; background: #f0f0f0; border: none; border-radius: 6px; cursor: pointer; font-size: 20px; }
+        .rotate-btn:hover { background: #e0e0e0; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #43e97b, #38f9d7); color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .drop-zone { border: 3px dashed #43e97b; background: #f0fff4; padding: 40px; text-align: center; border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Batch Rotate | 批量旋轉</h1>
+            <p>Rotate and flip multiple images | 旋轉和翻轉多張圖片</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#43e97b,#38f9d7);">Select Images</label>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <button class="rotate-btn" id="rotateLeft">↺ 90°</button>
+                <button class="rotate-btn" id="rotate180">180°</button>
+                <button class="rotate-btn" id="rotateRight">↻ 90°</button>
+                <button class="rotate-btn" id="flipH">⇆ Flip H</button>
+                <button class="rotate-btn" id="flipV">⇅ Flip V</button>
+                <button class="action-btn" id="processBtn">Download All</button>
+            </div>
+            <div class="preview-grid" id="previewGrid"></div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #076
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

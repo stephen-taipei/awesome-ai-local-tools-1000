@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Reverse | 影片倒轉</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Video Reverse</h1>
+            <p class="subtitle" data-i18n="subtitle">Play your videos backwards for creative effects</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - No Upload Required</span>
+        </div>
+
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="videoInput" accept="video/*" hidden>
+                <div class="upload-icon">⏪</div>
+                <p class="upload-text" data-i18n="uploadText">Drop video here or click to upload</p>
+                <p class="upload-hint" data-i18n="uploadHint">Supports MP4, WebM, MOV formats</p>
+            </div>
+
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="video-container">
+                    <video id="videoPlayer" controls></video>
+                </div>
+
+                <div class="controls">
+                    <div class="options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="reverseAudio" checked>
+                            <span data-i18n="reverseAudio">Reverse Audio</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="keepOriginalAudio">
+                            <span data-i18n="keepOriginalAudio">Keep Original Audio</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="muteAudio">
+                            <span data-i18n="muteAudio">Mute Audio</span>
+                        </label>
+                    </div>
+
+                    <div class="info-panel">
+                        <div class="info-item">
+                            <span data-i18n="videoDuration">Duration:</span>
+                            <span id="videoDuration">00:00</span>
+                        </div>
+                        <div class="info-item">
+                            <span data-i18n="totalFrames">Total Frames:</span>
+                            <span id="totalFrames">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="reverseBtn" class="btn btn-primary" data-i18n="reverse">Reverse Video</button>
+                    <button id="resetBtn" class="btn btn-outline" data-i18n="reset">Upload New Video</button>
+                </div>
+
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="extractingFrames">Extracting frames...</p>
+                </div>
+
+                <div class="download-area" id="downloadArea" style="display: none;">
+                    <video id="resultVideo" controls></video>
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download Reversed Video</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p><a href="../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #307</span></p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+    <script src="app.js"></script>
+</body>
+</html>

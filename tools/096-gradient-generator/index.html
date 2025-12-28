@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Generator | 漸層生成 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; width: 100%; }
+        .preview-box canvas { width: 100%; max-width: 600px; height: 300px; border-radius: 12px; border: 2px solid #eee; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 80px; }
+        input[type="color"] { width: 50px; height: 35px; border: none; cursor: pointer; border-radius: 4px; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #f5af19, #f12711); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; }
+        .color-stops { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center; margin: 20px 0; }
+        .color-stop { display: flex; align-items: center; gap: 5px; background: #f5f5f5; padding: 8px; border-radius: 8px; }
+        .color-stop input[type="number"] { width: 50px; padding: 5px; border-radius: 4px; border: 1px solid #ddd; }
+        .remove-stop { background: #ff4444; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px; }
+        .code-box { background: #1a1a2e; color: #00ff88; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 13px; text-align: left; overflow-x: auto; margin-top: 15px; }
+        .code-box span { color: #ff6b6b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gradient Generator | 漸層生成</h1>
+            <p>Create beautiful CSS gradients | 創建美麗的 CSS 漸層</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="controls">
+                <label>Type:
+                    <select id="gradientType">
+                        <option value="linear">Linear | 線性</option>
+                        <option value="radial">Radial | 放射</option>
+                        <option value="conic">Conic | 圓錐</option>
+                    </select>
+                </label>
+                <label>Angle: <input type="range" id="angle" min="0" max="360" value="90"> <span id="angleVal">90</span>°</label>
+                <button class="action-btn" id="addColorBtn">+ Add Color | 添加顏色</button>
+                <button class="action-btn" id="randomBtn">Random | 隨機</button>
+            </div>
+            <div class="color-stops" id="colorStops"></div>
+            <div class="preview-container">
+                <div class="preview-box">
+                    <canvas id="canvas"></canvas>
+                    <div class="code-box" id="codeBox"></div>
+                </div>
+            </div>
+            <div class="controls">
+                <label>Width: <input type="number" id="width" value="800" min="100" max="4000" style="width:70px;padding:5px;"></label>
+                <label>Height: <input type="number" id="height" value="400" min="100" max="4000" style="width:70px;padding:5px;"></label>
+                <button class="action-btn" id="downloadBtn">Download PNG | 下載</button>
+                <button class="action-btn" id="copyBtn">Copy CSS | 複製</button>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #096
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

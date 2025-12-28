@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punctuation Fix | 標點修正</title>
+    <meta name="description" content="Fix punctuation in text locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>標點修正</h1>
+            <p class="subtitle">自動修正文章中的標點符號問題</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入需要修正標點的文字..."></textarea>
+                </div>
+                <button id="fixBtn" class="btn btn-primary btn-block">修正標點</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>修正結果</h3>
+                <div class="result-content" id="resultContent"></div>
+                <div class="fixes-list" id="fixesList"></div>
+                <button class="copy-btn" id="copyBtn">複製結果</button>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="你好,我是小明.今天天氣很好,我們去公園玩吧!">中文範例</button>
+                <button class="example-btn" data-text="hello,how are you?i am fine.thank you!">English Example</button>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #148</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

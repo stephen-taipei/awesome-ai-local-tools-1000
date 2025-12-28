@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICO Generator | ICO 圖示產生器 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-section { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
+        .source-preview { flex: 1; min-width: 250px; text-align: center; }
+        .source-preview canvas { max-width: 100%; border: 2px dashed #ddd; border-radius: 12px; background: #f9f9f9; }
+        .ico-preview { flex: 1; min-width: 250px; }
+        .size-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; }
+        .size-item { text-align: center; padding: 15px; background: #f9f9f9; border-radius: 8px; }
+        .size-item canvas { display: block; margin: 0 auto 10px; background: repeating-conic-gradient(#ddd 0% 25%, white 0% 50%) 50% / 10px 10px; border-radius: 4px; }
+        .size-item label { display: flex; align-items: center; gap: 5px; justify-content: center; font-size: 13px; }
+        .size-item input[type="checkbox"] { margin: 0; }
+        .download-section { margin-top: 30px; padding: 20px; background: #f0f0f0; border-radius: 12px; text-align: center; }
+        .download-btn { padding: 15px 30px; background: linear-gradient(135deg, #f093fb, #f5576c); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
+        .drop-zone { border: 3px dashed #f5576c; background: #fff5f7; padding: 40px; text-align: center; border-radius: 12px; }
+        .drop-zone.dragover { background: #ffe0e6; }
+        .info-text { font-size: 12px; color: #888; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ICO Generator | ICO 圖示產生器</h1>
+            <p>Create favicon and icon files from images | 從圖片創建 favicon 和圖示文件</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#f093fb,#f5576c);">Select Image | 選擇圖片</label>
+                <p style="margin-top:15px;color:#888;">Recommended: Square image (256x256 or larger)</p>
+            </div>
+
+            <div class="preview-section" id="previewSection" style="display:none;">
+                <div class="source-preview">
+                    <h3 style="margin-bottom:15px;">Source Image | 原始圖片</h3>
+                    <canvas id="sourceCanvas"></canvas>
+                </div>
+                <div class="ico-preview">
+                    <h3 style="margin-bottom:15px;">Icon Sizes | 圖示尺寸</h3>
+                    <div class="size-grid" id="sizeGrid"></div>
+                </div>
+            </div>
+
+            <div class="download-section" id="downloadSection" style="display:none;">
+                <p style="margin-bottom:15px;">Select sizes to include in ICO file | 選擇要包含在 ICO 文件中的尺寸</p>
+                <button class="download-btn" id="downloadBtn">Download ICO | 下載 ICO</button>
+                <p class="info-text">Note: Downloads individual PNGs as browser-based ICO generation is limited</p>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #065
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

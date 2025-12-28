@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collage Maker | 拼貼製作 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box canvas { max-width: 100%; border-radius: 12px; border: 2px solid #eee; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 80px; }
+        input[type="color"] { width: 40px; height: 30px; border: none; cursor: pointer; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #fa709a, #fee140); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #fa709a; background: #fff5f8; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+        .drop-zone:hover { background: #ffe8ef; }
+        select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; }
+        .thumbnails { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 15px; }
+        .thumb-item { position: relative; }
+        .thumb-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd; }
+        .thumb-item .remove { position: absolute; top: -5px; right: -5px; background: #ff4444; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Collage Maker | 拼貼製作</h1>
+            <p>Create photo collages with various layouts | 用多種佈局創建照片拼貼</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#fa709a,#fee140);cursor:pointer;">Add Images | 添加圖片</label>
+                <p style="margin-top:15px;color:#666;">Select multiple images or drag and drop</p>
+                <div class="thumbnails" id="thumbnails"></div>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Layout:
+                    <select id="layout">
+                        <option value="grid2x2">2x2 Grid</option>
+                        <option value="grid3x3">3x3 Grid</option>
+                        <option value="horizontal">Horizontal</option>
+                        <option value="vertical">Vertical</option>
+                        <option value="featured">Featured Left</option>
+                        <option value="mosaic">Mosaic</option>
+                    </select>
+                </label>
+                <label>Gap: <input type="range" id="gap" min="0" max="30" value="10"> <span id="gapVal">10</span></label>
+                <label>Radius: <input type="range" id="radius" min="0" max="30" value="8"> <span id="radiusVal">8</span></label>
+                <label>Background: <input type="color" id="bgColor" value="#ffffff"></label>
+                <button class="action-btn" id="generateBtn">Generate | 生成</button>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box"><canvas id="canvas"></canvas></div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #092
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

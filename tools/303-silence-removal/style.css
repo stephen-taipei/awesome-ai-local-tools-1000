@@ -1,0 +1,376 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+    min-height: 100vh;
+    color: #fff;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.lang-switcher {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.lang-btn {
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: transparent;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.lang-btn:hover, .lang-btn.active {
+    background: rgba(255,255,255,0.2);
+    border-color: #fff;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.1rem;
+}
+
+.privacy-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(0, 210, 255, 0.2);
+    border: 1px solid rgba(0, 210, 255, 0.5);
+    padding: 10px 20px;
+    border-radius: 25px;
+    margin-bottom: 30px;
+}
+
+.main-content {
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 30px;
+}
+
+.upload-area {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 15px;
+    padding: 60px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.upload-area:hover {
+    border-color: #00d2ff;
+    background: rgba(0, 210, 255, 0.1);
+}
+
+.upload-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.upload-text {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.upload-hint {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+}
+
+.editor-area {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.video-container {
+    width: 100%;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    max-height: 350px;
+    display: block;
+}
+
+.waveform-container {
+    position: relative;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 10px;
+    height: 120px;
+}
+
+#waveformCanvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.threshold-line {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background: #ff4757;
+    top: 50%;
+    pointer-events: none;
+}
+
+.controls {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.control-group label {
+    min-width: 200px;
+    color: rgba(255,255,255,0.8);
+}
+
+.control-group input[type="range"] {
+    flex: 1;
+    min-width: 150px;
+    accent-color: #00d2ff;
+}
+
+.control-group span {
+    min-width: 60px;
+    font-family: monospace;
+    color: #00d2ff;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #00d2ff;
+    font-family: monospace;
+}
+
+.actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 210, 255, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.3);
+    color: #fff;
+}
+
+.btn-outline:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,0.1);
+}
+
+.btn-success {
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+    color: #fff;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4);
+}
+
+.progress-container {
+    text-align: center;
+}
+
+.progress-bar {
+    height: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.progress-text {
+    color: rgba(255,255,255,0.7);
+}
+
+.download-area {
+    text-align: center;
+}
+
+.download-area video {
+    width: 100%;
+    max-height: 300px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    background: #000;
+}
+
+.info-section {
+    margin-bottom: 30px;
+}
+
+.info-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.info-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+}
+
+.info-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.info-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.info-card p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+}
+
+.footer {
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    padding: 20px;
+}
+
+.footer a {
+    color: #00d2ff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .control-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

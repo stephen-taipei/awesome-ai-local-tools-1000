@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialogue Generator | 對話生成器</title>
+    <meta name="description" content="Generate dialogues locally. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">對話生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">生成自然流暢的對話內容</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>場景設定</label>
+                    <input type="text" id="sceneInput" class="input-field" placeholder="例如：咖啡廳、辦公室、機場...">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>角色A</label>
+                        <input type="text" id="roleAInput" class="input-field" placeholder="例如：老闆">
+                    </div>
+                    <div class="form-group">
+                        <label>角色B</label>
+                        <input type="text" id="roleBInput" class="input-field" placeholder="例如：員工">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>對話主題</label>
+                    <input type="text" id="topicInput" class="input-field" placeholder="例如：討論專案進度">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>對話風格</label>
+                        <select id="styleSelect" class="select-field">
+                            <option value="formal">正式</option>
+                            <option value="casual">日常</option>
+                            <option value="humorous">幽默</option>
+                            <option value="dramatic">戲劇</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>對話輪數</label>
+                        <select id="turnsSelect" class="select-field">
+                            <option value="3">3 輪</option>
+                            <option value="5">5 輪</option>
+                            <option value="8">8 輪</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span>生成對話</span>
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3>生成的對話</h3>
+                    <div class="output-actions">
+                        <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                    </div>
+                </div>
+                <div class="dialogue-display" id="dialogueDisplay"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">💬</div>
+                    <h3>自然對話</h3>
+                    <p>生成流暢自然的對話</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎭</div>
+                    <h3>角色設定</h3>
+                    <p>自訂角色與場景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3>多種風格</h3>
+                    <p>正式、日常、幽默等</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #108</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

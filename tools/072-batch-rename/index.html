@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Rename | 批量重命名 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .file-list { margin-top: 20px; }
+        .file-item { display: flex; gap: 15px; align-items: center; padding: 10px; background: #f9f9f9; border-radius: 8px; margin-bottom: 8px; }
+        .file-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; }
+        .file-item .original { flex: 1; color: #888; font-size: 13px; }
+        .file-item .new { flex: 1; color: #27ae60; font-weight: bold; font-size: 13px; }
+        .file-item .arrow { color: #667eea; }
+        .controls { display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap; align-items: center; justify-content: center; }
+        input[type="text"] { padding: 10px; border: 1px solid #ddd; border-radius: 6px; width: 150px; }
+        select { padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .drop-zone { border: 3px dashed #667eea; background: #f8f5ff; padding: 40px; text-align: center; border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Batch Rename | 批量重命名</h1>
+            <p>Rename multiple image files at once | 一次重命名多個圖片文件</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button">Select Images | 選擇圖片</label>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <select id="renameMode">
+                    <option value="prefix">Add Prefix 加前綴</option>
+                    <option value="suffix">Add Suffix 加後綴</option>
+                    <option value="replace">Replace 替換</option>
+                    <option value="sequence">Sequence 序列</option>
+                </select>
+                <input type="text" id="renameText" placeholder="Text...">
+                <input type="text" id="replaceWith" placeholder="Replace with..." style="display:none;">
+                <input type="number" id="startNum" value="1" min="1" style="display:none;width:60px;">
+                <button class="action-btn" id="downloadBtn">Download All | 下載全部</button>
+            </div>
+            <div class="file-list" id="fileList"></div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #072
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

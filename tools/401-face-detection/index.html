@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Detection | 人臉偵測</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Face Detection</h1>
+            <p class="subtitle" data-i18n="subtitle">Detect faces in images and video using AI - runs locally in your browser</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - No Data Upload</span>
+        </div>
+
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">Model not loaded</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">Load Model</button>
+        </div>
+
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText" data-i18n="downloading">Downloading model...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="input-tabs">
+                    <button class="tab-btn active" data-tab="image" data-i18n="imageTab">Image</button>
+                    <button class="tab-btn" data-tab="webcam" data-i18n="webcamTab">Webcam</button>
+                </div>
+
+                <div class="tab-content active" id="image-tab">
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                        <div class="upload-icon">📷</div>
+                        <p class="upload-text" data-i18n="uploadText">Drag & drop image or click to upload</p>
+                        <p class="upload-hint" data-i18n="uploadHint">Supports JPG, PNG, WebP</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="webcam-tab">
+                    <div class="webcam-controls">
+                        <button id="startWebcam" class="btn btn-primary" data-i18n="startWebcam">Start Webcam</button>
+                        <button id="stopWebcam" class="btn btn-secondary" style="display:none;" data-i18n="stopWebcam">Stop Webcam</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="canvas"></canvas>
+                <video id="video" style="display:none;" autoplay playsinline></video>
+            </div>
+
+            <div class="results-section" id="resultsSection" style="display:none;">
+                <h3 data-i18n="results">Detection Results</h3>
+                <div class="results-grid" id="resultsGrid"></div>
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download Result</button>
+                    <button id="exportJsonBtn" class="btn btn-secondary" data-i18n="exportJson">Export JSON</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">How It Works</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🤖</div>
+                    <h3 data-i18n="aiPowered">AI Powered</h3>
+                    <p data-i18n="aiPoweredDesc">Uses deep learning models for accurate face detection</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="privacy">Privacy First</h3>
+                    <p data-i18n="privacyDesc">All processing happens locally in your browser</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="fast">Real-time</h3>
+                    <p data-i18n="fastDesc">Fast detection with webcam support</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../index.html" data-i18n="backToHome">Back to Home</a> ·
+                <span data-i18n="toolNumber">Tool #401</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

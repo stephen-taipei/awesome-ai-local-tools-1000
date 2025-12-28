@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Classification | 文件分類器 - AI Local Tools</title>
+    <meta name="description" content="Automatically classify documents into categories locally. 100% private.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-container {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tool-header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .lang-switch {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .lang-btn {
+            padding: 8px 20px;
+            border: 2px solid #11998e;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn.active {
+            background: #11998e;
+            color: white;
+        }
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        .upload-area:hover {
+            border-color: #11998e;
+            background: #f0fff4;
+        }
+        .upload-icon { font-size: 48px; margin-bottom: 15px; }
+        .controls {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .control-group { margin-bottom: 15px; }
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .control-group input, .control-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(17, 153, 142, 0.4);
+        }
+        .results {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            display: none;
+        }
+        .results.visible { display: block; }
+        .category-result {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #11998e;
+        }
+        .category-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #11998e;
+            margin-bottom: 10px;
+        }
+        .confidence-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .confidence-fill {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            height: 100%;
+            transition: width 0.5s;
+        }
+        .category-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .tag {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        .loading.visible { display: block; }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #11998e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+        }
+        footer a { color: #11998e; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="tool-container">
+        <div class="tool-card">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
+
+            <div class="tool-header">
+                <h1><span class="en">Document Classification</span><span class="zh" style="display:none;">文件分類器</span></h1>
+                <p><span class="en">Automatically classify documents into categories</span><span class="zh" style="display:none;">自動將文件分類到不同類別</span></p>
+            </div>
+
+            <div class="privacy-badge">
+                <span>🔒</span>
+                <span class="en">100% Local Processing - No Data Upload</span>
+                <span class="zh" style="display:none;">100% 本地處理 - 無需上傳資料</span>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".txt,.md,.html" hidden>
+                <div class="upload-icon">📁</div>
+                <p><span class="en">Drag & drop document or click to upload</span><span class="zh" style="display:none;">拖放文件或點擊上傳</span></p>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label><span class="en">Or paste text directly:</span><span class="zh" style="display:none;">或直接貼上文字：</span></label>
+                    <textarea id="textInput" rows="5" placeholder="Paste your document text here..."></textarea>
+                </div>
+                <div class="control-group">
+                    <label><span class="en">Custom Categories (optional, comma-separated):</span><span class="zh" style="display:none;">自訂類別（可選，逗號分隔）：</span></label>
+                    <input type="text" id="customCategories" placeholder="e.g., Legal, Technical, Marketing, Financial">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="classifyBtn" style="width:100%;">
+                <span class="en">Classify Document</span><span class="zh" style="display:none;">分類文件</span>
+            </button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p><span class="en">Analyzing document...</span><span class="zh" style="display:none;">正在分析文件...</span></p>
+            </div>
+
+            <div class="results" id="results">
+                <h3><span class="en">Classification Results</span><span class="zh" style="display:none;">分類結果</span></h3>
+                <div id="resultsContainer"></div>
+            </div>
+
+            <footer>
+                <p>
+                    <a href="../../index.html"><span class="en">Back to Home</span><span class="zh" style="display:none;">返回首頁</span></a> ·
+                    <span class="en">Tool #702</span><span class="zh" style="display:none;">工具 #702</span>
+                </p>
+                <p>Awesome AI Local Tools © 2024</p>
+            </footer>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

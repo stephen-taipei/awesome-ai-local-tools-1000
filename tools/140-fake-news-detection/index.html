@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detection | 假新聞檢測</title>
+    <meta name="description" content="Detect potential fake news indicators locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>假新聞檢測</h1>
+            <p class="subtitle">分析文字中的可疑新聞指標</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <div class="disclaimer">
+            <span class="disclaimer-icon">⚠️</span>
+            <span>此工具僅供參考，不能替代專業事實查核。請多方驗證重要資訊。</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入新聞文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="貼上要檢測的新聞內容..."></textarea>
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary btn-block">分析可信度</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>分析結果</h3>
+                <div class="credibility-score" id="credibilityScore">
+                    <div class="score-gauge">
+                        <div class="gauge-bg"></div>
+                        <div class="gauge-fill" id="gaugeFill"></div>
+                        <div class="gauge-center">
+                            <div class="gauge-value" id="gaugeValue">0</div>
+                            <div class="gauge-label">可信度</div>
+                        </div>
+                    </div>
+                    <div class="verdict" id="verdict"></div>
+                </div>
+                <div class="indicators-section">
+                    <h4>風險指標</h4>
+                    <div class="indicators-grid" id="indicatorsGrid"></div>
+                </div>
+                <div class="flags-section" id="flagsSection">
+                    <h4>可疑特徵</h4>
+                    <div class="flags-list" id="flagsList"></div>
+                </div>
+                <div class="tips-section">
+                    <h4>查核建議</h4>
+                    <div class="tips-list" id="tipsList"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="震驚！科學家發現喝咖啡可以讓人長生不老！這個秘密被隱藏了100年！立即分享給你的朋友！錯過後悔一輩子！">可疑內容</button>
+                <button class="example-btn" data-text="根據衛生署今日發布的新聞稿，研究團隊在經過為期三年的臨床試驗後，確認該疫苗的有效性達95%。研究結果已發表於《自然》期刊。">正常報導</button>
+                <button class="example-btn" data-text="BREAKING: Scientists discover miracle cure that THEY don't want you to know about! Share before it gets deleted! Big pharma is TERRIFIED!">Suspicious English</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>檢測指標</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎭</div>
+                    <h3>情緒化語言</h3>
+                    <p>誇張、煽動性用詞</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📢</div>
+                    <h3>聳動標題</h3>
+                    <p>吸引點擊的手法</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔍</div>
+                    <h3>來源可信度</h3>
+                    <p>是否引用可靠來源</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3>緊迫感製造</h3>
+                    <p>要求立即行動</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #140</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

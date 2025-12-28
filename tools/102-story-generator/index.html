@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Generator | AI 故事生成</title>
+    <meta name="description" content="Generate creative stories locally in your browser. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">AI 故事生成</h1>
+            <p class="subtitle" data-i18n="subtitle">創意故事生成器，激發無限想像</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label data-i18n="genreLabel">故事類型</label>
+                    <select id="genreSelect" class="select-field">
+                        <option value="fantasy" data-i18n="genreFantasy">奇幻</option>
+                        <option value="scifi" data-i18n="genreScifi">科幻</option>
+                        <option value="romance" data-i18n="genreRomance">愛情</option>
+                        <option value="mystery" data-i18n="genreMystery">懸疑</option>
+                        <option value="adventure" data-i18n="genreAdventure">冒險</option>
+                        <option value="horror" data-i18n="genreHorror">恐怖</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="settingLabel">故事背景</label>
+                    <input type="text" id="settingInput" class="input-field" data-i18n-placeholder="settingPlaceholder" placeholder="例如：中世紀城堡、未來都市...">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="characterLabel">主角描述</label>
+                    <input type="text" id="characterInput" class="input-field" data-i18n-placeholder="characterPlaceholder" placeholder="描述您的主角...">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="plotLabel">故事情節提示</label>
+                    <textarea id="plotInput" class="textarea-field" rows="3" data-i18n-placeholder="plotPlaceholder" placeholder="輸入故事的關鍵情節或轉折..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="toneLabel">敘事風格</label>
+                        <select id="toneSelect" class="select-field">
+                            <option value="dramatic" data-i18n="toneDramatic">戲劇性</option>
+                            <option value="humorous" data-i18n="toneHumorous">幽默</option>
+                            <option value="dark" data-i18n="toneDark">黑暗</option>
+                            <option value="lighthearted" data-i18n="toneLighthearted">輕鬆</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="lengthLabel">故事長度</label>
+                        <select id="lengthSelect" class="select-field">
+                            <option value="short">短篇</option>
+                            <option value="medium">中篇</option>
+                            <option value="long">長篇</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成故事</span>
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">您的故事</h3>
+                    <div class="output-actions">
+                        <button id="copyBtn" class="btn btn-secondary btn-sm" data-i18n="copyBtn">複製</button>
+                        <button id="downloadBtn" class="btn btn-secondary btn-sm" data-i18n="downloadBtn">下載</button>
+                    </div>
+                </div>
+                <div class="output-content" id="outputContent"></div>
+                <div class="output-stats" id="outputStats"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📚</div>
+                    <h3 data-i18n="feature1">多種類型</h3>
+                    <p data-i18n="feature1Desc">奇幻、科幻、愛情、懸疑等多種故事類型</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎭</div>
+                    <h3 data-i18n="feature2">角色塑造</h3>
+                    <p data-i18n="feature2Desc">自定義主角特性，打造獨特角色</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✨</div>
+                    <h3 data-i18n="feature4">創意無限</h3>
+                    <p data-i18n="feature4Desc">AI 協助激發創作靈感</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #102</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

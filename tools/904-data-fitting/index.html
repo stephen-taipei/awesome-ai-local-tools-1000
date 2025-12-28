@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Fitting Tool | 數據擬合工具</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+        <header class="header">
+            <h1 data-i18n="title">Data Fitting Tool</h1>
+            <p class="subtitle" data-i18n="subtitle">Fit curves to your data locally in browser</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing</span>
+        </div>
+        <main class="main-content">
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label data-i18n="fitType">Fit Type:</label>
+                    <select id="fitType">
+                        <option value="linear">Linear</option>
+                        <option value="polynomial">Polynomial</option>
+                        <option value="exponential">Exponential</option>
+                        <option value="logarithmic">Logarithmic</option>
+                        <option value="power">Power</option>
+                    </select>
+                </div>
+                <div class="control-group" id="degreeGroup">
+                    <label data-i18n="degree">Polynomial Degree:</label>
+                    <input type="number" id="degree" value="2" min="1" max="10">
+                </div>
+            </div>
+            <div class="input-section">
+                <h3 data-i18n="dataInput">Data Input</h3>
+                <textarea id="dataInput" placeholder="Enter data as x,y pairs (one per line)
+Example:
+1,2.1
+2,4.2
+3,5.9"></textarea>
+                <div class="button-row">
+                    <button id="loadSample" class="btn btn-secondary" data-i18n="loadSample">Load Sample</button>
+                    <button id="fitData" class="btn btn-primary" data-i18n="fitData">Fit Data</button>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="chart"></canvas>
+            </div>
+            <div class="results-panel" id="results">
+                <h3 data-i18n="results">Results</h3>
+                <div class="result-item">
+                    <span data-i18n="equation">Equation:</span>
+                    <span id="equation" class="result-value">-</span>
+                </div>
+                <div class="result-item">
+                    <span data-i18n="rSquared">R-Squared:</span>
+                    <span id="rSquared" class="result-value">-</span>
+                </div>
+                <div class="result-item">
+                    <span data-i18n="rmse">RMSE:</span>
+                    <span id="rmse" class="result-value">-</span>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #904</span></p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

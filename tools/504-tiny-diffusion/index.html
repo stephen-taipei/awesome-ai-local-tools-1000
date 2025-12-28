@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Diffusion | 輕量擴散模型</title>
+    <meta name="description" content="Lightweight diffusion model for quick image generation. 100% local, private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1 data-i18n="title">輕量擴散模型</h1>
+            <p class="subtitle" data-i18n="subtitle">輕量級擴散模型快速生成，完全本地處理</p>
+        </header>
+        <div class="privacy-badge"><span class="badge-icon">🔒</span><span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span></div>
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info"><span id="progressText">正在下載模型...</span><span id="progressPercent">0%</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+        <main class="main-content">
+            <div class="input-area">
+                <div class="input-group">
+                    <label for="promptInput" data-i18n="promptLabel">輸入提示詞</label>
+                    <textarea id="promptInput" rows="3" placeholder="描述您想要生成的內容..."></textarea>
+                </div>
+                <div class="settings-grid">
+                    <div class="input-group"><label>品質: <span id="qualityValue">中</span></label><input type="range" id="qualitySlider" min="1" max="3" value="2"></div>
+                    <div class="input-group"><label data-i18n="style">風格</label><select id="styleSelect"><option value="default">預設</option><option value="artistic">藝術</option><option value="realistic">寫實</option></select></div>
+                </div>
+                <button id="generateBtn" class="btn btn-primary btn-lg" disabled data-i18n="generate">開始生成</button>
+            </div>
+            <div class="result-area" id="resultArea" style="display: none;">
+                <div class="result-box"><div class="result-wrapper checkered-bg"><img id="resultImage" alt="Result"><div class="processing-overlay" id="processingOverlay"><div class="spinner"></div><p data-i18n="processing">正在處理中...</p></div></div></div>
+                <div class="actions"><button id="downloadBtn" class="btn btn-success" disabled data-i18n="download">下載結果</button><button id="regenerateBtn" class="btn btn-secondary" data-i18n="regenerate">重新生成</button></div>
+            </div>
+        </main>
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card"><div class="info-icon">🪶</div><h3>輕量模型</h3><p>小型模型快速載入</p></div>
+                <div class="info-card"><div class="info-icon">🔒</div><h3>隱私保護</h3><p>本地處理不上傳</p></div>
+                <div class="info-card"><div class="info-icon">⚡</div><h3>快速生成</h3><p>秒級生成圖像</p></div>
+                <div class="info-card"><div class="info-icon">💾</div><h3>離線快取</h3><p>模型自動快取</p></div>
+            </div>
+        </section>
+        <footer class="footer"><p><a href="../../index.html">返回首頁</a> · 工具 #504</p><p class="copyright">Awesome AI Local Tools © 2024</p></footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

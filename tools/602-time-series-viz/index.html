@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Series Visualization | 時間序列可視化</title>
+    <meta name="description" content="Visualize time series data with interactive charts. Supports CSV/JSON upload with trend analysis.">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Time Series Visualization</h1>
+            <p class="subtitle" data-i18n="subtitle">Visualize temporal data patterns and trends</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - Your data never leaves your browser</span>
+        </div>
+
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".csv,.json" hidden>
+                    <div class="upload-icon">📈</div>
+                    <p class="upload-text" data-i18n="uploadText">Drag & drop CSV/JSON file here or click to upload</p>
+                    <p class="upload-hint" data-i18n="uploadHint">Time series data with date/time column</p>
+                </div>
+            </div>
+
+            <div class="controls-section" id="controlsSection" style="display: none;">
+                <div class="control-row">
+                    <div class="control-group">
+                        <label data-i18n="dateColumn">Date Column:</label>
+                        <select id="dateColumn"></select>
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="valueColumn">Value Column:</label>
+                        <select id="valueColumn"></select>
+                    </div>
+                </div>
+                <div class="control-row">
+                    <div class="control-group">
+                        <label data-i18n="chartStyle">Chart Style:</label>
+                        <select id="chartStyle">
+                            <option value="line">Line</option>
+                            <option value="area">Area</option>
+                            <option value="bar">Bar</option>
+                            <option value="step">Step</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="showTrend">Show Trend Line:</label>
+                        <input type="checkbox" id="showTrend" checked>
+                    </div>
+                </div>
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">Generate Chart</button>
+            </div>
+
+            <div class="chart-section" id="chartSection" style="display: none;">
+                <div class="chart-container">
+                    <canvas id="chartCanvas"></canvas>
+                </div>
+                <div class="stats-panel" id="statsPanel">
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="min">Min:</span>
+                        <span class="stat-value" id="statMin">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="max">Max:</span>
+                        <span class="stat-value" id="statMax">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="avg">Average:</span>
+                        <span class="stat-value" id="statAvg">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="trend">Trend:</span>
+                        <span class="stat-value" id="statTrend">-</span>
+                    </div>
+                </div>
+                <div class="chart-actions">
+                    <button id="downloadPng" class="btn btn-success" data-i18n="downloadPng">Download PNG</button>
+                    <button id="downloadCsv" class="btn btn-info" data-i18n="downloadCsv">Export CSV</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p><a href="../../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #602</span></p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

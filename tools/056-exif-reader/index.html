@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXIF Reader | EXIF 資訊讀取 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .exif-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .exif-table th, .exif-table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        .exif-table th { background: #f8f9fa; font-weight: 600; width: 40%; }
+        .exif-section { margin-top: 30px; }
+        .exif-section h3 { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #3498db; }
+        .map-container { height: 300px; border-radius: 8px; overflow: hidden; margin-top: 15px; background: #eee; display: flex; align-items: center; justify-content: center; }
+        canvas { max-width: 300px; border-radius: 8px; }
+        .no-data { color: #999; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>EXIF Reader | EXIF 資訊讀取</h1>
+            <p>Read and display image metadata | 讀取並顯示圖片後設資料</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/jpeg,image/tiff" hidden>
+                <label for="imageInput" class="button">Choose Image (JPG/TIFF) | 選擇圖片</label>
+            </div>
+            <div id="results" style="display:none;">
+                <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;">
+                    <div><canvas id="preview"></canvas></div>
+                    <div id="basicInfo" style="flex:1;min-width:250px;"></div>
+                </div>
+                <div class="exif-section" id="cameraSection" style="display:none;">
+                    <h3>📷 Camera Info | 相機資訊</h3>
+                    <table class="exif-table" id="cameraTable"></table>
+                </div>
+                <div class="exif-section" id="photoSection" style="display:none;">
+                    <h3>🎞️ Photo Settings | 拍攝設定</h3>
+                    <table class="exif-table" id="photoTable"></table>
+                </div>
+                <div class="exif-section" id="gpsSection" style="display:none;">
+                    <h3>📍 GPS Location | GPS 位置</h3>
+                    <table class="exif-table" id="gpsTable"></table>
+                    <div class="map-container" id="mapContainer">Map would display here | 地圖將顯示於此</div>
+                </div>
+                <div style="margin-top:20px;text-align:center;">
+                    <button class="button" id="exportBtn">Export JSON | 匯出 JSON</button>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #056
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

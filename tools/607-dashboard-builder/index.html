@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Builder | 儀表板構建器</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+        <header class="header">
+            <h1 data-i18n="title">Dashboard Builder</h1>
+            <p class="subtitle" data-i18n="subtitle">Create interactive data dashboards</p>
+        </header>
+        <div class="privacy-badge"><span class="badge-icon">🔒</span><span data-i18n="privacyBadge">100% Local Processing</span></div>
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".csv,.json" hidden>
+                <div class="upload-icon">📊</div>
+                <p class="upload-text" data-i18n="uploadText">Upload your data file</p>
+                <p class="upload-hint" data-i18n="uploadHint">CSV or JSON format</p>
+            </div>
+            <div class="builder-section" id="builderSection" style="display: none;">
+                <div class="widget-controls">
+                    <h3 data-i18n="addWidget">Add Widget</h3>
+                    <div class="control-row">
+                        <select id="widgetType">
+                            <option value="kpi">KPI Card</option>
+                            <option value="bar">Bar Chart</option>
+                            <option value="line">Line Chart</option>
+                            <option value="pie">Pie Chart</option>
+                            <option value="table">Data Table</option>
+                        </select>
+                        <select id="widgetColumn"></select>
+                        <button id="addWidgetBtn" class="btn btn-primary" data-i18n="add">Add</button>
+                    </div>
+                </div>
+                <div class="dashboard" id="dashboard"></div>
+                <div class="chart-actions">
+                    <button id="exportBtn" class="btn btn-success" data-i18n="export">Export Dashboard</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer"><p><a href="../../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #607</span></p></footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Summary | 聊天記錄摘要</title>
+    <meta name="description" content="Summarize chat logs and conversations locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>聊天記錄摘要</h1>
+            <p class="subtitle">摘要長篇聊天記錄重點</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>貼上聊天記錄</label>
+                    <textarea id="chatInput" class="textarea-field" rows="14" placeholder="貼上聊天記錄...&#10;&#10;範例格式：&#10;小明: 今天開會討論什麼？&#10;小華: 討論新專案進度..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>摘要類型</label>
+                        <select id="typeSelect" class="select-field">
+                            <option value="overview">對話總覽</option>
+                            <option value="topics">討論主題</option>
+                            <option value="decisions">決定與結論</option>
+                            <option value="participants">參與者觀點</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>詳細程度</label>
+                        <select id="detailSelect" class="select-field">
+                            <option value="brief">簡要</option>
+                            <option value="standard" selected>標準</option>
+                            <option value="detailed">詳細</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">生成摘要</button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3>對話摘要</h3>
+                    <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                </div>
+                <div class="summary-content" id="summaryContent"></div>
+                <div class="stats" id="stats"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">💬</div>
+                    <h3>對話分析</h3>
+                    <p>識別對話結構</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">👥</div>
+                    <h3>參與者識別</h3>
+                    <p>追蹤各方觀點</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📋</div>
+                    <h3>主題提取</h3>
+                    <p>歸納討論重點</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #119</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

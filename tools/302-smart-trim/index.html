@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Video Trim | AI 智能剪輯</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Smart Video Trim</h1>
+            <p class="subtitle" data-i18n="subtitle">AI-powered automatic video trimming based on content analysis</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - No Upload Required</span>
+        </div>
+
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="videoInput" accept="video/*" hidden>
+                <div class="upload-icon">🎬</div>
+                <p class="upload-text" data-i18n="uploadText">Drop video here or click to upload</p>
+                <p class="upload-hint" data-i18n="uploadHint">Supports MP4, WebM, MOV formats</p>
+            </div>
+
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="video-container">
+                    <video id="videoPlayer" controls></video>
+                </div>
+
+                <div class="smart-options">
+                    <h3 data-i18n="smartOptions">Smart Trim Options</h3>
+                    <div class="option-grid">
+                        <label class="option-item">
+                            <input type="checkbox" id="removeIntro" checked>
+                            <span data-i18n="removeIntro">Remove Intro/Outro</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="removePauses" checked>
+                            <span data-i18n="removePauses">Remove Long Pauses</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="keepHighlight" checked>
+                            <span data-i18n="keepHighlight">Keep Highlight Moments</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="removeStatic">
+                            <span data-i18n="removeStatic">Remove Static Frames</span>
+                        </label>
+                    </div>
+
+                    <div class="threshold-control">
+                        <label data-i18n="sensitivity">Detection Sensitivity:</label>
+                        <input type="range" id="sensitivity" min="1" max="10" value="5">
+                        <span id="sensitivityValue">5</span>
+                    </div>
+                </div>
+
+                <div class="detected-segments" id="detectedSegments">
+                    <h3 data-i18n="detectedSegments">Detected Segments</h3>
+                    <div class="segments-list" id="segmentsList"></div>
+                </div>
+
+                <div class="actions">
+                    <button id="analyzeBtn" class="btn btn-secondary" data-i18n="analyze">Analyze Video</button>
+                    <button id="trimBtn" class="btn btn-primary" data-i18n="smartTrim">Smart Trim</button>
+                    <button id="resetBtn" class="btn btn-outline" data-i18n="reset">Upload New Video</button>
+                </div>
+
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="analyzing">Analyzing video...</p>
+                </div>
+
+                <div class="download-area" id="downloadArea" style="display: none;">
+                    <video id="resultVideo" controls></video>
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download Trimmed Video</button>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">How It Works</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🤖</div>
+                    <h3 data-i18n="aiAnalysis">AI Analysis</h3>
+                    <p data-i18n="aiAnalysisDesc">Automatically detects content patterns and important moments</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✂️</div>
+                    <h3 data-i18n="smartCut">Smart Cutting</h3>
+                    <p data-i18n="smartCutDesc">Removes unnecessary parts while preserving key content</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="fastProcess">Fast Processing</h3>
+                    <p data-i18n="fastProcessDesc">All processing happens locally for maximum speed</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #302</span></p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+    <script src="app.js"></script>
+</body>
+</html>

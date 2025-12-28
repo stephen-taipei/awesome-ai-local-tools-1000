@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Speed Changer | 影片速度調整</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Video Speed Changer</h1>
+            <p class="subtitle" data-i18n="subtitle">Speed up or slow down your videos with ease</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - No Upload Required</span>
+        </div>
+
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="videoInput" accept="video/*" hidden>
+                <div class="upload-icon">⏩</div>
+                <p class="upload-text" data-i18n="uploadText">Drop video here or click to upload</p>
+                <p class="upload-hint" data-i18n="uploadHint">Supports MP4, WebM, MOV formats</p>
+            </div>
+
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="video-container">
+                    <video id="videoPlayer" controls></video>
+                </div>
+
+                <div class="controls">
+                    <div class="speed-control">
+                        <h3 data-i18n="playbackSpeed">Playback Speed</h3>
+                        <div class="speed-presets">
+                            <button class="speed-btn" data-speed="0.25">0.25x</button>
+                            <button class="speed-btn" data-speed="0.5">0.5x</button>
+                            <button class="speed-btn" data-speed="0.75">0.75x</button>
+                            <button class="speed-btn active" data-speed="1">1x</button>
+                            <button class="speed-btn" data-speed="1.25">1.25x</button>
+                            <button class="speed-btn" data-speed="1.5">1.5x</button>
+                            <button class="speed-btn" data-speed="2">2x</button>
+                            <button class="speed-btn" data-speed="4">4x</button>
+                        </div>
+
+                        <div class="custom-speed">
+                            <label data-i18n="customSpeed">Custom Speed:</label>
+                            <input type="range" id="speedSlider" min="0.1" max="4" step="0.05" value="1">
+                            <span id="speedValue">1.00x</span>
+                        </div>
+                    </div>
+
+                    <div class="duration-info">
+                        <div class="info-item">
+                            <span data-i18n="originalDuration">Original Duration:</span>
+                            <span id="originalDuration">00:00</span>
+                        </div>
+                        <div class="info-item">
+                            <span data-i18n="newDuration">New Duration:</span>
+                            <span id="newDuration">00:00</span>
+                        </div>
+                    </div>
+
+                    <div class="audio-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="preservePitch" checked>
+                            <span data-i18n="preservePitch">Preserve Audio Pitch</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="keepAudio" checked>
+                            <span data-i18n="keepAudio">Keep Audio</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="previewBtn" class="btn btn-secondary" data-i18n="preview">Preview</button>
+                    <button id="applyBtn" class="btn btn-primary" data-i18n="apply">Apply Speed Change</button>
+                    <button id="resetBtn" class="btn btn-outline" data-i18n="reset">Upload New Video</button>
+                </div>
+
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="processing">Processing...</p>
+                </div>
+
+                <div class="download-area" id="downloadArea" style="display: none;">
+                    <video id="resultVideo" controls></video>
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download Video</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p><a href="../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #306</span></p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+    <script src="app.js"></script>
+</body>
+</html>

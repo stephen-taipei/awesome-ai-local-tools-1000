@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Plane Tracking | AR 平面追蹤</title>
+    <meta name="description" content="Track and detect horizontal and vertical planes in AR. 100% local processing.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .lang-switcher { text-align: right; margin-bottom: 10px; }
+        .lang-btn { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 5px 15px; cursor: pointer; border-radius: 5px; margin-left: 5px; transition: all 0.3s; }
+        .lang-btn:hover, .lang-btn.active { background: rgba(255,255,255,0.2); }
+        header { text-align: center; padding: 30px 0; }
+        h1 { font-size: 2.5em; margin-bottom: 10px; background: linear-gradient(90deg, #a8edea, #fed6e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .subtitle { color: rgba(255,255,255,0.7); font-size: 1.1em; }
+        .privacy-badge { display: flex; align-items: center; justify-content: center; gap: 10px; background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); padding: 10px 20px; border-radius: 25px; margin: 20px auto; width: fit-content; }
+        .main-content { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 30px; margin-top: 20px; }
+        .ar-container { position: relative; width: 100%; max-width: 800px; margin: 0 auto; aspect-ratio: 16/9; background: #000; border-radius: 15px; overflow: hidden; }
+        #video { width: 100%; height: 100%; object-fit: cover; }
+        #canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+        .btn { padding: 12px 30px; font-size: 1em; border: none; border-radius: 25px; cursor: pointer; transition: all 0.3s; }
+        .btn-primary { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(168, 237, 234, 0.4); }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+        .plane-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+        .stat-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; text-align: center; }
+        .stat-value { font-size: 2em; font-weight: bold; color: #a8edea; }
+        .stat-label { color: rgba(255,255,255,0.7); font-size: 0.9em; }
+        .info-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 40px; }
+        .info-card { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; text-align: center; }
+        .info-icon { font-size: 2.5em; margin-bottom: 15px; }
+        .info-card h3 { margin-bottom: 10px; color: #a8edea; }
+        footer { text-align: center; padding: 30px; margin-top: 40px; color: rgba(255,255,255,0.5); }
+        .status { text-align: center; padding: 10px; margin: 10px 0; border-radius: 10px; background: rgba(0,255,136,0.2); color: #00ff88; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="setLang('en')">English</button>
+            <button class="lang-btn" onclick="setLang('zh')">中文</button>
+        </div>
+        <header>
+            <h1 data-i18n="title">AR Plane Tracking</h1>
+            <p class="subtitle" data-i18n="subtitle">Detect and track horizontal and vertical surfaces</p>
+        </header>
+        <div class="privacy-badge">
+            <span>🔒</span>
+            <span data-i18n="privacy">100% Local Processing - No Data Upload</span>
+        </div>
+        <div class="main-content">
+            <div id="status" class="status" data-i18n="ready">Ready to detect planes</div>
+            <div class="ar-container">
+                <video id="video" autoplay playsinline></video>
+                <canvas id="canvas"></canvas>
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary" id="startBtn" onclick="startTracking()" data-i18n="start">Start Tracking</button>
+                <button class="btn btn-secondary" onclick="togglePlaneType()" data-i18n="toggle">Toggle Plane Type</button>
+            </div>
+            <div class="plane-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="horizontalCount">0</div>
+                    <div class="stat-label" data-i18n="horizontal">Horizontal Planes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="verticalCount">0</div>
+                    <div class="stat-label" data-i18n="vertical">Vertical Planes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalArea">0</div>
+                    <div class="stat-label" data-i18n="area">Total Area (m²)</div>
+                </div>
+            </div>
+        </div>
+        <div class="info-section">
+            <div class="info-card">
+                <div class="info-icon">📐</div>
+                <h3 data-i18n="detection">Surface Detection</h3>
+                <p data-i18n="detectionDesc">Automatically detects floors, walls, and tables</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">🎯</div>
+                <h3 data-i18n="precision">High Precision</h3>
+                <p data-i18n="precisionDesc">Accurate plane boundaries and orientation</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">⚡</div>
+                <h3 data-i18n="realtime">Real-time</h3>
+                <p data-i18n="realtimeDesc">60fps tracking for smooth AR experience</p>
+            </div>
+        </div>
+        <footer>
+            <p>Tool #802 | AR Plane Tracking | Awesome AI Local Tools</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

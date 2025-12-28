@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Data Visualization | 3D 數據可視化</title>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+        <header class="header">
+            <h1 data-i18n="title">3D Data Visualization</h1>
+            <p class="subtitle" data-i18n="subtitle">Interactive 3D scatter plots and surfaces</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".csv,.json" hidden>
+                <div class="upload-icon">🎲</div>
+                <p class="upload-text" data-i18n="uploadText">Drag & drop CSV/JSON file or click to upload</p>
+                <p class="upload-hint" data-i18n="uploadHint">3D data with X, Y, Z columns</p>
+            </div>
+            <div class="controls-section" id="controlsSection" style="display: none;">
+                <div class="control-row">
+                    <div class="control-group">
+                        <label>X:</label>
+                        <select id="xCol"></select>
+                    </div>
+                    <div class="control-group">
+                        <label>Y:</label>
+                        <select id="yCol"></select>
+                    </div>
+                    <div class="control-group">
+                        <label>Z:</label>
+                        <select id="zCol"></select>
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="vizType">Type:</label>
+                        <select id="vizType">
+                            <option value="scatter">Scatter</option>
+                            <option value="bars">3D Bars</option>
+                            <option value="surface">Surface</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">Generate 3D View</button>
+            </div>
+            <div class="viz-section" id="vizSection" style="display: none;">
+                <div id="threeContainer"></div>
+                <p class="hint" data-i18n="dragHint">Drag to rotate, scroll to zoom</p>
+                <div class="chart-actions">
+                    <button id="resetView" class="btn btn-info" data-i18n="resetView">Reset View</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #604</span></p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

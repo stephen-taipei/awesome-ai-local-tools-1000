@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Thumbnail | 批量縮圖 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 20px; }
+        .preview-item { background: #f9f9f9; border-radius: 12px; padding: 10px; text-align: center; }
+        .preview-item canvas { max-width: 100%; border-radius: 8px; margin-bottom: 8px; background: repeating-conic-gradient(#ddd 0% 25%, white 0% 50%) 50% / 10px 10px; }
+        .preview-item .info { font-size: 10px; color: #666; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="number"], select { padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; width: 80px; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #ff758c, #ff7eb3); color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .drop-zone { border: 3px dashed #ff758c; background: #fff5f7; padding: 40px; text-align: center; border-radius: 12px; }
+        .presets { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+        .preset-btn { padding: 6px 12px; background: #f0f0f0; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .preset-btn:hover { background: #e0e0e0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Batch Thumbnail | 批量縮圖</h1>
+            <p>Create thumbnails from multiple images | 從多張圖片創建縮圖</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#ff758c,#ff7eb3);">Select Images</label>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Width: <input type="number" id="thumbWidth" value="150" min="16" max="500"></label>
+                <label>Height: <input type="number" id="thumbHeight" value="150" min="16" max="500"></label>
+                <label>Mode:
+                    <select id="fitMode">
+                        <option value="cover">Cover 填滿</option>
+                        <option value="contain">Contain 適應</option>
+                        <option value="stretch">Stretch 拉伸</option>
+                    </select>
+                </label>
+            </div>
+            <div class="presets" id="presets" style="display:none;">
+                <button class="preset-btn" data-w="50" data-h="50">50×50</button>
+                <button class="preset-btn" data-w="100" data-h="100">100×100</button>
+                <button class="preset-btn" data-w="150" data-h="150">150×150</button>
+                <button class="preset-btn" data-w="200" data-h="200">200×200</button>
+                <button class="preset-btn" data-w="320" data-h="180">320×180</button>
+                <button class="preset-btn" data-w="640" data-h="360">640×360</button>
+            </div>
+            <div style="text-align:center;margin-top:20px;" id="actionSection" style="display:none;">
+                <button class="action-btn" id="processBtn" style="display:none;">Generate & Download | 生成並下載</button>
+            </div>
+            <div class="preview-grid" id="previewGrid"></div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #080
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
