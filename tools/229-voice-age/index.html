@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Age Estimation | 語音年齡估計</title>
+    <meta name="description" content="Estimate speaker age from voice. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>語音年齡估計</h1>
+            <p class="subtitle">根據語音估計說話者年齡</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="record-area" id="recordArea">
+                    <div class="record-icon">🎙️</div>
+                    <div class="record-text">點擊開始錄音</div>
+                    <div class="record-hint">建議錄製 3-5 秒</div>
+                </div>
+                <div class="upload-option">
+                    <button id="uploadBtn" class="btn-link">上傳音訊檔案</button>
+                    <input type="file" id="audioInput" accept="audio/*" hidden>
+                </div>
+            </div>
+            <div id="analysisSection" class="analysis-section" style="display:none">
+                <audio id="audioPlayer" controls></audio>
+                <button id="analyzeBtn" class="btn btn-primary">估計年齡</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="age-display">
+                    <div class="age-range" id="ageRange">25-35</div>
+                    <div class="age-label">歲</div>
+                </div>
+                <div class="age-meter">
+                    <div class="meter-track">
+                        <div id="meterIndicator" class="meter-indicator"></div>
+                    </div>
+                    <div class="meter-labels">
+                        <span>0</span>
+                        <span>20</span>
+                        <span>40</span>
+                        <span>60</span>
+                        <span>80+</span>
+                    </div>
+                </div>
+                <div class="age-groups">
+                    <h3>年齡分布機率</h3>
+                    <div id="ageGroups" class="groups-list"></div>
+                </div>
+                <div class="voice-indicators">
+                    <h3>語音指標</h3>
+                    <div id="indicators" class="indicators-grid"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #229</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Emotion Recognition | 語音情感分析</title>
+    <meta name="description" content="Analyze emotions in speech. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>語音情感分析</h1>
+            <p class="subtitle">分析語音中的情感狀態</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="record-area" id="recordArea">
+                    <div class="record-icon">🎙️</div>
+                    <div class="record-text">點擊開始錄音</div>
+                    <div class="record-hint">或上傳音訊檔案</div>
+                </div>
+                <div class="upload-option">
+                    <button id="uploadBtn" class="btn-link">上傳檔案</button>
+                    <input type="file" id="audioInput" accept="audio/*" hidden>
+                </div>
+            </div>
+            <div id="analysisSection" class="analysis-section" style="display:none">
+                <audio id="audioPlayer" controls></audio>
+                <button id="analyzeBtn" class="btn btn-primary">分析情感</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="primary-emotion">
+                    <div id="emotionIcon" class="emotion-icon">😊</div>
+                    <div id="emotionName" class="emotion-name">快樂</div>
+                    <div id="emotionConf" class="emotion-confidence">85%</div>
+                </div>
+                <div class="emotion-breakdown">
+                    <h3>情感分布</h3>
+                    <div id="emotionBars" class="emotion-bars"></div>
+                </div>
+                <div class="voice-metrics">
+                    <h3>語音特徵</h3>
+                    <div id="voiceMetrics" class="metrics-grid"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #227</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
