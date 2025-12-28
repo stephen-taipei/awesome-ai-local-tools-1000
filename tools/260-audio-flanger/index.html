@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Flanger | 音訊鑲邊</title>
+    <meta name="description" content="Add flanger effect to audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊鑲邊</h1>
+            <p class="subtitle">為音訊添加鑲邊效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🌊</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>調變速率</label>
+                        <input type="range" id="rateSlider" min="0.1" max="10" step="0.1" value="0.5">
+                        <span id="rateValue">0.5 Hz</span>
+                    </div>
+                    <div class="option-group">
+                        <label>調變深度</label>
+                        <input type="range" id="depthSlider" min="0" max="10" step="0.5" value="5">
+                        <span id="depthValue">5 ms</span>
+                    </div>
+                    <div class="option-group">
+                        <label>回授量</label>
+                        <input type="range" id="feedbackSlider" min="0" max="90" step="5" value="50">
+                        <span id="feedbackValue">50%</span>
+                    </div>
+                    <div class="option-group">
+                        <label>混合比例</label>
+                        <input type="range" id="mixSlider" min="0" max="100" step="5" value="50">
+                        <span id="mixValue">50%</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #260</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
