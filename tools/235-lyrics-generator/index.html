@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyrics Generator | 歌詞生成</title>
+    <meta name="description" content="AI-powered lyrics generation. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>歌詞生成</h1>
+            <p class="subtitle">AI 自動生成歌詞</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="controls-section">
+                <div class="control-group full-width">
+                    <label>主題關鍵字</label>
+                    <input type="text" id="themeInput" placeholder="輸入主題，如：愛情、夢想、旅行...">
+                </div>
+                <div class="control-group">
+                    <label>風格</label>
+                    <select id="styleSelect">
+                        <option value="pop">流行情歌</option>
+                        <option value="rock">搖滾</option>
+                        <option value="hiphop">嘻哈</option>
+                        <option value="folk">民謠</option>
+                        <option value="ballad">抒情</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>語言</label>
+                    <select id="lyricsLangSelect">
+                        <option value="zh">中文</option>
+                        <option value="en">英文</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>段落結構</label>
+                    <select id="structureSelect">
+                        <option value="verse-chorus">主歌-副歌</option>
+                        <option value="verse-chorus-bridge">主歌-副歌-橋段</option>
+                        <option value="aaba">AABA 結構</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>情感基調</label>
+                    <select id="moodSelect">
+                        <option value="happy">歡樂</option>
+                        <option value="sad">憂傷</option>
+                        <option value="romantic">浪漫</option>
+                        <option value="inspiring">勵志</option>
+                        <option value="nostalgic">懷舊</option>
+                    </select>
+                </div>
+            </div>
+            <div class="generate-section">
+                <button id="generateBtn" class="btn btn-primary">生成歌詞</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="lyrics-display" id="lyricsDisplay"></div>
+                <div class="action-controls">
+                    <button id="copyBtn" class="control-btn">📋 複製</button>
+                    <button id="regenerateBtn" class="control-btn">🔄 重新生成</button>
+                </div>
+                <div class="lyrics-info">
+                    <div class="info-item">
+                        <span class="info-label">段落數</span>
+                        <span id="sectionCount" class="info-value">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">行數</span>
+                        <span id="lineCount" class="info-value">0</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #235</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
