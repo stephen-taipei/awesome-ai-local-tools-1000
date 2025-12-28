@@ -1,0 +1,58 @@
+/* Audio Tuner - Tool #302 */
+:root { --primary-color: #10b981; --success-color: #22c55e; --warning-color: #f59e0b; --danger-color: #ef4444; --bg-color: #0f172a; --card-bg: #1e293b; --border-color: #334155; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --radius: 12px; --radius-sm: 8px; --transition: all 0.2s ease; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-color); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+.container { max-width: 600px; margin: 0 auto; padding: 1.5rem; }
+.lang-switcher { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; }
+.lang-btn { padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: transparent; color: var(--text-secondary); border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); }
+.lang-btn:hover { border-color: var(--primary-color); }
+.lang-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+.header { text-align: center; margin-bottom: 1.5rem; }
+.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--primary-color), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.subtitle { color: var(--text-secondary); font-size: 1rem; }
+.privacy-badge { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.875rem; color: var(--success-color); margin: 0 auto 1.5rem; width: fit-content; }
+.editor-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; }
+.tuner-display { text-align: center; margin-bottom: 1.5rem; }
+.note-display { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 0.5rem; }
+.prev-note, .next-note { font-size: 1.5rem; color: var(--text-secondary); opacity: 0.5; }
+.current-note { font-size: 5rem; font-weight: 700; background: linear-gradient(135deg, var(--primary-color), #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; min-width: 120px; }
+.frequency-display { font-size: 1.25rem; color: var(--text-secondary); }
+.tuner-meter { margin-bottom: 1.5rem; }
+.meter-scale { position: relative; height: 20px; margin-bottom: 0.5rem; }
+.scale-mark { position: absolute; transform: translateX(-50%); font-size: 0.75rem; color: var(--text-secondary); }
+.scale-mark.center { color: var(--success-color); font-weight: 600; }
+.meter-track { position: relative; height: 40px; background: var(--bg-color); border-radius: 20px; overflow: hidden; }
+.meter-track::before { content: ''; position: absolute; top: 0; left: 50%; width: 4px; height: 100%; background: var(--success-color); transform: translateX(-50%); z-index: 1; }
+.meter-needle { position: absolute; top: 50%; left: 50%; width: 12px; height: 30px; background: var(--warning-color); border-radius: 6px; transform: translate(-50%, -50%); transition: left 0.1s ease; z-index: 2; }
+.meter-needle.in-tune { background: var(--success-color); }
+.meter-needle.flat { background: var(--danger-color); }
+.meter-needle.sharp { background: var(--warning-color); }
+.tuning-status { text-align: center; margin-top: 0.5rem; font-size: 1rem; font-weight: 500; color: var(--text-secondary); }
+.tuning-status.in-tune { color: var(--success-color); }
+.tuning-status.flat { color: var(--danger-color); }
+.tuning-status.sharp { color: var(--warning-color); }
+.options-section { margin-bottom: 1.5rem; }
+.option-group { display: flex; align-items: center; gap: 1rem; }
+.option-group label { font-size: 0.875rem; color: var(--text-secondary); min-width: 80px; }
+.option-group input[type="range"] { flex: 1; accent-color: var(--primary-color); }
+.option-group span { min-width: 100px; font-size: 0.875rem; color: var(--primary-color); text-align: right; }
+.instrument-section { margin-bottom: 1.5rem; }
+.instrument-section h3 { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+.instrument-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+.instrument-btn { padding: 0.75rem; border: 1px solid var(--border-color); background: transparent; border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+.instrument-btn:hover { border-color: var(--primary-color); }
+.instrument-btn.active { border-color: var(--primary-color); background: rgba(16, 185, 129, 0.1); }
+.instrument-icon { font-size: 1.25rem; }
+.instrument-name { font-size: 0.75rem; color: var(--text-primary); }
+.string-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
+.string-btn { padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: transparent; color: var(--text-primary); border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); font-size: 0.875rem; }
+.string-btn:hover { border-color: var(--primary-color); }
+.string-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+.action-section { text-align: center; }
+.btn { padding: 0.75rem 1.5rem; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
+.btn-large { padding: 1rem 2rem; font-size: 1.125rem; }
+.btn-primary { background: linear-gradient(135deg, var(--primary-color), #34d399); color: white; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
+.btn-stop { background: linear-gradient(135deg, #ef4444, #f87171); }
+.footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 0.875rem; }
+.footer a { color: var(--primary-color); text-decoration: none; }
