@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Notch Filter | 音頻陷波濾波器</title>
+    <meta name="description" content="Notch filter to remove specific frequencies. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音頻陷波濾波器</h1>
+            <p class="subtitle">移除特定頻率（如電源雜音）</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔇</div>
+                    <p>拖放音頻檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP3, WAV, OGG, M4A</p>
+                    <input type="file" id="fileInput" accept="audio/*" hidden>
+                </div>
+                <div class="audio-loaded" id="audioLoaded" style="display: none;">
+                    <div class="file-info" id="fileInfo"></div>
+                    <audio id="originalAudio" controls></audio>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="option-group">
+                        <label>頻率</label>
+                        <input type="range" id="frequency" min="30" max="1000" step="10" value="60">
+                        <span id="frequencyValue">60 Hz</span>
+                    </div>
+                    <div class="option-group">
+                        <label>Q 值</label>
+                        <input type="range" id="q" min="1" max="50" step="1" value="30">
+                        <span id="qValue">30</span>
+                    </div>
+                    <div class="preset-group">
+                        <label>預設</label>
+                        <div class="presets">
+                            <button class="preset-btn" data-freq="50">50 Hz</button>
+                            <button class="preset-btn active" data-freq="60">60 Hz</button>
+                            <button class="preset-btn" data-freq="100">100 Hz</button>
+                            <button class="preset-btn" data-freq="120">120 Hz</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 處理音頻</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">處理結果</h3>
+                    <audio id="processedAudio" controls></audio>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #325</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

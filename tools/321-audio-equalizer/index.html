@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Equalizer | 音頻均衡器</title>
+    <meta name="description" content="Multi-band equalizer for audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音頻均衡器</h1>
+            <p class="subtitle">5 頻段圖形均衡器</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎚️</div>
+                    <p>拖放音頻檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP3, WAV, OGG, M4A</p>
+                    <input type="file" id="fileInput" accept="audio/*" hidden>
+                </div>
+                <div class="audio-loaded" id="audioLoaded" style="display: none;">
+                    <div class="file-info" id="fileInfo"></div>
+                    <audio id="originalAudio" controls></audio>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="eq-container">
+                        <div class="eq-band">
+                            <input type="range" id="band1" min="-12" max="12" step="0.5" value="0" orient="vertical">
+                            <span class="band-value" id="band1Value">0 dB</span>
+                            <span class="band-freq">60 Hz</span>
+                        </div>
+                        <div class="eq-band">
+                            <input type="range" id="band2" min="-12" max="12" step="0.5" value="0" orient="vertical">
+                            <span class="band-value" id="band2Value">0 dB</span>
+                            <span class="band-freq">250 Hz</span>
+                        </div>
+                        <div class="eq-band">
+                            <input type="range" id="band3" min="-12" max="12" step="0.5" value="0" orient="vertical">
+                            <span class="band-value" id="band3Value">0 dB</span>
+                            <span class="band-freq">1 kHz</span>
+                        </div>
+                        <div class="eq-band">
+                            <input type="range" id="band4" min="-12" max="12" step="0.5" value="0" orient="vertical">
+                            <span class="band-value" id="band4Value">0 dB</span>
+                            <span class="band-freq">4 kHz</span>
+                        </div>
+                        <div class="eq-band">
+                            <input type="range" id="band5" min="-12" max="12" step="0.5" value="0" orient="vertical">
+                            <span class="band-value" id="band5Value">0 dB</span>
+                            <span class="band-freq">12 kHz</span>
+                        </div>
+                    </div>
+                    <button id="resetBtn" class="btn btn-small">重置</button>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 處理音頻</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">處理結果</h3>
+                    <audio id="processedAudio" controls></audio>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #321</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
