@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprite Sheet Generator | 精靈圖生成 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box canvas { max-width: 100%; border-radius: 12px; background: repeating-conic-gradient(#eee 0% 25%, white 0% 50%) 50% / 20px 20px; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="number"] { width: 60px; padding: 8px; border-radius: 6px; border: 1px solid #ddd; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #6a11cb; background: #f8f5ff; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+        .drop-zone:hover { background: #f0e8ff; }
+        .frame-list { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 15px; }
+        .frame-item { position: relative; }
+        .frame-item img { width: 60px; height: 60px; object-fit: contain; border-radius: 8px; border: 2px solid #ddd; background: white; }
+        .frame-item .order { position: absolute; bottom: -5px; right: -5px; background: #6a11cb; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+        .info-box { background: #f0f0f0; padding: 15px; border-radius: 8px; margin-top: 15px; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sprite Sheet Generator | 精靈圖生成</h1>
+            <p>Create sprite sheets from multiple images | 從多張圖片創建精靈圖</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#6a11cb,#2575fc);cursor:pointer;">Add Frames | 添加幀</label>
+                <p style="margin-top:15px;color:#666;">Select animation frames in order</p>
+                <div class="frame-list" id="frameList"></div>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Columns: <input type="number" id="cols" min="1" max="20" value="4"></label>
+                <label>Frame Width: <input type="number" id="frameW" min="16" max="1024" value="64"></label>
+                <label>Frame Height: <input type="number" id="frameH" min="16" max="1024" value="64"></label>
+                <label>Padding: <input type="number" id="padding" min="0" max="20" value="0"></label>
+                <button class="action-btn" id="generateBtn">Generate | 生成</button>
+                <button class="action-btn" id="clearBtn" style="background:#ff6b6b;">Clear | 清除</button>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box">
+                    <canvas id="canvas"></canvas>
+                    <div class="info-box" id="infoBox"></div>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #093
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

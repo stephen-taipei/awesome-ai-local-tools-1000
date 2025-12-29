@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title Generator | AI 標題生成</title>
+    <meta name="description" content="Generate catchy titles locally in your browser. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">AI 標題生成</h1>
+            <p class="subtitle" data-i18n="subtitle">生成吸引人的標題，提升點擊率</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label data-i18n="topicLabel">主題內容</label>
+                    <textarea id="topicInput" class="textarea-field" rows="3" data-i18n-placeholder="topicPlaceholder" placeholder="輸入您的文章主題或內容概要..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="typeLabel">標題類型</label>
+                        <select id="typeSelect" class="select-field">
+                            <option value="blog" data-i18n="typeBlog">部落格</option>
+                            <option value="news" data-i18n="typeNews">新聞</option>
+                            <option value="marketing" data-i18n="typeMarketing">行銷</option>
+                            <option value="youtube" data-i18n="typeYoutube">YouTube</option>
+                            <option value="academic" data-i18n="typeAcademic">學術</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="countLabel">生成數量</label>
+                        <select id="countSelect" class="select-field">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成標題</span>
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成的標題</h3>
+                </div>
+                <div class="titles-list" id="titlesList"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3 data-i18n="feature1">多種類型</h3>
+                    <p data-i18n="feature1Desc">支援部落格、新聞、行銷等多種標題類型</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📈</div>
+                    <h3 data-i18n="feature2">提升點擊</h3>
+                    <p data-i18n="feature2Desc">生成吸引人的標題，提高點擊率</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="feature4">批量生成</h3>
+                    <p data-i18n="feature4Desc">一次生成多個標題供選擇</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #103</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

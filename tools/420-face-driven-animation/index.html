@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Driven Animation | 表情驅動動畫</title>
+    <meta name="description" content="Drive avatar with face movements. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>表情驅動動畫</h1>
+            <p class="subtitle">用臉部動作控制虛擬角色</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始動畫</button>
+            </div>
+            <div id="animationSection" class="animation-section" style="display: none;">
+                <div class="dual-view">
+                    <div class="view-box">
+                        <h3>攝影機</h3>
+                        <video id="webcam" autoplay playsinline></video>
+                    </div>
+                    <div class="view-box">
+                        <h3>虛擬角色</h3>
+                        <canvas id="avatarCanvas"></canvas>
+                    </div>
+                </div>
+                <div class="avatar-selector">
+                    <button class="avatar-btn active" data-avatar="emoji">😀</button>
+                    <button class="avatar-btn" data-avatar="cat">🐱</button>
+                    <button class="avatar-btn" data-avatar="robot">🤖</button>
+                    <button class="avatar-btn" data-avatar="alien">👽</button>
+                </div>
+                <div class="expression-display">
+                    <div class="expression-item">
+                        <span class="expression-label">眨眼</span>
+                        <div class="expression-bar"><div class="expression-fill" id="blinkFill"></div></div>
+                    </div>
+                    <div class="expression-item">
+                        <span class="expression-label">微笑</span>
+                        <div class="expression-bar"><div class="expression-fill" id="smileFill"></div></div>
+                    </div>
+                    <div class="expression-item">
+                        <span class="expression-label">頭部轉動</span>
+                        <div class="expression-bar"><div class="expression-fill" id="headFill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #420</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

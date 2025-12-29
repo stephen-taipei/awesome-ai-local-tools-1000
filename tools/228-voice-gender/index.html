@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Gender Detection | 語音性別辨識</title>
+    <meta name="description" content="Detect speaker gender from voice. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>語音性別辨識</h1>
+            <p class="subtitle">根據語音辨識說話者性別</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="record-area" id="recordArea">
+                    <div class="record-icon">🎙️</div>
+                    <div class="record-text">點擊開始錄音</div>
+                    <div class="record-hint">建議錄製 2-5 秒</div>
+                </div>
+                <div class="upload-option">
+                    <span>或</span>
+                    <button id="uploadBtn" class="btn-link">上傳音訊檔案</button>
+                    <input type="file" id="audioInput" accept="audio/*" hidden>
+                </div>
+            </div>
+            <div id="analysisSection" class="analysis-section" style="display:none">
+                <audio id="audioPlayer" controls></audio>
+                <button id="analyzeBtn" class="btn btn-primary">分析性別</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="gender-result">
+                    <div id="genderIcon" class="gender-icon">👨</div>
+                    <div id="genderLabel" class="gender-label">男性</div>
+                    <div id="confidence" class="confidence">信心度: 92%</div>
+                </div>
+                <div class="probability-bars">
+                    <div class="prob-item">
+                        <span class="prob-label">👨 男性</span>
+                        <div class="prob-bar">
+                            <div id="maleBar" class="prob-fill male"></div>
+                        </div>
+                        <span id="malePercent" class="prob-percent">92%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">👩 女性</span>
+                        <div class="prob-bar">
+                            <div id="femaleBar" class="prob-fill female"></div>
+                        </div>
+                        <span id="femalePercent" class="prob-percent">8%</span>
+                    </div>
+                </div>
+                <div class="voice-features">
+                    <h3>語音特徵</h3>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <div id="pitchValue" class="feature-value">120 Hz</div>
+                            <div class="feature-label">基頻</div>
+                        </div>
+                        <div class="feature-item">
+                            <div id="formantValue" class="feature-value">中低</div>
+                            <div class="feature-label">共振峰</div>
+                        </div>
+                        <div class="feature-item">
+                            <div id="timbreValue" class="feature-value">渾厚</div>
+                            <div class="feature-label">音色</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #228</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

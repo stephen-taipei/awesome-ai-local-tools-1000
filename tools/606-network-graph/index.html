@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Graph | 網絡圖</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+        <header class="header">
+            <h1 data-i18n="title">Network Graph</h1>
+            <p class="subtitle" data-i18n="subtitle">Visualize relationships and connections</p>
+        </header>
+        <div class="privacy-badge"><span class="badge-icon">🔒</span><span data-i18n="privacyBadge">100% Local Processing</span></div>
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".csv,.json" hidden>
+                <div class="upload-icon">🕸️</div>
+                <p class="upload-text" data-i18n="uploadText">Upload edge list (source, target columns)</p>
+                <p class="upload-hint" data-i18n="uploadHint">CSV/JSON with connection data</p>
+            </div>
+            <div class="controls-section" id="controlsSection" style="display: none;">
+                <div class="control-row">
+                    <div class="control-group"><label data-i18n="sourceCol">Source:</label><select id="sourceCol"></select></div>
+                    <div class="control-group"><label data-i18n="targetCol">Target:</label><select id="targetCol"></select></div>
+                    <div class="control-group"><label data-i18n="layout">Layout:</label>
+                        <select id="layout">
+                            <option value="force">Force Directed</option>
+                            <option value="hierarchical">Hierarchical</option>
+                            <option value="circular">Circular</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">Generate Graph</button>
+            </div>
+            <div class="graph-section" id="graphSection" style="display: none;">
+                <div id="network"></div>
+                <div class="stats-bar"><span data-i18n="nodes">Nodes:</span> <span id="nodeCount">0</span> | <span data-i18n="edges">Edges:</span> <span id="edgeCount">0</span></div>
+                <div class="chart-actions">
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer"><p><a href="../../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #606</span></p></footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

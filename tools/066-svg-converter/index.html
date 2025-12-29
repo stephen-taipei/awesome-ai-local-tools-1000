@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Converter | SVG 轉換器 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-section { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
+        .preview-box { flex: 1; min-width: 300px; text-align: center; padding: 20px; background: #f9f9f9; border-radius: 12px; }
+        .preview-box canvas, .preview-box img { max-width: 100%; max-height: 300px; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+        .control-group { display: flex; align-items: center; gap: 8px; }
+        input[type="range"] { width: 100px; }
+        select { padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; }
+        .download-btn { padding: 12px 24px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; margin: 5px; }
+        .drop-zone { border: 3px dashed #667eea; background: #f8f5ff; padding: 40px; text-align: center; border-radius: 12px; }
+        .drop-zone.dragover { background: #f0e8ff; }
+        .svg-output { background: white; padding: 15px; border-radius: 8px; text-align: left; max-height: 200px; overflow: auto; font-family: monospace; font-size: 12px; white-space: pre-wrap; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SVG Converter | SVG 轉換器</h1>
+            <p>Convert images to/from SVG format | 圖片與 SVG 格式互轉</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*,.svg" hidden>
+                <label for="imageInput" class="button">Select Image or SVG | 選擇圖片或 SVG</label>
+                <p style="margin-top:15px;color:#888;">Supports PNG, JPG, WebP, SVG</p>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <div class="control-group">
+                    <label>Mode | 模式:</label>
+                    <select id="mode">
+                        <option value="toSvg">Image → SVG (Embed)</option>
+                        <option value="trace">Image → SVG (Trace)</option>
+                        <option value="toRaster">SVG → PNG</option>
+                    </select>
+                </div>
+                <div class="control-group" id="scaleGroup">
+                    <label>Scale | 縮放:</label>
+                    <input type="range" id="scale" min="0.5" max="3" step="0.1" value="1">
+                    <span id="scaleValue">1x</span>
+                </div>
+            </div>
+            <div class="preview-section" id="previewSection" style="display:none;">
+                <div class="preview-box">
+                    <h3>Input | 輸入</h3>
+                    <canvas id="inputCanvas"></canvas>
+                </div>
+                <div class="preview-box">
+                    <h3>Output | 輸出</h3>
+                    <div id="outputContainer"></div>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:20px;" id="downloadSection" style="display:none;">
+                <button class="download-btn" id="downloadBtn">Download | 下載</button>
+                <button class="download-btn" id="copySvgBtn" style="display:none;">Copy SVG Code | 複製 SVG 代碼</button>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #066
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

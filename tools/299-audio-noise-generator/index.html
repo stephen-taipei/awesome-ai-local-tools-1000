@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Noise Generator | 音訊噪音產生器</title>
+    <meta name="description" content="Generate various types of noise. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊噪音產生器</h1>
+            <p class="subtitle">產生各種類型的噪音信號</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="noise-types">
+                    <button class="noise-btn active" data-type="white">
+                        <span class="noise-icon">⚪</span>
+                        <span class="noise-name">白噪音</span>
+                    </button>
+                    <button class="noise-btn" data-type="pink">
+                        <span class="noise-icon">🩷</span>
+                        <span class="noise-name">粉紅噪音</span>
+                    </button>
+                    <button class="noise-btn" data-type="brown">
+                        <span class="noise-icon">🟤</span>
+                        <span class="noise-name">棕噪音</span>
+                    </button>
+                </div>
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>音量</label>
+                        <input type="range" id="volumeSlider" min="0" max="100" step="1" value="50">
+                        <span id="volumeValue">50%</span>
+                    </div>
+                    <div class="option-group">
+                        <label>持續時間</label>
+                        <input type="range" id="durationSlider" min="1" max="60" step="1" value="10">
+                        <span id="durationValue">10 秒</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <p id="noiseInfo">白噪音包含所有頻率，適合遮蔽環境噪音和幫助專注。</p>
+                </div>
+                <div class="action-section">
+                    <button id="playBtn" class="btn btn-primary">▶️ 播放</button>
+                    <button id="downloadBtn" class="btn btn-secondary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #299</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

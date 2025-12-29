@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Filter | 復古濾鏡 - AI Local Tools</title>
+    <meta name="description" content="Apply retro and vintage color effects to your photos locally in browser. No upload, 100% private.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .preview-box {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .filter-btn {
+            padding: 12px 16px;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border-color: #c0392b;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+        }
+        .filter-btn:hover:not(.active) {
+            background: #f9f9f9;
+            border-color: #bbb;
+        }
+        .slider-group {
+            margin: 15px 0;
+        }
+        .slider-group label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .slider-group input[type="range"] {
+            width: 100%;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .action-buttons button {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2980b9, #1a5276);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+            color: white;
+        }
+        .btn-success:hover {
+            background: linear-gradient(135deg, #1e8449, #145a32);
+        }
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .upload-hint {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Retro Filter | 復古濾鏡</h1>
+            <p>Apply vintage and retro color effects to your photos</p>
+            <p>為照片套用復古、懷舊色調效果</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span>🔒</span>
+            <span>100% Local Processing - No Data Upload | 完全本地處理，資料不外傳</span>
+        </div>
+
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <label for="imageInput" class="button">Choose Image | 選擇圖片</label>
+                <p class="upload-hint">Supports PNG, JPG, WebP | 支援 PNG、JPG、WebP</p>
+            </div>
+
+            <div class="controls" id="controlsSection" style="display: none;">
+                <h3>Select Retro Style | 選擇復古風格</h3>
+                <div class="filter-grid" id="filterContainer">
+                    <button class="filter-btn active" data-filter="none">Original<br>原圖</button>
+                    <button class="filter-btn" data-filter="70s">70s Film<br>70年代膠片</button>
+                    <button class="filter-btn" data-filter="80s">80s Pop<br>80年代流行</button>
+                    <button class="filter-btn" data-filter="polaroid">Polaroid<br>拍立得</button>
+                    <button class="filter-btn" data-filter="sepia">Sepia<br>懷舊棕褐</button>
+                    <button class="filter-btn" data-filter="faded">Faded<br>褪色效果</button>
+                    <button class="filter-btn" data-filter="warmVintage">Warm Vintage<br>暖色復古</button>
+                    <button class="filter-btn" data-filter="coolVintage">Cool Vintage<br>冷色復古</button>
+                    <button class="filter-btn" data-filter="kodachrome">Kodachrome<br>柯達色</button>
+                    <button class="filter-btn" data-filter="agfa">Agfa Vista<br>愛克發</button>
+                    <button class="filter-btn" data-filter="crossProcess">Cross Process<br>交叉沖洗</button>
+                    <button class="filter-btn" data-filter="lofi">Lo-Fi<br>低保真</button>
+                </div>
+
+                <div class="slider-group">
+                    <label>
+                        <span>Filter Intensity | 濾鏡強度</span>
+                        <span id="intensityValue">100%</span>
+                    </label>
+                    <input type="range" id="intensitySlider" min="0" max="100" value="100">
+                </div>
+
+                <div class="slider-group">
+                    <label>
+                        <span>Grain Effect | 顆粒效果</span>
+                        <span id="grainValue">0%</span>
+                    </label>
+                    <input type="range" id="grainSlider" min="0" max="50" value="0">
+                </div>
+
+                <div class="slider-group">
+                    <label>
+                        <span>Vignette | 暗角效果</span>
+                        <span id="vignetteValue">0%</span>
+                    </label>
+                    <input type="range" id="vignetteSlider" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <div class="preview-container" id="previewSection" style="display: none;">
+                <div class="preview-box">
+                    <h3>Preview | 預覽</h3>
+                    <canvas id="outputCanvas"></canvas>
+                </div>
+            </div>
+
+            <div class="action-buttons" id="actionButtons" style="display: none;">
+                <button class="btn-success" id="downloadBtn">Download PNG | 下載 PNG</button>
+                <button class="btn-primary" id="downloadJpgBtn">Download JPG | 下載 JPG</button>
+                <button class="btn-secondary" id="resetBtn">Reset | 重置</button>
+            </div>
+        </main>
+
+        <section class="info-section" style="margin-top: 40px;">
+            <h2>How It Works | 如何運作</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🎨</div>
+                    <h4>12 Retro Styles</h4>
+                    <p style="font-size: 14px; color: #666;">Classic film emulation and vintage effects</p>
+                </div>
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🔒</div>
+                    <h4>100% Private</h4>
+                    <p style="font-size: 14px; color: #666;">All processing in your browser</p>
+                </div>
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">⚡</div>
+                    <h4>Real-time</h4>
+                    <p style="font-size: 14px; color: #666;">Instant preview with WebGL</p>
+                </div>
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📱</div>
+                    <h4>Works Offline</h4>
+                    <p style="font-size: 14px; color: #666;">No internet needed after loading</p>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #666;">
+            <p>
+                <a href="../../README.md">Back to Home | 返回首頁</a> ·
+                Tool #036 | 工具 #036 ·
+                <a href="https://github.com" target="_blank">Source Code | 原始碼</a>
+            </p>
+            <p>Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Cloning | 語音克隆模擬</title>
+    <meta name="description" content="Voice cloning simulation. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>語音克隆模擬</h1>
+            <p class="subtitle">模擬不同聲音風格的語音合成</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="info-box">
+                <p>此工具使用瀏覽器內建語音引擎模擬不同聲音特徵。實際語音克隆需要深度學習模型，此處僅展示概念。</p>
+            </div>
+            <div class="voice-profiles">
+                <h3>聲音模板</h3>
+                <div class="profiles-grid">
+                    <div class="profile-card" data-profile="male-adult">
+                        <div class="profile-icon">👨</div>
+                        <div class="profile-name">成年男性</div>
+                        <div class="profile-desc">低沉穩重</div>
+                    </div>
+                    <div class="profile-card" data-profile="female-adult">
+                        <div class="profile-icon">👩</div>
+                        <div class="profile-name">成年女性</div>
+                        <div class="profile-desc">溫柔清晰</div>
+                    </div>
+                    <div class="profile-card" data-profile="child">
+                        <div class="profile-icon">👧</div>
+                        <div class="profile-name">兒童</div>
+                        <div class="profile-desc">活潑可愛</div>
+                    </div>
+                    <div class="profile-card" data-profile="elderly">
+                        <div class="profile-icon">👴</div>
+                        <div class="profile-name">長者</div>
+                        <div class="profile-desc">沉穩緩慢</div>
+                    </div>
+                    <div class="profile-card" data-profile="robot">
+                        <div class="profile-icon">🤖</div>
+                        <div class="profile-name">機器人</div>
+                        <div class="profile-desc">機械音調</div>
+                    </div>
+                    <div class="profile-card" data-profile="whisper">
+                        <div class="profile-icon">🤫</div>
+                        <div class="profile-name">悄悄話</div>
+                        <div class="profile-desc">輕聲細語</div>
+                    </div>
+                </div>
+            </div>
+            <div class="custom-voice">
+                <h3>自訂聲音參數</h3>
+                <div class="params-grid">
+                    <div class="param-group">
+                        <label>音調</label>
+                        <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1">
+                        <span id="pitchValue">1.0</span>
+                    </div>
+                    <div class="param-group">
+                        <label>語速</label>
+                        <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
+                        <span id="rateValue">1.0</span>
+                    </div>
+                    <div class="param-group">
+                        <label>音量</label>
+                        <input type="range" id="volume" min="0.1" max="1" step="0.1" value="1">
+                        <span id="volumeValue">1.0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-section">
+                <h3>輸入文字</h3>
+                <textarea id="inputText" placeholder="輸入要朗讀的文字..."></textarea>
+            </div>
+            <div class="controls">
+                <button id="playBtn" class="btn btn-primary">播放</button>
+                <button id="stopBtn" class="btn btn-secondary" disabled>停止</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #220</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

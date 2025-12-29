@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Extraction | 表格提取 - AI Local Tools</title>
+    <meta name="description" content="Extract tables from documents locally. 100% private.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-container { background: linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%); min-height: 100vh; padding: 20px; }
+        .tool-card { background: white; border-radius: 20px; padding: 40px; max-width: 1000px; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        .tool-header { text-align: center; margin-bottom: 30px; }
+        .tool-header h1 { font-size: 2.5em; background: linear-gradient(135deg, #ee9ca7, #d4738c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .lang-switch { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .lang-btn { padding: 8px 20px; border: 2px solid #ee9ca7; background: white; border-radius: 20px; cursor: pointer; }
+        .lang-btn.active { background: #ee9ca7; color: white; }
+        .privacy-badge { display: inline-flex; align-items: center; gap: 8px; background: #fce4ec; color: #c2185b; padding: 10px 20px; border-radius: 25px; font-size: 14px; margin-bottom: 20px; }
+        .upload-area { border: 3px dashed #ddd; border-radius: 15px; padding: 40px; text-align: center; cursor: pointer; margin-bottom: 20px; }
+        .upload-area:hover { border-color: #ee9ca7; background: #fff5f7; }
+        .upload-icon { font-size: 48px; margin-bottom: 15px; }
+        .input-area { margin-bottom: 20px; }
+        .input-area textarea { width: 100%; height: 200px; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-family: monospace; }
+        .btn { padding: 14px 28px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600; }
+        .btn-primary { background: linear-gradient(135deg, #ee9ca7, #d4738c); color: white; }
+        .btn-success { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        .results { display: none; margin-top: 20px; }
+        .results.visible { display: block; }
+        .table-preview { background: #f8f9fa; border-radius: 12px; padding: 20px; overflow-x: auto; margin-bottom: 20px; }
+        .extracted-table { width: 100%; border-collapse: collapse; background: white; }
+        .extracted-table th, .extracted-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .extracted-table th { background: linear-gradient(135deg, #ee9ca7, #d4738c); color: white; }
+        .extracted-table tr:nth-child(even) { background: #f9f9f9; }
+        .action-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+        .loading { display: none; text-align: center; padding: 40px; }
+        .loading.visible { display: block; }
+        .spinner { width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #ee9ca7; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        footer { text-align: center; margin-top: 40px; padding: 20px; color: #666; }
+        footer a { color: #ee9ca7; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="tool-container">
+        <div class="tool-card">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
+            <div class="tool-header">
+                <h1><span class="en">Table Extraction</span><span class="zh" style="display:none;">表格提取</span></h1>
+                <p><span class="en">Extract and convert tables from text</span><span class="zh" style="display:none;">從文本中提取和轉換表格</span></p>
+            </div>
+            <div class="privacy-badge">
+                <span>🔒</span>
+                <span class="en">100% Local Processing</span>
+                <span class="zh" style="display:none;">100% 本地處理</span>
+            </div>
+            <div class="input-area">
+                <label><span class="en">Paste tabular data (CSV, TSV, or space-separated):</span><span class="zh" style="display:none;">貼上表格資料（CSV、TSV 或空格分隔）：</span></label>
+                <textarea id="inputText" placeholder="Name, Age, City&#10;John, 25, New York&#10;Jane, 30, Los Angeles"></textarea>
+            </div>
+            <div style="margin-bottom:20px;">
+                <label><span class="en">Delimiter:</span><span class="zh" style="display:none;">分隔符：</span></label>
+                <select id="delimiter" style="padding:10px;border-radius:8px;border:2px solid #e0e0e0;margin-left:10px;">
+                    <option value=",">Comma (,)</option>
+                    <option value="	">Tab</option>
+                    <option value=";">Semicolon (;)</option>
+                    <option value="|">Pipe (|)</option>
+                    <option value=" ">Space</option>
+                </select>
+                <label style="margin-left:20px;"><input type="checkbox" id="hasHeader" checked> <span class="en">First row is header</span><span class="zh" style="display:none;">第一行為標題</span></label>
+            </div>
+            <button class="btn btn-primary" id="extractBtn" style="width:100%;">
+                <span class="en">Extract Table</span><span class="zh" style="display:none;">提取表格</span>
+            </button>
+            <div class="loading" id="loading"><div class="spinner"></div></div>
+            <div class="results" id="results">
+                <h3><span class="en">Extracted Table</span><span class="zh" style="display:none;">提取的表格</span></h3>
+                <div class="table-preview" id="tablePreview"></div>
+                <div class="action-buttons">
+                    <button class="btn btn-success" id="exportCsv">Export CSV</button>
+                    <button class="btn btn-primary" id="exportJson">Export JSON</button>
+                    <button class="btn btn-primary" id="exportHtml">Export HTML</button>
+                    <button class="btn btn-primary" id="copyTable">Copy Table</button>
+                </div>
+            </div>
+            <footer>
+                <p><a href="../../index.html">Back to Home</a> · Tool #708</p>
+                <p>Awesome AI Local Tools © 2024</p>
+            </footer>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accent-Adapted Recognition | 口音適應識別</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-switcher button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+        .lang-switcher button.active { background: white; color: #f12711; }
+        .main-content { padding: 30px; }
+        .accent-selector {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .accent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .accent-option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .accent-option:hover { border-color: #f12711; }
+        .accent-option.active {
+            border-color: #f12711;
+            background: linear-gradient(135deg, rgba(241, 39, 17, 0.1) 0%, rgba(245, 175, 25, 0.1) 100%);
+        }
+        .accent-flag { font-size: 1.5em; margin-bottom: 5px; }
+        .visualizer {
+            background: #1a1a2e;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        #waveform { width: 100%; height: 80px; }
+        .status {
+            text-align: center;
+            color: white;
+            margin-top: 10px;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-primary { background: linear-gradient(135deg, #f12711 0%, #f5af19 100%); color: white; }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .transcript-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 150px;
+        }
+        .transcript-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        .confidence-bar {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+        .confidence-label { margin-bottom: 10px; }
+        .confidence-meter {
+            height: 20px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);
+            transition: width 0.3s;
+        }
+        .tips {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 10px;
+        }
+        .tips h4 { margin-bottom: 10px; }
+        .tips ul { margin-left: 20px; }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .footer a { color: #f12711; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button id="lang-en" class="active">EN</button>
+                <button id="lang-zh">中文</button>
+            </div>
+            <h1 data-i18n="title">Accent-Adapted Recognition</h1>
+            <p data-i18n="subtitle">Optimized speech recognition for different accents</p>
+        </div>
+
+        <div class="main-content">
+            <div class="accent-selector">
+                <h3 data-i18n="selectAccent">Select Your Accent</h3>
+                <div class="accent-grid" id="accentGrid">
+                    <div class="accent-option active" data-accent="en-US"><div class="accent-flag">🇺🇸</div>American</div>
+                    <div class="accent-option" data-accent="en-GB"><div class="accent-flag">🇬🇧</div>British</div>
+                    <div class="accent-option" data-accent="en-AU"><div class="accent-flag">🇦🇺</div>Australian</div>
+                    <div class="accent-option" data-accent="en-IN"><div class="accent-flag">🇮🇳</div>Indian</div>
+                    <div class="accent-option" data-accent="en-IE"><div class="accent-flag">🇮🇪</div>Irish</div>
+                    <div class="accent-option" data-accent="en-ZA"><div class="accent-flag">🇿🇦</div>South African</div>
+                    <div class="accent-option" data-accent="en-NZ"><div class="accent-flag">🇳🇿</div>New Zealand</div>
+                    <div class="accent-option" data-accent="en-SG"><div class="accent-flag">🇸🇬</div>Singaporean</div>
+                </div>
+            </div>
+
+            <div class="visualizer">
+                <canvas id="waveform"></canvas>
+                <div class="status" id="statusText" data-i18n="ready">Ready to record</div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="startBtn" data-i18n="start">Start</button>
+                <button class="btn btn-secondary" id="stopBtn" disabled data-i18n="stop">Stop</button>
+                <button class="btn btn-secondary" id="clearBtn" data-i18n="clear">Clear</button>
+            </div>
+
+            <div class="transcript-area">
+                <h3 data-i18n="transcript">Transcript</h3>
+                <div class="transcript-content" id="transcriptContent" data-i18n="placeholder">
+                    Select your accent and start speaking...
+                </div>
+            </div>
+
+            <div class="confidence-bar">
+                <div class="confidence-label">
+                    <span data-i18n="confidence">Recognition Confidence:</span>
+                    <span id="confidenceValue">0%</span>
+                </div>
+                <div class="confidence-meter">
+                    <div class="confidence-fill" id="confidenceFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <h4 data-i18n="tips">Tips for Better Recognition</h4>
+                <ul>
+                    <li data-i18n="tip1">Speak clearly and at a moderate pace</li>
+                    <li data-i18n="tip2">Reduce background noise</li>
+                    <li data-i18n="tip3">Position microphone close to your mouth</li>
+                    <li data-i18n="tip4">Select the accent closest to yours</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Tool #210 | <a href="../index.html">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

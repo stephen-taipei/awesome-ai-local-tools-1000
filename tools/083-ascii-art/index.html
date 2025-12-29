@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Art | ASCII 字符畫 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box canvas { max-width: 100%; border-radius: 12px; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 100px; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #11998e, #38ef7d); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #11998e; background: #f0fff4; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+        .drop-zone:hover { background: #e0ffe8; }
+        #asciiOutput { font-family: monospace; font-size: 6px; line-height: 6px; white-space: pre; background: #1a1a2e; color: #11998e; padding: 20px; border-radius: 12px; overflow: auto; max-height: 500px; text-align: left; }
+        select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ASCII Art | ASCII 字符畫</h1>
+            <p>Convert images to ASCII character art | 將圖片轉換為 ASCII 字符藝術</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#11998e,#38ef7d);cursor:pointer;">Upload Image | 上傳圖片</label>
+                <p style="margin-top:15px;color:#666;">Or drag and drop an image here</p>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Width: <input type="range" id="width" min="40" max="200" value="100"> <span id="widthVal">100</span></label>
+                <label>Charset:
+                    <select id="charset">
+                        <option value="standard">Standard</option>
+                        <option value="blocks">Blocks</option>
+                        <option value="detailed">Detailed</option>
+                    </select>
+                </label>
+                <label><input type="checkbox" id="invert"> Invert</label>
+                <label><input type="checkbox" id="colored"> Colored</label>
+                <button class="action-btn" id="downloadBtn">Download TXT | 下載文字</button>
+                <button class="action-btn" id="downloadImgBtn">Download Image | 下載圖片</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box" style="width:100%;">
+                    <pre id="asciiOutput"></pre>
+                </div>
+            </div>
+            <canvas id="canvas" style="display:none;"></canvas>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #083
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

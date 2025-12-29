@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audiobook Generation | 有聲書產生</title>
+    <meta name="description" content="Generate audiobooks from text. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>有聲書產生</h1>
+            <p class="subtitle">將長篇文字轉換為有聲書</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>書籍內容</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="inputText" placeholder="貼上書籍或文章內容..."></textarea>
+                <div class="text-stats">
+                    <span><span id="charCount">0</span> 字</span>
+                    <span>預估時長: <span id="duration">0</span> 分鐘</span>
+                </div>
+            </div>
+            <div class="options-section">
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label>語音</label>
+                        <select id="voiceSelect"></select>
+                    </div>
+                    <div class="option-group">
+                        <label>朗讀速度</label>
+                        <select id="speed">
+                            <option value="0.8">慢速 (0.8x)</option>
+                            <option value="1" selected>正常 (1x)</option>
+                            <option value="1.2">快速 (1.2x)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>章節間隔 (秒)</label>
+                        <input type="number" id="chapterPause" min="1" max="5" value="2">
+                    </div>
+                </div>
+            </div>
+            <div class="chapters-section" id="chaptersSection" style="display: none;">
+                <h3>章節列表</h3>
+                <div id="chaptersList" class="chapters-list"></div>
+            </div>
+            <div class="player-section" id="playerSection" style="display: none;">
+                <div class="now-playing">
+                    <span id="currentChapter">第 1 章</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="time-display">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalTime">0:00</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="prevBtn" class="ctrl-btn" disabled>⏮</button>
+                <button id="playBtn" class="btn btn-primary">▶ 開始朗讀</button>
+                <button id="nextBtn" class="ctrl-btn" disabled>⏭</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #215</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

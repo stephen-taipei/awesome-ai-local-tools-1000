@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Tracking | 眼球追蹤</title>
+    <meta name="description" content="Track eye movement. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>眼球追蹤</h1>
+            <p class="subtitle">即時追蹤眼球移動方向</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始追蹤</button>
+                <div class="video-container" style="display: none;">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="overlayCanvas"></canvas>
+                </div>
+            </div>
+            <div id="resultSection" class="result-section" style="display: none;">
+                <div class="gaze-display">
+                    <div class="gaze-grid">
+                        <div class="gaze-cell" data-dir="top-left">↖</div>
+                        <div class="gaze-cell" data-dir="top">↑</div>
+                        <div class="gaze-cell" data-dir="top-right">↗</div>
+                        <div class="gaze-cell" data-dir="left">←</div>
+                        <div class="gaze-cell active" data-dir="center">●</div>
+                        <div class="gaze-cell" data-dir="right">→</div>
+                        <div class="gaze-cell" data-dir="bottom-left">↙</div>
+                        <div class="gaze-cell" data-dir="bottom">↓</div>
+                        <div class="gaze-cell" data-dir="bottom-right">↘</div>
+                    </div>
+                    <div class="gaze-label" id="gazeLabel">注視中央</div>
+                </div>
+                <div class="eye-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">左眼狀態</div>
+                        <div class="stat-value" id="leftEyeStatus">--</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">右眼狀態</div>
+                        <div class="stat-value" id="rightEyeStatus">--</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">眨眼次數</div>
+                        <div class="stat-value" id="blinkCount">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="calibration-section" id="calibrationSection" style="display: none;">
+                <h3>校準追蹤</h3>
+                <p>請依序注視下方 9 個點</p>
+                <div class="calibration-grid" id="calibrationGrid"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #407</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

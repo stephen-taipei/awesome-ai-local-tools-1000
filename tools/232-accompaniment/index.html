@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accompaniment Generator | 伴奏生成</title>
+    <meta name="description" content="AI-powered accompaniment generation. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>伴奏生成</h1>
+            <p class="subtitle">AI 自動生成音樂伴奏</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="controls-section">
+                <div class="control-group">
+                    <label>伴奏風格</label>
+                    <select id="styleSelect">
+                        <option value="piano">鋼琴</option>
+                        <option value="guitar">吉他</option>
+                        <option value="orchestra">管弦樂</option>
+                        <option value="electronic">電子</option>
+                        <option value="band">樂團</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>調性</label>
+                    <select id="keySelect">
+                        <option value="C">C 大調</option>
+                        <option value="G">G 大調</option>
+                        <option value="D">D 大調</option>
+                        <option value="F">F 大調</option>
+                        <option value="Am">A 小調</option>
+                        <option value="Em">E 小調</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>速度 (BPM)</label>
+                    <input type="range" id="bpmSlider" min="60" max="180" value="100">
+                    <span id="bpmValue">100</span>
+                </div>
+                <div class="control-group">
+                    <label>小節數</label>
+                    <select id="barsSelect">
+                        <option value="4">4 小節</option>
+                        <option value="8" selected>8 小節</option>
+                        <option value="16">16 小節</option>
+                    </select>
+                </div>
+            </div>
+            <div class="chord-section">
+                <label>和弦進行</label>
+                <div class="chord-display" id="chordDisplay">
+                    <span class="chord">C</span>
+                    <span class="chord">Am</span>
+                    <span class="chord">F</span>
+                    <span class="chord">G</span>
+                </div>
+                <button id="shuffleBtn" class="btn-small">🔀 隨機和弦</button>
+            </div>
+            <div class="generate-section">
+                <button id="generateBtn" class="btn btn-primary">生成伴奏</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="track-display" id="trackDisplay"></div>
+                <div class="playback-controls">
+                    <button id="playBtn" class="control-btn">▶️ 播放</button>
+                    <button id="stopBtn" class="control-btn">⏹️ 停止</button>
+                    <button id="regenerateBtn" class="control-btn">🔄 重新生成</button>
+                </div>
+                <div class="track-info">
+                    <div class="info-item">
+                        <span class="info-label">音軌數</span>
+                        <span id="trackCount" class="info-value">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">時長</span>
+                        <span id="duration" class="info-value">0s</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #232</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

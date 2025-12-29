@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic Modeling | 主題建模</title>
+    <meta name="description" content="Discover topics in text documents locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>主題建模</h1>
+            <p class="subtitle">自動發現文件中的主題</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要分析的文字（建議較長的文本效果更好）..."></textarea>
+                </div>
+                <div class="options-row">
+                    <div class="form-group">
+                        <label>主題數量</label>
+                        <select id="topicCount" class="select-field">
+                            <option value="3">3 個主題</option>
+                            <option value="5" selected>5 個主題</option>
+                            <option value="7">7 個主題</option>
+                            <option value="10">10 個主題</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>每主題關鍵詞數</label>
+                        <select id="keywordsPerTopic" class="select-field">
+                            <option value="5">5 個詞</option>
+                            <option value="8" selected>8 個詞</option>
+                            <option value="10">10 個詞</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary btn-block">分析主題</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>發現的主題</h3>
+                <div class="topics-container" id="topicsContainer"></div>
+                <div class="word-cloud-section">
+                    <h4>詞彙分佈</h4>
+                    <div class="word-cloud" id="wordCloud"></div>
+                </div>
+                <div class="stats" id="stats"></div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="人工智慧和機器學習正在改變科技產業。深度學習算法在圖像識別和自然語言處理方面取得了突破性進展。同時，電動車和自動駕駛技術也在快速發展。特斯拉和其他汽車製造商正在競相開發更先進的電池技術。在醫療領域，AI診斷系統可以幫助醫生更準確地檢測疾病。製藥公司利用機器學習加速新藥研發過程。環保議題也受到關注，各國政府正在制定碳中和政策。再生能源如太陽能和風力發電正成為主流。金融科技創新改變了人們的支付方式，數位貨幣和區塊鏈技術引發廣泛討論。">科技綜合</button>
+                <button class="example-btn" data-text="Artificial intelligence is transforming healthcare with new diagnostic tools. Machine learning algorithms can analyze medical images to detect cancer earlier. Meanwhile, climate change continues to impact global weather patterns. Scientists warn about rising sea levels and extreme weather events. In the tech industry, companies are racing to develop quantum computers. These powerful machines could revolutionize encryption and drug discovery. The stock market shows volatility as investors react to economic indicators. Central banks adjust interest rates to control inflation. Sports leagues are using data analytics to improve player performance. Teams employ statisticians to gain competitive advantages.">English Mix</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>功能特點</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3>自動發現</h3>
+                    <p>自動識別文本主題</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>關鍵詞提取</h3>
+                    <p>每個主題的代表詞</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">☁️</div>
+                    <h3>詞雲視覺化</h3>
+                    <p>直觀展示詞彙分佈</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌐</div>
+                    <h3>雙語支援</h3>
+                    <p>中英文自動檢測</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #135</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

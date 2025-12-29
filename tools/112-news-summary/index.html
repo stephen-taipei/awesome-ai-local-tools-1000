@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Summary | 新聞摘要</title>
+    <meta name="description" content="Summarize news articles locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>新聞摘要</h1>
+            <p class="subtitle">快速掌握新聞重點</p>
+        </header>
+        <div class="privacy-badge"><span class="badge-icon">🔒</span><span>100% 本地處理</span></div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>貼上新聞內容</label>
+                    <textarea id="newsInput" class="textarea-field" rows="10" placeholder="將新聞文章貼在這裡..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>摘要格式</label>
+                    <select id="formatSelect" class="select-field">
+                        <option value="headline">標題式</option>
+                        <option value="5w1h">5W1H</option>
+                        <option value="bullets">重點條列</option>
+                    </select>
+                </div>
+                <button id="generateBtn" class="btn btn-primary btn-block"><span>生成摘要</span></button>
+            </div>
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header"><h3>新聞摘要</h3><button id="copyBtn" class="btn btn-secondary btn-sm">複製</button></div>
+                <div class="output-content" id="outputContent"></div>
+            </div>
+        </main>
+        <footer class="footer"><p><a href="../../index.html">返回首頁</a> · 工具 #112</p></footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-voice TTS | 多聲道語音合成</title>
+    <meta name="description" content="Multi-voice text to speech. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>多聲道語音合成</h1>
+            <p class="subtitle">使用多個語音角色朗讀對話</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>對話腳本</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <div class="format-hint">格式：[角色名稱]: 對話內容</div>
+                <textarea id="inputText" placeholder="[小明]: 你好！
+[小華]: 你好，最近怎麼樣？
+[小明]: 很好，謝謝關心！"></textarea>
+            </div>
+            <div class="voices-section">
+                <h3>角色配音設定</h3>
+                <div id="voiceAssignments" class="voice-assignments"></div>
+            </div>
+            <div class="controls">
+                <button id="playBtn" class="btn btn-primary">播放對話</button>
+                <button id="stopBtn" class="btn btn-secondary" disabled>停止</button>
+            </div>
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div id="currentLine" class="current-line"></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #213</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

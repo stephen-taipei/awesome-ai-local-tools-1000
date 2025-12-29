@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Channel Splitter | 音頻聲道分離</title>
+    <meta name="description" content="Split stereo audio into separate channels. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音頻聲道分離</h1>
+            <p class="subtitle">將立體聲分離為獨立聲道</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔀</div>
+                    <p>拖放音頻檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP3, WAV, OGG, M4A</p>
+                    <input type="file" id="fileInput" accept="audio/*" hidden>
+                </div>
+                <div class="audio-loaded" id="audioLoaded" style="display: none;">
+                    <div class="file-info" id="fileInfo"></div>
+                    <audio id="originalAudio" controls></audio>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <p class="info-text" id="infoText">處理後將產生左右聲道兩個獨立檔案</p>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 分離聲道</button>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">處理結果</h3>
+                    <div class="channel-result">
+                        <div class="channel-item">
+                            <span id="leftLabel">左聲道</span>
+                            <audio id="leftAudio" controls></audio>
+                            <button id="downloadLeft" class="btn btn-small">⬇️ 下載</button>
+                        </div>
+                        <div class="channel-item">
+                            <span id="rightLabel">右聲道</span>
+                            <audio id="rightAudio" controls></audio>
+                            <button id="downloadRight" class="btn btn-small">⬇️ 下載</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #328</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

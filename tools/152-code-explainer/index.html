@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Explainer | 程式碼解說</title>
+    <meta name="description" content="Explain code with pattern-based analysis. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>程式碼解說</h1>
+            <p class="subtitle">分析並解釋程式碼的結構與功能</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>程式碼</label>
+                    <textarea id="codeInput" class="code-field" placeholder="貼上程式碼..."></textarea>
+                </div>
+                <button id="explainBtn" class="btn btn-primary btn-block">解說程式碼</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>程式碼分析</h3>
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <div class="card-header">語言偵測</div>
+                        <div class="card-value" id="langDetected">-</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="card-header">程式碼行數</div>
+                        <div class="card-value" id="lineCount">-</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="card-header">複雜度</div>
+                        <div class="card-value" id="complexity">-</div>
+                    </div>
+                </div>
+                <div class="explanation-section">
+                    <h4>結構分析</h4>
+                    <div id="structureAnalysis" class="explanation-content"></div>
+                </div>
+                <div class="explanation-section">
+                    <h4>程式碼元素</h4>
+                    <div id="elementsFound" class="elements-grid"></div>
+                </div>
+                <div class="explanation-section">
+                    <h4>功能說明</h4>
+                    <div id="functionalExplanation" class="explanation-content"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例程式碼</h3>
+            <div class="example-list">
+                <button class="example-btn" data-code="function add(a, b) {\n  return a + b;\n}">JS 函數</button>
+                <button class="example-btn" data-code="class User:\n    def __init__(self, name):\n        self.name = name\n\n    def greet(self):\n        return f'Hello, {self.name}'">Python 類別</button>
+                <button class="example-btn" data-code="const data = await fetch('/api/users')\n  .then(res => res.json())\n  .catch(err => console.error(err));"> Async 程式碼</button>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #152</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

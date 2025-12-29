@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Document Summary | 智能文件摘要 - AI Local Tools</title>
+    <meta name="description" content="Generate intelligent summaries from documents locally. 100% private, no data upload.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .tool-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tool-header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .lang-switch {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .lang-btn {
+            padding: 8px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: #f0f3ff;
+        }
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .controls {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        .control-group select, .control-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .control-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+        }
+        .output-area {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 200px;
+            display: none;
+        }
+        .output-area.visible {
+            display: block;
+        }
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .output-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        .loading.visible {
+            display: block;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .file-info {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .file-info.visible {
+            display: block;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+        }
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-container">
+        <div class="tool-card">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
+
+            <div class="tool-header">
+                <h1><span class="en">Smart Document Summary</span><span class="zh" style="display:none;">智能文件摘要</span></h1>
+                <p><span class="en">Generate intelligent summaries from documents locally</span><span class="zh" style="display:none;">本地智能生成文件摘要</span></p>
+            </div>
+
+            <div class="privacy-badge">
+                <span>🔒</span>
+                <span class="en">100% Local Processing - No Data Upload</span>
+                <span class="zh" style="display:none;">100% 本地處理 - 無需上傳資料</span>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".txt,.md,.html,.pdf,.doc,.docx" hidden>
+                <div class="upload-icon">📄</div>
+                <p><span class="en">Drag & drop document or click to upload</span><span class="zh" style="display:none;">拖放文件或點擊上傳</span></p>
+                <p style="color:#666;font-size:14px;"><span class="en">Supports TXT, MD, HTML files</span><span class="zh" style="display:none;">支援 TXT、MD、HTML 檔案</span></p>
+            </div>
+
+            <div class="file-info" id="fileInfo">
+                <strong><span class="en">File loaded:</span><span class="zh" style="display:none;">已載入檔案：</span></strong>
+                <span id="fileName"></span>
+            </div>
+
+            <div class="controls">
+                <div class="control-row">
+                    <div class="control-group">
+                        <label><span class="en">Summary Length</span><span class="zh" style="display:none;">摘要長度</span></label>
+                        <select id="summaryLength">
+                            <option value="short">Short (1-2 sentences) | 簡短</option>
+                            <option value="medium" selected>Medium (3-5 sentences) | 中等</option>
+                            <option value="long">Long (1-2 paragraphs) | 詳細</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label><span class="en">Summary Style</span><span class="zh" style="display:none;">摘要風格</span></label>
+                        <select id="summaryStyle">
+                            <option value="informative">Informative | 資訊型</option>
+                            <option value="executive">Executive Brief | 執行摘要</option>
+                            <option value="bullet">Bullet Points | 要點列表</option>
+                            <option value="academic">Academic | 學術型</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label><span class="en">Focus Keywords (optional)</span><span class="zh" style="display:none;">重點關鍵詞（可選）</span></label>
+                    <input type="text" id="focusKeywords" placeholder="Enter keywords separated by comma | 輸入關鍵詞，以逗號分隔">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="summarizeBtn" style="width:100%;">
+                <span class="en">Generate Summary</span><span class="zh" style="display:none;">生成摘要</span>
+            </button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p><span class="en">Analyzing document...</span><span class="zh" style="display:none;">正在分析文件...</span></p>
+            </div>
+
+            <div class="output-area" id="outputArea">
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-value" id="origWords">0</div>
+                        <div class="stat-label"><span class="en">Original Words</span><span class="zh" style="display:none;">原文字數</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="summaryWords">0</div>
+                        <div class="stat-label"><span class="en">Summary Words</span><span class="zh" style="display:none;">摘要字數</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="compression">0%</div>
+                        <div class="stat-label"><span class="en">Compression</span><span class="zh" style="display:none;">壓縮率</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="readTime">0m</div>
+                        <div class="stat-label"><span class="en">Read Time</span><span class="zh" style="display:none;">閱讀時間</span></div>
+                    </div>
+                </div>
+
+                <div class="output-header">
+                    <h3><span class="en">Summary</span><span class="zh" style="display:none;">摘要</span></h3>
+                </div>
+                <div class="output-content" id="summaryOutput"></div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-success" id="copyBtn">
+                        <span class="en">Copy to Clipboard</span><span class="zh" style="display:none;">複製到剪貼簿</span>
+                    </button>
+                    <button class="btn btn-primary" id="exportBtn">
+                        <span class="en">Export as TXT</span><span class="zh" style="display:none;">匯出為 TXT</span>
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <span class="en">Reset</span><span class="zh" style="display:none;">重置</span>
+                    </button>
+                </div>
+            </div>
+
+            <footer>
+                <p>
+                    <a href="../../index.html"><span class="en">Back to Home</span><span class="zh" style="display:none;">返回首頁</span></a> ·
+                    <span class="en">Tool #701</span><span class="zh" style="display:none;">工具 #701</span>
+                </p>
+                <p>Awesome AI Local Tools © 2024</p>
+            </footer>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

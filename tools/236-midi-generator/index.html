@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIDI Generator | MIDI 生成器</title>
+    <meta name="description" content="Generate MIDI files locally. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>MIDI 生成器</h1>
+            <p class="subtitle">生成並下載 MIDI 檔案</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="piano-section">
+                <div class="piano" id="piano"></div>
+            </div>
+            <div class="controls-section">
+                <div class="control-group">
+                    <label>音色</label>
+                    <select id="instrumentSelect">
+                        <option value="0">鋼琴</option>
+                        <option value="24">吉他</option>
+                        <option value="32">貝斯</option>
+                        <option value="40">小提琴</option>
+                        <option value="73">長笛</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>速度 (BPM)</label>
+                    <input type="range" id="bpmSlider" min="60" max="200" value="120">
+                    <span id="bpmValue">120</span>
+                </div>
+                <div class="control-group">
+                    <label>八度</label>
+                    <select id="octaveSelect">
+                        <option value="3">3</option>
+                        <option value="4" selected>4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>音符長度</label>
+                    <select id="durationSelect">
+                        <option value="0.25">十六分音符</option>
+                        <option value="0.5">八分音符</option>
+                        <option value="1" selected>四分音符</option>
+                        <option value="2">二分音符</option>
+                    </select>
+                </div>
+            </div>
+            <div class="sequence-section">
+                <div class="sequence-header">
+                    <label>音符序列</label>
+                    <button id="clearBtn" class="btn-small">清除</button>
+                </div>
+                <div class="sequence-display" id="sequenceDisplay">
+                    <span class="empty-hint">點擊鋼琴鍵盤添加音符</span>
+                </div>
+            </div>
+            <div class="action-section">
+                <button id="playBtn" class="btn btn-secondary">▶️ 預覽</button>
+                <button id="downloadBtn" class="btn btn-primary">⬇️ 下載 MIDI</button>
+            </div>
+            <div class="info-section">
+                <div class="info-item">
+                    <span class="info-label">音符數</span>
+                    <span id="noteCount" class="info-value">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">預估時長</span>
+                    <span id="duration" class="info-value">0s</span>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #236</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

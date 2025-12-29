@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blink Detection | 眨眼偵測</title>
+    <meta name="description" content="Detect eye blinks in real-time. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>眨眼偵測</h1>
+            <p class="subtitle">即時監測眨眼頻率</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始偵測</button>
+                <div class="video-container" style="display: none;">
+                    <video id="webcam" autoplay playsinline></video>
+                    <div class="eye-indicators">
+                        <div class="eye-indicator" id="leftEyeIndicator">
+                            <span class="eye-icon">👁️</span>
+                            <span class="eye-status">--</span>
+                        </div>
+                        <div class="eye-indicator" id="rightEyeIndicator">
+                            <span class="eye-icon">👁️</span>
+                            <span class="eye-status">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="statsSection" class="stats-section" style="display: none;">
+                <div class="blink-counter">
+                    <div class="counter-value" id="blinkCount">0</div>
+                    <div class="counter-label">眨眼次數</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-value" id="avgInterval">--</div>
+                        <div class="stat-label">平均間隔</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-value" id="blinkRate">--</div>
+                        <div class="stat-label">每分鐘次數</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-value" id="blinkDuration">--</div>
+                        <div class="stat-label">平均時長</div>
+                    </div>
+                </div>
+                <div class="blink-timeline" id="blinkTimeline">
+                    <h4>眨眼時間軸</h4>
+                    <div class="timeline-bar" id="timelineBar"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #409</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

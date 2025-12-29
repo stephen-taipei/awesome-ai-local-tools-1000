@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotate & Flip Video | 影片旋轉翻轉</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Rotate & Flip Video</h1>
+            <p class="subtitle" data-i18n="subtitle">Rotate, flip, and mirror your videos easily</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - No Upload Required</span>
+        </div>
+
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="videoInput" accept="video/*" hidden>
+                <div class="upload-icon">🔄</div>
+                <p class="upload-text" data-i18n="uploadText">Drop video here or click to upload</p>
+                <p class="upload-hint" data-i18n="uploadHint">Supports MP4, WebM, MOV formats</p>
+            </div>
+
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="preview-container">
+                    <div class="video-wrapper" id="videoWrapper">
+                        <video id="videoPlayer" controls></video>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="control-section">
+                        <h3 data-i18n="rotate">Rotate</h3>
+                        <div class="button-group">
+                            <button class="control-btn" id="rotateLeft" title="Rotate 90° Left">
+                                <span class="icon">↺</span>
+                                <span data-i18n="rotateLeft">90° Left</span>
+                            </button>
+                            <button class="control-btn" id="rotateRight" title="Rotate 90° Right">
+                                <span class="icon">↻</span>
+                                <span data-i18n="rotateRight">90° Right</span>
+                            </button>
+                            <button class="control-btn" id="rotate180" title="Rotate 180°">
+                                <span class="icon">⟲</span>
+                                <span data-i18n="rotate180">180°</span>
+                            </button>
+                        </div>
+                        <div class="custom-rotate">
+                            <label data-i18n="customAngle">Custom Angle:</label>
+                            <input type="range" id="rotateSlider" min="0" max="360" value="0">
+                            <span id="rotateValue">0°</span>
+                        </div>
+                    </div>
+
+                    <div class="control-section">
+                        <h3 data-i18n="flip">Flip</h3>
+                        <div class="button-group">
+                            <button class="control-btn" id="flipH" title="Flip Horizontal">
+                                <span class="icon">↔</span>
+                                <span data-i18n="flipHorizontal">Horizontal</span>
+                            </button>
+                            <button class="control-btn" id="flipV" title="Flip Vertical">
+                                <span class="icon">↕</span>
+                                <span data-i18n="flipVertical">Vertical</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="transform-info">
+                        <span data-i18n="currentTransform">Current Transform:</span>
+                        <span id="transformInfo">None</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="resetTransformBtn" class="btn btn-secondary" data-i18n="resetTransform">Reset Transform</button>
+                    <button id="applyBtn" class="btn btn-primary" data-i18n="apply">Apply Changes</button>
+                    <button id="resetBtn" class="btn btn-outline" data-i18n="reset">Upload New Video</button>
+                </div>
+
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="processing">Processing...</p>
+                </div>
+
+                <div class="download-area" id="downloadArea" style="display: none;">
+                    <video id="resultVideo" controls></video>
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download Video</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p><a href="../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #305</span></p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+    <script src="app.js"></script>
+</body>
+</html>

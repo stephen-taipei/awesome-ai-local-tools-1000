@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowd Counting | 人群計數</title>
+    <meta name="description" content="Count people in images. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>人群計數</h1>
+            <p class="subtitle">計算圖片中的人數</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">👥</div>
+                    <div class="upload-text">上傳人群照片</div>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                </div>
+            </div>
+            <div id="resultSection" class="result-section" style="display: none;">
+                <div class="count-display">
+                    <span class="count-value" id="countValue">0</span>
+                    <span class="count-label">人</span>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="resultCanvas"></canvas>
+                </div>
+                <div class="density-info">
+                    <div class="density-item">
+                        <span class="density-label">密度等級</span>
+                        <span class="density-value" id="densityLevel">--</span>
+                    </div>
+                    <div class="density-item">
+                        <span class="density-label">信心度</span>
+                        <span class="density-value" id="confidence">--</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #435</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

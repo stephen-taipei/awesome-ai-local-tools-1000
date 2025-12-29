@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed & Pitch Control | 語速音調控制</title>
+    <meta name="description" content="Fine-tune speech speed and pitch. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>語速音調控制</h1>
+            <p class="subtitle">精細調整語音參數</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <textarea id="inputText" placeholder="輸入要朗讀的文字..."></textarea>
+            </div>
+            <div class="controls-section">
+                <div class="control-group">
+                    <label>語音選擇</label>
+                    <select id="voiceSelect"></select>
+                </div>
+                <div class="control-group">
+                    <div class="control-header">
+                        <label>語速 (Rate)</label>
+                        <span id="rateValue">1.00x</span>
+                    </div>
+                    <input type="range" id="rate" min="0.1" max="3" step="0.05" value="1">
+                    <div class="range-labels"><span>0.1x</span><span>3x</span></div>
+                </div>
+                <div class="control-group">
+                    <div class="control-header">
+                        <label>音調 (Pitch)</label>
+                        <span id="pitchValue">1.00x</span>
+                    </div>
+                    <input type="range" id="pitch" min="0" max="2" step="0.05" value="1">
+                    <div class="range-labels"><span>低</span><span>高</span></div>
+                </div>
+                <div class="control-group">
+                    <div class="control-header">
+                        <label>音量 (Volume)</label>
+                        <span id="volumeValue">100%</span>
+                    </div>
+                    <input type="range" id="volume" min="0" max="1" step="0.05" value="1">
+                    <div class="range-labels"><span>0%</span><span>100%</span></div>
+                </div>
+            </div>
+            <div class="presets-section">
+                <h3>預設值</h3>
+                <div class="presets-grid">
+                    <button class="preset-btn" data-rate="1" data-pitch="1">標準</button>
+                    <button class="preset-btn" data-rate="0.7" data-pitch="0.8">低沉慢速</button>
+                    <button class="preset-btn" data-rate="1.5" data-pitch="1.2">活潑快速</button>
+                    <button class="preset-btn" data-rate="0.5" data-pitch="1">超慢速</button>
+                    <button class="preset-btn" data-rate="2" data-pitch="1">超快速</button>
+                    <button class="preset-btn" data-rate="1" data-pitch="1.5">高音</button>
+                    <button class="preset-btn" data-rate="1" data-pitch="0.5">低音</button>
+                    <button class="preset-btn" data-rate="1.2" data-pitch="0.9">新聞播報</button>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="playBtn" class="btn btn-primary">播放</button>
+                <button id="stopBtn" class="btn btn-secondary" disabled>停止</button>
+                <button id="resetBtn" class="btn btn-secondary">重置</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #217</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

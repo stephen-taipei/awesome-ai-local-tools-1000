@@ -1,0 +1,51 @@
+/* Voice Age Estimation - Tool #229 */
+:root { --primary-color: #f59e0b; --success-color: #22c55e; --bg-color: #0f172a; --card-bg: #1e293b; --border-color: #334155; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --radius: 12px; --radius-sm: 8px; --transition: all 0.2s ease; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-color); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+.container { max-width: 600px; margin: 0 auto; padding: 1.5rem; }
+.lang-switcher { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; }
+.lang-btn { padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: transparent; color: var(--text-secondary); border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); }
+.lang-btn:hover { border-color: var(--primary-color); }
+.lang-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+.header { text-align: center; margin-bottom: 1.5rem; }
+.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--primary-color), #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.subtitle { color: var(--text-secondary); font-size: 1rem; }
+.privacy-badge { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.875rem; color: var(--success-color); margin: 0 auto 1.5rem; width: fit-content; }
+.input-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; }
+.record-area { border: 2px dashed var(--border-color); border-radius: var(--radius-sm); padding: 2.5rem; text-align: center; cursor: pointer; transition: var(--transition); }
+.record-area:hover { border-color: var(--primary-color); background: rgba(245, 158, 11, 0.05); }
+.record-area.recording { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); animation: pulse 1s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+.record-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.record-text { font-weight: 500; margin-bottom: 0.25rem; }
+.record-hint { font-size: 0.75rem; color: var(--text-secondary); }
+.upload-option { text-align: center; margin-top: 1rem; }
+.btn-link { background: none; border: none; color: var(--primary-color); cursor: pointer; text-decoration: underline; }
+.analysis-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+.analysis-section audio { width: 100%; margin-bottom: 1rem; }
+.btn { padding: 0.75rem 2rem; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
+.btn-primary { background: linear-gradient(135deg, var(--primary-color), #fbbf24); color: white; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4); }
+.result-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; }
+.age-display { text-align: center; padding: 2rem; background: var(--bg-color); border-radius: var(--radius-sm); margin-bottom: 1.5rem; }
+.age-range { font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, var(--primary-color), #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.age-label { font-size: 1.25rem; color: var(--text-secondary); }
+.age-meter { margin-bottom: 1.5rem; }
+.meter-track { position: relative; height: 12px; background: linear-gradient(90deg, #22c55e, #84cc16, #eab308, #f97316, #ef4444); border-radius: 6px; }
+.meter-indicator { position: absolute; top: -4px; width: 20px; height: 20px; background: white; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transform: translateX(-50%); transition: left 0.5s ease; }
+.meter-labels { display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-secondary); }
+.age-groups, .voice-indicators { margin-bottom: 1.5rem; }
+.age-groups h3, .voice-indicators h3 { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem; }
+.groups-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.group-item { display: flex; align-items: center; gap: 0.75rem; }
+.group-label { min-width: 120px; font-size: 0.875rem; }
+.group-bar { flex: 1; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
+.group-fill { height: 100%; background: linear-gradient(90deg, var(--primary-color), #fbbf24); border-radius: 4px; transition: width 0.5s ease; }
+.group-percent { min-width: 40px; text-align: right; font-size: 0.875rem; font-weight: 600; }
+.indicators-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+.indicator-item { text-align: center; padding: 0.75rem; background: var(--bg-color); border-radius: var(--radius-sm); }
+.indicator-value { font-size: 1.125rem; font-weight: 700; color: var(--primary-color); }
+.indicator-label { font-size: 0.625rem; color: var(--text-secondary); }
+.footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 0.875rem; }
+.footer a { color: var(--primary-color); text-decoration: none; }
+@media (max-width: 500px) { .indicators-grid { grid-template-columns: repeat(2, 1fr); } }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetry Generator | AI 詩詞生成</title>
+    <meta name="description" content="Generate poetry locally in your browser. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">AI 詩詞生成</h1>
+            <p class="subtitle" data-i18n="subtitle">創作優美詩句，抒發情感</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>詩詞主題</label>
+                    <input type="text" id="themeInput" class="input-field" placeholder="如：春天、離別、思念...">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>詩詞類型</label>
+                        <select id="typeSelect" class="select-field">
+                            <option value="modern">現代詩</option>
+                            <option value="haiku">俳句</option>
+                            <option value="quatrain">絕句</option>
+                            <option value="regulated">律詩</option>
+                            <option value="free">自由詩</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>情感基調</label>
+                        <select id="moodSelect" class="select-field">
+                            <option value="romantic">浪漫</option>
+                            <option value="melancholy">憂傷</option>
+                            <option value="joyful">歡樂</option>
+                            <option value="nostalgic">懷舊</option>
+                            <option value="peaceful">寧靜</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span>生成詩詞</span>
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3>創作的詩詞</h3>
+                    <div class="output-actions">
+                        <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                        <button id="regenerateBtn" class="btn btn-secondary btn-sm">重新生成</button>
+                    </div>
+                </div>
+                <div class="poem-display" id="poemDisplay"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📜</div>
+                    <h3>多種體裁</h3>
+                    <p>現代詩、絕句、律詩等</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎭</div>
+                    <h3>情感表達</h3>
+                    <p>多種情感基調可選</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✨</div>
+                    <h3>創意無限</h3>
+                    <p>AI 輔助激發靈感</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #107</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

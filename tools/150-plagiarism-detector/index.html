@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plagiarism Detector | 抄襲檢測</title>
+    <meta name="description" content="Compare texts for similarity locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>抄襲檢測</h1>
+            <p class="subtitle">比較兩段文字的相似度與重複內容</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="texts-grid">
+                    <div class="form-group">
+                        <label>文件 A（原始文件）</label>
+                        <textarea id="textA" class="textarea-field" placeholder="輸入原始文件..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>文件 B（待檢測文件）</label>
+                        <textarea id="textB" class="textarea-field" placeholder="輸入待檢測文件..."></textarea>
+                    </div>
+                </div>
+                <button id="detectBtn" class="btn btn-primary btn-block">檢測相似度</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>檢測結果</h3>
+                <div class="similarity-display" id="similarityDisplay"></div>
+                <div class="matches-section" id="matchesSection">
+                    <h4>相似片段</h4>
+                    <div class="matches-list" id="matchesList"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-a="人工智慧是電腦科學的一個分支，專注於創造能夠執行通常需要人類智慧的任務的系統。" data-b="人工智慧屬於電腦科學領域，致力於開發能夠完成需要人類智慧任務的系統。">中文相似</button>
+                <button class="example-btn" data-a="The quick brown fox jumps over the lazy dog." data-b="A fast brown fox leaps over a sleepy dog.">English Similar</button>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #150</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

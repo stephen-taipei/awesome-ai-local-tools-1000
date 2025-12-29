@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Doc Generator | API 文件產生器</title>
+    <meta name="description" content="Generate API documentation from code. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>API 文件產生器</h1>
+            <p class="subtitle">從程式碼快速產生 API 文件</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>API 名稱</label>
+                        <input type="text" id="apiName" class="text-field" placeholder="User API">
+                    </div>
+                    <div class="form-group">
+                        <label>基礎 URL</label>
+                        <input type="text" id="baseUrl" class="text-field" placeholder="https://api.example.com/v1">
+                    </div>
+                </div>
+                <div class="endpoints-section">
+                    <h3>端點列表</h3>
+                    <div id="endpointsList" class="endpoints-list"></div>
+                    <button id="addEndpointBtn" class="btn btn-secondary">+ 新增端點</button>
+                </div>
+                <div class="format-options">
+                    <label>輸出格式</label>
+                    <div class="format-btns">
+                        <button class="format-btn active" data-format="markdown">Markdown</button>
+                        <button class="format-btn" data-format="html">HTML</button>
+                        <button class="format-btn" data-format="openapi">OpenAPI</button>
+                    </div>
+                </div>
+                <button id="generateBtn" class="btn btn-primary btn-block">產生文件</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-header">
+                    <h3>API 文件</h3>
+                    <button id="copyBtn" class="copy-btn">複製</button>
+                </div>
+                <pre class="doc-output"><code id="docOutput"></code></pre>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #160</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

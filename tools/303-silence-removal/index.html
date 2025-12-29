@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silence Remover | 靜音移除器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Silence Remover</h1>
+            <p class="subtitle" data-i18n="subtitle">Automatically remove silent parts from your videos</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - No Upload Required</span>
+        </div>
+
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="videoInput" accept="video/*" hidden>
+                <div class="upload-icon">🔇</div>
+                <p class="upload-text" data-i18n="uploadText">Drop video here or click to upload</p>
+                <p class="upload-hint" data-i18n="uploadHint">Supports MP4, WebM, MOV formats</p>
+            </div>
+
+            <div class="editor-area" id="editorArea" style="display: none;">
+                <div class="video-container">
+                    <video id="videoPlayer" controls></video>
+                </div>
+
+                <div class="waveform-container">
+                    <canvas id="waveformCanvas"></canvas>
+                    <div class="threshold-line" id="thresholdLine"></div>
+                </div>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <label data-i18n="silenceThreshold">Silence Threshold (dB):</label>
+                        <input type="range" id="thresholdSlider" min="-60" max="-10" value="-40">
+                        <span id="thresholdValue">-40 dB</span>
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="minSilence">Minimum Silence Duration (s):</label>
+                        <input type="range" id="minSilenceSlider" min="0.1" max="2" step="0.1" value="0.5">
+                        <span id="minSilenceValue">0.5s</span>
+                    </div>
+                    <div class="control-group">
+                        <label data-i18n="padding">Padding Around Speech (s):</label>
+                        <input type="range" id="paddingSlider" min="0" max="0.5" step="0.05" value="0.1">
+                        <span id="paddingValue">0.1s</span>
+                    </div>
+                </div>
+
+                <div class="stats" id="stats">
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="originalDuration">Original Duration:</span>
+                        <span class="stat-value" id="originalDuration">00:00</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="silenceRemoved">Silence Removed:</span>
+                        <span class="stat-value" id="silenceRemoved">00:00</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="newDuration">New Duration:</span>
+                        <span class="stat-value" id="newDuration">00:00</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="analyzeBtn" class="btn btn-secondary" data-i18n="analyze">Analyze Audio</button>
+                    <button id="removeBtn" class="btn btn-primary" data-i18n="removeSilence">Remove Silence</button>
+                    <button id="resetBtn" class="btn btn-outline" data-i18n="reset">Upload New Video</button>
+                </div>
+
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="analyzing">Analyzing audio...</p>
+                </div>
+
+                <div class="download-area" id="downloadArea" style="display: none;">
+                    <video id="resultVideo" controls></video>
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download Processed Video</button>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">How It Works</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3 data-i18n="audioAnalysis">Audio Analysis</h3>
+                    <p data-i18n="audioAnalysisDesc">Analyzes the audio waveform to detect silent sections</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✂️</div>
+                    <h3 data-i18n="smartRemoval">Smart Removal</h3>
+                    <p data-i18n="smartRemovalDesc">Removes only the silent parts while keeping speech intact</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3 data-i18n="precision">Precision Control</h3>
+                    <p data-i18n="precisionDesc">Adjustable threshold and padding for perfect results</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #303</span></p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+    <script src="app.js"></script>
+</body>
+</html>

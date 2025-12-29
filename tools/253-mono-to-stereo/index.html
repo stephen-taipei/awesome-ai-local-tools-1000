@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mono to Stereo | 單聲道轉立體聲</title>
+    <meta name="description" content="Convert mono audio to stereo with effects. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>單聲道轉立體聲</h1>
+            <p class="subtitle">為單聲道音訊創建立體聲效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔈➡️🔊</div>
+                    <div class="upload-text">點擊或拖放單聲道音訊</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="mono-display">
+                    <div class="channel-label">單聲道</div>
+                    <canvas id="monoCanvas"></canvas>
+                </div>
+                <div class="arrow-section">⬇️</div>
+                <div class="stereo-display">
+                    <div class="channel-box">
+                        <div class="channel-label">左聲道</div>
+                        <canvas id="leftCanvas"></canvas>
+                    </div>
+                    <div class="channel-box">
+                        <div class="channel-label">右聲道</div>
+                        <canvas id="rightCanvas"></canvas>
+                    </div>
+                </div>
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>立體聲效果</label>
+                        <select id="stereoMode">
+                            <option value="duplicate">複製 (雙聲道相同)</option>
+                            <option value="delay">延遲 (Haas 效果)</option>
+                            <option value="pitch">音高偏移</option>
+                            <option value="pan">自動平移</option>
+                        </select>
+                    </div>
+                    <div class="option-group" id="delayOption" style="display:none">
+                        <label>延遲量</label>
+                        <input type="range" id="delaySlider" min="5" max="40" value="20">
+                        <span id="delayValue">20 ms</span>
+                    </div>
+                    <div class="option-group" id="widthOption">
+                        <label>立體聲寬度</label>
+                        <input type="range" id="widthSlider" min="0" max="100" value="50">
+                        <span id="widthValue">50%</span>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-item">
+                        <span class="info-label">時長</span>
+                        <span id="duration" class="info-value">0:00</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載立體聲</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #253</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

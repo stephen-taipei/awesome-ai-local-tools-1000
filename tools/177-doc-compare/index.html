@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doc Compare | 文件比較</title>
+    <meta name="description" content="Compare two text documents side by side. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文件比較</h1>
+            <p class="subtitle">並排比較兩份文件的差異</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="input-panel">
+                    <div class="panel-header">
+                        <span>原始文件</span>
+                        <button class="upload-btn" data-target="text1">上傳檔案</button>
+                        <input type="file" id="file1" accept=".txt,.md,.html,.css,.js,.json" hidden>
+                    </div>
+                    <textarea id="text1" placeholder="貼上或上傳原始文件..."></textarea>
+                </div>
+                <div class="input-panel">
+                    <div class="panel-header">
+                        <span>修改後文件</span>
+                        <button class="upload-btn" data-target="text2">上傳檔案</button>
+                        <input type="file" id="file2" accept=".txt,.md,.html,.css,.js,.json" hidden>
+                    </div>
+                    <textarea id="text2" placeholder="貼上或上傳修改後文件..."></textarea>
+                </div>
+            </div>
+            <button id="compareBtn" class="btn btn-primary btn-block">比較差異</button>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="stats-bar">
+                    <span class="stat added">+ <span id="addedCount">0</span> 新增</span>
+                    <span class="stat removed">- <span id="removedCount">0</span> 刪除</span>
+                    <span class="stat unchanged"><span id="unchangedCount">0</span> 相同</span>
+                </div>
+                <div class="diff-container">
+                    <div class="diff-panel">
+                        <div class="diff-header">原始</div>
+                        <div id="diffLeft" class="diff-content"></div>
+                    </div>
+                    <div class="diff-panel">
+                        <div class="diff-header">修改後</div>
+                        <div id="diffRight" class="diff-content"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #177</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

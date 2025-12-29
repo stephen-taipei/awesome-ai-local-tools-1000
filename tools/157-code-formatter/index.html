@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Formatter | 程式碼格式化</title>
+    <meta name="description" content="Format and beautify code locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>程式碼格式化</h1>
+            <p class="subtitle">美化程式碼的縮排與格式</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="options-bar">
+                    <div class="option-group">
+                        <label>語言</label>
+                        <select id="langSelect" class="select-field">
+                            <option value="javascript">JavaScript</option>
+                            <option value="json">JSON</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>縮排</label>
+                        <select id="indentSelect" class="select-field">
+                            <option value="2">2 空格</option>
+                            <option value="4">4 空格</option>
+                            <option value="tab">Tab</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="code-panels">
+                    <div class="code-panel">
+                        <div class="panel-header">輸入程式碼</div>
+                        <textarea id="inputCode" class="code-field" placeholder="貼上程式碼..."></textarea>
+                    </div>
+                    <div class="code-panel">
+                        <div class="panel-header">
+                            <span>格式化結果</span>
+                            <button id="copyBtn" class="copy-btn">複製</button>
+                        </div>
+                        <pre class="code-output"><code id="outputCode"></code></pre>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="formatBtn" class="btn btn-primary">格式化</button>
+                    <button id="minifyBtn" class="btn btn-secondary">壓縮</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #157</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

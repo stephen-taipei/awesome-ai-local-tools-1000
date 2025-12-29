@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Post Generator | 社群貼文生成</title>
+    <meta name="description" content="Generate social media posts locally. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">社群貼文生成</h1>
+            <p class="subtitle" data-i18n="subtitle">快速生成各平台社群貼文</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label data-i18n="platformLabel">社群平台</label>
+                    <div class="platform-selector">
+                        <button class="platform-btn active" data-platform="facebook">Facebook</button>
+                        <button class="platform-btn" data-platform="instagram">Instagram</button>
+                        <button class="platform-btn" data-platform="twitter">Twitter/X</button>
+                        <button class="platform-btn" data-platform="linkedin">LinkedIn</button>
+                        <button class="platform-btn" data-platform="threads">Threads</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="topicLabel">貼文主題</label>
+                    <input type="text" id="topicInput" class="input-field" data-i18n-placeholder="topicPlaceholder" placeholder="輸入貼文主題或產品...">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="toneLabel">語調風格</label>
+                    <select id="toneSelect" class="select-field">
+                        <option value="professional">專業</option>
+                        <option value="casual">輕鬆</option>
+                        <option value="humorous">幽默</option>
+                        <option value="inspiring">勵志</option>
+                        <option value="promotional">促銷</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="hashtagLabel">包含 Hashtag</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="hashtagToggle" checked>
+                        <label for="hashtagToggle"></label>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成貼文</span>
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成的貼文</h3>
+                    <div class="output-actions">
+                        <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                        <button id="regenerateBtn" class="btn btn-secondary btn-sm">重新生成</button>
+                    </div>
+                </div>
+                <div class="output-content" id="outputContent"></div>
+                <div class="char-count" id="charCount"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📱</div>
+                    <h3>多平台支援</h3>
+                    <p>FB、IG、Twitter、LinkedIn等</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3>風格多樣</h3>
+                    <p>專業、輕鬆、幽默等風格</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">#️⃣</div>
+                    <h3>Hashtag</h3>
+                    <p>自動生成相關標籤</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3>即時生成</h3>
+                    <p>秒速生成高品質貼文</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #104</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

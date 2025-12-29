@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Recognition | 手勢識別</title>
+    <meta name="description" content="Recognize hand gestures in real-time. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>手勢識別</h1>
+            <p class="subtitle">即時識別手勢動作</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始識別</button>
+            </div>
+            <div id="gestureSection" class="gesture-section" style="display: none;">
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="gestureCanvas"></canvas>
+                    <div class="gesture-overlay" id="gestureOverlay">
+                        <span class="gesture-icon" id="gestureIcon">👋</span>
+                        <span class="gesture-name" id="gestureName">等待中...</span>
+                    </div>
+                </div>
+                <div class="gesture-grid">
+                    <div class="gesture-item" data-gesture="thumbsUp"><span>👍</span><span>讚</span></div>
+                    <div class="gesture-item" data-gesture="thumbsDown"><span>👎</span><span>倒讚</span></div>
+                    <div class="gesture-item" data-gesture="peace"><span>✌️</span><span>和平</span></div>
+                    <div class="gesture-item" data-gesture="fist"><span>✊</span><span>拳頭</span></div>
+                    <div class="gesture-item" data-gesture="palm"><span>🖐️</span><span>手掌</span></div>
+                    <div class="gesture-item" data-gesture="point"><span>👆</span><span>指向</span></div>
+                    <div class="gesture-item" data-gesture="ok"><span>👌</span><span>OK</span></div>
+                    <div class="gesture-item" data-gesture="rock"><span>🤘</span><span>搖滾</span></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #424</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

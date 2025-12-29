@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Analysis | 運動分析</title>
+    <meta name="description" content="Analyze sports movements and form. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>運動分析</h1>
+            <p class="subtitle">分析運動姿勢與動作</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="sport-select" id="sportSelect">
+                <h3>選擇運動類型</h3>
+                <div class="sport-grid">
+                    <button class="sport-btn" data-sport="squat">🏋️ 深蹲</button>
+                    <button class="sport-btn" data-sport="pushup">💪 伏地挺身</button>
+                    <button class="sport-btn" data-sport="jumping">🦘 跳躍</button>
+                    <button class="sport-btn" data-sport="boxing">🥊 拳擊</button>
+                </div>
+            </div>
+            <div id="analysisSection" class="analysis-section" style="display: none;">
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="analysisCanvas"></canvas>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-icon">🔢</span>
+                        <span class="stat-value" id="repCount">0</span>
+                        <span class="stat-label">次數</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">📊</span>
+                        <span class="stat-value" id="formScore">--</span>
+                        <span class="stat-label">姿勢分數</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">⏱️</span>
+                        <span class="stat-value" id="duration">0:00</span>
+                        <span class="stat-label">時間</span>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <button id="resetBtn" class="btn btn-secondary">重新開始</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #427</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Re-ID | 人物重識別</title>
+    <meta name="description" content="Re-identify the same person across images. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>人物重識別</h1>
+            <p class="subtitle">跨圖片識別同一人物</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-box">
+                    <h3>查詢圖片</h3>
+                    <div class="upload-area" id="queryArea">
+                        <div class="upload-icon">🔍</div>
+                        <div class="upload-text">上傳要查詢的人物</div>
+                        <input type="file" id="queryInput" accept="image/*" hidden>
+                    </div>
+                    <canvas id="queryCanvas" style="display:none"></canvas>
+                </div>
+                <div class="upload-box">
+                    <h3>搜尋圖庫</h3>
+                    <div class="upload-area" id="galleryArea">
+                        <div class="upload-icon">📚</div>
+                        <div class="upload-text">上傳多張圖片</div>
+                        <input type="file" id="galleryInput" accept="image/*" multiple hidden>
+                    </div>
+                    <div id="galleryPreview" class="gallery-preview"></div>
+                </div>
+            </div>
+            <button id="searchBtn" class="btn btn-primary" style="display:none">開始搜尋</button>
+            <div id="resultSection" class="result-section" style="display:none">
+                <h3>匹配結果</h3>
+                <div id="matchResults" class="match-results"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #437</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

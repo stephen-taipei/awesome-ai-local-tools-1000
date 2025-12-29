@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Measurement | 身體測量</title>
+    <meta name="description" content="Estimate body measurements from photos. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>身體測量</h1>
+            <p class="subtitle">從照片估算身體尺寸</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="calibration-section">
+                <h3>校準設定</h3>
+                <div class="input-group">
+                    <label>實際身高 (cm)</label>
+                    <input type="number" id="heightInput" value="170" min="100" max="250">
+                </div>
+            </div>
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📏</div>
+                    <div class="upload-text">上傳全身正面照片</div>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="previewCanvas"></canvas>
+                    <canvas id="overlayCanvas"></canvas>
+                </div>
+            </div>
+            <button id="measureBtn" class="btn btn-primary" style="display:none">開始測量</button>
+            <div id="resultSection" class="result-section" style="display:none">
+                <h3>測量結果</h3>
+                <div class="measurement-grid">
+                    <div class="measurement-item">
+                        <div class="measurement-icon">👤</div>
+                        <div class="measurement-label">肩寬</div>
+                        <div id="shoulderWidth" class="measurement-value">-</div>
+                    </div>
+                    <div class="measurement-item">
+                        <div class="measurement-icon">👕</div>
+                        <div class="measurement-label">胸圍</div>
+                        <div id="chestSize" class="measurement-value">-</div>
+                    </div>
+                    <div class="measurement-item">
+                        <div class="measurement-icon">🎯</div>
+                        <div class="measurement-label">腰圍</div>
+                        <div id="waistSize" class="measurement-value">-</div>
+                    </div>
+                    <div class="measurement-item">
+                        <div class="measurement-icon">👖</div>
+                        <div class="measurement-label">臀圍</div>
+                        <div id="hipSize" class="measurement-value">-</div>
+                    </div>
+                    <div class="measurement-item">
+                        <div class="measurement-icon">🦵</div>
+                        <div class="measurement-label">腿長</div>
+                        <div id="legLength" class="measurement-value">-</div>
+                    </div>
+                    <div class="measurement-item">
+                        <div class="measurement-icon">💪</div>
+                        <div class="measurement-label">手臂長</div>
+                        <div id="armLength" class="measurement-value">-</div>
+                    </div>
+                </div>
+                <div class="note">
+                    <span class="note-icon">⚠️</span>
+                    <span id="noteText">測量結果僅供參考，實際尺寸可能有差異</span>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #439</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

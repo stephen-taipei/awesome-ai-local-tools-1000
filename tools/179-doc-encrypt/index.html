@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doc Encrypt | 文件加密</title>
+    <meta name="description" content="Encrypt and decrypt text with password. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文件加密</h1>
+            <p class="subtitle">使用密碼加密和解密文字內容</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · AES-256 加密</span>
+        </div>
+        <main class="main-content">
+            <div class="mode-tabs">
+                <button id="encryptTab" class="tab-btn active">加密</button>
+                <button id="decryptTab" class="tab-btn">解密</button>
+            </div>
+            <div class="input-section">
+                <div class="password-field">
+                    <label>密碼</label>
+                    <div class="password-input">
+                        <input type="password" id="password" placeholder="輸入密碼...">
+                        <button id="togglePassword" class="toggle-btn">👁️</button>
+                    </div>
+                    <div class="password-strength" id="passwordStrength"></div>
+                </div>
+                <div class="text-field">
+                    <label id="inputLabel">要加密的文字</label>
+                    <textarea id="inputText" placeholder="輸入或貼上文字內容..."></textarea>
+                </div>
+                <button id="processBtn" class="btn btn-primary btn-block">加密</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-header">
+                    <h3 id="resultLabel">加密結果</h3>
+                    <div class="result-actions">
+                        <button id="copyBtn" class="action-btn">複製</button>
+                        <button id="downloadBtn" class="action-btn">下載</button>
+                    </div>
+                </div>
+                <div id="resultText" class="result-text"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #179</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

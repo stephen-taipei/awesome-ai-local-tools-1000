@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIF Maker | GIF 製作器 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .frames-container { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; padding: 20px; background: #f9f9f9; border-radius: 12px; min-height: 150px; align-items: center; justify-content: center; }
+        .frame-item { position: relative; }
+        .frame-item img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd; }
+        .frame-item .remove-btn { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; background: #e74c3c; color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 14px; }
+        .frame-number { position: absolute; bottom: 5px; left: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+        .controls { display: flex; gap: 20px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        .control-group { display: flex; align-items: center; gap: 8px; }
+        .control-group label { font-size: 14px; color: #666; }
+        input[type="range"], select { padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
+        .preview-section { text-align: center; margin-top: 30px; padding: 20px; background: #f0f0f0; border-radius: 12px; }
+        .preview-section img { max-width: 100%; max-height: 400px; border-radius: 8px; }
+        .action-btn { padding: 12px 24px; background: linear-gradient(135deg, #a8ff78, #78ffd6); color: #333; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; margin: 5px; }
+        .action-btn:hover { opacity: 0.9; }
+        .action-btn.primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .drop-zone { border: 3px dashed #78ffd6; background: #f0fff4; padding: 40px; text-align: center; border-radius: 12px; }
+        .drop-zone.dragover { background: #d0f7df; }
+        .empty-hint { color: #aaa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GIF Maker | GIF 製作器</h1>
+            <p>Create animated GIFs from multiple images | 從多張圖片創建動態 GIF</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#a8ff78,#78ffd6);color:#333;">Add Images | 添加圖片</label>
+                <p style="margin-top:15px;color:#888;">Select multiple images or drag and drop</p>
+            </div>
+
+            <div class="frames-container" id="framesContainer">
+                <p class="empty-hint">No frames added yet | 尚未添加幀</p>
+            </div>
+
+            <div class="controls" id="controls" style="display:none;">
+                <div class="control-group">
+                    <label>Delay (ms) | 延遲:</label>
+                    <input type="range" id="delay" min="50" max="1000" value="200" step="50">
+                    <span id="delayValue">200ms</span>
+                </div>
+                <div class="control-group">
+                    <label>Size | 尺寸:</label>
+                    <select id="size">
+                        <option value="original">Original 原始</option>
+                        <option value="640">640px</option>
+                        <option value="480">480px</option>
+                        <option value="320">320px</option>
+                        <option value="240">240px</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Loop | 循環:</label>
+                    <select id="loop">
+                        <option value="0">Infinite 無限</option>
+                        <option value="1">Once 一次</option>
+                        <option value="3">3 times</option>
+                        <option value="5">5 times</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:20px;" id="actionButtons" style="display:none;">
+                <button class="action-btn" id="previewBtn" style="display:none;">Preview | 預覽</button>
+                <button class="action-btn primary" id="createBtn" style="display:none;">Create GIF | 創建 GIF</button>
+                <button class="action-btn" id="clearBtn" style="display:none;">Clear All | 清除全部</button>
+            </div>
+
+            <div class="preview-section" id="previewSection" style="display:none;">
+                <h3 style="margin-bottom:15px;">Preview | 預覽</h3>
+                <img id="gifPreview" alt="GIF Preview">
+                <div style="margin-top:15px;">
+                    <button class="action-btn primary" id="downloadBtn">Download GIF | 下載 GIF</button>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #064
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

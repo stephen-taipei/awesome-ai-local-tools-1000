@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Transcription | 會議轉錄</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-switcher button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+        .lang-switcher button.active {
+            background: white;
+            color: #667eea;
+        }
+        .main-content { padding: 30px; }
+        .meeting-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .meeting-info input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        .participants {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .participant {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .participant .remove {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .add-participant {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .add-participant input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        .visualizer {
+            background: #1a1a2e;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        #waveform { width: 100%; height: 80px; }
+        .recording-status {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            margin-top: 10px;
+        }
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff4757;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .recording-dot.stopped { background: #2ed573; animation: none; }
+        .timer { font-family: monospace; font-size: 1.2em; }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .btn-danger { background: #ff4757; color: white; }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .transcript-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .transcript-entry {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .transcript-entry:last-child { border-bottom: none; }
+        .transcript-time {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .transcript-speaker {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        .transcript-text { line-height: 1.6; }
+        .summary-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 15px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button id="lang-en" class="active">EN</button>
+                <button id="lang-zh">中文</button>
+            </div>
+            <h1 data-i18n="title">Meeting Transcription</h1>
+            <p data-i18n="subtitle">Record and transcribe meetings with timestamps</p>
+        </div>
+
+        <div class="main-content">
+            <div class="meeting-info">
+                <h3 data-i18n="meetingDetails">Meeting Details</h3>
+                <input type="text" id="meetingTitle" placeholder="Meeting Title" data-i18n-placeholder="meetingTitlePlaceholder">
+                <input type="text" id="meetingDate" placeholder="Date" value="" readonly>
+
+                <h4 data-i18n="participants" style="margin-top: 15px;">Participants</h4>
+                <div class="add-participant">
+                    <input type="text" id="newParticipant" placeholder="Add participant name" data-i18n-placeholder="addParticipant">
+                    <button class="btn btn-primary" id="addParticipantBtn">+</button>
+                </div>
+                <div class="participants" id="participantList"></div>
+            </div>
+
+            <div class="visualizer">
+                <canvas id="waveform"></canvas>
+                <div class="recording-status">
+                    <div class="recording-dot stopped" id="recordingDot"></div>
+                    <span class="timer" id="timer">00:00:00</span>
+                    <span id="statusText" data-i18n="ready">Ready</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="startBtn" data-i18n="start">Start Recording</button>
+                <button class="btn btn-danger" id="stopBtn" disabled data-i18n="stop">Stop</button>
+                <button class="btn btn-secondary" id="exportBtn" data-i18n="export">Export</button>
+            </div>
+
+            <div class="transcript-container" id="transcriptContainer">
+                <h3 data-i18n="transcript">Meeting Transcript</h3>
+                <div id="transcriptList">
+                    <p class="placeholder" data-i18n="placeholder">Click Start to begin recording...</p>
+                </div>
+            </div>
+
+            <div class="summary-section" style="display:none;" id="summarySection">
+                <h3 data-i18n="summary">Meeting Summary</h3>
+                <div id="summaryContent"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Tool #204 | <a href="../index.html">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

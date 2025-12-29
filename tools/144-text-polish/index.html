@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Polish | 文字潤飾</title>
+    <meta name="description" content="Polish and improve your text locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文字潤飾</h1>
+            <p class="subtitle">優化文字表達，提升寫作品質</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要潤飾的文字..."></textarea>
+                </div>
+                <div class="options-row">
+                    <div class="option-group">
+                        <label>潤飾風格</label>
+                        <select id="styleSelect" class="select-field">
+                            <option value="formal">正式書面</option>
+                            <option value="casual">輕鬆口語</option>
+                            <option value="concise">簡潔精練</option>
+                            <option value="elaborate">詳細豐富</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="polishBtn" class="btn btn-primary btn-block">潤飾文字</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>潤飾結果</h3>
+                <div class="comparison">
+                    <div class="comparison-panel original">
+                        <h4>原始文字</h4>
+                        <div class="text-content" id="originalText"></div>
+                    </div>
+                    <div class="comparison-panel polished">
+                        <h4>潤飾後</h4>
+                        <div class="text-content" id="polishedText"></div>
+                        <button class="copy-btn" id="copyBtn">複製結果</button>
+                    </div>
+                </div>
+                <div class="improvements-section">
+                    <h4>改善項目</h4>
+                    <div class="improvements-list" id="improvementsList"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="這個東西真的很好用，我非常非常喜歡它，推薦給大家。">中文範例</button>
+                <button class="example-btn" data-text="The thing is really really good and I like it a lot very much.">English Example</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>潤飾功能</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">✨</div>
+                    <h3>消除贅詞</h3>
+                    <p>移除冗餘表達</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📝</div>
+                    <h3>優化用詞</h3>
+                    <p>提升詞彙精準</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3>調整語氣</h3>
+                    <p>符合寫作風格</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>對比顯示</h3>
+                    <p>清楚看出差異</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #144</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

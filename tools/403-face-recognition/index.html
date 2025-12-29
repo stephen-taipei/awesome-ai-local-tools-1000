@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition | 人臉辨識</title>
+    <meta name="description" content="Recognize and match faces. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>人臉辨識</h1>
+            <p class="subtitle">比對和識別人臉特徵</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-grid">
+                <div class="upload-box">
+                    <h3>參考人臉</h3>
+                    <div class="upload-area" id="refUpload">
+                        <div class="upload-icon">👤</div>
+                        <div class="upload-text">上傳參考照片</div>
+                        <input type="file" id="refInput" accept="image/*" hidden>
+                    </div>
+                    <div class="image-preview" id="refPreview"></div>
+                </div>
+                <div class="upload-box">
+                    <h3>待比對人臉</h3>
+                    <div class="upload-area" id="targetUpload">
+                        <div class="upload-icon">🔍</div>
+                        <div class="upload-text">上傳待比對照片</div>
+                        <input type="file" id="targetInput" accept="image/*" hidden>
+                    </div>
+                    <div class="image-preview" id="targetPreview"></div>
+                </div>
+            </div>
+            <div id="compareBtn" class="compare-section" style="display: none;">
+                <button id="matchBtn" class="btn btn-primary">開始比對</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display: none;">
+                <h3>比對結果</h3>
+                <div class="result-card">
+                    <div class="similarity-meter">
+                        <div class="meter-fill" id="meterFill"></div>
+                    </div>
+                    <div class="similarity-value" id="similarityValue">0%</div>
+                    <div class="result-text" id="resultText">--</div>
+                </div>
+                <div class="feature-comparison" id="featureComparison"></div>
+            </div>
+            <div id="historySection" class="history-section" style="display: none;">
+                <h3>比對歷史</h3>
+                <div class="history-list" id="historyList"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #403</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

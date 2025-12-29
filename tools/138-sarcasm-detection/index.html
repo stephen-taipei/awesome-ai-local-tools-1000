@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarcasm Detection | 諷刺檢測</title>
+    <meta name="description" content="Detect sarcasm and irony in text locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>諷刺檢測</h1>
+            <p class="subtitle">識別文字中的諷刺與反諷</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要檢測諷刺的文字..."></textarea>
+                </div>
+                <button id="detectBtn" class="btn btn-primary btn-block">檢測諷刺</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>檢測結果</h3>
+                <div class="sarcasm-meter" id="sarcasmMeter">
+                    <div class="meter-label">諷刺指數</div>
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="meterFill"></div>
+                    </div>
+                    <div class="meter-value" id="meterValue">0%</div>
+                </div>
+                <div class="verdict" id="verdict"></div>
+                <div class="indicators-section">
+                    <h4>檢測指標</h4>
+                    <div class="indicators-list" id="indicatorsList"></div>
+                </div>
+                <div class="highlighted-section">
+                    <h4>標記文本</h4>
+                    <div class="highlighted-text" id="highlightedText"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="哇，你真是太聰明了，連這麼簡單的問題都答不出來。">明顯諷刺</button>
+                <button class="example-btn" data-text="今天天氣真好，陽光普照，很適合出遊。">非諷刺</button>
+                <button class="example-btn" data-text="Oh great, another Monday. I just love waking up early and going to work. It's definitely my favorite thing ever.">English Sarcasm</button>
+                <button class="example-btn" data-text="謝謝你遲到一小時，你真是準時的典範。">反諷</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>功能特點</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎭</div>
+                    <h3>諷刺識別</h3>
+                    <p>檢測諷刺語氣</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>量化評分</h3>
+                    <p>諷刺程度指數</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔍</div>
+                    <h3>線索分析</h3>
+                    <p>顯示諷刺指標</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌐</div>
+                    <h3>雙語支援</h3>
+                    <p>中英文皆可</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #138</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

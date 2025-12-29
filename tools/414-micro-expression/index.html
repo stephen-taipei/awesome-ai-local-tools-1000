@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro Expression | 微表情分析</title>
+    <meta name="description" content="Detect micro expressions. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>微表情分析</h1>
+            <p class="subtitle">偵測細微的表情變化</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始分析</button>
+                <div class="video-container" style="display: none;">
+                    <video id="webcam" autoplay playsinline></video>
+                </div>
+            </div>
+            <div id="analysisSection" class="analysis-section" style="display: none;">
+                <div class="timeline">
+                    <h3>表情時間軸</h3>
+                    <div class="timeline-chart" id="timelineChart"></div>
+                </div>
+                <div class="current-state">
+                    <div class="state-emoji" id="stateEmoji">😐</div>
+                    <div class="state-label" id="stateLabel">中性</div>
+                    <div class="intensity-bar">
+                        <div class="intensity-fill" id="intensityFill"></div>
+                    </div>
+                </div>
+                <div class="micro-list" id="microList">
+                    <h4>偵測到的微表情</h4>
+                    <div class="micro-items" id="microItems"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #414</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

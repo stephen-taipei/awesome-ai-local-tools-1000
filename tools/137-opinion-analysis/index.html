@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opinion Analysis | 觀點分析</title>
+    <meta name="description" content="Analyze opinions and viewpoints in text locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>觀點分析</h1>
+            <p class="subtitle">分析文字中的觀點與立場</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要分析觀點的文字..."></textarea>
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary btn-block">分析觀點</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>分析結果</h3>
+                <div class="summary-cards" id="summaryCards"></div>
+                <div class="opinions-section">
+                    <h4>識別的觀點</h4>
+                    <div class="opinions-list" id="opinionsList"></div>
+                </div>
+                <div class="aspects-section">
+                    <h4>面向分析</h4>
+                    <div class="aspects-grid" id="aspectsGrid"></div>
+                </div>
+                <div class="highlighted-section">
+                    <h4>標記文本</h4>
+                    <div class="highlighted-text" id="highlightedText"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="我認為這款手機的拍照效果非常出色，但電池續航力讓人失望。螢幕顯示品質很棒，價格也算合理。不過我覺得系統有時候會卡頓，希望未來能改善。整體來說，這是一款值得推薦的產品。">產品評價</button>
+                <button class="example-btn" data-text="這家餐廳的服務態度很好，環境舒適。但我個人覺得餐點份量有點少，價位偏高。甜點倒是相當美味，值得一試。">餐廳評論</button>
+                <button class="example-btn" data-text="I think this movie is absolutely amazing. The acting was superb, but the plot felt a bit predictable. However, the visual effects were stunning and the soundtrack was perfect. Overall, I would recommend it to anyone who loves action films.">English Review</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>功能特點</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">💭</div>
+                    <h3>觀點提取</h3>
+                    <p>識別主觀意見</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3>面向分析</h3>
+                    <p>針對特定主題</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>立場評估</h3>
+                    <p>正面/負面傾向</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔍</div>
+                    <h3>視覺標記</h3>
+                    <p>高亮顯示觀點</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #137</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

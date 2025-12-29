@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fact Check | 事實核查</title>
+    <meta name="description" content="Extract and verify factual claims. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>事實核查</h1>
+            <p class="subtitle">提取文本中的事實陳述進行分析</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入文本</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="textInput" placeholder="輸入包含事實陳述的文本..."></textarea>
+                <button id="analyzeBtn" class="btn btn-primary btn-block">分析事實陳述</button>
+            </div>
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="summary">
+                    <div class="summary-item">
+                        <span class="count" id="totalCount">0</span>
+                        <span class="label">總陳述</span>
+                    </div>
+                    <div class="summary-item verifiable">
+                        <span class="count" id="verifiableCount">0</span>
+                        <span class="label">可驗證</span>
+                    </div>
+                    <div class="summary-item opinion">
+                        <span class="count" id="opinionCount">0</span>
+                        <span class="label">意見</span>
+                    </div>
+                </div>
+                <div id="claimsList" class="claims-list"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #184</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posture Assessment | 姿勢評估</title>
+    <meta name="description" content="Assess sitting and standing posture. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>姿勢評估</h1>
+            <p class="subtitle">評估站姿與坐姿</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始評估</button>
+            </div>
+            <div id="assessSection" class="assess-section" style="display: none;">
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="postureCanvas"></canvas>
+                </div>
+                <div class="score-display">
+                    <div class="score-circle">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" class="score-bg"/>
+                            <circle cx="50" cy="50" r="45" class="score-fill" id="scoreFill"/>
+                        </svg>
+                        <div class="score-text">
+                            <span class="score-value" id="scoreValue">--</span>
+                            <span class="score-label">姿勢分數</span>
+                        </div>
+                    </div>
+                    <div class="posture-status" id="postureStatus">評估中...</div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-label">頭部位置</span>
+                        <div class="metric-bar"><div class="metric-fill" id="headFill"></div></div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">肩膀對齊</span>
+                        <div class="metric-bar"><div class="metric-fill" id="shoulderFill"></div></div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">脊椎曲度</span>
+                        <div class="metric-bar"><div class="metric-fill" id="spineFill"></div></div>
+                    </div>
+                </div>
+                <div class="tips-section">
+                    <h3>改善建議</h3>
+                    <div id="tipsList" class="tips-list"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #429</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

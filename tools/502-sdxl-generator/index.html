@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDXL Image Generator | SDXL 圖像生成器</title>
+    <meta name="description" content="Generate high-resolution images using SDXL locally. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">SDXL 圖像生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">使用 SDXL 生成高解析度圖像，完全本地處理</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText" data-i18n="downloading">正在下載模型...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <main class="main-content">
+            <div class="input-area">
+                <div class="input-group">
+                    <label for="promptInput" data-i18n="promptLabel">提示詞</label>
+                    <textarea id="promptInput" rows="3" placeholder="Photorealistic portrait, 8k resolution, detailed lighting"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="negativePrompt" data-i18n="negativeLabel">負面提示詞</label>
+                    <textarea id="negativePrompt" rows="2" placeholder="blurry, low quality, distorted"></textarea>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="input-group">
+                        <label for="stepsSlider">步數: <span id="stepsValue">30</span></label>
+                        <input type="range" id="stepsSlider" min="10" max="50" value="30">
+                    </div>
+                    <div class="input-group">
+                        <label for="guidanceSlider">引導度: <span id="guidanceValue">7.5</span></label>
+                        <input type="range" id="guidanceSlider" min="1" max="20" step="0.5" value="7.5">
+                    </div>
+                    <div class="input-group">
+                        <label for="sizeSelect" data-i18n="size">尺寸</label>
+                        <select id="sizeSelect">
+                            <option value="1024x1024">1024 x 1024</option>
+                            <option value="1152x896">1152 x 896</option>
+                            <option value="896x1152">896 x 1152</option>
+                            <option value="1216x832">1216 x 832</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-lg" disabled data-i18n="generate">生成圖像</button>
+            </div>
+
+            <div class="result-area" id="resultArea" style="display: none;">
+                <div class="result-box">
+                    <div class="result-wrapper checkered-bg">
+                        <img id="resultImage" alt="Generated Image">
+                        <div class="processing-overlay" id="processingOverlay">
+                            <div class="spinner"></div>
+                            <p data-i18n="processing">正在生成中...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-success" disabled data-i18n="download">下載圖像</button>
+                    <button id="regenerateBtn" class="btn btn-secondary" data-i18n="regenerate">重新生成</button>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="aiModel">SDXL 模型</h3>
+                    <p data-i18n="aiModelDesc">使用 SDXL 1.0 生成超高解析度圖像</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="privacy">隱私保護</h3>
+                    <p data-i18n="privacyDesc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="performance">高效能</h3>
+                    <p data-i18n="performanceDesc">支援 WebGPU 加速</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💾</div>
+                    <h3 data-i18n="cache">離線快取</h3>
+                    <p data-i18n="cacheDesc">模型自動快取至本地</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html" data-i18n="backToHome">返回首頁</a> · <span data-i18n="toolNumber">工具 #502</span></p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

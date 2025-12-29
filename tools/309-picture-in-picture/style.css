@@ -1,0 +1,43 @@
+/* Picture in Picture - Tool #309 */
+:root { --primary-color: #8b5cf6; --success-color: #22c55e; --bg-color: #0f172a; --card-bg: #1e293b; --border-color: #334155; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --radius: 12px; --radius-sm: 8px; --transition: all 0.2s ease; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-color); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+.container { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+.lang-switcher { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; }
+.lang-btn { padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: transparent; color: var(--text-secondary); border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); }
+.lang-btn:hover { border-color: var(--primary-color); }
+.lang-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+.header { text-align: center; margin-bottom: 1.5rem; }
+.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--primary-color), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.subtitle { color: var(--text-secondary); font-size: 1rem; }
+.privacy-badge { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.875rem; color: var(--success-color); margin: 0 auto 1.5rem; width: fit-content; }
+.upload-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 1.5rem; }
+@media (max-width: 600px) { .upload-grid { grid-template-columns: 1fr; } }
+.upload-box { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; }
+.upload-box h3 { margin-bottom: 1rem; text-align: center; }
+.upload-area { border: 2px dashed var(--border-color); border-radius: var(--radius-sm); padding: 2rem; text-align: center; cursor: pointer; transition: var(--transition); }
+.upload-area:hover { border-color: var(--primary-color); }
+.upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.upload-text { font-size: 0.875rem; color: var(--text-secondary); }
+.upload-box video { width: 100%; border-radius: var(--radius-sm); margin-top: 1rem; }
+.settings-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; }
+.settings-section h3 { margin-bottom: 1rem; }
+.settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; }
+.setting-group label { display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+.setting-group select { width: 100%; padding: 0.5rem; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); }
+.position-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+.pos-btn { padding: 0.75rem; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 1rem; cursor: pointer; transition: var(--transition); }
+.pos-btn:hover { border-color: var(--primary-color); }
+.pos-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+.preview-section { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; }
+.preview-section h3 { margin-bottom: 1rem; }
+.canvas-wrapper { background: #000; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 1rem; }
+#previewCanvas { display: block; max-width: 100%; margin: 0 auto; }
+.preview-controls { display: flex; gap: 1rem; justify-content: center; }
+.btn { padding: 0.75rem 1.5rem; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
+.btn-primary { background: linear-gradient(135deg, var(--primary-color), #a78bfa); color: white; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4); }
+.btn-secondary { background: var(--border-color); color: var(--text-primary); }
+.btn-secondary:hover { background: #475569; }
+.footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 0.875rem; }
+.footer a { color: var(--primary-color); text-decoration: none; }

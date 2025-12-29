@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Annotation | 文件標註 - AI Local Tools</title>
+    <meta name="description" content="Add annotations and highlights to documents locally. 100% private.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-container { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); min-height: 100vh; padding: 20px; }
+        .tool-card { background: white; border-radius: 20px; padding: 40px; max-width: 1000px; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        .tool-header { text-align: center; margin-bottom: 30px; }
+        .tool-header h1 { font-size: 2.5em; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .lang-switch { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .lang-btn { padding: 8px 20px; border: 2px solid #667eea; background: white; border-radius: 20px; cursor: pointer; }
+        .lang-btn.active { background: #667eea; color: white; }
+        .privacy-badge { display: inline-flex; align-items: center; gap: 8px; background: #e3f2fd; color: #1565c0; padding: 10px 20px; border-radius: 25px; font-size: 14px; margin-bottom: 20px; }
+        .toolbar { display: flex; gap: 10px; padding: 15px; background: #f5f5f5; border-radius: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tool-btn { padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .tool-btn:hover { opacity: 0.8; }
+        .tool-btn.highlight-yellow { background: #fff59d; }
+        .tool-btn.highlight-green { background: #a5d6a7; }
+        .tool-btn.highlight-pink { background: #f8bbd9; }
+        .tool-btn.highlight-blue { background: #90caf9; }
+        .tool-btn.comment { background: #e0e0e0; }
+        .editor-container { border: 2px solid #e0e0e0; border-radius: 12px; overflow: hidden; }
+        .editor { min-height: 400px; padding: 20px; outline: none; line-height: 1.8; font-size: 16px; }
+        .editor .highlight-yellow { background: #fff59d; }
+        .editor .highlight-green { background: #a5d6a7; }
+        .editor .highlight-pink { background: #f8bbd9; }
+        .editor .highlight-blue { background: #90caf9; }
+        .editor .comment { background: #ffe082; border-bottom: 2px dashed #ff9800; cursor: pointer; }
+        .annotations-panel { background: #f8f9fa; border-radius: 12px; padding: 20px; margin-top: 20px; }
+        .annotation-item { background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #667eea; }
+        .annotation-text { font-style: italic; color: #666; margin-bottom: 8px; }
+        .annotation-comment { font-weight: 500; }
+        .annotation-delete { color: #f44336; cursor: pointer; float: right; }
+        .btn { padding: 14px 28px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .btn-success { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        .action-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        footer { text-align: center; margin-top: 40px; padding: 20px; color: #666; }
+        footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="tool-container">
+        <div class="tool-card">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
+            <div class="tool-header">
+                <h1><span class="en">Document Annotation</span><span class="zh" style="display:none;">文件標註</span></h1>
+                <p><span class="en">Highlight text and add comments to documents</span><span class="zh" style="display:none;">標記文字並為文件添加註解</span></p>
+            </div>
+            <div class="privacy-badge">
+                <span>🔒</span>
+                <span class="en">100% Local Processing</span>
+                <span class="zh" style="display:none;">100% 本地處理</span>
+            </div>
+            <div class="toolbar">
+                <button class="tool-btn highlight-yellow" data-action="highlight-yellow">🖍️ Yellow</button>
+                <button class="tool-btn highlight-green" data-action="highlight-green">🖍️ Green</button>
+                <button class="tool-btn highlight-pink" data-action="highlight-pink">🖍️ Pink</button>
+                <button class="tool-btn highlight-blue" data-action="highlight-blue">🖍️ Blue</button>
+                <button class="tool-btn comment" data-action="comment">💬 Comment</button>
+                <button class="tool-btn" data-action="clear" style="background:#ffcdd2;">🗑️ Clear</button>
+            </div>
+            <div class="editor-container">
+                <div class="editor" id="editor" contenteditable="true">
+                    <p>Paste or type your document text here. Select any text and use the toolbar above to add highlights or comments.</p>
+                    <p>This is a sample paragraph that you can annotate. Try selecting some text and clicking on one of the highlight colors or the comment button.</p>
+                    <p>All annotations are saved locally in your browser and your data never leaves your device.</p>
+                </div>
+            </div>
+            <div class="annotations-panel">
+                <h3><span class="en">Annotations</span><span class="zh" style="display:none;">註解列表</span></h3>
+                <div id="annotationsList"></div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-success" id="exportBtn">Export with Annotations</button>
+                <button class="btn btn-primary" id="clearAllBtn">Clear All</button>
+            </div>
+            <footer>
+                <p><a href="../../index.html">Back to Home</a> · Tool #710</p>
+                <p>Awesome AI Local Tools © 2024</p>
+            </footer>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

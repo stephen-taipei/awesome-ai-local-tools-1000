@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Named Entity Recognition | 命名實體識別</title>
+    <meta name="description" content="Identify named entities in text locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>命名實體識別</h1>
+            <p class="subtitle">識別文字中的人名、地名、組織等</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要分析的文字..."></textarea>
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary btn-block">識別實體</button>
+            </div>
+
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>識別結果</h3>
+                <div class="highlighted-text" id="highlightedText"></div>
+
+                <div class="entity-legend">
+                    <span class="legend-item person"><span class="legend-dot"></span>人名</span>
+                    <span class="legend-item location"><span class="legend-dot"></span>地名</span>
+                    <span class="legend-item organization"><span class="legend-dot"></span>組織</span>
+                    <span class="legend-item date"><span class="legend-dot"></span>日期</span>
+                    <span class="legend-item number"><span class="legend-dot"></span>數字</span>
+                </div>
+
+                <div class="entities-list" id="entitiesList"></div>
+                <div class="stats" id="stats"></div>
+            </div>
+
+            <div class="examples-section">
+                <h3>範例文字</h3>
+                <div class="example-list">
+                    <button class="example-btn" data-text="蘋果公司的執行長提姆·庫克於2023年9月在加州總部發布了iPhone 15。">商業新聞</button>
+                    <button class="example-btn" data-text="台北市長今天宣布將在2024年舉辦國際馬拉松比賽，預計有5000人參加。">地方新聞</button>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">👤</div>
+                    <h3>人名識別</h3>
+                    <p>識別人物名稱</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <h3>地名識別</h3>
+                    <p>識別地理位置</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🏢</div>
+                    <h3>組織識別</h3>
+                    <p>識別公司機構</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #133</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

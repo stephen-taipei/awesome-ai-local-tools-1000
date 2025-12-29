@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette | 調色盤 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #fc466b, #3f5efb); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #fc466b; background: #fff5f7; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+        .drop-zone:hover { background: #ffe8ed; }
+        select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; }
+        .palette { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 20px; }
+        .color-card { width: 120px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; }
+        .color-card:hover { transform: translateY(-5px); }
+        .color-swatch { height: 80px; }
+        .color-info { padding: 10px; background: white; text-align: center; }
+        .color-info .hex { font-weight: bold; font-size: 14px; }
+        .color-info .rgb { font-size: 11px; color: #666; margin-top: 3px; }
+        .palette-preview { display: flex; height: 60px; border-radius: 8px; overflow: hidden; margin-top: 20px; }
+        .palette-preview div { flex: 1; }
+        .image-preview { max-width: 300px; max-height: 200px; border-radius: 12px; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Color Palette | 調色盤</h1>
+            <p>Extract color palettes from images | 從圖片提取色彩調色盤</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#fc466b,#3f5efb);cursor:pointer;">Upload Image | 上傳圖片</label>
+                <p style="margin-top:15px;color:#666;">Or drag and drop an image here</p>
+                <img id="imagePreview" class="image-preview" style="display:none;">
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Colors:
+                    <select id="colorCount">
+                        <option value="5">5 Colors</option>
+                        <option value="8" selected>8 Colors</option>
+                        <option value="10">10 Colors</option>
+                        <option value="16">16 Colors</option>
+                    </select>
+                </label>
+                <label>Algorithm:
+                    <select id="algorithm">
+                        <option value="kmeans">K-Means</option>
+                        <option value="frequency">Frequency</option>
+                        <option value="vibrant">Vibrant</option>
+                    </select>
+                </label>
+                <button class="action-btn" id="extractBtn">Extract | 提取</button>
+                <button class="action-btn" id="exportBtn">Export CSS | 匯出</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box" style="width:100%;">
+                    <div class="palette-preview" id="palettePreview"></div>
+                    <div class="palette" id="palette"></div>
+                </div>
+            </div>
+            <canvas id="canvas" style="display:none;"></canvas>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #097
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

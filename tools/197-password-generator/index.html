@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator | 密碼產生器</title>
+    <meta name="description" content="Generate secure passwords. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>密碼產生器</h1>
+            <p class="subtitle">產生安全的隨機密碼</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="password-display">
+                <div id="passwordOutput" class="password-text">點擊生成密碼</div>
+                <button id="copyBtn" class="copy-btn" title="複製">📋</button>
+            </div>
+            <div class="strength-meter">
+                <div class="strength-bar" id="strengthBar"></div>
+            </div>
+            <div id="strengthText" class="strength-text">密碼強度: --</div>
+            <div class="options-section">
+                <div class="option-group">
+                    <label>密碼長度: <span id="lengthValue">16</span></label>
+                    <input type="range" id="lengthSlider" min="4" max="64" value="16">
+                </div>
+                <div class="checkbox-grid">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="uppercase" checked>
+                        <span>大寫字母 (A-Z)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="lowercase" checked>
+                        <span>小寫字母 (a-z)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="numbers" checked>
+                        <span>數字 (0-9)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="symbols" checked>
+                        <span>符號 (!@#$...)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="excludeSimilar">
+                        <span>排除相似字元 (0OIl1)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="excludeAmbiguous">
+                        <span>排除歧義符號 ({}[]...)</span>
+                    </label>
+                </div>
+            </div>
+            <button id="generateBtn" class="btn btn-primary btn-block">生成密碼</button>
+            <div class="history-section">
+                <div class="section-header">
+                    <h3>歷史記錄</h3>
+                    <button id="clearHistoryBtn" class="small-btn">清除</button>
+                </div>
+                <div id="historyList" class="history-list">
+                    <p class="empty-hint">尚無記錄</p>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #197</p>
+        </footer>
+    </div>
+    <div class="toast" id="toast">已複製！</div>
+    <script src="app.js"></script>
+</body>
+</html>

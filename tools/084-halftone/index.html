@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halftone Effect | 半調網點效果 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; }
+        .preview-box canvas { max-width: 100%; border-radius: 12px; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        input[type="range"] { width: 100px; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #ff6b6b, #feca57); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #ff6b6b; background: #fff5f5; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+        .drop-zone:hover { background: #ffe8e8; }
+        select { padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Halftone Effect | 半調網點效果</h1>
+            <p>Create halftone dot pattern effects | 創建半調網點圖案效果</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#ff6b6b,#feca57);cursor:pointer;">Upload Image | 上傳圖片</label>
+                <p style="margin-top:15px;color:#666;">Or drag and drop an image here</p>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Dot Size: <input type="range" id="dotSize" min="2" max="20" value="8"> <span id="dotVal">8</span></label>
+                <label>Spacing: <input type="range" id="spacing" min="4" max="30" value="10"> <span id="spacingVal">10</span></label>
+                <label>Style:
+                    <select id="style">
+                        <option value="circles">Circles</option>
+                        <option value="squares">Squares</option>
+                        <option value="diamonds">Diamonds</option>
+                    </select>
+                </label>
+                <label>Color:
+                    <select id="colorMode">
+                        <option value="bw">Black & White</option>
+                        <option value="cmyk">CMYK</option>
+                        <option value="rgb">RGB</option>
+                    </select>
+                </label>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box"><canvas id="canvas"></canvas></div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #084
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

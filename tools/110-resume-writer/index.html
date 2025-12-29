@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Writer | 履歷自傳生成</title>
+    <meta name="description" content="Generate professional resumes locally. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">履歷自傳生成</h1>
+            <p class="subtitle" data-i18n="subtitle">快速撰寫專業履歷與自傳</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>姓名</label>
+                        <input type="text" id="nameInput" class="input-field" placeholder="您的姓名">
+                    </div>
+                    <div class="form-group">
+                        <label>應徵職位</label>
+                        <input type="text" id="positionInput" class="input-field" placeholder="想應徵的職位">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>學歷背景</label>
+                    <input type="text" id="educationInput" class="input-field" placeholder="例如：國立台灣大學 資訊工程系 學士">
+                </div>
+
+                <div class="form-group">
+                    <label>工作經歷 (每行一項)</label>
+                    <textarea id="experienceInput" class="textarea-field" rows="4" placeholder="例如：
+2020-2023 ABC公司 軟體工程師
+2018-2020 XYZ公司 初級工程師"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>專業技能 (用逗號分隔)</label>
+                    <input type="text" id="skillsInput" class="input-field" placeholder="例如：JavaScript, Python, React, SQL">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>自傳類型</label>
+                        <select id="typeSelect" class="select-field">
+                            <option value="professional">專業型</option>
+                            <option value="creative">創意型</option>
+                            <option value="academic">學術型</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>自傳長度</label>
+                        <select id="lengthSelect" class="select-field">
+                            <option value="short">短篇 (200字)</option>
+                            <option value="medium">中篇 (400字)</option>
+                            <option value="long">長篇 (600字)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span>生成履歷自傳</span>
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3>生成的自傳</h3>
+                    <div class="output-actions">
+                        <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                        <button id="downloadBtn" class="btn btn-secondary btn-sm">下載</button>
+                    </div>
+                </div>
+                <div class="resume-preview" id="resumePreview"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📝</div>
+                    <h3>專業撰寫</h3>
+                    <p>符合業界標準的履歷格式</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3>職位優化</h3>
+                    <p>針對目標職位客製內容</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3>快速生成</h3>
+                    <p>幾秒鐘完成專業自傳</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳個資</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #110</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

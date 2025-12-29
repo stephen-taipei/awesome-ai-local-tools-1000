@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Composer | AI 作曲</title>
+    <meta name="description" content="AI-powered music composition. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>AI 作曲</h1>
+            <p class="subtitle">AI 自動生成音樂旋律</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="controls-section">
+                <div class="control-group">
+                    <label>音樂風格</label>
+                    <select id="styleSelect">
+                        <option value="pop">流行</option>
+                        <option value="classical">古典</option>
+                        <option value="jazz">爵士</option>
+                        <option value="electronic">電子</option>
+                        <option value="folk">民謠</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>調性</label>
+                    <select id="keySelect">
+                        <option value="C">C 大調</option>
+                        <option value="G">G 大調</option>
+                        <option value="D">D 大調</option>
+                        <option value="Am">A 小調</option>
+                        <option value="Em">E 小調</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>速度 (BPM)</label>
+                    <input type="range" id="bpmSlider" min="60" max="180" value="120">
+                    <span id="bpmValue">120</span>
+                </div>
+                <div class="control-group">
+                    <label>小節數</label>
+                    <select id="barsSelect">
+                        <option value="4">4 小節</option>
+                        <option value="8" selected>8 小節</option>
+                        <option value="16">16 小節</option>
+                    </select>
+                </div>
+            </div>
+            <div class="generate-section">
+                <button id="generateBtn" class="btn btn-primary">生成旋律</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="piano-roll" id="pianoRoll"></div>
+                <div class="playback-controls">
+                    <button id="playBtn" class="control-btn">▶️ 播放</button>
+                    <button id="stopBtn" class="control-btn">⏹️ 停止</button>
+                    <button id="regenerateBtn" class="control-btn">🔄 重新生成</button>
+                </div>
+                <div class="melody-info">
+                    <div class="info-item">
+                        <span class="info-label">音符數</span>
+                        <span id="noteCount" class="info-value">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">時長</span>
+                        <span id="duration" class="info-value">0s</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #231</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Stereo Widener | 音訊立體聲擴展</title>
+    <meta name="description" content="Widen stereo image of audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊立體聲擴展</h1>
+            <p class="subtitle">擴展或縮窄立體聲音場</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔊</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>寬度</label>
+                        <input type="range" id="widthSlider" min="0" max="200" step="5" value="100">
+                        <span id="widthValue">100%</span>
+                    </div>
+                    <div class="option-group">
+                        <label>中央增益</label>
+                        <input type="range" id="centerSlider" min="0" max="200" step="5" value="100">
+                        <span id="centerValue">100%</span>
+                    </div>
+                    <div class="option-group">
+                        <label>側邊增益</label>
+                        <input type="range" id="sideSlider" min="0" max="200" step="5" value="100">
+                        <span id="sideValue">100%</span>
+                    </div>
+                </div>
+                <div class="preset-section">
+                    <button class="preset-btn" data-width="0" data-center="100" data-side="0">單聲道</button>
+                    <button class="preset-btn active" data-width="100" data-center="100" data-side="100">原始</button>
+                    <button class="preset-btn" data-width="150" data-center="100" data-side="150">寬闊</button>
+                    <button class="preset-btn" data-width="200" data-center="80" data-side="200">超寬</button>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #270</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

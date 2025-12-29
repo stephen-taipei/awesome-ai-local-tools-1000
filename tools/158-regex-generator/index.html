@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Generator | 正則表達式產生器</title>
+    <meta name="description" content="Generate and test regular expressions locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>正則表達式產生器</h1>
+            <p class="subtitle">快速產生與測試常用正則表達式</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="patterns-section">
+                <h3>常用模式</h3>
+                <div class="patterns-grid" id="patternsGrid"></div>
+            </div>
+            <div class="input-section">
+                <div class="form-group">
+                    <label>正則表達式</label>
+                    <div class="regex-input">
+                        <span class="regex-slash">/</span>
+                        <input type="text" id="regexInput" class="text-field" placeholder="輸入正則表達式...">
+                        <span class="regex-slash">/</span>
+                        <input type="text" id="flagsInput" class="flags-field" value="g" placeholder="g">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>測試文字</label>
+                    <textarea id="testInput" class="textarea-field" placeholder="輸入要測試的文字..."></textarea>
+                </div>
+                <button id="testBtn" class="btn btn-primary btn-block">測試</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3>匹配結果</h3>
+                <div class="match-stats" id="matchStats"></div>
+                <div class="matches-list" id="matchesList"></div>
+                <div class="highlighted-text" id="highlightedText"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #158</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

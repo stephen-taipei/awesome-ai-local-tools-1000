@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Ring Modulator | 環形調變器</title>
+    <meta name="description" content="Add ring modulation effect to audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>環形調變器</h1>
+            <p class="subtitle">創造獨特的金屬般聲音效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔔</div>
+                    <p>拖放音頻檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP3, WAV, OGG, M4A</p>
+                    <input type="file" id="fileInput" accept="audio/*" hidden>
+                </div>
+                <div class="audio-loaded" id="audioLoaded" style="display: none;">
+                    <div class="file-info" id="fileInfo"></div>
+                    <audio id="originalAudio" controls></audio>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="option-group">
+                        <label>調變頻率</label>
+                        <input type="range" id="modFreq" min="20" max="2000" step="10" value="440">
+                        <span id="modValue">440 Hz</span>
+                    </div>
+                    <div class="option-group">
+                        <label>調變深度</label>
+                        <input type="range" id="modDepth" min="0" max="100" step="5" value="100">
+                        <span id="depthValue">100%</span>
+                    </div>
+                    <div class="option-group">
+                        <label>波形類型</label>
+                        <select id="waveType">
+                            <option value="sine">正弦波</option>
+                            <option value="square">方波</option>
+                            <option value="triangle">三角波</option>
+                            <option value="sawtooth">鋸齒波</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>混合比例</label>
+                        <input type="range" id="mixRatio" min="0" max="100" step="5" value="80">
+                        <span id="mixValue">80%</span>
+                    </div>
+                    <div class="preset-section">
+                        <h3 id="presetTitle">預設效果</h3>
+                        <div class="preset-buttons">
+                            <button class="preset-btn active" data-preset="metallic">🔔 金屬</button>
+                            <button class="preset-btn" data-preset="tremolo">🌊 顫音</button>
+                            <button class="preset-btn" data-preset="dalek">🤖 機器人</button>
+                            <button class="preset-btn" data-preset="bell">🔔 鐘聲</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 處理音頻</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">處理結果</h3>
+                    <audio id="processedAudio" controls></audio>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #305</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

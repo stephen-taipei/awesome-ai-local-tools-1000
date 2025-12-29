@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korean Translator | 韓語翻譯器</title>
+    <meta name="description" content="Korean-Chinese-English translation locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1>韓語翻譯器</h1>
+            <p class="subtitle">中韓、英韓互譯</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="direction-selector">
+                <select id="sourceLanguage" class="select-field">
+                    <option value="zh">中文</option>
+                    <option value="en">English</option>
+                    <option value="ko">한국어</option>
+                </select>
+                <span class="arrow">→</span>
+                <select id="targetLanguage" class="select-field">
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+
+            <div class="translator-box">
+                <div class="input-section">
+                    <textarea id="sourceText" class="textarea-field" placeholder="輸入文字..."></textarea>
+                    <div class="section-footer">
+                        <span id="sourceCount">0 字</span>
+                        <button id="clearBtn" class="link-btn">清除</button>
+                    </div>
+                </div>
+
+                <button id="translateBtn" class="btn btn-primary btn-block">翻譯</button>
+
+                <div class="output-section">
+                    <div id="targetText" class="output-field"></div>
+                    <div id="romanSection" class="roman-section" style="display: none;">
+                        <span class="roman-label">羅馬拼音：</span>
+                        <span id="romanText"></span>
+                    </div>
+                    <div class="section-footer">
+                        <span id="targetCount">0 字</span>
+                        <button id="copyBtn" class="link-btn">複製</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="options-row">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="showRoman" checked>
+                    <span>顯示羅馬拼音</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="formalMode" checked>
+                    <span>正式語氣</span>
+                </label>
+            </div>
+
+            <div class="phrases-section">
+                <h3>常用韓語</h3>
+                <div class="phrase-grid">
+                    <button class="phrase-card" data-ko="안녕하세요" data-roman="annyeonghaseyo">
+                        <span class="ko">안녕하세요</span>
+                        <span class="meaning">你好</span>
+                    </button>
+                    <button class="phrase-card" data-ko="감사합니다" data-roman="gamsahamnida">
+                        <span class="ko">감사합니다</span>
+                        <span class="meaning">謝謝</span>
+                    </button>
+                    <button class="phrase-card" data-ko="안녕히 가세요" data-roman="annyeonghi gaseyo">
+                        <span class="ko">안녕히 가세요</span>
+                        <span class="meaning">再見</span>
+                    </button>
+                    <button class="phrase-card" data-ko="좋은 아침" data-roman="joeun achim">
+                        <span class="ko">좋은 아침</span>
+                        <span class="meaning">早安</span>
+                    </button>
+                    <button class="phrase-card" data-ko="미안합니다" data-roman="mianhamnida">
+                        <span class="ko">미안합니다</span>
+                        <span class="meaning">對不起</span>
+                    </button>
+                    <button class="phrase-card" data-ko="사랑해요" data-roman="saranghaeyo">
+                        <span class="ko">사랑해요</span>
+                        <span class="meaning">我愛你</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🇰🇷</div>
+                    <h3>韓語專精</h3>
+                    <p>專為韓語翻譯優化</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔤</div>
+                    <h3>羅馬拼音</h3>
+                    <p>同時顯示發音</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💬</div>
+                    <h3>敬語支援</h3>
+                    <p>正式與非正式語氣</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #124</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

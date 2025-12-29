@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD to Mindmap | Markdown 轉心智圖</title>
+    <meta name="description" content="Convert Markdown to mindmap. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>Markdown 轉心智圖</h1>
+            <p class="subtitle">將 Markdown 標題結構轉換為心智圖</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入 Markdown</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="inputText" placeholder="輸入 Markdown 文字（使用 # 標題）..."></textarea>
+            </div>
+            <button id="generateBtn" class="btn btn-primary btn-block">生成心智圖</button>
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <div class="section-header">
+                    <h3>心智圖</h3>
+                    <div class="header-actions">
+                        <button id="zoomInBtn" class="small-btn">放大</button>
+                        <button id="zoomOutBtn" class="small-btn">縮小</button>
+                        <button id="downloadBtn" class="small-btn">下載 PNG</button>
+                    </div>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="mindmapCanvas"></canvas>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #200</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

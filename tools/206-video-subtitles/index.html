@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Subtitles Generator | 影片字幕生成</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #16213e;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #e94560 0%, #0f3460 100%);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-switcher button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+        .lang-switcher button.active { background: white; color: #e94560; }
+        .main-content { padding: 30px; }
+        .upload-area {
+            border: 3px dashed #e94560;
+            border-radius: 15px;
+            padding: 50px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        .upload-area:hover { background: rgba(233, 69, 96, 0.1); }
+        .upload-icon { font-size: 4em; margin-bottom: 15px; }
+        .video-container {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .video-wrapper {
+            position: relative;
+            background: black;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #videoPlayer {
+            width: 100%;
+            max-height: 400px;
+        }
+        .subtitle-overlay {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            max-width: 80%;
+            text-align: center;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: #e94560; color: white; }
+        .btn-secondary { background: #0f3460; color: white; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .options-panel {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .option-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .option-row label { min-width: 120px; }
+        .option-row select, .option-row input {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            background: #0f3460;
+            color: white;
+        }
+        .subtitle-editor {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .subtitle-line {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        .subtitle-line input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: #0f3460;
+            color: white;
+        }
+        .time-input { width: 100px !important; flex: none !important; }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer a { color: #e94560; text-decoration: none; }
+        #fileInput { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button id="lang-en" class="active">EN</button>
+                <button id="lang-zh">中文</button>
+            </div>
+            <h1 data-i18n="title">Video Subtitles Generator</h1>
+            <p data-i18n="subtitle">Auto-generate subtitles for your videos</p>
+        </div>
+
+        <div class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">🎬</div>
+                <p data-i18n="uploadText">Drop video file here or click to upload</p>
+                <p style="color:#888; margin-top:10px;" data-i18n="uploadHint">Supports MP4, WebM, MOV</p>
+                <input type="file" id="fileInput" accept="video/*">
+            </div>
+
+            <div class="video-container" id="videoContainer">
+                <div class="video-wrapper">
+                    <video id="videoPlayer" controls></video>
+                    <div class="subtitle-overlay" id="subtitleOverlay"></div>
+                </div>
+            </div>
+
+            <div class="options-panel">
+                <h3 data-i18n="options" style="margin-bottom:15px;">Options</h3>
+                <div class="option-row">
+                    <label data-i18n="language">Language:</label>
+                    <select id="languageSelect">
+                        <option value="en-US">English</option>
+                        <option value="zh-TW">繁體中文</option>
+                        <option value="zh-CN">简体中文</option>
+                        <option value="ja-JP">日本語</option>
+                        <option value="ko-KR">한국어</option>
+                    </select>
+                </div>
+                <div class="option-row">
+                    <label data-i18n="format">Format:</label>
+                    <select id="formatSelect">
+                        <option value="srt">SRT</option>
+                        <option value="vtt">VTT</option>
+                        <option value="txt">Plain Text</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="generateBtn" disabled data-i18n="generate">Generate Subtitles</button>
+                <button class="btn btn-secondary" id="downloadBtn" disabled data-i18n="download">Download</button>
+            </div>
+
+            <div class="subtitle-editor" id="subtitleEditor">
+                <h3 data-i18n="subtitles" style="margin-bottom:15px;">Subtitles</h3>
+                <div id="subtitleList">
+                    <p data-i18n="placeholder">Upload a video to generate subtitles...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Tool #206 | <a href="../index.html">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

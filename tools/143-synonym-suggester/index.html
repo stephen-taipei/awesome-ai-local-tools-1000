@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synonym Suggester | 同義詞建議</title>
+    <meta name="description" content="Find synonyms for words locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>同義詞建議</h1>
+            <p class="subtitle">尋找詞彙的同義詞與替代用語</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入詞彙</label>
+                    <input type="text" id="wordInput" class="text-field" placeholder="輸入要查找同義詞的詞彙...">
+                </div>
+                <button id="searchBtn" class="btn btn-primary btn-block">查找同義詞</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="word-info" id="wordInfo"></div>
+                <div class="synonyms-section">
+                    <h4>同義詞</h4>
+                    <div class="synonyms-grid" id="synonymsGrid"></div>
+                </div>
+                <div class="antonyms-section" id="antonymsSection">
+                    <h4>反義詞</h4>
+                    <div class="antonyms-grid" id="antonymsGrid"></div>
+                </div>
+                <div class="related-section" id="relatedSection">
+                    <h4>相關詞</h4>
+                    <div class="related-grid" id="relatedGrid"></div>
+                </div>
+            </div>
+        </main>
+        <section class="quick-words">
+            <h3>常用詞彙</h3>
+            <div class="quick-list">
+                <button class="quick-btn" data-word="good">good</button>
+                <button class="quick-btn" data-word="bad">bad</button>
+                <button class="quick-btn" data-word="happy">happy</button>
+                <button class="quick-btn" data-word="sad">sad</button>
+                <button class="quick-btn" data-word="big">big</button>
+                <button class="quick-btn" data-word="small">small</button>
+                <button class="quick-btn" data-word="fast">fast</button>
+                <button class="quick-btn" data-word="important">important</button>
+                <button class="quick-btn" data-word="好">好</button>
+                <button class="quick-btn" data-word="快樂">快樂</button>
+                <button class="quick-btn" data-word="美麗">美麗</button>
+                <button class="quick-btn" data-word="重要">重要</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>功能特點</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📚</div>
+                    <h3>豐富詞庫</h3>
+                    <p>常用詞彙同義詞</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔄</div>
+                    <h3>反義詞</h3>
+                    <p>提供相反詞彙</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔗</div>
+                    <h3>相關詞</h3>
+                    <p>語義相關詞彙</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌐</div>
+                    <h3>雙語支援</h3>
+                    <p>中英文詞彙</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #143</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

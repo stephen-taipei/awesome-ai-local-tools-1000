@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Stats | 文字統計</title>
+    <meta name="description" content="Analyze text statistics. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文字統計</h1>
+            <p class="subtitle">分析文字內容統計資訊</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <textarea id="inputText" placeholder="輸入或貼上文字進行分析..."></textarea>
+            </div>
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-value" id="charCount">0</div>
+                    <div class="stat-label">總字元</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="charNoSpace">0</div>
+                    <div class="stat-label">字元 (不含空格)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="wordCount">0</div>
+                    <div class="stat-label">單字/詞</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="sentenceCount">0</div>
+                    <div class="stat-label">句子</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="paragraphCount">0</div>
+                    <div class="stat-label">段落</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="lineCount">0</div>
+                    <div class="stat-label">行數</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="chineseCount">0</div>
+                    <div class="stat-label">中文字</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="englishCount">0</div>
+                    <div class="stat-label">英文字母</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="numberCount">0</div>
+                    <div class="stat-label">數字</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="punctCount">0</div>
+                    <div class="stat-label">標點符號</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="readTime">0</div>
+                    <div class="stat-label">閱讀時間 (分)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="speakTime">0</div>
+                    <div class="stat-label">朗讀時間 (分)</div>
+                </div>
+            </div>
+            <div class="details-section" id="detailsSection" style="display: none;">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="frequency">詞頻分析</button>
+                    <button class="tab-btn" data-tab="distribution">字元分布</button>
+                </div>
+                <div class="tab-content active" id="frequency-content">
+                    <div id="frequencyList" class="frequency-list"></div>
+                </div>
+                <div class="tab-content" id="distribution-content">
+                    <div id="distributionChart" class="distribution-chart"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #199</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

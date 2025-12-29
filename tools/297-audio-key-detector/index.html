@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Key Detector | 音訊調性偵測</title>
+    <meta name="description" content="Detect musical key from audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊調性偵測</h1>
+            <p class="subtitle">偵測音訊的音樂調性</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎹</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="key-display">
+                    <div class="key-label">偵測到的調性</div>
+                    <div class="key-value" id="keyValue">-</div>
+                    <div class="key-type" id="keyType">-</div>
+                </div>
+                <div class="chromagram">
+                    <div class="chroma-label">音符能量分佈</div>
+                    <div class="chroma-bars" id="chromaBars"></div>
+                    <div class="note-labels">
+                        <span>C</span><span>C#</span><span>D</span><span>D#</span>
+                        <span>E</span><span>F</span><span>F#</span><span>G</span>
+                        <span>G#</span><span>A</span><span>A#</span><span>B</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="playBtn" class="btn btn-primary">▶️ 播放</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #297</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

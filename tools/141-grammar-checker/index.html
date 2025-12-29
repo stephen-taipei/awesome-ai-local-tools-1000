@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Checker | 文法檢查</title>
+    <meta name="description" content="Check grammar errors in text locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文法檢查</h1>
+            <p class="subtitle">自動檢測文章中的文法錯誤</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>輸入文字</label>
+                    <textarea id="textInput" class="textarea-field" placeholder="輸入要檢查文法的文字..."></textarea>
+                </div>
+                <button id="checkBtn" class="btn btn-primary btn-block">檢查文法</button>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="summary-bar">
+                    <div class="summary-item">
+                        <span class="summary-value" id="errorCount">0</span>
+                        <span class="summary-label">發現問題</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-value" id="suggestionCount">0</span>
+                        <span class="summary-label">改善建議</span>
+                    </div>
+                    <div class="summary-score">
+                        <span class="score-label">文法評分</span>
+                        <span class="score-value" id="scoreValue">100</span>
+                    </div>
+                </div>
+                <div class="corrected-text-section">
+                    <h4>標記文本</h4>
+                    <div class="corrected-text" id="correctedText"></div>
+                </div>
+                <div class="errors-section" id="errorsSection">
+                    <h4>問題列表</h4>
+                    <div class="errors-list" id="errorsList"></div>
+                </div>
+            </div>
+        </main>
+        <section class="examples-section">
+            <h3>範例文字</h3>
+            <div class="example-list">
+                <button class="example-btn" data-text="他昨天去到了公園裡玩。這個問題讓我感到非常的困惑。我們應該要好好學習。">中文範例</button>
+                <button class="example-btn" data-text="She don't like apples. He go to school yesterday. I am agree with you.">English Example</button>
+                <button class="example-btn" data-text="Their going to the store. Its a beautiful day. Your the best person I know.">Common Mistakes</button>
+            </div>
+        </section>
+        <section class="info-section">
+            <h2>檢查項目</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📝</div>
+                    <h3>語法錯誤</h3>
+                    <p>主謂不一致等</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔤</div>
+                    <h3>詞彙使用</h3>
+                    <p>用詞不當問題</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✨</div>
+                    <h3>冗餘表達</h3>
+                    <p>贅字贅詞檢測</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💡</div>
+                    <h3>改善建議</h3>
+                    <p>提供修正方案</p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #141</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

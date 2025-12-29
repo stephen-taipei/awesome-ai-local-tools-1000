@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accent Recognition | 語音口音辨識</title>
+    <meta name="description" content="Recognize speaker accent from voice. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>語音口音辨識</h1>
+            <p class="subtitle">辨識說話者的口音類型</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="record-area" id="recordArea">
+                    <div class="record-icon">🗣️</div>
+                    <div class="record-text">點擊開始錄音</div>
+                    <div class="record-hint">請說中文，建議錄製 5-10 秒</div>
+                </div>
+                <div class="upload-option">
+                    <button id="uploadBtn" class="btn-link">上傳音訊檔案</button>
+                    <input type="file" id="audioInput" accept="audio/*" hidden>
+                </div>
+            </div>
+            <div id="analysisSection" class="analysis-section" style="display:none">
+                <audio id="audioPlayer" controls></audio>
+                <button id="analyzeBtn" class="btn btn-primary">分析口音</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="primary-accent">
+                    <div id="accentFlag" class="accent-flag">🇹🇼</div>
+                    <div id="accentName" class="accent-name">台灣腔</div>
+                    <div id="accentConf" class="accent-conf">信心度: 85%</div>
+                </div>
+                <div class="accent-distribution">
+                    <h3>口音分布</h3>
+                    <div id="accentBars" class="accent-bars"></div>
+                </div>
+                <div class="voice-characteristics">
+                    <h3>語音特徵</h3>
+                    <div id="characteristics" class="char-grid"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #230</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

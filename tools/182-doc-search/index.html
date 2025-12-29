@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doc Search | 文件搜尋</title>
+    <meta name="description" content="Full-text search in documents. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>文件搜尋</h1>
+            <p class="subtitle">多文件全文搜尋與高亮顯示</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📁</div>
+                    <p>拖放多個文字檔案或點擊上傳</p>
+                    <input type="file" id="fileInput" accept=".txt,.md,.html,.css,.js,.json" multiple hidden>
+                </div>
+                <div class="file-list" id="fileList"></div>
+            </div>
+            <div class="search-section" id="searchSection" style="display: none;">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜尋關鍵字...">
+                    <button id="searchBtn" class="btn btn-primary">搜尋</button>
+                </div>
+                <div class="search-options">
+                    <label><input type="checkbox" id="caseSensitive"> 區分大小寫</label>
+                    <label><input type="checkbox" id="wholeWord"> 完整單字</label>
+                    <label><input type="checkbox" id="useRegex"> 正規表達式</label>
+                </div>
+            </div>
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <span id="resultCount">0 個結果</span>
+                </div>
+                <div id="resultsList" class="results-list"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #182</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

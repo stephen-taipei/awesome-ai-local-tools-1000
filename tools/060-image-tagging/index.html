@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Tagging | 圖片標籤生成 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-section { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
+        .image-preview { flex: 1; min-width: 300px; text-align: center; }
+        .image-preview canvas { max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .tags-panel { flex: 1; min-width: 300px; }
+        .tags-container { background: #f8f5ff; border-radius: 12px; padding: 20px; min-height: 300px; }
+        .tag-category { margin-bottom: 20px; }
+        .tag-category h4 { color: #667eea; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; }
+        .tags-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; background: white; border-radius: 20px; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.2s; }
+        .tag:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .tag.selected { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .tag .confidence { font-size: 11px; opacity: 0.7; }
+        .export-section { margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 8px; }
+        .export-section textarea { width: 100%; height: 80px; border: 1px solid #ddd; border-radius: 6px; padding: 10px; font-family: monospace; font-size: 12px; resize: vertical; }
+        .export-buttons { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+        .export-btn { padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+        .export-btn:hover { background: #5567d8; }
+        .loading { text-align: center; padding: 40px; color: #888; }
+        .loading-spinner { width: 40px; height: 40px; border: 4px solid #ddd; border-top-color: #667eea; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Image Tagging | 圖片標籤生成</h1>
+            <p>Auto-generate descriptive tags for your images | 自動為圖片生成描述標籤</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button">Upload Image | 上傳圖片</label>
+                <p style="margin-top:10px;color:#888;">Supports JPG, PNG, WebP</p>
+            </div>
+
+            <div class="preview-section" id="previewSection" style="display:none;">
+                <div class="image-preview">
+                    <canvas id="preview"></canvas>
+                </div>
+                <div class="tags-panel">
+                    <h3 style="margin-bottom:15px;">Generated Tags | 生成的標籤</h3>
+                    <div class="tags-container" id="tagsContainer">
+                        <div class="loading" id="loading">
+                            <div class="loading-spinner"></div>
+                            <p>Analyzing image... | 分析圖片中...</p>
+                        </div>
+                    </div>
+                    <div class="export-section" id="exportSection" style="display:none;">
+                        <h4 style="margin-bottom:10px;">Export Tags | 匯出標籤</h4>
+                        <textarea id="exportText" readonly></textarea>
+                        <div class="export-buttons">
+                            <button class="export-btn" id="copyBtn">Copy | 複製</button>
+                            <button class="export-btn" id="copyHashtags">Copy as #Hashtags</button>
+                            <button class="export-btn" id="downloadBtn">Download JSON</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #060
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

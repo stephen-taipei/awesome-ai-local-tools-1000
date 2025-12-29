@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multilingual TTS | 多語言語音合成</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #3494e6 0%, #ec6ead 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #3494e6 0%, #ec6ead 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-switcher button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+        .lang-switcher button.active { background: white; color: #3494e6; }
+        .main-content { padding: 30px; }
+        .language-select {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .lang-option {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-option:hover { border-color: #3494e6; }
+        .lang-option.active {
+            border-color: #3494e6;
+            background: linear-gradient(135deg, rgba(52, 148, 230, 0.1) 0%, rgba(236, 110, 173, 0.1) 100%);
+        }
+        .lang-option .flag { font-size: 1.5em; }
+        .text-input-area {
+            margin-bottom: 20px;
+        }
+        .text-input-area textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1em;
+            resize: vertical;
+        }
+        .text-input-area textarea:focus {
+            outline: none;
+            border-color: #3494e6;
+        }
+        .char-count {
+            text-align: right;
+            color: #888;
+            margin-top: 5px;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: linear-gradient(135deg, #3494e6 0%, #ec6ead 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(52, 148, 230, 0.4); }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .audio-output {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .audio-output h3 { margin-bottom: 15px; }
+        .audio-output audio { width: 100%; }
+        .settings-panel {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .setting-row label { min-width: 100px; }
+        .setting-row input[type="range"] { flex: 1; margin: 0 15px; }
+        .setting-row .value { min-width: 50px; text-align: right; }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .footer a { color: #3494e6; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="lang-switcher">
+                <button id="lang-en" class="active">EN</button>
+                <button id="lang-zh">中文</button>
+            </div>
+            <h1 data-i18n="title">Multilingual Text-to-Speech</h1>
+            <p data-i18n="subtitle">Convert text to speech in 50+ languages</p>
+        </div>
+
+        <div class="main-content">
+            <h3 data-i18n="selectLanguage" style="margin-bottom:15px;">Select Language</h3>
+            <div class="language-select" id="languageSelect">
+                <div class="lang-option active" data-lang="en-US"><div class="flag">🇺🇸</div>English</div>
+                <div class="lang-option" data-lang="zh-TW"><div class="flag">🇹🇼</div>繁體中文</div>
+                <div class="lang-option" data-lang="zh-CN"><div class="flag">🇨🇳</div>简体中文</div>
+                <div class="lang-option" data-lang="ja-JP"><div class="flag">🇯🇵</div>日本語</div>
+                <div class="lang-option" data-lang="ko-KR"><div class="flag">🇰🇷</div>한국어</div>
+                <div class="lang-option" data-lang="es-ES"><div class="flag">🇪🇸</div>Español</div>
+                <div class="lang-option" data-lang="fr-FR"><div class="flag">🇫🇷</div>Français</div>
+                <div class="lang-option" data-lang="de-DE"><div class="flag">🇩🇪</div>Deutsch</div>
+                <div class="lang-option" data-lang="it-IT"><div class="flag">🇮🇹</div>Italiano</div>
+                <div class="lang-option" data-lang="pt-BR"><div class="flag">🇧🇷</div>Português</div>
+                <div class="lang-option" data-lang="ru-RU"><div class="flag">🇷🇺</div>Русский</div>
+                <div class="lang-option" data-lang="ar-SA"><div class="flag">🇸🇦</div>العربية</div>
+            </div>
+
+            <div class="text-input-area">
+                <h3 data-i18n="enterText" style="margin-bottom:15px;">Enter Text</h3>
+                <textarea id="textInput" placeholder="Type or paste your text here..." data-i18n-placeholder="textPlaceholder"></textarea>
+                <div class="char-count"><span id="charCount">0</span> / 5000</div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="speakBtn" data-i18n="speak">Speak</button>
+                <button class="btn btn-secondary" id="pauseBtn" disabled data-i18n="pause">Pause</button>
+                <button class="btn btn-secondary" id="stopBtn" disabled data-i18n="stop">Stop</button>
+                <button class="btn btn-secondary" id="downloadBtn" disabled data-i18n="download">Download</button>
+            </div>
+
+            <div class="audio-output">
+                <h3 data-i18n="output">Audio Output</h3>
+                <div id="statusText" style="color:#888; margin-bottom:10px;" data-i18n="ready">Ready to speak</div>
+                <audio id="audioPlayer" controls style="display:none;"></audio>
+            </div>
+
+            <div class="settings-panel">
+                <h3 data-i18n="settings" style="margin-bottom:15px;">Settings</h3>
+                <div class="setting-row">
+                    <label data-i18n="rate">Speed:</label>
+                    <input type="range" id="rateSlider" min="0.5" max="2" step="0.1" value="1">
+                    <span class="value" id="rateValue">1.0x</span>
+                </div>
+                <div class="setting-row">
+                    <label data-i18n="pitch">Pitch:</label>
+                    <input type="range" id="pitchSlider" min="0.5" max="2" step="0.1" value="1">
+                    <span class="value" id="pitchValue">1.0</span>
+                </div>
+                <div class="setting-row">
+                    <label data-i18n="volume">Volume:</label>
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                    <span class="value" id="volumeValue">100%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Tool #211 | <a href="../index.html">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

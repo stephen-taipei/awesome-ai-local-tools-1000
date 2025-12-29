@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Fade | 音訊淡化</title>
+    <meta name="description" content="Add fade in/out effects to audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊淡化</h1>
+            <p class="subtitle">為音訊添加淡入淡出效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🌅</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="waveform-section">
+                    <canvas id="waveformCanvas"></canvas>
+                    <div class="fade-overlay">
+                        <div id="fadeInOverlay" class="fade-region fade-in"></div>
+                        <div id="fadeOutOverlay" class="fade-region fade-out"></div>
+                    </div>
+                </div>
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>淡入時長</label>
+                        <input type="range" id="fadeInSlider" min="0" max="10" step="0.1" value="2">
+                        <span id="fadeInValue">2.0 秒</span>
+                    </div>
+                    <div class="option-group">
+                        <label>淡出時長</label>
+                        <input type="range" id="fadeOutSlider" min="0" max="10" step="0.1" value="2">
+                        <span id="fadeOutValue">2.0 秒</span>
+                    </div>
+                    <div class="option-group">
+                        <label>曲線類型</label>
+                        <select id="curveType">
+                            <option value="linear">線性</option>
+                            <option value="exponential">指數</option>
+                            <option value="logarithmic">對數</option>
+                            <option value="scurve">S 曲線</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-item">
+                        <span class="info-label">音訊時長</span>
+                        <span id="duration" class="info-value">0:00</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #247</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

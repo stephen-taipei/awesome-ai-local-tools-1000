@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traditional-Simplified | 繁簡轉換</title>
+    <meta name="description" content="Convert between Traditional and Simplified Chinese. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>繁簡轉換</h1>
+            <p class="subtitle">繁體中文與簡體中文互轉</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="converter-box">
+                <div class="input-panel">
+                    <div class="panel-header">
+                        <span id="inputLabel">繁體中文</span>
+                        <button id="clearBtn" class="small-btn">清除</button>
+                    </div>
+                    <textarea id="inputText" placeholder="輸入文字..."></textarea>
+                    <div class="char-count"><span id="inputCount">0</span> 字</div>
+                </div>
+                <div class="switch-panel">
+                    <button id="switchBtn" class="switch-btn" title="切換方向">⇄</button>
+                    <div class="mode-indicator">
+                        <span id="modeText">繁 → 簡</span>
+                    </div>
+                </div>
+                <div class="output-panel">
+                    <div class="panel-header">
+                        <span id="outputLabel">簡體中文</span>
+                        <button id="copyBtn" class="small-btn">複製</button>
+                    </div>
+                    <textarea id="outputText" placeholder="轉換結果..." readonly></textarea>
+                    <div class="char-count"><span id="outputCount">0</span> 字</div>
+                </div>
+            </div>
+            <div class="options-section">
+                <label><input type="checkbox" id="autoConvert" checked> 即時轉換</label>
+                <button id="convertBtn" class="btn btn-primary">轉換</button>
+            </div>
+            <div class="stats-section" id="statsSection" style="display: none;">
+                <h3>轉換統計</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="statConverted">0</span>
+                        <span class="stat-label">轉換字數</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="statTotal">0</span>
+                        <span class="stat-label">總字數</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="statPercent">0%</span>
+                        <span class="stat-label">轉換比例</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #193</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

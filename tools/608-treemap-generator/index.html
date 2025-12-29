@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treemap Generator | 樹狀圖生成器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher"><button id="lang-en" class="lang-btn active">English</button><button id="lang-zh" class="lang-btn">中文</button></div>
+        <header class="header"><h1 data-i18n="title">Treemap Generator</h1><p class="subtitle" data-i18n="subtitle">Visualize hierarchical data proportionally</p></header>
+        <div class="privacy-badge"><span class="badge-icon">🔒</span><span data-i18n="privacyBadge">100% Local Processing</span></div>
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".csv,.json" hidden>
+                <div class="upload-icon">🌲</div>
+                <p class="upload-text" data-i18n="uploadText">Upload hierarchical data</p>
+                <p class="upload-hint" data-i18n="uploadHint">CSV/JSON with category and value</p>
+            </div>
+            <div class="controls-section" id="controlsSection" style="display: none;">
+                <div class="control-row">
+                    <div class="control-group"><label data-i18n="categoryCol">Category:</label><select id="categoryCol"></select></div>
+                    <div class="control-group"><label data-i18n="valueCol">Value:</label><select id="valueCol"></select></div>
+                    <div class="control-group"><label data-i18n="colorScheme">Colors:</label>
+                        <select id="colorScheme"><option value="default">Default</option><option value="warm">Warm</option><option value="cool">Cool</option><option value="rainbow">Rainbow</option></select>
+                    </div>
+                </div>
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">Generate Treemap</button>
+            </div>
+            <div class="treemap-section" id="treemapSection" style="display: none;">
+                <div id="treemap"></div>
+                <div class="chart-actions">
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download PNG</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer"><p><a href="../../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #608</span></p></footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

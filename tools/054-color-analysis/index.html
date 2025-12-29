@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Analysis | 顏色分析 - AI Local Tools</title>
+    <meta name="description" content="Analyze image colors, extract color palette, and get color distribution. 100% local processing.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .color-card {
+            width: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .color-swatch {
+            height: 80px;
+            width: 100%;
+        }
+        .color-info {
+            padding: 10px;
+            background: white;
+            font-size: 12px;
+        }
+        .color-info .hex {
+            font-weight: bold;
+            font-family: monospace;
+        }
+        .color-info .rgb {
+            color: #666;
+            margin-top: 3px;
+        }
+        .color-info .percent {
+            color: #999;
+            font-size: 11px;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .analysis-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        .analysis-section h3 {
+            margin-bottom: 15px;
+        }
+        .histogram {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .histogram-bar {
+            flex: 1;
+            min-width: 200px;
+        }
+        .histogram-bar h4 {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .bar-container {
+            height: 100px;
+            background: #eee;
+            border-radius: 4px;
+            display: flex;
+            align-items: flex-end;
+            gap: 1px;
+            padding: 5px;
+        }
+        .bar {
+            flex: 1;
+            min-width: 2px;
+            border-radius: 2px 2px 0 0;
+        }
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Color Analysis | 顏色分析</h1>
+            <p>Extract color palette and analyze color distribution</p>
+            <p>分析圖片主要顏色、色調分布</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span>🔒</span>
+            <span>100% Local Processing | 完全本地處理</span>
+        </div>
+
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <label for="imageInput" class="button">Choose Image | 選擇圖片</label>
+            </div>
+
+            <div id="resultsSection" style="display: none;">
+                <div style="text-align: center; margin-top: 20px;">
+                    <canvas id="previewCanvas"></canvas>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Dominant Colors | 主要顏色</h3>
+                    <div class="color-palette" id="colorPalette"></div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Color Statistics | 顏色統計</h3>
+                    <div class="stats-grid" id="statsGrid"></div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3>Color Histogram | 顏色直方圖</h3>
+                    <div class="histogram">
+                        <div class="histogram-bar">
+                            <h4 style="color: #e74c3c;">Red Channel | 紅色通道</h4>
+                            <div class="bar-container" id="redHistogram"></div>
+                        </div>
+                        <div class="histogram-bar">
+                            <h4 style="color: #27ae60;">Green Channel | 綠色通道</h4>
+                            <div class="bar-container" id="greenHistogram"></div>
+                        </div>
+                        <div class="histogram-bar">
+                            <h4 style="color: #3498db;">Blue Channel | 藍色通道</h4>
+                            <div class="bar-container" id="blueHistogram"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="button" id="exportBtn">Export Palette | 匯出調色盤</button>
+                </div>
+            </div>
+        </main>
+
+        <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #666;">
+            <p>
+                <a href="../../README.md">Back to Home | 返回首頁</a> ·
+                Tool #054 | 工具 #054
+            </p>
+            <p>Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

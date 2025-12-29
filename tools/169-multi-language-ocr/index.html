@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Language OCR | 多語言辨識</title>
+    <meta name="description" content="Recognize text in multiple languages. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>多語言辨識</h1>
+            <p class="subtitle">同時辨識多種語言的文字</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">🌍</div>
+                    <p>拖放圖片或點擊上傳</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="preview-section" id="previewSection" style="display: none;">
+                    <img id="previewImage" class="preview-image">
+                </div>
+                <div class="lang-select-section">
+                    <label>選擇語言 (可多選)</label>
+                    <div class="lang-checkboxes">
+                        <label><input type="checkbox" value="chi_tra" checked> 繁體中文</label>
+                        <label><input type="checkbox" value="chi_sim"> 簡體中文</label>
+                        <label><input type="checkbox" value="eng" checked> English</label>
+                        <label><input type="checkbox" value="jpn"> 日本語</label>
+                        <label><input type="checkbox" value="kor"> 한국어</label>
+                        <label><input type="checkbox" value="fra"> Français</label>
+                        <label><input type="checkbox" value="deu"> Deutsch</label>
+                        <label><input type="checkbox" value="spa"> Español</label>
+                    </div>
+                </div>
+                <button id="recognizeBtn" class="btn btn-primary btn-block" disabled>開始辨識</button>
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p class="progress-text" id="progressText">載入中...</p>
+                </div>
+            </div>
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-header">
+                    <h3>辨識結果</h3>
+                    <button id="copyBtn" class="copy-btn">複製</button>
+                </div>
+                <div class="result-text" id="resultText"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #169</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

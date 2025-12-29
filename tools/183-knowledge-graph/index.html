@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Graph | 知識圖譜</title>
+    <meta name="description" content="Visualize relationships between concepts. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>知識圖譜</h1>
+            <p class="subtitle">視覺化概念之間的關係</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入文本</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="textInput" placeholder="輸入文本，系統會自動提取實體和關係..."></textarea>
+                <button id="analyzeBtn" class="btn btn-primary btn-block">分析並生成圖譜</button>
+            </div>
+            <div class="graph-section" id="graphSection" style="display: none;">
+                <div class="section-header">
+                    <h3>知識圖譜</h3>
+                    <div class="graph-controls">
+                        <button id="zoomIn" class="ctrl-btn">+</button>
+                        <button id="zoomOut" class="ctrl-btn">−</button>
+                        <button id="resetBtn" class="ctrl-btn">重置</button>
+                    </div>
+                </div>
+                <div class="graph-container">
+                    <canvas id="graphCanvas"></canvas>
+                </div>
+                <div class="legend">
+                    <span class="legend-item"><span class="dot person"></span>人物</span>
+                    <span class="legend-item"><span class="dot org"></span>組織</span>
+                    <span class="legend-item"><span class="dot concept"></span>概念</span>
+                    <span class="legend-item"><span class="dot location"></span>地點</span>
+                </div>
+            </div>
+            <div class="entities-section" id="entitiesSection" style="display: none;">
+                <h3>提取的實體</h3>
+                <div id="entitiesList" class="entities-list"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #183</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

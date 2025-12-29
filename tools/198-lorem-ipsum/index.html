@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum | 假文產生器</title>
+    <meta name="description" content="Generate placeholder text. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>假文產生器</h1>
+            <p class="subtitle">產生 Lorem Ipsum 或中文假文</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="options-section">
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label>語言</label>
+                        <select id="language">
+                            <option value="latin">Latin (Lorem Ipsum)</option>
+                            <option value="chinese">繁體中文</option>
+                            <option value="mixed">混合中英文</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>類型</label>
+                        <select id="type">
+                            <option value="paragraphs">段落</option>
+                            <option value="sentences">句子</option>
+                            <option value="words">單字</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>數量</label>
+                        <input type="number" id="count" min="1" max="100" value="3">
+                    </div>
+                </div>
+                <div class="checkbox-options">
+                    <label><input type="checkbox" id="startLorem" checked> 以 "Lorem ipsum" 開頭</label>
+                    <label><input type="checkbox" id="includeHtml"> 包含 HTML 標籤</label>
+                </div>
+            </div>
+            <button id="generateBtn" class="btn btn-primary btn-block">產生假文</button>
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <div class="section-header">
+                    <h3>產生的假文</h3>
+                    <div class="header-actions">
+                        <span id="wordCount" class="word-count"></span>
+                        <button id="copyBtn" class="small-btn">複製</button>
+                    </div>
+                </div>
+                <div id="output" class="output-area"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #198</p>
+        </footer>
+    </div>
+    <div class="toast" id="toast">已複製！</div>
+    <script src="app.js"></script>
+</body>
+</html>

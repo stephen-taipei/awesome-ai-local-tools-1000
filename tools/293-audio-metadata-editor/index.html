@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Metadata Editor | 音訊元資料編輯</title>
+    <meta name="description" content="View and edit audio metadata. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊元資料編輯</h1>
+            <p class="subtitle">查看和編輯音訊檔案資訊</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🏷️</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="info-box">
+                    <p>檔案資訊</p>
+                    <div class="file-info">
+                        <span>格式：<strong id="fileFormat">-</strong></span>
+                        <span>長度：<strong id="fileDuration">-</strong></span>
+                        <span>取樣率：<strong id="fileSampleRate">-</strong></span>
+                        <span>聲道：<strong id="fileChannels">-</strong></span>
+                    </div>
+                </div>
+                <div class="metadata-form">
+                    <div class="form-group">
+                        <label>標題</label>
+                        <input type="text" id="metaTitle" placeholder="歌曲標題">
+                    </div>
+                    <div class="form-group">
+                        <label>藝術家</label>
+                        <input type="text" id="metaArtist" placeholder="藝術家名稱">
+                    </div>
+                    <div class="form-group">
+                        <label>專輯</label>
+                        <input type="text" id="metaAlbum" placeholder="專輯名稱">
+                    </div>
+                    <div class="form-group">
+                        <label>年份</label>
+                        <input type="text" id="metaYear" placeholder="發行年份">
+                    </div>
+                    <div class="form-group">
+                        <label>曲目</label>
+                        <input type="text" id="metaTrack" placeholder="曲目編號">
+                    </div>
+                    <div class="form-group">
+                        <label>類型</label>
+                        <input type="text" id="metaGenre" placeholder="音樂類型">
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #293</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

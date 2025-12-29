@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chord Progression Generator | 和弦進行生成</title>
+    <meta name="description" content="AI-powered chord progression generation. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>和弦進行生成</h1>
+            <p class="subtitle">AI 自動生成和弦進行</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="controls-section">
+                <div class="control-group">
+                    <label>調性</label>
+                    <select id="keySelect">
+                        <option value="C">C 大調</option>
+                        <option value="G">G 大調</option>
+                        <option value="D">D 大調</option>
+                        <option value="A">A 大調</option>
+                        <option value="F">F 大調</option>
+                        <option value="Am">A 小調</option>
+                        <option value="Em">E 小調</option>
+                        <option value="Dm">D 小調</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>風格</label>
+                    <select id="styleSelect">
+                        <option value="pop">流行</option>
+                        <option value="jazz">爵士</option>
+                        <option value="blues">藍調</option>
+                        <option value="folk">民謠</option>
+                        <option value="classical">古典</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>和弦數量</label>
+                    <select id="lengthSelect">
+                        <option value="4">4 個和弦</option>
+                        <option value="8" selected>8 個和弦</option>
+                        <option value="16">16 個和弦</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>複雜度</label>
+                    <input type="range" id="complexitySlider" min="1" max="5" value="2">
+                    <span id="complexityValue">2</span>
+                </div>
+            </div>
+            <div class="generate-section">
+                <button id="generateBtn" class="btn btn-primary">生成和弦進行</button>
+            </div>
+            <div id="resultSection" class="result-section" style="display:none">
+                <div class="chord-display" id="chordDisplay"></div>
+                <div class="chord-notation" id="chordNotation"></div>
+                <div class="playback-controls">
+                    <button id="playBtn" class="control-btn">▶️ 播放</button>
+                    <button id="stopBtn" class="control-btn">⏹️ 停止</button>
+                    <button id="regenerateBtn" class="control-btn">🔄 重新生成</button>
+                </div>
+                <div class="progression-info">
+                    <div class="info-item">
+                        <span class="info-label">和弦數</span>
+                        <span id="chordCount" class="info-value">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">調性功能</span>
+                        <span id="functionInfo" class="info-value">-</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #234</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

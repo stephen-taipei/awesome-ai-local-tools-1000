@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histogram | 直方圖 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .preview-box { text-align: center; flex: 1; min-width: 300px; }
+        .preview-box img { max-width: 100%; max-height: 300px; border-radius: 12px; border: 2px solid #eee; }
+        .preview-box canvas { width: 100%; height: 200px; border-radius: 12px; background: #1a1a2e; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #8e2de2, #4a00e0); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .drop-zone { border: 3px dashed #8e2de2; background: #f8f5ff; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; }
+        .drop-zone:hover { background: #f0e8ff; }
+        .channel-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .channel-btn { padding: 8px 20px; border: 2px solid; border-radius: 20px; cursor: pointer; font-size: 14px; background: transparent; transition: all 0.2s; }
+        .channel-btn.active { color: white; }
+        .channel-btn.rgb { border-color: #888; color: #888; }
+        .channel-btn.rgb.active { background: #888; }
+        .channel-btn.red { border-color: #ff4444; color: #ff4444; }
+        .channel-btn.red.active { background: #ff4444; }
+        .channel-btn.green { border-color: #44ff44; color: #44ff44; }
+        .channel-btn.green.active { background: #44ff44; }
+        .channel-btn.blue { border-color: #4444ff; color: #4444ff; }
+        .channel-btn.blue.active { background: #4444ff; }
+        .channel-btn.lum { border-color: #ffaa00; color: #ffaa00; }
+        .channel-btn.lum.active { background: #ffaa00; }
+        .histogram-info { margin-top: 15px; padding: 15px; background: #f5f5f5; border-radius: 8px; font-size: 13px; }
+        .histogram-info span { margin: 0 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Histogram | 直方圖</h1>
+            <p>View image color histograms | 查看圖片色彩直方圖</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#8e2de2,#4a00e0);cursor:pointer;">Upload Image | 上傳圖片</label>
+                <p style="margin-top:15px;color:#666;">Or drag and drop an image here</p>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <div class="channel-btns">
+                    <button class="channel-btn rgb active" data-channel="rgb">RGB</button>
+                    <button class="channel-btn red" data-channel="red">Red | 紅</button>
+                    <button class="channel-btn green" data-channel="green">Green | 綠</button>
+                    <button class="channel-btn blue" data-channel="blue">Blue | 藍</button>
+                    <button class="channel-btn lum" data-channel="luminance">Luminance | 亮度</button>
+                </div>
+                <button class="action-btn" id="downloadBtn">Download | 下載</button>
+            </div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <div class="preview-box">
+                    <img id="imagePreview">
+                </div>
+                <div class="preview-box">
+                    <canvas id="histogramCanvas"></canvas>
+                    <div class="histogram-info" id="histogramInfo"></div>
+                </div>
+            </div>
+            <canvas id="imageCanvas" style="display:none;"></canvas>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #099
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

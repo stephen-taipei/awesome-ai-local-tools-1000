@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chart Generator | AI 圖表生成器</title>
+    <meta name="description" content="Generate beautiful charts from your data using AI. Supports CSV/JSON upload with automatic chart type recommendations.">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-zh" class="lang-btn">中文</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">AI Chart Generator</h1>
+            <p class="subtitle" data-i18n="subtitle">Intelligent chart creation from your data</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% Local Processing - Your data never leaves your browser</span>
+        </div>
+
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".csv,.json" hidden>
+                    <div class="upload-icon">📊</div>
+                    <p class="upload-text" data-i18n="uploadText">Drag & drop CSV/JSON file here or click to upload</p>
+                    <p class="upload-hint" data-i18n="uploadHint">Supports CSV and JSON formats</p>
+                </div>
+            </div>
+
+            <div class="controls-section" id="controlsSection" style="display: none;">
+                <div class="control-group">
+                    <label data-i18n="chartType">Chart Type:</label>
+                    <select id="chartType">
+                        <option value="bar" data-i18n="barChart">Bar Chart</option>
+                        <option value="line" data-i18n="lineChart">Line Chart</option>
+                        <option value="pie" data-i18n="pieChart">Pie Chart</option>
+                        <option value="doughnut" data-i18n="doughnutChart">Doughnut Chart</option>
+                        <option value="polarArea" data-i18n="polarChart">Polar Area</option>
+                        <option value="radar" data-i18n="radarChart">Radar Chart</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label data-i18n="xAxis">X-Axis Column:</label>
+                    <select id="xAxisSelect"></select>
+                </div>
+
+                <div class="control-group">
+                    <label data-i18n="yAxis">Y-Axis Column:</label>
+                    <select id="yAxisSelect"></select>
+                </div>
+
+                <div class="control-group">
+                    <label data-i18n="colorScheme">Color Scheme:</label>
+                    <select id="colorScheme">
+                        <option value="default">Default</option>
+                        <option value="pastel">Pastel</option>
+                        <option value="vibrant">Vibrant</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="sunset">Sunset</option>
+                    </select>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">Generate Chart</button>
+            </div>
+
+            <div class="chart-section" id="chartSection" style="display: none;">
+                <div class="chart-container">
+                    <canvas id="chartCanvas"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button id="downloadPng" class="btn btn-success" data-i18n="downloadPng">Download PNG</button>
+                    <button id="downloadSvg" class="btn btn-info" data-i18n="downloadSvg">Download SVG</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+
+            <div class="data-preview" id="dataPreview" style="display: none;">
+                <h3 data-i18n="dataPreview">Data Preview</h3>
+                <div class="table-wrapper">
+                    <table id="previewTable"></table>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="features">Features</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📈</div>
+                    <h3 data-i18n="multipleCharts">Multiple Chart Types</h3>
+                    <p data-i18n="multipleChartsDesc">Support for bar, line, pie, doughnut, polar, and radar charts</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="customColors">Custom Colors</h3>
+                    <p data-i18n="customColorsDesc">Choose from multiple color schemes or customize your own</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💾</div>
+                    <h3 data-i18n="exportOptions">Export Options</h3>
+                    <p data-i18n="exportOptionsDesc">Download your charts as PNG or SVG files</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="privacy">Privacy First</h3>
+                    <p data-i18n="privacyDesc">All processing happens locally in your browser</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">Back to Home</a> |
+                <span data-i18n="toolNumber">Tool #601</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

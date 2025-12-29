@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Counter | 健身計數器</title>
+    <meta name="description" content="Count fitness reps automatically. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>健身計數器</h1>
+            <p class="subtitle">自動計算運動次數</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="exercise-select" id="exerciseSelect">
+                <h3>選擇運動</h3>
+                <div class="exercise-grid">
+                    <button class="exercise-btn" data-exercise="squat">🏋️ 深蹲</button>
+                    <button class="exercise-btn" data-exercise="pushup">💪 伏地挺身</button>
+                    <button class="exercise-btn" data-exercise="jumpingjack">⭐ 開合跳</button>
+                    <button class="exercise-btn" data-exercise="lunge">🦵 弓步</button>
+                </div>
+            </div>
+            <div id="counterSection" class="counter-section" style="display: none;">
+                <div class="exercise-header">
+                    <span class="exercise-icon" id="exerciseIcon">🏋️</span>
+                    <span class="exercise-name" id="exerciseName">深蹲</span>
+                </div>
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="fitnessCanvas"></canvas>
+                </div>
+                <div class="counter-display">
+                    <div class="big-counter">
+                        <span id="repCount">0</span>
+                        <span class="counter-label">次</span>
+                    </div>
+                </div>
+                <div class="stats-row">
+                    <div class="mini-stat">
+                        <span class="mini-label">時間</span>
+                        <span class="mini-value" id="duration">0:00</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-label">卡路里</span>
+                        <span class="mini-value" id="calories">0</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-label">速率</span>
+                        <span class="mini-value" id="rate">--/min</span>
+                    </div>
+                </div>
+                <button id="resetBtn" class="btn btn-secondary">重新選擇</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #432</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

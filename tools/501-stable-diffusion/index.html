@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stable Diffusion Generator | AI 穩定擴散生成器</title>
+    <meta name="description" content="Generate images from text prompts locally using Stable Diffusion. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 穩定擴散生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">完全在瀏覽器本地執行，資料不外傳</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Model Status -->
+        <div class="model-status" id="modelStatus">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText" data-i18n="modelNotLoaded">模型未載入</span>
+            <button id="loadModelBtn" class="btn btn-primary btn-sm" data-i18n="loadModel">載入模型</button>
+        </div>
+
+        <!-- Model Progress -->
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText" data-i18n="downloading">正在下載模型...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-note" data-i18n="progressNote">首次載入需下載模型，之後會快取至本地</p>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Area -->
+            <div class="input-area" id="inputArea">
+                <div class="input-group">
+                    <label for="promptInput" data-i18n="promptLabel">提示詞</label>
+                    <textarea id="promptInput" rows="3" placeholder="A beautiful sunset over mountains, digital art, highly detailed" data-i18n-placeholder="promptPlaceholder"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="negativePrompt" data-i18n="negativeLabel">負面提示詞</label>
+                    <textarea id="negativePrompt" rows="2" placeholder="blurry, low quality, distorted" data-i18n-placeholder="negativePlaceholder"></textarea>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="input-group">
+                        <label for="stepsSlider" data-i18n="steps">步數: <span id="stepsValue">20</span></label>
+                        <input type="range" id="stepsSlider" min="1" max="50" value="20">
+                    </div>
+                    <div class="input-group">
+                        <label for="guidanceSlider" data-i18n="guidance">引導度: <span id="guidanceValue">7.5</span></label>
+                        <input type="range" id="guidanceSlider" min="1" max="20" step="0.5" value="7.5">
+                    </div>
+                    <div class="input-group">
+                        <label for="seedInput" data-i18n="seed">種子碼</label>
+                        <input type="number" id="seedInput" value="-1" min="-1">
+                    </div>
+                    <div class="input-group">
+                        <label for="sizeSelect" data-i18n="size">尺寸</label>
+                        <select id="sizeSelect">
+                            <option value="512x512">512 x 512</option>
+                            <option value="768x768">768 x 768</option>
+                            <option value="512x768">512 x 768 (直)</option>
+                            <option value="768x512">768 x 512 (橫)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-lg" disabled data-i18n="generate">生成圖像</button>
+            </div>
+
+            <!-- Result Area -->
+            <div class="result-area" id="resultArea" style="display: none;">
+                <div class="result-box">
+                    <div class="result-wrapper checkered-bg">
+                        <img id="resultImage" alt="Generated Image">
+                        <div class="processing-overlay" id="processingOverlay">
+                            <div class="spinner"></div>
+                            <p data-i18n="processing">正在生成中...</p>
+                            <p class="step-info" id="stepInfo"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-success" disabled data-i18n="download">下載圖像</button>
+                    <button id="regenerateBtn" class="btn btn-secondary" data-i18n="regenerate">重新生成</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">如何運作？</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="aiModel">AI 模型</h3>
+                    <p data-i18n="aiModelDesc">使用 Stable Diffusion 深度學習模型從文字生成高品質圖像</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="privacy">隱私保護</h3>
+                    <p data-i18n="privacyDesc">所有處理在瀏覽器本地完成，資料不會上傳至任何伺服器</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="performance">高效能</h3>
+                    <p data-i18n="performanceDesc">支援 WebGPU 加速，可快速生成圖像</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💾</div>
+                    <h3 data-i18n="cache">離線快取</h3>
+                    <p data-i18n="cacheDesc">模型下載後自動快取，下次使用無需重新下載</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #501</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

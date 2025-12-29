@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Compress | 批量壓縮 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+        .preview-item { background: #f9f9f9; border-radius: 12px; padding: 10px; text-align: center; }
+        .preview-item img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+        .preview-item .info { font-size: 11px; color: #666; }
+        .preview-item .savings { color: #27ae60; font-weight: bold; }
+        .controls { display: flex; gap: 20px; justify-content: center; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+        .action-btn { padding: 12px 30px; background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .drop-zone { border: 3px dashed #4facfe; background: #f0f9ff; padding: 40px; text-align: center; border-radius: 12px; }
+        .stats-bar { background: #f0f9ff; padding: 15px; border-radius: 8px; text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Batch Compress | 批量壓縮</h1>
+            <p>Compress multiple images to reduce file size | 壓縮多張圖片以減少文件大小</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                <label for="imageInput" class="button" style="background:linear-gradient(135deg,#4facfe,#00f2fe);">Select Images | 選擇圖片</label>
+            </div>
+            <div class="controls" id="controls" style="display:none;">
+                <label>Quality | 品質: <input type="range" id="quality" min="10" max="100" value="70"> <span id="qualityValue">70%</span></label>
+                <label>Max Size | 最大尺寸: <select id="maxSize">
+                    <option value="0">No limit 不限</option>
+                    <option value="1920">1920px</option>
+                    <option value="1280">1280px</option>
+                    <option value="800">800px</option>
+                </select></label>
+                <button class="action-btn" id="processBtn">Compress & Download | 壓縮並下載</button>
+            </div>
+            <div class="stats-bar" id="statsBar" style="display:none;"></div>
+            <div class="preview-grid" id="previewGrid"></div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #074
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

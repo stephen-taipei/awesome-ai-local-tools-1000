@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Distortion | 音頻失真</title>
+    <meta name="description" content="Add distortion and overdrive effects to audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音頻失真</h1>
+            <p class="subtitle">添加失真與過載效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎸</div>
+                    <p>拖放音頻檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP3, WAV, OGG, M4A</p>
+                    <input type="file" id="fileInput" accept="audio/*" hidden>
+                </div>
+                <div class="audio-loaded" id="audioLoaded" style="display: none;">
+                    <div class="file-info" id="fileInfo"></div>
+                    <audio id="originalAudio" controls></audio>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="option-group">
+                        <label id="typeLabel">類型</label>
+                        <select id="distType">
+                            <option value="soft">軟削波</option>
+                            <option value="hard">硬削波</option>
+                            <option value="fuzz">Fuzz</option>
+                            <option value="overdrive">過載</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label id="driveLabel">驅動</label>
+                        <input type="range" id="drive" min="1" max="100" step="1" value="50">
+                        <span id="driveValue">50%</span>
+                    </div>
+                    <div class="option-group">
+                        <label id="toneLabel">音色</label>
+                        <input type="range" id="tone" min="200" max="8000" step="100" value="4000">
+                        <span id="toneValue">4000 Hz</span>
+                    </div>
+                    <div class="option-group">
+                        <label id="mixLabel">混合</label>
+                        <input type="range" id="mix" min="0" max="100" step="1" value="100">
+                        <span id="mixValue">100%</span>
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 處理音頻</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">處理結果</h3>
+                    <audio id="processedAudio" controls></audio>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #341</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Quality | 人臉品質</title>
+    <meta name="description" content="Assess face image quality. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>人臉品質</h1>
+            <p class="subtitle">評估人臉影像品質</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">上傳人臉照片</div>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                </div>
+            </div>
+            <div id="previewSection" class="preview-section" style="display: none;">
+                <canvas id="previewCanvas"></canvas>
+            </div>
+            <div id="resultSection" class="result-section" style="display: none;">
+                <div class="quality-score">
+                    <div class="score-circle">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#334155" stroke-width="8"/>
+                            <circle id="scoreCircle" cx="50" cy="50" r="45" fill="none" stroke="url(#scoreGradient)" stroke-width="8" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" transform="rotate(-90 50 50)"/>
+                            <defs>
+                                <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#22c55e"/>
+                                    <stop offset="100%" stop-color="#4ade80"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="score-value" id="scoreValue">0</div>
+                    </div>
+                    <div class="score-label" id="scoreLabel">--</div>
+                </div>
+                <div class="quality-metrics" id="qualityMetrics"></div>
+                <div class="recommendations" id="recommendations"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #418</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

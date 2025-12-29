@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citation Extract | 引用提取</title>
+    <meta name="description" content="Extract citations and references from text. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>引用提取</h1>
+            <p class="subtitle">從文本中提取引用和參考文獻</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="section-header">
+                    <h3>輸入文本</h3>
+                    <button id="loadSampleBtn" class="small-btn">載入範例</button>
+                </div>
+                <textarea id="textInput" placeholder="輸入包含引用的學術文本..."></textarea>
+                <button id="extractBtn" class="btn btn-primary btn-block">提取引用</button>
+            </div>
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="section-header">
+                    <h3>提取結果</h3>
+                    <span id="citationCount" class="citation-count">0 個引用</span>
+                </div>
+                <div id="citationsList" class="citations-list"></div>
+                <button id="exportBtn" class="btn btn-secondary btn-block">匯出引用列表</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #188</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

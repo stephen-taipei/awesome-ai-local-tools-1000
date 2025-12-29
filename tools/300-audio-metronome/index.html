@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Metronome | 節拍器</title>
+    <meta name="description" content="Digital metronome for practice. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>節拍器</h1>
+            <p class="subtitle">數位節拍器練習工具</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="tempo-display">
+                    <div class="tempo-value" id="tempoValue">120</div>
+                    <div class="tempo-label">BPM</div>
+                </div>
+                <div class="beat-indicator">
+                    <span class="beat-dot active" data-beat="1"></span>
+                    <span class="beat-dot" data-beat="2"></span>
+                    <span class="beat-dot" data-beat="3"></span>
+                    <span class="beat-dot" data-beat="4"></span>
+                </div>
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>速度</label>
+                        <input type="range" id="tempoSlider" min="40" max="240" step="1" value="120">
+                    </div>
+                    <div class="option-group">
+                        <label>拍號</label>
+                        <select id="beatsSelect">
+                            <option value="2">2/4</option>
+                            <option value="3">3/4</option>
+                            <option value="4" selected>4/4</option>
+                            <option value="6">6/8</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>音量</label>
+                        <input type="range" id="volumeSlider" min="0" max="100" step="1" value="80">
+                        <span id="volumeValue">80%</span>
+                    </div>
+                    <div class="option-group">
+                        <label>重音</label>
+                        <select id="accentSelect">
+                            <option value="yes">開啟</option>
+                            <option value="no">關閉</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="tempo-presets">
+                    <button class="tempo-btn" data-tempo="60">Largo</button>
+                    <button class="tempo-btn" data-tempo="80">Adagio</button>
+                    <button class="tempo-btn" data-tempo="100">Andante</button>
+                    <button class="tempo-btn active" data-tempo="120">Allegro</button>
+                    <button class="tempo-btn" data-tempo="160">Vivace</button>
+                    <button class="tempo-btn" data-tempo="200">Presto</button>
+                </div>
+                <div class="action-section">
+                    <button id="playBtn" class="btn btn-primary btn-large">▶️ 開始</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #300</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

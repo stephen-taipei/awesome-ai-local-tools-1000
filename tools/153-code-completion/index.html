@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Completion | 程式碼補全</title>
+    <meta name="description" content="Get code completion suggestions locally. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>程式碼補全</h1>
+            <p class="subtitle">智慧提示常用程式碼片段與語法</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>程式語言</label>
+                    <select id="langSelect" class="select-field">
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="typescript">TypeScript</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>輸入程式碼 (按 Tab 或點擊建議補全)</label>
+                    <textarea id="codeInput" class="code-field" placeholder="開始輸入程式碼..."></textarea>
+                </div>
+                <div class="suggestions-container" id="suggestionsContainer" style="display: none;">
+                    <div class="suggestions-header">建議補全</div>
+                    <div class="suggestions-list" id="suggestionsList"></div>
+                </div>
+            </div>
+            <div class="snippets-section">
+                <h3>常用程式碼片段</h3>
+                <div class="snippets-grid" id="snippetsGrid"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #153</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

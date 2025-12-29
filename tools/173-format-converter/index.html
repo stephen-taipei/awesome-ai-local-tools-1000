@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Format Converter | 格式轉換器</title>
+    <meta name="description" content="Convert between JSON, XML, YAML, and more. 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>格式轉換器</h1>
+            <p class="subtitle">JSON、XML、YAML、CSV 格式互轉</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="converter-section">
+                <div class="format-selectors">
+                    <div class="format-group">
+                        <label>來源格式</label>
+                        <select id="fromFormat">
+                            <option value="json">JSON</option>
+                            <option value="xml">XML</option>
+                            <option value="yaml">YAML</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                    </div>
+                    <button id="swapBtn" class="swap-btn">⇄</button>
+                    <div class="format-group">
+                        <label>目標格式</label>
+                        <select id="toFormat">
+                            <option value="xml">XML</option>
+                            <option value="json">JSON</option>
+                            <option value="yaml">YAML</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <div class="editor-panel">
+                        <div class="editor-header">
+                            <span>輸入</span>
+                            <button id="clearBtn" class="small-btn">清除</button>
+                        </div>
+                        <textarea id="inputText" placeholder="貼上要轉換的內容..."></textarea>
+                    </div>
+                    <div class="editor-panel">
+                        <div class="editor-header">
+                            <span>輸出</span>
+                            <button id="copyBtn" class="small-btn">複製</button>
+                        </div>
+                        <textarea id="outputText" readonly placeholder="轉換結果會顯示在這裡..."></textarea>
+                    </div>
+                </div>
+                <button id="convertBtn" class="btn btn-primary btn-block">轉換</button>
+                <div class="error-message" id="errorMessage" style="display: none;"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #173</p>
+        </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

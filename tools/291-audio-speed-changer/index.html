@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Speed Changer | 音訊速度調整</title>
+    <meta name="description" content="Change audio playback speed. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音訊速度調整</h1>
+            <p class="subtitle">調整音訊播放速度</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="upload-section">
+                <input type="file" id="audioInput" accept="audio/*" hidden>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">⏩</div>
+                    <div class="upload-text">點擊或拖放音訊檔案</div>
+                    <div class="upload-hint">支援 MP3, WAV, OGG 等格式</div>
+                </div>
+            </div>
+            <div id="editorSection" class="editor-section" style="display:none">
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>播放速度</label>
+                        <input type="range" id="speedSlider" min="0.25" max="4" step="0.05" value="1">
+                        <span id="speedValue">1.00x</span>
+                    </div>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-speed="0.5">0.5x</button>
+                        <button class="preset-btn" data-speed="0.75">0.75x</button>
+                        <button class="preset-btn active" data-speed="1">1x</button>
+                        <button class="preset-btn" data-speed="1.25">1.25x</button>
+                        <button class="preset-btn" data-speed="1.5">1.5x</button>
+                        <button class="preset-btn" data-speed="2">2x</button>
+                    </div>
+                    <div class="option-group">
+                        <label>保持音高</label>
+                        <select id="pitchSelect">
+                            <option value="yes">是</option>
+                            <option value="no">否（變調）</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">▶️ 預覽</button>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #291</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

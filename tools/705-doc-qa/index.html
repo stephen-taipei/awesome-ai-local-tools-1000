@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Q&A | 文件問答 - AI Local Tools</title>
+    <meta name="description" content="Ask questions about your documents locally. 100% private.">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .tool-container { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); min-height: 100vh; padding: 20px; }
+        .tool-card { background: white; border-radius: 20px; padding: 40px; max-width: 900px; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        .tool-header { text-align: center; margin-bottom: 30px; }
+        .tool-header h1 { font-size: 2.5em; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .lang-switch { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .lang-btn { padding: 8px 20px; border: 2px solid #667eea; background: white; border-radius: 20px; cursor: pointer; }
+        .lang-btn.active { background: #667eea; color: white; }
+        .privacy-badge { display: inline-flex; align-items: center; gap: 8px; background: #e8f5e9; color: #2e7d32; padding: 10px 20px; border-radius: 25px; font-size: 14px; margin-bottom: 20px; }
+        .upload-area { border: 3px dashed #ddd; border-radius: 15px; padding: 30px; text-align: center; cursor: pointer; margin-bottom: 20px; }
+        .upload-area:hover { border-color: #667eea; background: #f8f9ff; }
+        .upload-icon { font-size: 40px; margin-bottom: 10px; }
+        .doc-loaded { background: #e8f5e9; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: none; }
+        .doc-loaded.visible { display: block; }
+        .chat-container { background: #f8f9fa; border-radius: 15px; padding: 20px; min-height: 300px; max-height: 400px; overflow-y: auto; margin-bottom: 20px; }
+        .message { margin-bottom: 15px; display: flex; gap: 10px; }
+        .message.user { flex-direction: row-reverse; }
+        .message-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .message.user .message-avatar { background: #667eea; }
+        .message.assistant .message-avatar { background: #11998e; }
+        .message-content { max-width: 70%; padding: 12px 18px; border-radius: 15px; }
+        .message.user .message-content { background: #667eea; color: white; border-bottom-right-radius: 5px; }
+        .message.assistant .message-content { background: white; border: 1px solid #e0e0e0; border-bottom-left-radius: 5px; }
+        .input-area { display: flex; gap: 10px; }
+        .input-area input { flex: 1; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; }
+        .input-area input:focus { border-color: #667eea; outline: none; }
+        .btn { padding: 15px 25px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 600; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .suggested-questions { margin-top: 20px; }
+        .suggested-questions h4 { margin-bottom: 10px; color: #666; }
+        .question-chip { display: inline-block; padding: 8px 15px; background: #f0f0f0; border-radius: 20px; margin: 5px; cursor: pointer; font-size: 14px; }
+        .question-chip:hover { background: #e0e0e0; }
+        footer { text-align: center; margin-top: 40px; padding: 20px; color: #666; }
+        footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="tool-container">
+        <div class="tool-card">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
+            <div class="tool-header">
+                <h1><span class="en">Document Q&A</span><span class="zh" style="display:none;">文件問答</span></h1>
+                <p><span class="en">Ask questions about your documents</span><span class="zh" style="display:none;">針對您的文件提問</span></p>
+            </div>
+            <div class="privacy-badge">
+                <span>🔒</span>
+                <span class="en">100% Local Processing - No Data Upload</span>
+                <span class="zh" style="display:none;">100% 本地處理 - 無需上傳資料</span>
+            </div>
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".txt,.md,.html" hidden>
+                <div class="upload-icon">📄</div>
+                <p><span class="en">Upload a document to start asking questions</span><span class="zh" style="display:none;">上傳文件開始提問</span></p>
+            </div>
+            <div class="doc-loaded" id="docLoaded">
+                <strong>📄 <span id="docName"></span></strong> - <span id="docStats"></span>
+            </div>
+            <div class="chat-container" id="chatContainer">
+                <div class="message assistant">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <span class="en">Hello! Upload a document and I'll help you find answers from it.</span>
+                        <span class="zh" style="display:none;">您好！上傳文件後，我將幫您從中尋找答案。</span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="questionInput" placeholder="Ask a question about the document..." disabled>
+                <button class="btn btn-primary" id="askBtn" disabled>
+                    <span class="en">Ask</span><span class="zh" style="display:none;">提問</span>
+                </button>
+            </div>
+            <div class="suggested-questions" id="suggestedQuestions" style="display:none;">
+                <h4><span class="en">Suggested Questions:</span><span class="zh" style="display:none;">建議問題：</span></h4>
+                <div id="questionChips"></div>
+            </div>
+            <footer>
+                <p><a href="../../index.html"><span class="en">Back to Home</span><span class="zh" style="display:none;">返回首頁</span></a> · <span class="en">Tool #705</span><span class="zh" style="display:none;">工具 #705</span></p>
+                <p>Awesome AI Local Tools © 2024</p>
+            </footer>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

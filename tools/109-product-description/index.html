@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Description | 產品描述生成</title>
+    <meta name="description" content="Generate product descriptions locally. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">產品描述生成</h1>
+            <p class="subtitle" data-i18n="subtitle">為您的產品撰寫吸引人的描述</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label>產品名稱</label>
+                    <input type="text" id="nameInput" class="input-field" placeholder="輸入產品名稱...">
+                </div>
+
+                <div class="form-group">
+                    <label>產品類別</label>
+                    <select id="categorySelect" class="select-field">
+                        <option value="electronics">3C 電子</option>
+                        <option value="fashion">時尚服飾</option>
+                        <option value="beauty">美妝保養</option>
+                        <option value="food">食品飲料</option>
+                        <option value="home">居家生活</option>
+                        <option value="sports">運動健身</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>產品特色 (每行一個)</label>
+                    <textarea id="featuresInput" class="textarea-field" rows="4" placeholder="例如：
+防水設計
+輕量化材質
+一年保固"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>目標客群</label>
+                        <select id="audienceSelect" class="select-field">
+                            <option value="general">一般消費者</option>
+                            <option value="professional">專業人士</option>
+                            <option value="youth">年輕族群</option>
+                            <option value="luxury">高端客群</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>文案風格</label>
+                        <select id="styleSelect" class="select-field">
+                            <option value="professional">專業</option>
+                            <option value="friendly">親切</option>
+                            <option value="luxury">奢華</option>
+                            <option value="minimalist">簡約</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span>生成產品描述</span>
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3>產品描述</h3>
+                    <div class="output-actions">
+                        <button id="copyBtn" class="btn btn-secondary btn-sm">複製</button>
+                    </div>
+                </div>
+                <div class="product-preview">
+                    <h4 class="product-title" id="productTitle"></h4>
+                    <p class="product-tagline" id="productTagline"></p>
+                    <div class="product-description" id="productDescription"></div>
+                    <ul class="product-features" id="productFeatures"></ul>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2>功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🏷️</div>
+                    <h3>多種類別</h3>
+                    <p>支援各類產品描述</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3>精準定位</h3>
+                    <p>針對目標客群優化</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✨</div>
+                    <h3>專業文案</h3>
+                    <p>符合電商標準的描述</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>隱私保護</h3>
+                    <p>本地處理不上傳</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #109</p>
+            <p class="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoder | Base64 編碼器 - AI Local Tools</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .main-section { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
+        .panel { flex: 1; min-width: 300px; }
+        .panel h3 { margin-bottom: 15px; color: #667eea; }
+        .preview-box { width: 100%; height: 200px; border: 2px dashed #ddd; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: #f9f9f9; overflow: hidden; }
+        .preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        textarea { width: 100%; height: 200px; border: 1px solid #ddd; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 12px; resize: vertical; }
+        .button-row { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .btn-secondary { background: #f0f0f0; color: #333; }
+        .stats { margin-top: 15px; padding: 15px; background: #f8f5ff; border-radius: 8px; font-size: 13px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 18px; font-weight: bold; color: #667eea; }
+        .stat-label { font-size: 11px; color: #888; }
+        .drop-zone { border: 3px dashed #667eea; background: #f8f5ff; padding: 40px; text-align: center; border-radius: 12px; }
+        .drop-zone.dragover { background: #f0e8ff; }
+        .format-options { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+        .format-options label { display: flex; align-items: center; gap: 5px; font-size: 13px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Base64 Encoder | Base64 編碼器</h1>
+            <p>Convert images to Base64 strings and vice versa | 圖片與 Base64 字串互轉</p>
+        </header>
+        <div class="privacy-badge" style="display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;color:#2e7d32;padding:8px 16px;border-radius:20px;font-size:14px;margin-bottom:20px;">
+            <span>🔒</span><span>100% Local Processing</span>
+        </div>
+        <main>
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <label for="imageInput" class="button">Select Image | 選擇圖片</label>
+                <p style="margin-top:15px;color:#888;">Or drag and drop an image, or paste Base64 below</p>
+            </div>
+
+            <div class="main-section" id="mainSection" style="display:none;">
+                <div class="panel">
+                    <h3>Image Preview | 圖片預覽</h3>
+                    <div class="preview-box" id="previewBox">
+                        <img id="previewImage" src="" alt="Preview">
+                    </div>
+                    <div class="stats" id="stats"></div>
+                </div>
+                <div class="panel">
+                    <h3>Base64 Output | Base64 輸出</h3>
+                    <textarea id="base64Output" placeholder="Base64 string will appear here..."></textarea>
+                    <div class="format-options">
+                        <label><input type="radio" name="format" value="dataurl" checked> Data URL</label>
+                        <label><input type="radio" name="format" value="raw"> Raw Base64</label>
+                        <label><input type="radio" name="format" value="css"> CSS Background</label>
+                        <label><input type="radio" name="format" value="html"> HTML img tag</label>
+                    </div>
+                    <div class="button-row">
+                        <button class="btn btn-primary" id="copyBtn">Copy | 複製</button>
+                        <button class="btn btn-secondary" id="downloadBtn">Download Text | 下載文字檔</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:30px;">
+                <h3 style="color:#667eea;margin-bottom:15px;">Or paste Base64 to decode | 或貼上 Base64 解碼</h3>
+                <textarea id="base64Input" placeholder="Paste Base64 or Data URL here..." style="width:100%;height:100px;border:1px solid #ddd;border-radius:8px;padding:12px;font-family:monospace;font-size:12px;"></textarea>
+                <div class="button-row">
+                    <button class="btn btn-primary" id="decodeBtn">Decode to Image | 解碼為圖片</button>
+                </div>
+            </div>
+        </main>
+        <footer style="text-align:center;margin-top:40px;padding:20px;color:#666;">
+            <a href="../../README.md">Back to Home</a> · Tool #069
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

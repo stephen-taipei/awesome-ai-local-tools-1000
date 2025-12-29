@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Pitch Detector | 音高偵測器</title>
+    <meta name="description" content="Detect pitch from audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音高偵測器</h1>
+            <p class="subtitle">即時偵測音頻音高</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="pitch-display">
+                    <div class="note-name" id="noteName">--</div>
+                    <div class="frequency" id="frequency">-- Hz</div>
+                    <div class="cents" id="cents">-- cents</div>
+                </div>
+                <div class="pitch-meter">
+                    <div class="meter-bar">
+                        <div class="meter-indicator" id="meterIndicator"></div>
+                        <div class="meter-center"></div>
+                    </div>
+                    <div class="meter-labels">
+                        <span>-50</span>
+                        <span>0</span>
+                        <span>+50</span>
+                    </div>
+                </div>
+                <div class="mode-section">
+                    <button class="mode-btn active" data-mode="mic">
+                        <span class="mode-icon">🎤</span>
+                        <span class="mode-name">麥克風</span>
+                    </button>
+                    <button class="mode-btn" data-mode="file">
+                        <span class="mode-icon">📁</span>
+                        <span class="mode-name">檔案</span>
+                    </button>
+                </div>
+                <div class="mic-section" id="micSection">
+                    <button id="startMicBtn" class="btn btn-primary btn-large">🎤 開始偵測</button>
+                </div>
+                <div class="file-section" id="fileSection" style="display: none;">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📂</div>
+                        <p>拖放音頻檔案至此或點擊上傳</p>
+                        <p class="upload-hint">支援 MP3, WAV, OGG, M4A</p>
+                        <input type="file" id="fileInput" accept="audio/*" hidden>
+                    </div>
+                    <div class="audio-controls" id="audioControls" style="display: none;">
+                        <audio id="audioPlayer" controls></audio>
+                        <button id="analyzeBtn" class="btn btn-primary">▶️ 分析音高</button>
+                    </div>
+                </div>
+                <div class="history-section">
+                    <h3 id="historyTitle">偵測歷史</h3>
+                    <div class="history-list" id="historyList"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #301</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

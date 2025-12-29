@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaker Identification | 語者辨識</title>
+    <meta name="description" content="Identify and verify speakers by voice. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>語者辨識</h1>
+            <p class="subtitle">辨識與驗證說話者身份</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="enroll">註冊語者</button>
+                <button class="tab-btn" data-tab="identify">辨識語者</button>
+            </div>
+            <div id="enrollTab" class="tab-content active">
+                <div class="enroll-section">
+                    <h3>新增語者</h3>
+                    <div class="input-group">
+                        <label>語者名稱</label>
+                        <input type="text" id="speakerName" placeholder="輸入名稱...">
+                    </div>
+                    <div class="record-section">
+                        <div class="record-area" id="enrollRecordArea">
+                            <div class="record-icon">🎙️</div>
+                            <div class="record-text">點擊錄製語音樣本</div>
+                            <div class="record-hint">建議錄製 3-5 秒</div>
+                        </div>
+                        <div class="upload-option">
+                            <span>或</span>
+                            <button id="uploadEnrollBtn" class="btn-link">上傳音訊檔案</button>
+                            <input type="file" id="enrollFileInput" accept="audio/*" hidden>
+                        </div>
+                    </div>
+                    <div id="enrollPreview" class="audio-preview" style="display:none">
+                        <audio id="enrollAudio" controls></audio>
+                        <button id="analyzeBtn" class="btn btn-primary">分析並註冊</button>
+                    </div>
+                </div>
+                <div class="enrolled-speakers">
+                    <h3>已註冊語者 (<span id="speakerCount">0</span>)</h3>
+                    <div id="speakerList" class="speaker-list"></div>
+                </div>
+            </div>
+            <div id="identifyTab" class="tab-content">
+                <div class="identify-section">
+                    <h3>辨識語音</h3>
+                    <div class="record-section">
+                        <div class="record-area" id="identifyRecordArea">
+                            <div class="record-icon">🎤</div>
+                            <div class="record-text">點擊錄製要辨識的語音</div>
+                            <div class="record-hint">錄製說話者的聲音</div>
+                        </div>
+                        <div class="upload-option">
+                            <span>或</span>
+                            <button id="uploadIdentifyBtn" class="btn-link">上傳音訊檔案</button>
+                            <input type="file" id="identifyFileInput" accept="audio/*" hidden>
+                        </div>
+                    </div>
+                    <div id="identifyPreview" class="audio-preview" style="display:none">
+                        <audio id="identifyAudio" controls></audio>
+                        <button id="identifyBtn" class="btn btn-primary">開始辨識</button>
+                    </div>
+                </div>
+                <div id="resultSection" class="result-section" style="display:none">
+                    <h3>辨識結果</h3>
+                    <div id="matchResults" class="match-results"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #225</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

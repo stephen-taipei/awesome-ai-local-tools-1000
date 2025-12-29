@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Tuner | 調音器</title>
+    <meta name="description" content="Chromatic tuner for instruments. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>調音器</h1>
+            <p class="subtitle">樂器調音工具</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="tuner-display">
+                    <div class="note-display">
+                        <span class="prev-note" id="prevNote">--</span>
+                        <span class="current-note" id="currentNote">--</span>
+                        <span class="next-note" id="nextNote">--</span>
+                    </div>
+                    <div class="frequency-display" id="frequencyDisplay">-- Hz</div>
+                </div>
+                <div class="tuner-meter">
+                    <div class="meter-scale">
+                        <div class="scale-mark" style="left: 0%;">-50</div>
+                        <div class="scale-mark" style="left: 25%;">-25</div>
+                        <div class="scale-mark center" style="left: 50%;">0</div>
+                        <div class="scale-mark" style="left: 75%;">+25</div>
+                        <div class="scale-mark" style="left: 100%;">+50</div>
+                    </div>
+                    <div class="meter-track">
+                        <div class="meter-needle" id="meterNeedle"></div>
+                    </div>
+                    <div class="tuning-status" id="tuningStatus">--</div>
+                </div>
+                <div class="options-section">
+                    <div class="option-group">
+                        <label id="refLabel">參考音高</label>
+                        <input type="range" id="refSlider" min="430" max="450" step="1" value="440">
+                        <span id="refValue">A4 = 440 Hz</span>
+                    </div>
+                </div>
+                <div class="instrument-section">
+                    <h3 id="instrumentTitle">快速調音</h3>
+                    <div class="instrument-grid">
+                        <button class="instrument-btn" data-instrument="guitar">
+                            <span class="instrument-icon">🎸</span>
+                            <span class="instrument-name">吉他</span>
+                        </button>
+                        <button class="instrument-btn" data-instrument="bass">
+                            <span class="instrument-icon">🎸</span>
+                            <span class="instrument-name">貝斯</span>
+                        </button>
+                        <button class="instrument-btn" data-instrument="ukulele">
+                            <span class="instrument-icon">🪕</span>
+                            <span class="instrument-name">烏克麗麗</span>
+                        </button>
+                        <button class="instrument-btn" data-instrument="violin">
+                            <span class="instrument-icon">🎻</span>
+                            <span class="instrument-name">小提琴</span>
+                        </button>
+                    </div>
+                    <div class="string-buttons" id="stringButtons" style="display: none;"></div>
+                </div>
+                <div class="action-section">
+                    <button id="startBtn" class="btn btn-primary btn-large">🎤 開始調音</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #302</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

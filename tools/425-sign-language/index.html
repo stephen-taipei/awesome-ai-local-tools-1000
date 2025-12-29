@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Recognition | 手語識別</title>
+    <meta name="description" content="Recognize sign language gestures. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>手語識別</h1>
+            <p class="subtitle">識別手語字母與詞彙</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="webcam-section">
+                <button id="startBtn" class="btn btn-primary">開始識別</button>
+            </div>
+            <div id="signSection" class="sign-section" style="display: none;">
+                <div class="canvas-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="signCanvas"></canvas>
+                </div>
+                <div class="result-display">
+                    <div class="current-sign">
+                        <span class="sign-letter" id="signLetter">?</span>
+                        <span class="sign-confidence" id="signConfidence">--</span>
+                    </div>
+                    <div class="sign-sentence" id="signSentence"></div>
+                </div>
+                <div class="alphabet-grid" id="alphabetGrid"></div>
+                <div class="controls">
+                    <button id="clearBtn" class="btn btn-secondary">清除</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #425</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sankey Diagram | 桑基圖</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher"><button id="lang-en" class="lang-btn active">English</button><button id="lang-zh" class="lang-btn">中文</button></div>
+        <header class="header"><h1 data-i18n="title">Sankey Diagram</h1><p class="subtitle" data-i18n="subtitle">Visualize flow and relationships between entities</p></header>
+        <div class="privacy-badge"><span class="badge-icon">🔒</span><span data-i18n="privacyBadge">100% Local Processing</span></div>
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept=".csv,.json" hidden>
+                <div class="upload-icon">🔀</div>
+                <p class="upload-text" data-i18n="uploadText">Upload flow data (source, target, value)</p>
+                <p class="upload-hint" data-i18n="uploadHint">CSV/JSON with flow relationships</p>
+            </div>
+            <div class="controls-section" id="controlsSection" style="display: none;">
+                <div class="control-row">
+                    <div class="control-group"><label data-i18n="sourceCol">Source:</label><select id="sourceCol"></select></div>
+                    <div class="control-group"><label data-i18n="targetCol">Target:</label><select id="targetCol"></select></div>
+                    <div class="control-group"><label data-i18n="valueCol">Value:</label><select id="valueCol"></select></div>
+                </div>
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">Generate Diagram</button>
+            </div>
+            <div class="sankey-section" id="sankeySection" style="display: none;">
+                <div id="sankey"></div>
+                <div class="chart-actions">
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="download">Download SVG</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">Reset</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer"><p><a href="../../index.html" data-i18n="backToHome">Back to Home</a> | <span data-i18n="toolNumber">Tool #609</span></p></footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
