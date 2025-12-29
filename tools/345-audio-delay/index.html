@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Delay | 音頻延遲</title>
+    <meta name="description" content="Add delay and echo effects to audio. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>音頻延遲</h1>
+            <p class="subtitle">添加延遲與迴音效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔊</div>
+                    <p>拖放音頻檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP3, WAV, OGG, M4A</p>
+                    <input type="file" id="fileInput" accept="audio/*" hidden>
+                </div>
+                <div class="audio-loaded" id="audioLoaded" style="display: none;">
+                    <div class="file-info" id="fileInfo"></div>
+                    <audio id="originalAudio" controls></audio>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="option-group">
+                        <label id="typeLabel">類型</label>
+                        <select id="delayType">
+                            <option value="mono">單聲道延遲</option>
+                            <option value="stereo">立體聲乒乓</option>
+                            <option value="multi">多重回聲</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label id="timeLabel">延遲時間</label>
+                        <input type="range" id="delayTime" min="50" max="1000" step="10" value="300">
+                        <span id="timeValue">300 ms</span>
+                    </div>
+                    <div class="option-group">
+                        <label id="feedbackLabel">回授</label>
+                        <input type="range" id="feedback" min="0" max="90" step="5" value="40">
+                        <span id="feedbackValue">40%</span>
+                    </div>
+                    <div class="option-group">
+                        <label id="filterLabel">高切</label>
+                        <input type="range" id="filter" min="1000" max="20000" step="500" value="8000">
+                        <span id="filterValue">8000 Hz</span>
+                    </div>
+                    <div class="option-group">
+                        <label id="mixLabel">混合</label>
+                        <input type="range" id="mix" min="0" max="100" step="1" value="40">
+                        <span id="mixValue">40%</span>
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 處理音頻</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">處理結果</h3>
+                    <audio id="processedAudio" controls></audio>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #345</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
