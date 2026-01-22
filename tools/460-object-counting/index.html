@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Counting | 物件計數</title>
+    <meta name="description" content="Count specific objects in images. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>物件計數</h1>
+            <p class="subtitle">計算圖片中特定物件的數量</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔢</div>
+                    <p id="uploadText">拖放圖片至此或點擊上傳</p>
+                    <p class="upload-hint">支援 JPG, PNG, WebP</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <div class="canvas-container"><canvas id="mainCanvas"></canvas></div>
+                    </div>
+                    <div class="category-section">
+                        <label id="categoryLabel">選擇要計數的類別：</label>
+                        <div class="category-grid" id="categoryGrid">
+                            <button class="category-btn active" data-category="person">👤 人</button>
+                            <button class="category-btn" data-category="car">🚗 車輛</button>
+                            <button class="category-btn" data-category="animal">🐕 動物</button>
+                            <button class="category-btn" data-category="tree">🌳 樹木</button>
+                            <button class="category-btn" data-category="building">🏢 建築</button>
+                            <button class="category-btn" data-category="all">📦 全部物件</button>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="countBtn" class="btn btn-primary">🔍 開始計數</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">計數中...</p>
+                    </div>
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <div class="count-display" id="countDisplay">
+                            <span class="count-number" id="totalCount">0</span>
+                            <span class="count-label" id="countLabelText">個物件</span>
+                        </div>
+                        <div class="density-info">
+                            <div class="density-item"><span id="densityLabel">密度</span><span class="density-value" id="densityValue">0</span><span>/100px²</span></div>
+                        </div>
+                        <div class="heatmap-section">
+                            <h4 id="heatmapTitle">分佈熱點圖</h4>
+                            <canvas id="heatmapCanvas" width="200" height="150"></canvas>
+                        </div>
+                    </div>
+                    <div class="action-section" id="exportSection" style="display: none;">
+                        <button id="downloadBtn" class="btn btn-secondary">💾 下載結果</button>
+                        <button id="exportBtn" class="btn btn-secondary">📄 匯出報告</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #460</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
