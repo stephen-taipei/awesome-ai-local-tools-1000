@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Background | 虛擬背景</title>
+    <meta name="description" content="Replace webcam background with custom images. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>虛擬背景</h1>
+            <p class="subtitle">即時替換視訊背景</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="video-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="output"></canvas>
+                </div>
+                <div class="bg-selector" id="bgSelector">
+                    <h3>選擇背景</h3>
+                    <div class="bg-options">
+                        <div class="bg-option active" data-bg="blur">
+                            <span>🌫️</span>
+                            <span>模糊</span>
+                        </div>
+                        <div class="bg-option" data-bg="color">
+                            <span>🎨</span>
+                            <span>純色</span>
+                        </div>
+                        <div class="bg-option" data-bg="image">
+                            <span>🖼️</span>
+                            <span>圖片</span>
+                        </div>
+                    </div>
+                    <div class="bg-settings">
+                        <div id="blurSettings" class="setting-panel">
+                            <label>模糊程度：</label>
+                            <input type="range" id="blurAmount" min="5" max="30" value="15">
+                        </div>
+                        <div id="colorSettings" class="setting-panel" style="display: none;">
+                            <label>背景顏色：</label>
+                            <input type="color" id="bgColor" value="#1e293b">
+                        </div>
+                        <div id="imageSettings" class="setting-panel" style="display: none;">
+                            <button id="uploadBgBtn" class="btn btn-small">上傳背景圖片</button>
+                            <input type="file" id="bgInput" accept="image/*" hidden>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-primary">📷 啟動攝影機</button>
+                    <button id="recordBtn" class="btn btn-secondary" disabled>⏺️ 開始錄製</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="status" id="status"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #362</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+</html>

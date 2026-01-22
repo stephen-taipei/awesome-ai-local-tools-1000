@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Detection | 動物偵測</title>
+    <meta name="description" content="Detect and classify various animals in images. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>動物偵測</h1>
+            <p class="subtitle">偵測並辨識圖片中的各類動物</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🐾</div>
+                    <p id="uploadText">拖放圖片至此或點擊上傳</p>
+                    <p class="upload-hint">支援 JPG, PNG, WebP</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <div class="canvas-container">
+                            <canvas id="mainCanvas"></canvas>
+                        </div>
+                    </div>
+                    <div class="options-section">
+                        <div class="option-group">
+                            <label id="confidenceLabel">信心度閾值</label>
+                            <input type="range" id="confidence" min="0.1" max="0.9" step="0.1" value="0.5">
+                            <span id="confidenceValue">50%</span>
+                        </div>
+                        <div class="option-group">
+                            <label id="maxDetectLabel">最大偵測數</label>
+                            <select id="maxDetect">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="detectBtn" class="btn btn-primary">🔍 開始偵測</button>
+                        <button id="cameraBtn" class="btn btn-secondary">📷 使用攝影機</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">處理中...</p>
+                    </div>
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <h3 id="resultsTitle">偵測結果</h3>
+                        <div class="results-list" id="resultsList"></div>
+                        <div class="stats-section">
+                            <div class="stat-item">
+                                <span class="stat-label" id="totalLabel">偵測到</span>
+                                <span class="stat-value" id="totalCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label" id="speciesLabel">種類</span>
+                                <span class="stat-value" id="speciesCount">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-section" id="exportSection" style="display: none;">
+                        <button id="downloadBtn" class="btn btn-secondary">💾 下載結果</button>
+                        <button id="exportBtn" class="btn btn-secondary">📄 匯出 JSON</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #444</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

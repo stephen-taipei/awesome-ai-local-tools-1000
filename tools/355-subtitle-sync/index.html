@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtitle Sync | 字幕時間軸調整</title>
+    <meta name="description" content="Adjust subtitle timing offset. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>字幕時間軸調整</h1>
+            <p class="subtitle">調整字幕時間偏移</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">⏱️</div>
+                    <p>拖放字幕檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 SRT, VTT</p>
+                    <input type="file" id="fileInput" accept=".srt,.vtt" hidden>
+                </div>
+                <div class="file-loaded" id="fileLoaded" style="display: none;">
+                    <div class="file-info" id="fileInfo"></div>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="option-group">
+                        <label id="shiftLabel">時間偏移 (秒)</label>
+                        <input type="number" id="shiftValue" step="0.1" value="0">
+                    </div>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" onclick="setShift(-5)">-5s</button>
+                        <button class="preset-btn" onclick="setShift(-1)">-1s</button>
+                        <button class="preset-btn" onclick="setShift(-0.5)">-0.5s</button>
+                        <button class="preset-btn" onclick="setShift(0.5)">+0.5s</button>
+                        <button class="preset-btn" onclick="setShift(1)">+1s</button>
+                        <button class="preset-btn" onclick="setShift(5)">+5s</button>
+                    </div>
+                    <div class="option-group">
+                        <label id="scaleLabel">速度比例</label>
+                        <input type="number" id="scaleValue" step="0.01" value="1" min="0.5" max="2">
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 調整</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">調整結果</h3>
+                    <textarea id="resultText" readonly></textarea>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #355</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

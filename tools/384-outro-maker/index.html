@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outro Maker | 片尾製作</title>
+    <meta name="description" content="Create video outros with credits. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>片尾製作</h1>
+            <p class="subtitle">製作影片片尾字幕與感謝名單</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label>片尾標題</label>
+                        <input type="text" id="titleInput" placeholder="感謝觀看" value="感謝觀看">
+                    </div>
+                    <div class="input-group">
+                        <label>製作團隊 / 感謝名單 (每行一項)</label>
+                        <textarea id="creditsInput" placeholder="導演：某某某&#10;攝影：某某某&#10;音樂：某某某">導演：張三
+攝影：李四
+剪輯：王五
+音樂：陳六</textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>結尾訊息</label>
+                        <input type="text" id="endMessageInput" placeholder="訂閱頻道 · 按讚分享" value="訂閱頻道 · 按讚分享">
+                    </div>
+                </div>
+                <div class="options-section">
+                    <div class="option-group">
+                        <label>片尾樣式</label>
+                        <select id="outroStyle">
+                            <option value="scroll">捲動字幕</option>
+                            <option value="fade">淡入淡出</option>
+                            <option value="cinema">電影風格</option>
+                            <option value="minimal">極簡</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>文字顏色</label>
+                        <input type="color" id="textColor" value="#ffffff">
+                    </div>
+                    <div class="option-group">
+                        <label>背景顏色</label>
+                        <input type="color" id="bgColor" value="#0f172a">
+                    </div>
+                    <div class="option-group">
+                        <label>時長 (秒)</label>
+                        <input type="range" id="duration" min="5" max="30" step="1" value="10">
+                        <span id="durationValue">10</span>
+                    </div>
+                </div>
+                <div class="action-section">
+                    <button id="previewBtn" class="btn btn-secondary">👁️ 預覽</button>
+                    <button id="processBtn" class="btn btn-primary">🎬 生成片尾</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p class="progress-text" id="progressText">處理中...</p>
+                </div>
+                <div class="preview-section">
+                    <h3>預覽</h3>
+                    <canvas id="previewCanvas"></canvas>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #384</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

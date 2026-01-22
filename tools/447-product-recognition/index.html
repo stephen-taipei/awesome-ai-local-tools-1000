@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Recognition | 商品辨識</title>
+    <meta name="description" content="Recognize product types in images. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>商品辨識</h1>
+            <p class="subtitle">辨識圖片中的商品類型</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🛍️</div>
+                    <p id="uploadText">拖放商品圖片至此或點擊上傳</p>
+                    <p class="upload-hint">支援 JPG, PNG, WebP</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <div class="image-container"><img id="previewImage" alt="Preview"></div>
+                    </div>
+                    <div class="action-section">
+                        <button id="recognizeBtn" class="btn btn-primary">🔍 辨識商品</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">分析中...</p>
+                    </div>
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <div class="main-result" id="mainResult"></div>
+                        <div class="product-tags" id="productTags"></div>
+                        <div class="other-results" id="otherResults"></div>
+                    </div>
+                    <div class="action-section" id="exportSection" style="display: none;">
+                        <button id="exportBtn" class="btn btn-secondary">📄 匯出報告</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #447</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

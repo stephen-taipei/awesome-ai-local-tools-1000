@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire & Smoke Detection | 煙火偵測</title>
+    <meta name="description" content="Detect fire and smoke in images. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>煙火偵測</h1>
+            <p class="subtitle">偵測圖片中的煙霧或火焰</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔥</div>
+                    <p id="uploadText">拖放圖片至此或點擊上傳</p>
+                    <p class="upload-hint">支援 JPG, PNG, WebP</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <div class="canvas-container"><canvas id="mainCanvas"></canvas></div>
+                    </div>
+                    <div class="action-section">
+                        <button id="detectBtn" class="btn btn-primary">🔍 開始偵測</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">處理中...</p>
+                    </div>
+                    <div class="alert-section" id="alertSection" style="display: none;">
+                        <div class="alert-box" id="alertBox">
+                            <div class="alert-icon" id="alertIcon">✅</div>
+                            <div class="alert-text" id="alertText">未偵測到危險</div>
+                        </div>
+                    </div>
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <div class="detection-list" id="detectionList"></div>
+                    </div>
+                    <div class="action-section" id="exportSection" style="display: none;">
+                        <button id="downloadBtn" class="btn btn-secondary">💾 下載結果</button>
+                        <button id="exportBtn" class="btn btn-secondary">📄 匯出報告</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #453</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

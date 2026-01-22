@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Protection | 影片隱私保護</title>
+    <meta name="description" content="Remove video metadata for privacy. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>影片隱私保護</h1>
+            <p class="subtitle">移除影片元資料以保護隱私</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🛡️</div>
+                    <p>拖放影片檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP4, WebM</p>
+                    <input type="file" id="fileInput" accept="video/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <video id="inputVideo" controls></video>
+                    </div>
+                    <div class="metadata-section">
+                        <h3 id="currentMetaTitle">目前元資料</h3>
+                        <div class="metadata-list" id="metadataList"></div>
+                    </div>
+                    <div class="options-section">
+                        <h3 id="optionsTitle">隱私選項</h3>
+                        <div class="option-item">
+                            <input type="checkbox" id="removeFilename" checked>
+                            <label id="removeFilenameLabel">使用隨機檔案名稱</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="resetTimestamp" checked>
+                            <label id="resetTimestampLabel">重設時間戳記</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="reencodeVideo" checked>
+                            <label id="reencodeLabel">重新編碼影片 (移除所有內嵌元資料)</label>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="processBtn" class="btn btn-primary">🛡️ 處理影片</button>
+                        <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">處理中...</p>
+                    </div>
+                    <div class="result-section" id="resultSection" style="display: none;">
+                        <h3 id="resultTitle">處理結果</h3>
+                        <div class="result-info">
+                            <div class="result-item">
+                                <span class="result-label" id="originalSizeLabel">原始大小</span>
+                                <span class="result-value" id="originalSize">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label" id="newSizeLabel">新檔案大小</span>
+                                <span class="result-value" id="newSize">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label" id="metaRemovedLabel">元資料</span>
+                                <span class="result-value" id="metaRemoved">已移除</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #398</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

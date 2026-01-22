@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chroma Key | 即時綠幕去背</title>
+    <meta name="description" content="Real-time green/blue screen removal. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>即時綠幕去背</h1>
+            <p class="subtitle">即時綠幕/藍幕去背效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="video-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="output"></canvas>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <h3>去背設定</h3>
+                    <div class="color-presets">
+                        <button class="color-preset active" data-color="green">🟢 綠幕</button>
+                        <button class="color-preset" data-color="blue">🔵 藍幕</button>
+                        <button class="color-preset" data-color="custom">🎨 自訂</button>
+                    </div>
+                    <div class="custom-color" id="customColor" style="display: none;">
+                        <label>選擇顏色：</label>
+                        <input type="color" id="keyColor" value="#00ff00">
+                    </div>
+                    <div class="slider-group">
+                        <label>容差值：<span id="toleranceValue">40</span></label>
+                        <input type="range" id="tolerance" min="10" max="100" value="40">
+                    </div>
+                    <div class="slider-group">
+                        <label>邊緣羽化：<span id="featherValue">5</span></label>
+                        <input type="range" id="feather" min="0" max="20" value="5">
+                    </div>
+                    <div class="bg-selector">
+                        <label>替換背景：</label>
+                        <select id="bgType">
+                            <option value="transparent">透明</option>
+                            <option value="color">純色</option>
+                            <option value="image">圖片</option>
+                        </select>
+                        <input type="color" id="bgColor" value="#1e293b" style="display: none;">
+                        <button id="uploadBgBtn" class="btn btn-small" style="display: none;">上傳</button>
+                        <input type="file" id="bgInput" accept="image/*" hidden>
+                    </div>
+                </div>
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-primary">📷 啟動攝影機</button>
+                    <button id="recordBtn" class="btn btn-secondary" disabled>⏺️ 開始錄製</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="status" id="status"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #370</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

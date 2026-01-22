@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Compare | 影片比較器</title>
+    <meta name="description" content="Compare two videos side by side. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>影片比較器</h1>
+            <p class="subtitle">並排比較兩個影片</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea1">
+                        <div class="upload-icon">🎬</div>
+                        <p id="uploadText1">上傳影片 A</p>
+                        <p class="upload-hint">支援 MP4, WebM</p>
+                        <input type="file" id="fileInput1" accept="video/*" hidden>
+                    </div>
+                    <div class="upload-area" id="uploadArea2">
+                        <div class="upload-icon">🎬</div>
+                        <p id="uploadText2">上傳影片 B</p>
+                        <p class="upload-hint">支援 MP4, WebM</p>
+                        <input type="file" id="fileInput2" accept="video/*" hidden>
+                    </div>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="compare-section">
+                        <div class="video-panel">
+                            <div class="video-label">A</div>
+                            <video id="video1" controls></video>
+                            <div class="video-info" id="info1"></div>
+                        </div>
+                        <div class="video-panel">
+                            <div class="video-label">B</div>
+                            <video id="video2" controls></video>
+                            <div class="video-info" id="info2"></div>
+                        </div>
+                    </div>
+                    <div class="controls-section">
+                        <div class="sync-controls">
+                            <label id="syncLabel">同步播放</label>
+                            <input type="checkbox" id="syncPlayback" checked>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="playBothBtn" class="btn btn-primary">▶️ 播放</button>
+                            <button id="pauseBothBtn" class="btn btn-secondary">⏸️ 暫停</button>
+                            <button id="resetBothBtn" class="btn btn-secondary">⏮️ 重置</button>
+                        </div>
+                    </div>
+                    <div class="comparison-table" id="comparisonTable">
+                        <h3 id="compareTitle">比較資訊</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th id="propertyHeader">屬性</th>
+                                    <th>影片 A</th>
+                                    <th>影片 B</th>
+                                </tr>
+                            </thead>
+                            <tbody id="compareBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #395</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

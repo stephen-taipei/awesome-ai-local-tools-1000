@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtitle Editor | 字幕編輯器</title>
+    <meta name="description" content="Edit subtitle content and timeline. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>字幕編輯器</h1>
+            <p class="subtitle">編輯字幕內容與時間軸</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📝</div>
+                    <p>拖放字幕檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 SRT, VTT, ASS</p>
+                    <input type="file" id="fileInput" accept=".srt,.vtt,.ass,.ssa" hidden>
+                </div>
+                <div class="editor-loaded" id="editorLoaded" style="display: none;">
+                    <div class="toolbar">
+                        <button id="addBtn" class="tool-btn">➕ 新增</button>
+                        <button id="shiftBtn" class="tool-btn">⏱️ 時間偏移</button>
+                        <button id="sortBtn" class="tool-btn">🔢 排序</button>
+                    </div>
+                    <div class="subtitle-list" id="subtitleList"></div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <select id="outputFormat">
+                        <option value="srt">SRT</option>
+                        <option value="vtt">VTT</option>
+                    </select>
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #352</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

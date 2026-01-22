@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtitle OCR | 字幕 OCR</title>
+    <meta name="description" content="OCR recognition for hardcoded subtitles in videos. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>字幕 OCR</h1>
+            <p class="subtitle">識別影片中的硬字幕</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🔍</div>
+                    <p>拖放影片或圖片至此或點擊上傳</p>
+                    <p class="upload-hint">支援影片截圖或帶字幕的圖片</p>
+                    <input type="file" id="fileInput" accept="image/*,video/*" hidden>
+                </div>
+                <div class="preview-section" id="previewSection" style="display: none;">
+                    <canvas id="previewCanvas"></canvas>
+                    <div class="frame-controls" id="frameControls" style="display: none;">
+                        <button id="prevFrame" class="btn btn-small">◀ 上一幀</button>
+                        <span id="frameInfo">幀 1</span>
+                        <button id="nextFrame" class="btn btn-small">下一幀 ▶</button>
+                    </div>
+                </div>
+                <div class="region-section" id="regionSection" style="display: none;">
+                    <h3>字幕區域</h3>
+                    <p class="hint">在預覽圖上拖曳選擇字幕區域，或使用預設</p>
+                    <div class="region-presets">
+                        <button class="preset-btn active" data-region="bottom">底部字幕</button>
+                        <button class="preset-btn" data-region="top">頂部字幕</button>
+                        <button class="preset-btn" data-region="custom">自訂區域</button>
+                    </div>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <h3>OCR 設定</h3>
+                    <div class="option-group">
+                        <label>語言：</label>
+                        <select id="ocrLang">
+                            <option value="chi_tra">繁體中文</option>
+                            <option value="chi_sim">簡體中文</option>
+                            <option value="eng">英文</option>
+                            <option value="jpn">日文</option>
+                            <option value="kor">韓文</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="ocrBtn" class="btn btn-primary">🔍 識別字幕</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p class="progress-text" id="progressText">載入 OCR 引擎...</p>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3>識別結果</h3>
+                    <textarea id="resultText"></textarea>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #360</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

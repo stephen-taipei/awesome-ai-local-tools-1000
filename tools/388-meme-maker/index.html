@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Maker | 表情包製作</title>
+    <meta name="description" content="Create animated memes and GIFs. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>表情包製作</h1>
+            <p class="subtitle">製作表情包 GIF 與動圖</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">😂</div>
+                    <p>拖放圖片或影片至此或點擊上傳</p>
+                    <p class="upload-hint">支援 JPG, PNG, GIF, MP4</p>
+                    <input type="file" id="fileInput" accept="image/*,video/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <canvas id="memeCanvas"></canvas>
+                        <video id="sourceVideo" style="display: none;"></video>
+                        <img id="sourceImage" style="display: none;">
+                    </div>
+                    <div class="text-section">
+                        <div class="text-group">
+                            <label>上方文字</label>
+                            <input type="text" id="topText" placeholder="上方文字...">
+                        </div>
+                        <div class="text-group">
+                            <label>下方文字</label>
+                            <input type="text" id="bottomText" placeholder="下方文字...">
+                        </div>
+                    </div>
+                    <div class="options-section">
+                        <div class="option-group">
+                            <label>字體大小</label>
+                            <input type="range" id="fontSize" min="20" max="80" step="2" value="40">
+                            <span id="fontSizeValue">40px</span>
+                        </div>
+                        <div class="option-group">
+                            <label>文字顏色</label>
+                            <input type="color" id="textColor" value="#ffffff">
+                        </div>
+                        <div class="option-group">
+                            <label>描邊顏色</label>
+                            <input type="color" id="strokeColor" value="#000000">
+                        </div>
+                        <div class="option-group">
+                            <label>動畫效果</label>
+                            <select id="animation">
+                                <option value="none">無</option>
+                                <option value="shake">抖動</option>
+                                <option value="bounce">彈跳</option>
+                                <option value="zoom">縮放</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="previewBtn" class="btn btn-secondary">👁️ 預覽</button>
+                        <button id="processBtn" class="btn btn-primary">🎬 生成 GIF</button>
+                        <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">處理中...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #388</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

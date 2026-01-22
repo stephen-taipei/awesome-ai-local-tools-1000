@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtitle Style | 字幕樣式設計</title>
+    <meta name="description" content="Customize subtitle font, color, and position. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>字幕樣式設計</h1>
+            <p class="subtitle">自訂字幕字型、顏色、位置</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎨</div>
+                    <p>拖放字幕檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 SRT, ASS</p>
+                    <input type="file" id="fileInput" accept=".srt,.ass,.ssa" hidden>
+                </div>
+                <div class="style-options" id="styleOptions" style="display: none;">
+                    <div class="preview-box" id="previewBox">
+                        <p id="previewText">字幕預覽 Subtitle Preview</p>
+                    </div>
+                    <div class="option-group">
+                        <label>字型</label>
+                        <select id="fontFamily">
+                            <option value="Arial">Arial</option>
+                            <option value="Microsoft JhengHei">微軟正黑體</option>
+                            <option value="Noto Sans TC">Noto Sans TC</option>
+                            <option value="PingFang TC">蘋方</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>大小</label>
+                        <input type="range" id="fontSize" min="16" max="48" value="24">
+                        <span id="fontSizeValue">24px</span>
+                    </div>
+                    <div class="option-group">
+                        <label>顏色</label>
+                        <input type="color" id="fontColor" value="#ffffff">
+                    </div>
+                    <div class="option-group">
+                        <label>邊框</label>
+                        <input type="color" id="outlineColor" value="#000000">
+                    </div>
+                    <div class="option-group">
+                        <label>邊框寬度</label>
+                        <input type="range" id="outlineWidth" min="0" max="5" value="2">
+                        <span id="outlineValue">2px</span>
+                    </div>
+                    <div class="option-group">
+                        <label>粗體</label>
+                        <input type="checkbox" id="bold">
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="downloadBtn" class="btn btn-primary">⬇️ 下載 ASS</button>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #357</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

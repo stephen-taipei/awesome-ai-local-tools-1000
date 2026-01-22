@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Preview | 影片預覽條</title>
+    <meta name="description" content="Generate video timeline preview strip. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>影片預覽條</h1>
+            <p class="subtitle">產生影片時間軸預覽條</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎞️</div>
+                    <p>拖放影片檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP4, WebM, MOV</p>
+                    <input type="file" id="fileInput" accept="video/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <video id="inputVideo" controls></video>
+                    </div>
+                    <div class="options-section">
+                        <div class="option-group">
+                            <label id="framesLabel">幀數</label>
+                            <input type="range" id="frameCount" min="10" max="60" step="5" value="30">
+                            <span id="framesValue">30</span>
+                        </div>
+                        <div class="option-group">
+                            <label id="heightLabel">高度</label>
+                            <select id="stripHeight">
+                                <option value="60">60px</option>
+                                <option value="80" selected>80px</option>
+                                <option value="100">100px</option>
+                                <option value="120">120px</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label id="showTimeLabel">顯示時間</label>
+                            <input type="checkbox" id="showTime" checked>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="generateBtn" class="btn btn-primary">🎬 產生預覽條</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">產生中...</p>
+                    </div>
+                    <div class="result-section" id="resultSection" style="display: none;">
+                        <h3 id="resultTitle">預覽條</h3>
+                        <div class="strip-container" id="stripContainer"></div>
+                        <div class="action-section">
+                            <button id="downloadBtn" class="btn btn-secondary">⬇️ 下載 PNG</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #394</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

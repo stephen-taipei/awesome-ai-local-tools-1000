@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perceptual Hash | 影片感知雜湊</title>
+    <meta name="description" content="Calculate perceptual hash for video similarity matching. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>影片感知雜湊</h1>
+            <p class="subtitle">計算感知雜湊以進行相似度比對</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea1">
+                        <div class="upload-icon">🎬</div>
+                        <p id="uploadText1">上傳影片 A</p>
+                        <p class="upload-hint">支援 MP4, WebM</p>
+                        <input type="file" id="fileInput1" accept="video/*" hidden>
+                    </div>
+                    <div class="upload-area" id="uploadArea2">
+                        <div class="upload-icon">🎬</div>
+                        <p id="uploadText2">上傳影片 B (可選)</p>
+                        <p class="upload-hint">用於比較</p>
+                        <input type="file" id="fileInput2" accept="video/*" hidden>
+                    </div>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="options-section">
+                        <div class="option-group">
+                            <label id="samplesLabel">取樣幀數</label>
+                            <input type="range" id="sampleFrames" min="5" max="30" step="5" value="10">
+                            <span id="samplesValue">10</span>
+                        </div>
+                        <div class="option-group">
+                            <label id="hashSizeLabel">雜湊大小</label>
+                            <select id="hashSize">
+                                <option value="8">8x8 (64 bits)</option>
+                                <option value="16" selected>16x16 (256 bits)</option>
+                                <option value="32">32x32 (1024 bits)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="calculateBtn" class="btn btn-primary">🔢 計算雜湊</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">處理中...</p>
+                    </div>
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <div class="hash-result" id="hash1Result">
+                            <h4>影片 A</h4>
+                            <div class="hash-preview" id="preview1"></div>
+                            <div class="hash-value" id="hashValue1"></div>
+                        </div>
+                        <div class="hash-result" id="hash2Result" style="display: none;">
+                            <h4>影片 B</h4>
+                            <div class="hash-preview" id="preview2"></div>
+                            <div class="hash-value" id="hashValue2"></div>
+                        </div>
+                        <div class="similarity-result" id="similarityResult" style="display: none;">
+                            <h3 id="similarityTitle">相似度分析</h3>
+                            <div class="similarity-meter">
+                                <div class="similarity-fill" id="similarityFill"></div>
+                            </div>
+                            <div class="similarity-value" id="similarityValue">0%</div>
+                            <p class="similarity-desc" id="similarityDesc"></p>
+                        </div>
+                    </div>
+                    <div class="action-section" id="exportSection" style="display: none;">
+                        <button id="copyBtn" class="btn btn-secondary">📋 複製雜湊</button>
+                        <button id="exportBtn" class="btn btn-secondary">📄 匯出報告</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #400</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

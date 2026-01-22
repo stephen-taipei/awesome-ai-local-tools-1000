@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Moderation | 內容審核</title>
+    <meta name="description" content="Detect sensitive content in videos. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>影片內容審核</h1>
+            <p class="subtitle">偵測影片中的敏感內容</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🛡️</div>
+                    <p>拖放影片檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP4, WebM</p>
+                    <input type="file" id="fileInput" accept="video/*" hidden>
+                </div>
+                <div class="preview-section" id="previewSection" style="display: none;">
+                    <video id="inputVideo" controls></video>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <h3>偵測項目</h3>
+                    <div class="option-group">
+                        <label><input type="checkbox" id="detectViolence" checked> 暴力內容</label>
+                    </div>
+                    <div class="option-group">
+                        <label><input type="checkbox" id="detectWeapons" checked> 武器偵測</label>
+                    </div>
+                    <div class="option-group">
+                        <label><input type="checkbox" id="detectText" checked> 敏感文字</label>
+                    </div>
+                    <div class="option-group">
+                        <label>取樣間隔 (秒)</label>
+                        <input type="number" id="sampleInterval" value="1" min="0.5" max="10" step="0.5">
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🛡️ 開始審核</button>
+                    <button id="exportBtn" class="btn btn-secondary" disabled>📊 匯出報告</button>
+                </div>
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p class="progress-text" id="progressText">處理中...</p>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3>審核結果</h3>
+                    <div class="result-summary" id="resultSummary"></div>
+                    <div class="result-timeline" id="resultTimeline"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #377</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Filter | AR 濾鏡</title>
+    <meta name="description" content="Apply AR effects to webcam in real-time. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>AR 濾鏡</h1>
+            <p class="subtitle">即時 AR 特效濾鏡</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="video-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="output"></canvas>
+                </div>
+                <div class="filter-selector" id="filterSelector">
+                    <h3>選擇特效</h3>
+                    <div class="filter-options">
+                        <div class="filter-option active" data-filter="glasses">🕶️ 墨鏡</div>
+                        <div class="filter-option" data-filter="hat">🎩 帽子</div>
+                        <div class="filter-option" data-filter="mask">😷 口罩</div>
+                        <div class="filter-option" data-filter="crown">👑 皇冠</div>
+                        <div class="filter-option" data-filter="mustache">🥸 鬍子</div>
+                        <div class="filter-option" data-filter="hearts">💕 愛心</div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-primary">📷 啟動攝影機</button>
+                    <button id="recordBtn" class="btn btn-secondary" disabled>⏺️ 開始錄製</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="status" id="status"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #364</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+</html>

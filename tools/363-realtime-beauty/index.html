@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime Beauty Filter | 即時美顏</title>
+    <meta name="description" content="Apply beauty filters to webcam in real-time. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>即時美顏</h1>
+            <p class="subtitle">即時美顏濾鏡效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="video-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="output"></canvas>
+                </div>
+                <div class="beauty-controls" id="beautyControls" style="display: none;">
+                    <h3>美顏設定</h3>
+                    <div class="slider-group">
+                        <label>磨皮：<span id="smoothValue">50</span>%</label>
+                        <input type="range" id="smooth" min="0" max="100" value="50">
+                    </div>
+                    <div class="slider-group">
+                        <label>美白：<span id="brightenValue">30</span>%</label>
+                        <input type="range" id="brighten" min="0" max="100" value="30">
+                    </div>
+                    <div class="slider-group">
+                        <label>瘦臉：<span id="slimValue">0</span>%</label>
+                        <input type="range" id="slim" min="0" max="50" value="0">
+                    </div>
+                    <div class="slider-group">
+                        <label>大眼：<span id="eyeValue">0</span>%</label>
+                        <input type="range" id="eye" min="0" max="50" value="0">
+                    </div>
+                </div>
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-primary">📷 啟動攝影機</button>
+                    <button id="recordBtn" class="btn btn-secondary" disabled>⏺️ 開始錄製</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="status" id="status"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #363</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+</html>

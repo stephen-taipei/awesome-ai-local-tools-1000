@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Sticker | 動態貼圖</title>
+    <meta name="description" content="Add animated stickers to videos. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>動態貼圖</h1>
+            <p class="subtitle">為影片添加動態貼圖效果</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🎬</div>
+                    <p>拖放影片檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP4, WebM</p>
+                    <input type="file" id="fileInput" accept="video/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-container">
+                        <video id="inputVideo" controls></video>
+                        <canvas id="overlayCanvas"></canvas>
+                    </div>
+                    <div class="sticker-section">
+                        <h3>選擇貼圖</h3>
+                        <div class="sticker-grid" id="stickerGrid">
+                            <button class="sticker-btn" data-sticker="heart">❤️</button>
+                            <button class="sticker-btn" data-sticker="star">⭐</button>
+                            <button class="sticker-btn" data-sticker="fire">🔥</button>
+                            <button class="sticker-btn" data-sticker="sparkle">✨</button>
+                            <button class="sticker-btn" data-sticker="thumbs">👍</button>
+                            <button class="sticker-btn" data-sticker="party">🎉</button>
+                            <button class="sticker-btn" data-sticker="laugh">😂</button>
+                            <button class="sticker-btn" data-sticker="cool">😎</button>
+                            <button class="sticker-btn" data-sticker="rocket">🚀</button>
+                            <button class="sticker-btn" data-sticker="rainbow">🌈</button>
+                        </div>
+                    </div>
+                    <div class="stickers-list" id="stickersList">
+                        <h3>已添加貼圖</h3>
+                        <div id="addedStickers"></div>
+                    </div>
+                    <div class="action-section">
+                        <button id="processBtn" class="btn btn-primary">🎬 生成影片</button>
+                        <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">處理中...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #386</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

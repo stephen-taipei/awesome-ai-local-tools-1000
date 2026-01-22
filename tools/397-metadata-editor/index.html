@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metadata Editor | 影片元資料編輯</title>
+    <meta name="description" content="View and export video metadata. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>影片元資料編輯</h1>
+            <p class="subtitle">查看並匯出影片元資料</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🏷️</div>
+                    <p>拖放影片檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 MP4, WebM, MOV</p>
+                    <input type="file" id="fileInput" accept="video/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <video id="inputVideo" controls></video>
+                    </div>
+                    <div class="metadata-section">
+                        <h3 id="metadataTitle">元資料</h3>
+                        <div class="metadata-tabs">
+                            <button class="tab-btn active" data-tab="basic" id="tabBasic">基本資訊</button>
+                            <button class="tab-btn" data-tab="technical" id="tabTechnical">技術資訊</button>
+                            <button class="tab-btn" data-tab="custom" id="tabCustom">自訂欄位</button>
+                        </div>
+                        <div class="tab-content active" id="basicTab">
+                            <div class="metadata-form">
+                                <div class="form-group">
+                                    <label id="titleLabel">標題</label>
+                                    <input type="text" id="metaTitle" placeholder="影片標題">
+                                </div>
+                                <div class="form-group">
+                                    <label id="descLabel">描述</label>
+                                    <textarea id="metaDescription" rows="3" placeholder="影片描述"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label id="authorLabel">作者</label>
+                                    <input type="text" id="metaAuthor" placeholder="作者名稱">
+                                </div>
+                                <div class="form-group">
+                                    <label id="tagsLabel">標籤</label>
+                                    <input type="text" id="metaTags" placeholder="以逗號分隔">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-content" id="technicalTab">
+                            <div class="tech-info" id="techInfo"></div>
+                        </div>
+                        <div class="tab-content" id="customTab">
+                            <div class="custom-fields" id="customFields"></div>
+                            <button id="addFieldBtn" class="btn btn-secondary">+ 新增欄位</button>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="exportJsonBtn" class="btn btn-secondary">📄 匯出 JSON</button>
+                        <button id="exportXmlBtn" class="btn btn-secondary">📄 匯出 XML</button>
+                        <button id="copyBtn" class="btn btn-primary">📋 複製</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #397</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

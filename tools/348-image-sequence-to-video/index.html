@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Sequence to Video | 圖片序列轉影片</title>
+    <meta name="description" content="Create video from image sequence. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>圖片序列轉影片</h1>
+            <p class="subtitle">將圖片序列合成影片</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🖼️</div>
+                    <p>拖放多張圖片至此或點擊上傳</p>
+                    <p class="upload-hint">支援 PNG, JPG, WebP</p>
+                    <input type="file" id="fileInput" accept="image/*" multiple hidden>
+                </div>
+                <div class="images-loaded" id="imagesLoaded" style="display: none;">
+                    <div class="file-info" id="fileInfo"></div>
+                    <div class="image-preview" id="imagePreview"></div>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="option-group">
+                        <label id="fpsLabel">幀率 (FPS)</label>
+                        <select id="fps">
+                            <option value="15">15 FPS</option>
+                            <option value="24">24 FPS</option>
+                            <option value="30" selected>30 FPS</option>
+                            <option value="60">60 FPS</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label id="formatLabel">輸出格式</label>
+                        <select id="format">
+                            <option value="webm">WebM</option>
+                            <option value="mp4">MP4</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label id="durationLabel">每張持續</label>
+                        <input type="range" id="duration" min="100" max="2000" step="100" value="500">
+                        <span id="durationValue">500 ms</span>
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 生成影片</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p class="progress-text" id="progressText">處理中...</p>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">生成結果</h3>
+                    <video id="resultVideo" controls loop></video>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #348</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

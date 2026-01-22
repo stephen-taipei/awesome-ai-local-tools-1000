@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilingual Subtitle | 雙語字幕</title>
+    <meta name="description" content="Create bilingual subtitles. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>雙語字幕</h1>
+            <p class="subtitle">合併生成雙語對照字幕</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-group">
+                    <div class="upload-area" id="primaryUpload">
+                        <div class="upload-icon">📝</div>
+                        <p>主要語言字幕</p>
+                        <p class="upload-hint">SRT, VTT</p>
+                        <input type="file" id="primaryInput" accept=".srt,.vtt" hidden>
+                    </div>
+                    <div class="upload-area" id="secondaryUpload">
+                        <div class="upload-icon">🌐</div>
+                        <p>次要語言字幕</p>
+                        <p class="upload-hint">SRT, VTT</p>
+                        <input type="file" id="secondaryInput" accept=".srt,.vtt" hidden>
+                    </div>
+                </div>
+                <div class="files-info" id="filesInfo" style="display: none;">
+                    <p id="primaryInfo"></p>
+                    <p id="secondaryInfo"></p>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="option-group">
+                        <label>排列方式</label>
+                        <select id="layout">
+                            <option value="stack">上下排列</option>
+                            <option value="inline">同行顯示</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>分隔符</label>
+                        <input type="text" id="separator" value=" / " maxlength="10">
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 合併</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3>合併結果</h3>
+                    <textarea id="resultText" readonly></textarea>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #358</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

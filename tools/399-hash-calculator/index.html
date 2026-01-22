@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Calculator | 影片雜湊計算</title>
+    <meta name="description" content="Calculate video file hash (MD5, SHA-1, SHA-256). 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>影片雜湊計算</h1>
+            <p class="subtitle">計算影片檔案雜湊值 (MD5, SHA-1, SHA-256)</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">#️⃣</div>
+                    <p>拖放影片檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援任何影片格式</p>
+                    <input type="file" id="fileInput" accept="video/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="file-info" id="fileInfo"></div>
+                    <div class="progress-section" id="progressSection">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">計算中...</p>
+                    </div>
+                    <div class="hash-results" id="hashResults">
+                        <div class="hash-item">
+                            <div class="hash-header">
+                                <span class="hash-type">MD5</span>
+                                <button class="copy-btn" data-hash="md5">📋</button>
+                            </div>
+                            <div class="hash-value" id="md5Hash">計算中...</div>
+                        </div>
+                        <div class="hash-item">
+                            <div class="hash-header">
+                                <span class="hash-type">SHA-1</span>
+                                <button class="copy-btn" data-hash="sha1">📋</button>
+                            </div>
+                            <div class="hash-value" id="sha1Hash">計算中...</div>
+                        </div>
+                        <div class="hash-item">
+                            <div class="hash-header">
+                                <span class="hash-type">SHA-256</span>
+                                <button class="copy-btn" data-hash="sha256">📋</button>
+                            </div>
+                            <div class="hash-value" id="sha256Hash">計算中...</div>
+                        </div>
+                    </div>
+                    <div class="verify-section">
+                        <h3 id="verifyTitle">驗證雜湊</h3>
+                        <div class="verify-form">
+                            <input type="text" id="verifyInput" placeholder="貼上要驗證的雜湊值">
+                            <button id="verifyBtn" class="btn btn-primary">驗證</button>
+                        </div>
+                        <div class="verify-result" id="verifyResult"></div>
+                    </div>
+                    <div class="action-section">
+                        <button id="exportBtn" class="btn btn-secondary">📄 匯出報告</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #399</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

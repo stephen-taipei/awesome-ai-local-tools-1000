@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardcoded Subtitle | 硬字幕嵌入</title>
+    <meta name="description" content="Burn subtitles into video. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>硬字幕嵌入</h1>
+            <p class="subtitle">將字幕燒錄至影片中</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-group">
+                    <div class="upload-area" id="videoUpload">
+                        <div class="upload-icon">🎬</div>
+                        <p>上傳影片</p>
+                        <p class="upload-hint">MP4, WebM</p>
+                        <input type="file" id="videoInput" accept="video/*" hidden>
+                    </div>
+                    <div class="upload-area" id="subtitleUpload">
+                        <div class="upload-icon">📝</div>
+                        <p>上傳字幕</p>
+                        <p class="upload-hint">SRT, VTT</p>
+                        <input type="file" id="subtitleInput" accept=".srt,.vtt" hidden>
+                    </div>
+                </div>
+                <div class="files-info" id="filesInfo" style="display: none;">
+                    <p id="videoInfo"></p>
+                    <p id="subtitleInfo"></p>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="option-group">
+                        <label id="fontSizeLabel">字體大小</label>
+                        <select id="fontSize">
+                            <option value="18">小</option>
+                            <option value="24" selected>中</option>
+                            <option value="32">大</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label id="positionLabel">位置</label>
+                        <select id="position">
+                            <option value="bottom" selected>底部</option>
+                            <option value="top">頂部</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary">🔄 嵌入字幕</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p class="progress-text" id="progressText">處理中...</p>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">處理結果</h3>
+                    <video id="resultVideo" controls></video>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #356</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.7/dist/umd/ffmpeg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/util.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

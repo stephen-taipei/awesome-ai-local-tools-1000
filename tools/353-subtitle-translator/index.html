@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtitle Translator | 字幕翻譯</title>
+    <meta name="description" content="Translate subtitles to other languages. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>字幕翻譯</h1>
+            <p class="subtitle">翻譯字幕為其他語言</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="model-status" id="modelStatus">
+                    <span class="status-icon">⏳</span>
+                    <span id="modelStatusText">載入翻譯模型中...</span>
+                </div>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🌐</div>
+                    <p>拖放字幕檔案至此或點擊上傳</p>
+                    <p class="upload-hint">支援 SRT, VTT</p>
+                    <input type="file" id="fileInput" accept=".srt,.vtt" hidden>
+                </div>
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <div class="option-group">
+                        <label id="targetLabel">目標語言</label>
+                        <select id="targetLang">
+                            <option value="zh">中文</option>
+                            <option value="en">英文</option>
+                            <option value="ja">日文</option>
+                            <option value="ko">韓文</option>
+                            <option value="es">西班牙文</option>
+                            <option value="fr">法文</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="action-section" id="actionSection" style="display: none;">
+                    <button id="processBtn" class="btn btn-primary" disabled>🔄 翻譯</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>⬇️ 下載</button>
+                </div>
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <p class="progress-text" id="progressText">翻譯中...</p>
+                </div>
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <h3 id="resultTitle">翻譯結果</h3>
+                    <textarea id="subtitleText" readonly></textarea>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #353</p>
+        </footer>
+    </div>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
