@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Segmentation | 頭髮分割</title>
+    <meta name="description" content="Segment hair region for virtual try-on. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>頭髮分割</h1>
+            <p class="subtitle">分割頭髮區域用於虛擬換髮</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">💇</div>
+                    <p id="uploadText">拖放人像照片至此或點擊上傳</p>
+                    <p class="upload-hint">支援 JPG, PNG, WebP</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <div class="canvas-container"><canvas id="mainCanvas"></canvas></div>
+                    </div>
+                    <div class="color-section" id="colorSection" style="display:none;">
+                        <label id="colorLabel">試試新髮色：</label>
+                        <div class="color-grid">
+                            <button class="color-btn" data-color="#1a1a1a" style="background:#1a1a1a"></button>
+                            <button class="color-btn" data-color="#4a3728" style="background:#4a3728"></button>
+                            <button class="color-btn" data-color="#8B4513" style="background:#8B4513"></button>
+                            <button class="color-btn" data-color="#D4A574" style="background:#D4A574"></button>
+                            <button class="color-btn" data-color="#FFD700" style="background:#FFD700"></button>
+                            <button class="color-btn" data-color="#DC143C" style="background:#DC143C"></button>
+                            <button class="color-btn" data-color="#9400D3" style="background:#9400D3"></button>
+                            <button class="color-btn" data-color="#1E90FF" style="background:#1E90FF"></button>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="segmentBtn" class="btn btn-primary">✂️ 分割頭髮</button>
+                        <button id="resetBtn" class="btn btn-secondary" style="display:none;">🔄 重置</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">處理中...</p>
+                    </div>
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <div class="stats-row">
+                            <div class="stat-item"><span class="stat-value" id="hairArea">0%</span><span class="stat-label" id="areaLabel">頭髮面積</span></div>
+                        </div>
+                    </div>
+                    <div class="action-section" id="exportSection" style="display: none;">
+                        <button id="downloadBtn" class="btn btn-secondary">💾 下載結果</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #465</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

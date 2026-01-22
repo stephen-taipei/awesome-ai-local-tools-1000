@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Segmentation | 天空分割</title>
+    <meta name="description" content="Segment and replace sky in photos. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>天空分割</h1>
+            <p class="subtitle">分割並替換照片中的天空</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🌤️</div>
+                    <p id="uploadText">拖放風景照片至此或點擊上傳</p>
+                    <p class="upload-hint">支援 JPG, PNG, WebP</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <div class="canvas-container"><canvas id="mainCanvas"></canvas></div>
+                    </div>
+                    <div class="sky-options" id="skyOptions" style="display:none;">
+                        <label id="skyLabel">選擇天空樣式：</label>
+                        <div class="sky-grid">
+                            <button class="sky-btn active" data-sky="original">原始</button>
+                            <button class="sky-btn" data-sky="sunset">日落</button>
+                            <button class="sky-btn" data-sky="blue">藍天</button>
+                            <button class="sky-btn" data-sky="night">夜空</button>
+                            <button class="sky-btn" data-sky="cloudy">多雲</button>
+                            <button class="sky-btn" data-sky="gradient">漸層</button>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="segmentBtn" class="btn btn-primary">🌤️ 分割天空</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">處理中...</p>
+                    </div>
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <div class="stats-row">
+                            <div class="stat-item"><span class="stat-value" id="skyArea">0%</span><span class="stat-label" id="areaLabel">天空面積</span></div>
+                        </div>
+                    </div>
+                    <div class="action-section" id="exportSection" style="display: none;">
+                        <button id="downloadBtn" class="btn btn-secondary">💾 下載結果</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #467</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

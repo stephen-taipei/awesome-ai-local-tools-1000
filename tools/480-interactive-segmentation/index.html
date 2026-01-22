@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Segmentation | 互動式分割</title>
+    <meta name="description" content="Click-based interactive image segmentation. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>互動式分割</h1>
+            <p class="subtitle">點擊選取目標物件進行分割</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">👆</div>
+                    <p id="uploadText">拖放圖片至此或點擊上傳</p>
+                    <p class="upload-hint">支援 JPG, PNG, WebP</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <div class="canvas-container"><canvas id="mainCanvas"></canvas></div>
+                    </div>
+                    <div class="instruction" id="instruction">
+                        <p>點擊圖片上的物件以選取分割目標。綠色點為正向選取，紅色點為負向排除。</p>
+                    </div>
+                    <div class="click-mode-section">
+                        <label id="modeLabel">點擊模式：</label>
+                        <div class="mode-buttons">
+                            <button class="mode-btn active" data-mode="positive">➕ 正向選取</button>
+                            <button class="mode-btn" data-mode="negative">➖ 負向排除</button>
+                        </div>
+                    </div>
+                    <div class="points-display" id="pointsDisplay">
+                        <span id="positiveCount">正向: 0</span>
+                        <span id="negativeCount">負向: 0</span>
+                    </div>
+                    <div class="action-section">
+                        <button id="segmentBtn" class="btn btn-primary" disabled>👆 執行分割</button>
+                        <button id="clearBtn" class="btn btn-secondary">🗑️ 清除點位</button>
+                        <button id="toggleBtn" class="btn btn-secondary" style="display:none;">🔄 切換顯示</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">分割中...</p>
+                    </div>
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <h3 id="resultsTitle">分割結果</h3>
+                        <div class="stats-row">
+                            <div class="stat-item"><span class="stat-value" id="coverage">0%</span><span class="stat-label" id="coverageLabel">覆蓋面積</span></div>
+                            <div class="stat-item"><span class="stat-value" id="confidence">0%</span><span class="stat-label" id="confidenceLabel">信心度</span></div>
+                            <div class="stat-item"><span class="stat-value" id="iterations">0</span><span class="stat-label" id="iterLabel">迭代次數</span></div>
+                        </div>
+                    </div>
+                    <div class="action-section" id="exportSection" style="display: none;">
+                        <button id="downloadBtn" class="btn btn-secondary">💾 下載結果</button>
+                        <button id="downloadMaskBtn" class="btn btn-secondary">🎭 下載遮罩</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #480</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

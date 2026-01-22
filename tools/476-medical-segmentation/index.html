@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Image Segmentation | 醫學影像分割</title>
+    <meta name="description" content="Segment medical imaging areas for analysis. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+        <header class="header">
+            <h1>醫學影像分割</h1>
+            <p class="subtitle">分割醫學影像中的解剖區域</p>
+        </header>
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span>100% 本地處理 · 零資料上傳</span>
+        </div>
+        <main class="main-content">
+            <div class="editor-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">🏥</div>
+                    <p id="uploadText">拖放醫學影像至此或點擊上傳</p>
+                    <p class="upload-hint">支援 JPG, PNG, WebP, DICOM</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div class="editor-content" id="editorContent" style="display: none;">
+                    <div class="preview-section">
+                        <div class="canvas-container"><canvas id="mainCanvas"></canvas></div>
+                    </div>
+                    <div class="options-section" id="optionsSection">
+                        <label id="modeLabel">分割模式：</label>
+                        <div class="mode-buttons">
+                            <button class="mode-btn active" data-mode="organ">器官</button>
+                            <button class="mode-btn" data-mode="tissue">組織</button>
+                            <button class="mode-btn" data-mode="lesion">病灶</button>
+                            <button class="mode-btn" data-mode="vessel">血管</button>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <button id="segmentBtn" class="btn btn-primary">🏥 開始分割</button>
+                        <button id="toggleBtn" class="btn btn-secondary" style="display:none;">🔄 切換顯示</button>
+                    </div>
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-text" id="progressText">分析中...</p>
+                    </div>
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <h3 id="resultsTitle">分割結果</h3>
+                        <div class="legend" id="legend"></div>
+                        <div class="stats-row">
+                            <div class="stat-item"><span class="stat-value" id="regionCount">0</span><span class="stat-label" id="regionLabel">偵測區域</span></div>
+                            <div class="stat-item"><span class="stat-value" id="coverage">0%</span><span class="stat-label" id="coverageLabel">覆蓋率</span></div>
+                            <div class="stat-item"><span class="stat-value" id="confidence">0%</span><span class="stat-label" id="confidenceLabel">信心度</span></div>
+                        </div>
+                    </div>
+                    <div class="action-section" id="exportSection" style="display: none;">
+                        <button id="downloadBtn" class="btn btn-secondary">💾 下載結果</button>
+                        <button id="exportBtn" class="btn btn-secondary">📄 匯出報告</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p><a href="../../index.html">返回首頁</a> · 工具 #476</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
