@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stable Diffusion Text to Image | Stable Diffusion 文字生圖</title>
+    <meta name="description" content="Generate images from text descriptions locally in your browser. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">Stable Diffusion 文字生圖</h1>
+            <p class="subtitle" data-i18n="subtitle">輸入文字描述，AI 為您生成獨特圖像</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label data-i18n="promptLabel">圖像描述 (Prompt)</label>
+                    <textarea id="promptInput" class="textarea-field" rows="4" data-i18n-placeholder="promptPlaceholder" placeholder="描述您想要生成的圖像，例如：一隻在星空下的貓咪，夢幻風格..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="negativeLabel">負面提示詞 (Negative Prompt)</label>
+                    <input type="text" id="negativeInput" class="input-field" data-i18n-placeholder="negativePlaceholder" placeholder="不希望出現的元素...">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="stepsLabel">生成步數</label>
+                        <select id="stepsSelect" class="select-field">
+                            <option value="20">20 步 (快速)</option>
+                            <option value="30" selected>30 步 (平衡)</option>
+                            <option value="50">50 步 (精細)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="sizeLabel">圖像尺寸</label>
+                        <select id="sizeSelect" class="select-field">
+                            <option value="512x512" selected>512 x 512</option>
+                            <option value="768x512">768 x 512</option>
+                            <option value="512x768">512 x 768</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="cfgLabel">CFG Scale</label>
+                        <input type="range" id="cfgSlider" min="1" max="20" value="7" class="slider-field">
+                        <span id="cfgValue" class="slider-value">7</span>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="seedLabel">種子值 (Seed)</label>
+                        <input type="number" id="seedInput" class="input-field" placeholder="-1 (隨機)" value="-1">
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成圖像</span>
+                </button>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成結果</h3>
+                    <div class="output-actions">
+                        <button id="downloadBtn" class="btn btn-success btn-sm" data-i18n="downloadBtn">下載 PNG</button>
+                        <button id="regenerateBtn" class="btn btn-secondary btn-sm" data-i18n="regenerateBtn">重新生成</button>
+                    </div>
+                </div>
+
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-info">
+                        <span id="progressText" data-i18n="generating">正在生成圖像...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-note" id="progressNote"></p>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="resultCanvas" width="512" height="512"></canvas>
+                </div>
+
+                <div class="output-stats" id="outputStats"></div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature1">文字生圖</h3>
+                    <p data-i18n="feature1Desc">輸入描述文字，AI 自動生成對應圖像</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎛️</div>
+                    <h3 data-i18n="feature2">精細控制</h3>
+                    <p data-i18n="feature2Desc">調整步數、CFG Scale 等參數優化結果</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌱</div>
+                    <h3 data-i18n="feature4">可重現</h3>
+                    <p data-i18n="feature4Desc">使用相同種子值可重現生成結果</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #501</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

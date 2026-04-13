@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Style Generator | 藝術風格生成</title>
+    <meta name="description" content="Generate AI art in various styles locally in your browser. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">AI 藝術風格生成</h1>
+            <p class="subtitle" data-i18n="subtitle">選擇藝術風格，創作獨特的 AI 藝術作品</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="generator-layout">
+                <div class="controls-panel">
+                    <h3 data-i18n="controlsTitle">藝術參數</h3>
+
+                    <div class="form-group">
+                        <label data-i18n="styleLabel">藝術風格</label>
+                        <div class="style-grid">
+                            <label class="style-item">
+                                <input type="radio" name="style" value="impressionist" checked>
+                                <div class="style-preview impressionist"></div>
+                                <span data-i18n="styleImpressionist">印象派</span>
+                            </label>
+                            <label class="style-item">
+                                <input type="radio" name="style" value="cubist">
+                                <div class="style-preview cubist"></div>
+                                <span data-i18n="styleCubist">立體派</span>
+                            </label>
+                            <label class="style-item">
+                                <input type="radio" name="style" value="popart">
+                                <div class="style-preview popart"></div>
+                                <span data-i18n="stylePopart">普普藝術</span>
+                            </label>
+                            <label class="style-item">
+                                <input type="radio" name="style" value="watercolor">
+                                <div class="style-preview watercolor"></div>
+                                <span data-i18n="styleWatercolor">水彩畫</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="subjectLabel">主題描述</label>
+                        <textarea id="subjectInput" class="textarea-field" rows="3" data-i18n-placeholder="subjectPlaceholder" placeholder="描述您想要創作的主題，例如：花瓶中的向日葵..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="colorSchemeLabel">色彩方案</label>
+                        <select id="colorSchemeSelect" class="select-field">
+                            <option value="vibrant" data-i18n="colorVibrant">鮮豔</option>
+                            <option value="pastel" data-i18n="colorPastel">柔和</option>
+                            <option value="monochrome" data-i18n="colorMono">單色</option>
+                            <option value="warm" data-i18n="colorWarm">暖色調</option>
+                            <option value="cool" data-i18n="colorCool">冷色調</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="complexityLabel">複雜度</label>
+                        <input type="range" id="complexitySlider" min="1" max="10" value="5" class="slider-field">
+                        <div class="slider-labels">
+                            <span data-i18n="simple">簡約</span>
+                            <span id="complexityValue">5</span>
+                            <span data-i18n="complex">複雜</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="brushSizeLabel">筆觸大小</label>
+                        <input type="range" id="brushSlider" min="1" max="10" value="5" class="slider-field">
+                        <div class="slider-labels">
+                            <span data-i18n="fine">細緻</span>
+                            <span id="brushValue">5</span>
+                            <span data-i18n="bold">粗獷</span>
+                        </div>
+                    </div>
+
+                    <button id="generateBtn" class="btn btn-primary btn-block">
+                        <span data-i18n="generateBtn">生成藝術作品</span>
+                    </button>
+                </div>
+
+                <div class="preview-panel">
+                    <div class="canvas-wrapper">
+                        <canvas id="artCanvas" width="512" height="512"></canvas>
+                        <div class="canvas-overlay" id="canvasOverlay">
+                            <div class="spinner"></div>
+                            <p data-i18n="generating">創作中...</p>
+                        </div>
+                    </div>
+
+                    <div class="preview-actions">
+                        <button id="downloadBtn" class="btn btn-success btn-sm" disabled data-i18n="downloadBtn">下載 PNG</button>
+                        <button id="randomizeBtn" class="btn btn-secondary btn-sm" data-i18n="randomizeBtn">隨機靈感</button>
+                    </div>
+
+                    <div class="output-stats" id="outputStats" style="display: none;"></div>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature1">經典風格</h3>
+                    <p data-i18n="feature1Desc">印象派、立體派、普普藝術等風格</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🖌️</div>
+                    <h3 data-i18n="feature2">筆觸控制</h3>
+                    <p data-i18n="feature2Desc">調整筆觸大小和複雜度</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎭</div>
+                    <h3 data-i18n="feature4">色彩方案</h3>
+                    <p data-i18n="feature4Desc">多種配色風格供選擇</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #505</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

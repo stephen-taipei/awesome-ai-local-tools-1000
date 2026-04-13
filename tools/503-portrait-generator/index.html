@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portrait Generator | 人像生成器</title>
+    <meta name="description" content="Generate AI portraits locally in your browser. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">AI 人像生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">自訂參數，生成獨特的 AI 人像</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="generator-layout">
+                <div class="controls-panel">
+                    <h3 data-i18n="controlsTitle">人像參數</h3>
+
+                    <div class="form-group">
+                        <label data-i18n="genderLabel">性別</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="gender" value="female" checked>
+                                <span data-i18n="genderFemale">女性</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="gender" value="male">
+                                <span data-i18n="genderMale">男性</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="gender" value="neutral">
+                                <span data-i18n="genderNeutral">中性</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="ageLabel">年齡範圍</label>
+                        <select id="ageSelect" class="select-field">
+                            <option value="child" data-i18n="ageChild">兒童 (5-12)</option>
+                            <option value="teen" data-i18n="ageTeen">青少年 (13-19)</option>
+                            <option value="young" selected data-i18n="ageYoung">青年 (20-35)</option>
+                            <option value="middle" data-i18n="ageMiddle">中年 (36-55)</option>
+                            <option value="senior" data-i18n="ageSenior">老年 (55+)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="styleLabel">風格</label>
+                        <select id="styleSelect" class="select-field">
+                            <option value="realistic" data-i18n="styleRealistic">寫實</option>
+                            <option value="anime" data-i18n="styleAnime">動漫</option>
+                            <option value="cartoon" data-i18n="styleCartoon">卡通</option>
+                            <option value="sketch" data-i18n="styleSketch">素描</option>
+                            <option value="oil" data-i18n="styleOil">油畫</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="skinLabel">膚色</label>
+                        <div class="color-picker-row">
+                            <input type="color" id="skinColor" value="#f5d0b0" class="color-picker">
+                            <div class="preset-colors" id="skinPresets">
+                                <button class="preset-color" data-color="#fce5d3" title="淺膚色"></button>
+                                <button class="preset-color" data-color="#f5d0b0" title="自然膚色"></button>
+                                <button class="preset-color" data-color="#d4a574" title="小麥色"></button>
+                                <button class="preset-color" data-color="#a67c52" title="棕褐色"></button>
+                                <button class="preset-color" data-color="#6b4423" title="深膚色"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="hairLabel">髮色</label>
+                        <div class="color-picker-row">
+                            <input type="color" id="hairColor" value="#3d2314" class="color-picker">
+                            <div class="preset-colors" id="hairPresets">
+                                <button class="preset-color" data-color="#f5e6ca" title="金色"></button>
+                                <button class="preset-color" data-color="#8b4513" title="棕色"></button>
+                                <button class="preset-color" data-color="#3d2314" title="深棕"></button>
+                                <button class="preset-color" data-color="#1a1a1a" title="黑色"></button>
+                                <button class="preset-color" data-color="#c41e3a" title="紅色"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="bgLabel">背景顏色</label>
+                        <input type="color" id="bgColor" value="#1e293b" class="color-picker full-width">
+                    </div>
+
+                    <button id="generateBtn" class="btn btn-primary btn-block">
+                        <span data-i18n="generateBtn">生成人像</span>
+                    </button>
+                </div>
+
+                <div class="preview-panel">
+                    <div class="canvas-wrapper">
+                        <canvas id="portraitCanvas" width="512" height="512"></canvas>
+                        <div class="canvas-overlay" id="canvasOverlay">
+                            <div class="spinner"></div>
+                            <p data-i18n="generating">生成中...</p>
+                        </div>
+                    </div>
+
+                    <div class="preview-actions">
+                        <button id="downloadBtn" class="btn btn-success btn-sm" disabled data-i18n="downloadBtn">下載 PNG</button>
+                        <button id="randomizeBtn" class="btn btn-secondary btn-sm" data-i18n="randomizeBtn">隨機參數</button>
+                    </div>
+
+                    <div class="output-stats" id="outputStats" style="display: none;"></div>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">👤</div>
+                    <h3 data-i18n="feature1">自訂參數</h3>
+                    <p data-i18n="feature1Desc">性別、年齡、膚色、髮色自由調整</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature2">多種風格</h3>
+                    <p data-i18n="feature2Desc">寫實、動漫、卡通、素描等風格</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎲</div>
+                    <h3 data-i18n="feature4">隨機生成</h3>
+                    <p data-i18n="feature4Desc">一鍵隨機所有參數創造驚喜</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #503</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

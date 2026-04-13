@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Tagging | 圖像標籤 - AI Local Tools</title>
+    <meta name="description" content="Generate AI tags for images. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">圖像標籤</h1>
+            <p class="subtitle" data-i18n="subtitle">AI 自動為圖片生成描述標籤</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <div class="upload-icon">🏷️</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP 格式</p>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <div class="image-preview">
+                    <img id="previewImage" alt="Preview">
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="analyzing">分析中...</p>
+                </div>
+
+                <!-- Tags Section -->
+                <div class="tags-section" id="tagsSection" style="display: none;">
+                    <h3 data-i18n="generatedTags">生成的標籤</h3>
+
+                    <!-- Categories -->
+                    <div class="tag-categories">
+                        <div class="tag-category">
+                            <h4 data-i18n="objects">物件</h4>
+                            <div class="tag-list" id="objectTags"></div>
+                        </div>
+                        <div class="tag-category">
+                            <h4 data-i18n="scene">場景</h4>
+                            <div class="tag-list" id="sceneTags"></div>
+                        </div>
+                        <div class="tag-category">
+                            <h4 data-i18n="attributes">屬性</h4>
+                            <div class="tag-list" id="attributeTags"></div>
+                        </div>
+                        <div class="tag-category">
+                            <h4 data-i18n="colors">顏色</h4>
+                            <div class="tag-list" id="colorTags"></div>
+                        </div>
+                    </div>
+
+                    <!-- All Tags -->
+                    <div class="all-tags">
+                        <h4 data-i18n="allTags">所有標籤</h4>
+                        <div class="tag-cloud" id="tagCloud"></div>
+                    </div>
+
+                    <!-- Copy Tags -->
+                    <div class="copy-section">
+                        <textarea id="tagOutput" readonly></textarea>
+                        <button id="copyBtn" class="btn btn-primary" data-i18n="copyTags">複製標籤</button>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="exportBtn" class="btn btn-success" data-i18n="export">匯出 JSON</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #492</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

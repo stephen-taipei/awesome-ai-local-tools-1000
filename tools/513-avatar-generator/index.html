@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Avatar Generator | AI 頭像生成器</title>
+    <meta name="description" content="Generate unique avatars locally in your browser with AI. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 頭像生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">完全在瀏覽器本地執行，資料不外傳</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Options Panel -->
+            <div class="options-panel">
+                <h3 data-i18n="avatarOptions">頭像選項</h3>
+
+                <div class="option-group">
+                    <label data-i18n="avatarStyle">頭像風格</label>
+                    <div class="style-types">
+                        <button class="style-btn active" data-style="cartoon" data-i18n="cartoon">卡通</button>
+                        <button class="style-btn" data-style="pixel" data-i18n="pixel">像素</button>
+                        <button class="style-btn" data-style="3d" data-i18n="3d">3D</button>
+                        <button class="style-btn" data-style="minimalist" data-i18n="minimalist">極簡</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="backgroundColor">背景顏色</label>
+                    <input type="color" id="bgColor" value="#6366f1">
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="skinTone">膚色</label>
+                    <div class="skin-tones">
+                        <button class="skin-btn" data-color="#FFDBB4" style="background: #FFDBB4"></button>
+                        <button class="skin-btn active" data-color="#EDB98A" style="background: #EDB98A"></button>
+                        <button class="skin-btn" data-color="#D08B5B" style="background: #D08B5B"></button>
+                        <button class="skin-btn" data-color="#AE5D29" style="background: #AE5D29"></button>
+                        <button class="skin-btn" data-color="#694D3D" style="background: #694D3D"></button>
+                    </div>
+                </div>
+
+                <div class="option-group features-group">
+                    <label data-i18n="features">特徵</label>
+                    <div class="feature-controls">
+                        <div class="feature-item">
+                            <span data-i18n="hair">髮型</span>
+                            <button class="feature-btn" data-feature="hair" data-i18n="randomize">隨機</button>
+                        </div>
+                        <div class="feature-item">
+                            <span data-i18n="eyes">眼睛</span>
+                            <button class="feature-btn" data-feature="eyes" data-i18n="randomize">隨機</button>
+                        </div>
+                        <div class="feature-item">
+                            <span data-i18n="accessories">配件</span>
+                            <button class="feature-btn" data-feature="accessories" data-i18n="randomize">隨機</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="avatarSize">頭像尺寸</label>
+                    <select id="avatarSize">
+                        <option value="128">128 x 128</option>
+                        <option value="256" selected>256 x 256</option>
+                        <option value="512">512 x 512</option>
+                    </select>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">生成頭像</button>
+                <button id="randomAllBtn" class="btn btn-secondary" data-i18n="randomAll">全部隨機</button>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area">
+                <div class="canvas-container">
+                    <div class="avatar-frame">
+                        <canvas id="avatarCanvas" width="256" height="256"></canvas>
+                    </div>
+                    <div class="processing-overlay" id="processingOverlay" style="display: none;">
+                        <div class="spinner"></div>
+                        <p data-i18n="generating">生成中...</p>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="progressText">0%</span>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-panel" id="statsPanel" style="display: none;">
+                    <h4 data-i18n="statistics">統計資訊</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statStyle">風格</span>
+                            <span class="stat-value" id="statStyle">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statFeatures">特徵數</span>
+                            <span class="stat-value" id="statFeatures">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statSize">尺寸</span>
+                            <span class="stat-value" id="statSize">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statSeed">種子碼</span>
+                            <span class="stat-value" id="statSeed">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions" id="actionsPanel" style="display: none;">
+                    <button id="downloadPng" class="btn btn-success" data-i18n="downloadPng">下載 PNG</button>
+                    <button id="downloadSvg" class="btn btn-secondary" data-i18n="downloadSvg">下載 SVG</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> |
+                <span data-i18n="toolNumber">工具 #513</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

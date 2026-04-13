@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Texture Generator | AI 材質生成器</title>
+    <meta name="description" content="Generate seamless textures locally in your browser with AI. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 材質生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">完全在瀏覽器本地執行，資料不外傳</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Options Panel -->
+            <div class="options-panel">
+                <h3 data-i18n="textureOptions">材質選項</h3>
+
+                <div class="option-group">
+                    <label data-i18n="textureType">材質類型</label>
+                    <div class="texture-types">
+                        <button class="texture-btn active" data-type="wood" data-i18n="wood">木紋</button>
+                        <button class="texture-btn" data-type="marble" data-i18n="marble">大理石</button>
+                        <button class="texture-btn" data-type="metal" data-i18n="metal">金屬</button>
+                        <button class="texture-btn" data-type="fabric" data-i18n="fabric">布料</button>
+                        <button class="texture-btn" data-type="brick" data-i18n="brick">磚塊</button>
+                        <button class="texture-btn" data-type="concrete" data-i18n="concrete">混凝土</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="scale">縮放比例</label>
+                    <input type="range" id="scaleSlider" min="0.5" max="3" step="0.1" value="1">
+                    <span id="scaleValue">1.0x</span>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="roughness">粗糙度</label>
+                    <input type="range" id="roughnessSlider" min="0" max="100" step="1" value="50">
+                    <span id="roughnessValue">50%</span>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="colorTint">色調</label>
+                    <input type="color" id="colorTint" value="#8B7355">
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="tileSize">圖塊尺寸</label>
+                    <select id="tileSize">
+                        <option value="256">256 x 256</option>
+                        <option value="512" selected>512 x 512</option>
+                        <option value="1024">1024 x 1024</option>
+                    </select>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">生成材質</button>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area">
+                <div class="canvas-container">
+                    <canvas id="textureCanvas" width="512" height="512"></canvas>
+                    <div class="processing-overlay" id="processingOverlay" style="display: none;">
+                        <div class="spinner"></div>
+                        <p data-i18n="generating">生成中...</p>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="progressText">0%</span>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-panel" id="statsPanel" style="display: none;">
+                    <h4 data-i18n="statistics">統計資訊</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statType">類型</span>
+                            <span class="stat-value" id="statType">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statTileSize">圖塊尺寸</span>
+                            <span class="stat-value" id="statTileSize">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statScale">縮放</span>
+                            <span class="stat-value" id="statScale">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statRoughness">粗糙度</span>
+                            <span class="stat-value" id="statRoughness">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions" id="actionsPanel" style="display: none;">
+                    <button id="downloadPng" class="btn btn-success" data-i18n="downloadPng">下載 PNG</button>
+                    <button id="downloadJpg" class="btn btn-secondary" data-i18n="downloadJpg">下載 JPG</button>
+                    <button id="previewTile" class="btn btn-secondary" data-i18n="previewTile">預覽平鋪效果</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Tile Preview Modal -->
+        <div class="modal" id="tileModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 data-i18n="tilePreview">平鋪預覽</h3>
+                    <button class="modal-close" id="closeModal">&times;</button>
+                </div>
+                <div class="tile-preview" id="tilePreviewContainer"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> |
+                <span data-i18n="toolNumber">工具 #511</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

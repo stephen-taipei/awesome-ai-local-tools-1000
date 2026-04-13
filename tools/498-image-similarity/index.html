@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Similarity | 圖像相似度 - AI Local Tools</title>
+    <meta name="description" content="Compare image similarity using AI. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">圖像相似度</h1>
+            <p class="subtitle" data-i18n="subtitle">AI 比較兩張圖片的相似程度</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Areas -->
+            <div class="upload-grid">
+                <div class="upload-box" id="uploadBox1">
+                    <input type="file" id="fileInput1" accept="image/*" hidden>
+                    <div class="upload-content" id="uploadContent1">
+                        <div class="upload-icon">🖼️</div>
+                        <p data-i18n="image1">圖片 1</p>
+                    </div>
+                    <img id="preview1" class="preview-img" style="display: none;">
+                </div>
+                <div class="vs-badge">VS</div>
+                <div class="upload-box" id="uploadBox2">
+                    <input type="file" id="fileInput2" accept="image/*" hidden>
+                    <div class="upload-content" id="uploadContent2">
+                        <div class="upload-icon">🖼️</div>
+                        <p data-i18n="image2">圖片 2</p>
+                    </div>
+                    <img id="preview2" class="preview-img" style="display: none;">
+                </div>
+            </div>
+
+            <!-- Compare Button -->
+            <div class="compare-section">
+                <button id="compareBtn" class="btn btn-primary" disabled data-i18n="compare">比較相似度</button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progressContainer" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText" data-i18n="analyzing">分析中...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <!-- Similarity Score -->
+                <div class="similarity-score">
+                    <div class="score-circle" id="scoreCircle">
+                        <span class="score-value" id="similarityValue">0</span>
+                        <span class="score-percent">%</span>
+                    </div>
+                    <div class="similarity-label" id="similarityLabel"></div>
+                </div>
+
+                <!-- Comparison Details -->
+                <div class="comparison-details">
+                    <h3 data-i18n="comparisonDetails">比較細項</h3>
+                    <div class="detail-items">
+                        <div class="detail-item">
+                            <span class="detail-label" data-i18n="colorSimilarity">色彩相似度</span>
+                            <div class="detail-bar"><div class="detail-fill" id="colorFill"></div></div>
+                            <span class="detail-value" id="colorValue">0%</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label" data-i18n="structureSimilarity">結構相似度</span>
+                            <div class="detail-bar"><div class="detail-fill" id="structureFill"></div></div>
+                            <span class="detail-value" id="structureValue">0%</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label" data-i18n="textureSimilarity">紋理相似度</span>
+                            <div class="detail-bar"><div class="detail-fill" id="textureFill"></div></div>
+                            <span class="detail-value" id="textureValue">0%</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label" data-i18n="histogramSimilarity">直方圖相似度</span>
+                            <div class="detail-bar"><div class="detail-fill" id="histogramFill"></div></div>
+                            <span class="detail-value" id="histogramValue">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verdict -->
+                <div class="verdict-section">
+                    <h3 data-i18n="verdict">判定結果</h3>
+                    <p id="verdictText"></p>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions" id="actions" style="display: none;">
+                <button id="exportBtn" class="btn btn-success" data-i18n="export">匯出報告</button>
+                <button id="resetBtn" class="btn btn-secondary" data-i18n="reset">重新比較</button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #498</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

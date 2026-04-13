@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Generator | Icon 生成器 - AI Local Tools</title>
+    <meta name="description" content="Generate icons locally in your browser with AI assistance. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">Icon 生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">智能圖示設計，本地處理保護隱私</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="categoryLabel">圖示類別</label>
+                        <select id="categorySelect" class="select-field">
+                            <option value="ui" data-i18n="categoryUI">介面元素</option>
+                            <option value="social" data-i18n="categorySocial">社交媒體</option>
+                            <option value="file" data-i18n="categoryFile">檔案類型</option>
+                            <option value="arrow" data-i18n="categoryArrow">箭頭方向</option>
+                            <option value="device" data-i18n="categoryDevice">設備裝置</option>
+                            <option value="weather" data-i18n="categoryWeather">天氣圖示</option>
+                            <option value="action" data-i18n="categoryAction">操作動作</option>
+                            <option value="emoji" data-i18n="categoryEmoji">表情符號</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="styleLabel">圖示風格</label>
+                        <select id="styleSelect" class="select-field">
+                            <option value="flat" data-i18n="styleFlat">扁平化</option>
+                            <option value="outlined" data-i18n="styleOutlined">線條</option>
+                            <option value="filled" data-i18n="styleFilled">填充</option>
+                            <option value="duotone" data-i18n="styleDuotone">雙色調</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="iconTypeLabel">具體圖示</label>
+                        <select id="iconTypeSelect" class="select-field">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="colorLabel">圖示顏色</label>
+                        <input type="color" id="iconColor" class="color-input" value="#14b8a6">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="sizeLabel">輸出尺寸</label>
+                    <div class="size-options">
+                        <label class="size-option">
+                            <input type="checkbox" value="16" checked> 16x16
+                        </label>
+                        <label class="size-option">
+                            <input type="checkbox" value="24" checked> 24x24
+                        </label>
+                        <label class="size-option">
+                            <input type="checkbox" value="32" checked> 32x32
+                        </label>
+                        <label class="size-option">
+                            <input type="checkbox" value="48" checked> 48x48
+                        </label>
+                        <label class="size-option">
+                            <input type="checkbox" value="64" checked> 64x64
+                        </label>
+                        <label class="size-option">
+                            <input type="checkbox" value="128"> 128x128
+                        </label>
+                        <label class="size-option">
+                            <input type="checkbox" value="256"> 256x256
+                        </label>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成圖示</span>
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText" data-i18n="processing">AI 正在繪製中...</p>
+            </div>
+
+            <!-- Canvas Section -->
+            <div class="canvas-section" id="canvasSection" style="display: none;">
+                <h3 data-i18n="previewTitle">圖示預覽</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="iconCanvas" width="256" height="256"></canvas>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成結果</h3>
+                </div>
+                <div class="output-stats" id="outputStats"></div>
+                <div class="size-previews" id="sizePreviews"></div>
+                <div class="output-actions">
+                    <button id="downloadAllBtn" class="btn btn-primary" data-i18n="downloadAll">下載全部尺寸</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature1">多種風格</h3>
+                    <p data-i18n="feature1Desc">支援扁平化、線條、填充、雙色調風格</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📐</div>
+                    <h3 data-i18n="feature2">多尺寸輸出</h3>
+                    <p data-i18n="feature2Desc">一次生成多種尺寸，適配各種場景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📦</div>
+                    <h3 data-i18n="feature4">批量下載</h3>
+                    <p data-i18n="feature4Desc">支援一鍵下載所有尺寸圖示</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #507</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

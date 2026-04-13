@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Character Generator | AI 角色生成器</title>
+    <meta name="description" content="Generate unique character silhouettes locally in your browser with AI. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 角色生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">完全在瀏覽器本地執行，資料不外傳</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Options Panel -->
+            <div class="options-panel">
+                <h3 data-i18n="characterOptions">角色選項</h3>
+
+                <div class="option-group">
+                    <label data-i18n="characterType">角色類型</label>
+                    <div class="type-grid">
+                        <button class="type-btn active" data-type="warrior" data-i18n="warrior">戰士</button>
+                        <button class="type-btn" data-type="mage" data-i18n="mage">法師</button>
+                        <button class="type-btn" data-type="archer" data-i18n="archer">弓箭手</button>
+                        <button class="type-btn" data-type="robot" data-i18n="robot">機器人</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="pose">姿勢</label>
+                    <div class="pose-options">
+                        <button class="pose-btn active" data-pose="standing" data-i18n="standing">站立</button>
+                        <button class="pose-btn" data-pose="action" data-i18n="action">動作</button>
+                        <button class="pose-btn" data-pose="idle" data-i18n="idle">待機</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="colorScheme">配色方案</label>
+                    <div class="color-inputs">
+                        <div class="color-item">
+                            <span data-i18n="primary">主色</span>
+                            <input type="color" id="primaryColor" value="#4ade80">
+                        </div>
+                        <div class="color-item">
+                            <span data-i18n="secondary">輔色</span>
+                            <input type="color" id="secondaryColor" value="#22c55e">
+                        </div>
+                        <div class="color-item">
+                            <span data-i18n="accent">強調色</span>
+                            <input type="color" id="accentColor" value="#16a34a">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="attributes">屬性加成</label>
+                    <div class="attributes">
+                        <div class="attr-item">
+                            <span data-i18n="strength">力量</span>
+                            <input type="range" id="strength" min="1" max="10" value="5">
+                            <span id="strengthVal">5</span>
+                        </div>
+                        <div class="attr-item">
+                            <span data-i18n="agility">敏捷</span>
+                            <input type="range" id="agility" min="1" max="10" value="5">
+                            <span id="agilityVal">5</span>
+                        </div>
+                        <div class="attr-item">
+                            <span data-i18n="magic">魔力</span>
+                            <input type="range" id="magic" min="1" max="10" value="5">
+                            <span id="magicVal">5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="canvasSize">畫布尺寸</label>
+                    <select id="canvasSize">
+                        <option value="256">256 x 384</option>
+                        <option value="512" selected>512 x 768</option>
+                        <option value="1024">1024 x 1536</option>
+                    </select>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">生成角色</button>
+                <button id="randomBtn" class="btn btn-secondary" data-i18n="randomize">隨機生成</button>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area">
+                <div class="canvas-container">
+                    <canvas id="characterCanvas" width="512" height="768"></canvas>
+                    <div class="processing-overlay" id="processingOverlay" style="display: none;">
+                        <div class="spinner"></div>
+                        <p data-i18n="generating">生成中...</p>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="progressText">0%</span>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-panel" id="statsPanel" style="display: none;">
+                    <h4 data-i18n="statistics">統計資訊</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statType">類型</span>
+                            <span class="stat-value" id="statType">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statAttributes">屬性總和</span>
+                            <span class="stat-value" id="statAttributes">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statPose">姿勢</span>
+                            <span class="stat-value" id="statPose">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statSize">尺寸</span>
+                            <span class="stat-value" id="statSize">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions" id="actionsPanel" style="display: none;">
+                    <button id="downloadPng" class="btn btn-success" data-i18n="downloadPng">下載 PNG</button>
+                    <button id="downloadJpg" class="btn btn-secondary" data-i18n="downloadJpg">下載 JPG</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> |
+                <span data-i18n="toolNumber">工具 #514</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

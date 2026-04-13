@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surface Normal Estimation | AI Local Tools</title>
+    <meta name="description" content="Estimate surface normals from images locally in your browser with AI.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">表面法線估計</h1>
+            <p class="subtitle" data-i18n="subtitle">從圖片估計表面法線方向</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <div class="upload-icon">🔮</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP 格式</p>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <div class="image-grid">
+                    <div class="image-box">
+                        <h3 data-i18n="originalImage">原始圖片</h3>
+                        <div class="image-wrapper">
+                            <img id="originalImage" alt="Original">
+                        </div>
+                    </div>
+                    <div class="image-box">
+                        <h3 data-i18n="normalMap">法線圖</h3>
+                        <div class="image-wrapper">
+                            <canvas id="normalCanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-info">
+                        <span id="progressText" data-i18n="analyzing">正在估計表面法線...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Color Legend -->
+                <div class="legend" id="legend" style="display: none;">
+                    <h4 data-i18n="colorLegend">顏色說明</h4>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ff8080;"></div>
+                            <span data-i18n="rightFacing">朝右 (+X)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #80ff80;"></div>
+                            <span data-i18n="upFacing">朝上 (+Y)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #8080ff;"></div>
+                            <span data-i18n="frontFacing">朝前 (+Z)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <h3 data-i18n="analysisResults">分析結果</h3>
+                    <div class="normal-stats" id="normalStats"></div>
+
+                    <!-- Actions -->
+                    <div class="actions">
+                        <button id="downloadBtn" class="btn btn-primary" data-i18n="downloadNormalMap">下載法線圖</button>
+                        <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #485</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
