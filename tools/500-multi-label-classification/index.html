@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Label Classification | 多標籤分類 - AI Local Tools</title>
+    <meta name="description" content="Multi-label image classification using AI. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">多標籤分類</h1>
+            <p class="subtitle" data-i18n="subtitle">AI 為圖片分配多個類別標籤</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <div class="upload-icon">🏷️</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP 格式</p>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <div class="image-preview">
+                    <img id="previewImage" alt="Preview">
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="analyzing">分類中...</p>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <!-- Summary -->
+                    <div class="summary-card">
+                        <div class="summary-stat">
+                            <span class="stat-value" id="labelCount">0</span>
+                            <span class="stat-label" data-i18n="labelsAssigned">個標籤</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="stat-value" id="avgConfidence">0%</span>
+                            <span class="stat-label" data-i18n="avgConfidence">平均信心度</span>
+                        </div>
+                    </div>
+
+                    <!-- Primary Labels -->
+                    <div class="labels-section">
+                        <h3 data-i18n="primaryLabels">主要分類</h3>
+                        <div class="labels-list" id="primaryLabels"></div>
+                    </div>
+
+                    <!-- Secondary Labels -->
+                    <div class="labels-section">
+                        <h3 data-i18n="secondaryLabels">次要分類</h3>
+                        <div class="labels-list" id="secondaryLabels"></div>
+                    </div>
+
+                    <!-- Category Breakdown -->
+                    <div class="category-breakdown">
+                        <h3 data-i18n="categoryBreakdown">類別分布</h3>
+                        <div id="categoryBars"></div>
+                    </div>
+
+                    <!-- All Labels -->
+                    <div class="all-labels-section">
+                        <h3 data-i18n="allLabels">所有標籤</h3>
+                        <div class="labels-cloud" id="labelsCloud"></div>
+                        <div class="labels-output">
+                            <textarea id="labelsOutput" readonly></textarea>
+                            <button id="copyBtn" class="btn btn-sm" data-i18n="copy">複製</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="exportBtn" class="btn btn-success" data-i18n="export">匯出結果</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #500</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

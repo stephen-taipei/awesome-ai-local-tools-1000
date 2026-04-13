@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Generator | Logo 生成器 - AI Local Tools</title>
+    <meta name="description" content="Generate logos locally in your browser with AI assistance. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">Logo 生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">智能 Logo 設計，本地處理保護隱私</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-group">
+                    <label data-i18n="companyLabel">公司名稱</label>
+                    <input type="text" id="companyInput" class="input-field" data-i18n-placeholder="companyPlaceholder" placeholder="輸入公司或品牌名稱...">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="industryLabel">行業類型</label>
+                        <select id="industrySelect" class="select-field">
+                            <option value="tech" data-i18n="industryTech">科技</option>
+                            <option value="finance" data-i18n="industryFinance">金融</option>
+                            <option value="health" data-i18n="industryHealth">醫療健康</option>
+                            <option value="food" data-i18n="industryFood">餐飲美食</option>
+                            <option value="education" data-i18n="industryEducation">教育培訓</option>
+                            <option value="creative" data-i18n="industryCreative">創意設計</option>
+                            <option value="retail" data-i18n="industryRetail">零售電商</option>
+                            <option value="sports" data-i18n="industrySports">運動健身</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="shapeLabel">形狀風格</label>
+                        <select id="shapeSelect" class="select-field">
+                            <option value="circle" data-i18n="shapeCircle">圓形</option>
+                            <option value="square" data-i18n="shapeSquare">方形</option>
+                            <option value="hexagon" data-i18n="shapeHexagon">六邊形</option>
+                            <option value="triangle" data-i18n="shapeTriangle">三角形</option>
+                            <option value="abstract" data-i18n="shapeAbstract">抽象</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="primaryColorLabel">主色調</label>
+                        <input type="color" id="primaryColor" class="color-input" value="#f43f5e">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="secondaryColorLabel">輔助色</label>
+                        <input type="color" id="secondaryColor" class="color-input" value="#1e293b">
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成 Logo</span>
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText" data-i18n="processing">AI 正在設計中...</p>
+            </div>
+
+            <!-- Canvas Section -->
+            <div class="canvas-section" id="canvasSection" style="display: none;">
+                <h3 data-i18n="previewTitle">Logo 預覽</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="logoCanvas" width="400" height="400"></canvas>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成結果</h3>
+                    <div class="output-actions">
+                        <button id="downloadPngBtn" class="btn btn-secondary btn-sm" data-i18n="downloadPng">下載 PNG</button>
+                        <button id="downloadSvgBtn" class="btn btn-secondary btn-sm" data-i18n="downloadSvg">下載 SVG</button>
+                    </div>
+                </div>
+                <div class="output-stats" id="outputStats"></div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature1">多種風格</h3>
+                    <p data-i18n="feature1Desc">支援圓形、方形、六邊形等多種幾何風格</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🏢</div>
+                    <h3 data-i18n="feature2">行業適配</h3>
+                    <p data-i18n="feature2Desc">根據行業類型智能選擇設計元素</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📥</div>
+                    <h3 data-i18n="feature4">多格式導出</h3>
+                    <p data-i18n="feature4Desc">支援 PNG 和 SVG 兩種格式下載</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #506</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

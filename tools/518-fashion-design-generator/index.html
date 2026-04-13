@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Design Generator | 時尚設計生成 - AI Local Tools</title>
+    <meta name="description" content="Generate fashion sketches locally in your browser with AI assistance. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">時尚設計生成</h1>
+            <p class="subtitle" data-i18n="subtitle">智能時尚設計，本地處理保護隱私</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="garmentTypeLabel">服裝類型</label>
+                        <select id="garmentType" class="select-field">
+                            <option value="dress" data-i18n="garmentDress">連衣裙</option>
+                            <option value="shirt" data-i18n="garmentShirt">襯衫</option>
+                            <option value="pants" data-i18n="garmentPants">褲子</option>
+                            <option value="jacket" data-i18n="garmentJacket">夾克</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="styleLabel">設計風格</label>
+                        <select id="designStyle" class="select-field">
+                            <option value="casual" data-i18n="styleCasual">休閒風</option>
+                            <option value="formal" data-i18n="styleFormal">正式風</option>
+                            <option value="streetwear" data-i18n="styleStreetwear">街頭風</option>
+                            <option value="elegant" data-i18n="styleElegant">優雅風</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="patternLabel">圖案</label>
+                        <select id="pattern" class="select-field">
+                            <option value="solid" data-i18n="patternSolid">純色</option>
+                            <option value="stripes" data-i18n="patternStripes">條紋</option>
+                            <option value="plaid" data-i18n="patternPlaid">格紋</option>
+                            <option value="floral" data-i18n="patternFloral">花卉</option>
+                            <option value="dots" data-i18n="patternDots">圓點</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="detailLevelLabel">細節程度</label>
+                        <input type="range" id="detailLevel" class="range-input" min="1" max="10" value="5">
+                        <span class="range-value" id="detailLevelValue">5</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="colorsLabel">配色方案</label>
+                    <div class="color-scheme">
+                        <div class="color-picker">
+                            <label data-i18n="colorPrimary">主色</label>
+                            <input type="color" id="colorPrimary" class="color-input" value="#e11d48">
+                        </div>
+                        <div class="color-picker">
+                            <label data-i18n="colorSecondary">副色</label>
+                            <input type="color" id="colorSecondary" class="color-input" value="#fda4af">
+                        </div>
+                        <div class="color-picker">
+                            <label data-i18n="colorAccent">強調色</label>
+                            <input type="color" id="colorAccent" class="color-input" value="#1e293b">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成設計</span>
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText" data-i18n="processing">AI 正在生成時尚設計...</p>
+            </div>
+
+            <!-- Canvas Section -->
+            <div class="canvas-section" id="canvasSection" style="display: none;">
+                <h3 data-i18n="previewTitle">設計預覽</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="mainCanvas" width="500" height="600"></canvas>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成結果</h3>
+                    <div class="output-actions">
+                        <button id="downloadPngBtn" class="btn btn-secondary btn-sm" data-i18n="downloadPng">下載 PNG</button>
+                        <button id="regenerateBtn" class="btn btn-secondary btn-sm" data-i18n="regenerate">重新生成</button>
+                    </div>
+                </div>
+                <div class="output-stats" id="outputStats"></div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">👗</div>
+                    <h3 data-i18n="feature1">多種服裝</h3>
+                    <p data-i18n="feature1Desc">支援連衣裙、襯衫、褲子、夾克</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature2">豐富圖案</h3>
+                    <p data-i18n="feature2Desc">條紋、格紋、花卉、圓點等圖案</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✨</div>
+                    <h3 data-i18n="feature4">時尚草圖</h3>
+                    <p data-i18n="feature4Desc">生成專業時尚設計草圖</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #518</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

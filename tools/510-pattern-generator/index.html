@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Generator | Pattern 生成器 - AI Local Tools</title>
+    <meta name="description" content="Generate seamless patterns locally in your browser with AI assistance. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">Pattern 生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">智能圖案設計，本地處理保護隱私</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="patternTypeLabel">圖案類型</label>
+                        <select id="patternType" class="select-field">
+                            <option value="geometric" data-i18n="patternGeometric">幾何圖形</option>
+                            <option value="floral" data-i18n="patternFloral">花卉</option>
+                            <option value="abstract" data-i18n="patternAbstract">抽象</option>
+                            <option value="dots" data-i18n="patternDots">圓點</option>
+                            <option value="lines" data-i18n="patternLines">線條</option>
+                            <option value="waves" data-i18n="patternWaves">波浪</option>
+                            <option value="chevron" data-i18n="patternChevron">人字紋</option>
+                            <option value="mosaic" data-i18n="patternMosaic">馬賽克</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="tileSizeLabel">磁貼尺寸</label>
+                        <select id="tileSize" class="select-field">
+                            <option value="50">50x50</option>
+                            <option value="100" selected>100x100</option>
+                            <option value="150">150x150</option>
+                            <option value="200">200x200</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="colorsLabel">配色方案</label>
+                    <div class="color-scheme">
+                        <div class="color-picker">
+                            <label data-i18n="color1">顏色 1</label>
+                            <input type="color" id="color1" class="color-input" value="#0ea5e9">
+                        </div>
+                        <div class="color-picker">
+                            <label data-i18n="color2">顏色 2</label>
+                            <input type="color" id="color2" class="color-input" value="#ffffff">
+                        </div>
+                        <div class="color-picker">
+                            <label data-i18n="color3">顏色 3</label>
+                            <input type="color" id="color3" class="color-input" value="#1e293b">
+                        </div>
+                        <button id="randomColorsBtn" class="btn btn-secondary btn-sm" data-i18n="randomColors">隨機配色</button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="densityLabel">密度</label>
+                        <input type="range" id="density" class="range-input" min="1" max="10" value="5">
+                        <span class="range-value" id="densityValue">5</span>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="rotationLabel">旋轉角度</label>
+                        <input type="range" id="rotation" class="range-input" min="0" max="360" value="0">
+                        <span class="range-value" id="rotationValue">0</span>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成圖案</span>
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText" data-i18n="processing">AI 正在生成圖案...</p>
+            </div>
+
+            <!-- Canvas Section -->
+            <div class="canvas-section" id="canvasSection" style="display: none;">
+                <h3 data-i18n="previewTitle">圖案預覽</h3>
+                <div class="preview-grid">
+                    <div class="tile-preview">
+                        <h4 data-i18n="tilePreview">單一磁貼</h4>
+                        <canvas id="tileCanvas" width="200" height="200"></canvas>
+                    </div>
+                    <div class="pattern-preview">
+                        <h4 data-i18n="patternPreview">重複效果</h4>
+                        <canvas id="patternCanvas" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成結果</h3>
+                    <div class="output-actions">
+                        <button id="downloadTileBtn" class="btn btn-secondary btn-sm" data-i18n="downloadTile">下載磁貼</button>
+                        <button id="downloadPatternBtn" class="btn btn-secondary btn-sm" data-i18n="downloadPattern">下載圖案</button>
+                    </div>
+                </div>
+                <div class="output-stats" id="outputStats"></div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature1">多種圖案</h3>
+                    <p data-i18n="feature1Desc">支援幾何、花卉、抽象等多種圖案類型</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔄</div>
+                    <h3 data-i18n="feature2">無縫銜接</h3>
+                    <p data-i18n="feature2Desc">生成可無縫重複的磁貼圖案</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎲</div>
+                    <h3 data-i18n="feature4">隨機配色</h3>
+                    <p data-i18n="feature4Desc">一鍵生成隨機和諧配色方案</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #510</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

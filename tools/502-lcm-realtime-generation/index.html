@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCM Realtime Generation | LCM 即時生圖</title>
+    <meta name="description" content="Generate images in real-time as you type. Lightning fast local AI generation.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">LCM 即時生圖</h1>
+            <p class="subtitle" data-i18n="subtitle">輸入即生成，極速 AI 圖像創作</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="realtime-container">
+                <div class="input-panel">
+                    <div class="form-group">
+                        <label data-i18n="promptLabel">即時描述</label>
+                        <textarea id="promptInput" class="textarea-field" rows="3" data-i18n-placeholder="promptPlaceholder" placeholder="開始輸入，即時看到生成結果..."></textarea>
+                        <p class="input-hint" data-i18n="inputHint">輸入時自動生成，無需按按鈕</p>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="styleLabel">風格預設</label>
+                            <select id="styleSelect" class="select-field">
+                                <option value="default" data-i18n="styleDefault">預設</option>
+                                <option value="anime" data-i18n="styleAnime">動漫</option>
+                                <option value="photo" data-i18n="stylePhoto">寫實</option>
+                                <option value="art" data-i18n="styleArt">藝術</option>
+                                <option value="pixel" data-i18n="stylePixel">像素</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="qualityLabel">品質</label>
+                            <select id="qualitySelect" class="select-field">
+                                <option value="fast">快速 (4 步)</option>
+                                <option value="balanced" selected>平衡 (8 步)</option>
+                                <option value="quality">高品質 (12 步)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="latency-display">
+                        <div class="latency-indicator">
+                            <span class="latency-dot" id="latencyDot"></span>
+                            <span data-i18n="latencyLabel">延遲：</span>
+                            <span id="latencyValue">--</span>
+                            <span>ms</span>
+                        </div>
+                        <div class="fps-display">
+                            <span data-i18n="fpsLabel">FPS：</span>
+                            <span id="fpsValue">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-panel">
+                    <div class="canvas-wrapper">
+                        <canvas id="previewCanvas" width="512" height="512"></canvas>
+                        <div class="canvas-overlay" id="canvasOverlay">
+                            <div class="spinner"></div>
+                            <p data-i18n="generating">生成中...</p>
+                        </div>
+                    </div>
+                    <div class="preview-actions">
+                        <button id="downloadBtn" class="btn btn-success btn-sm" data-i18n="downloadBtn">下載 PNG</button>
+                        <button id="lockBtn" class="btn btn-secondary btn-sm" data-i18n="lockBtn">鎖定當前</button>
+                        <button id="randomBtn" class="btn btn-secondary btn-sm" data-i18n="randomBtn">隨機種子</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section" id="statsSection">
+                <h3 data-i18n="statsTitle">生成統計</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="totalGenerated">已生成</span>
+                        <span class="stat-value" id="totalGenerated">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="avgLatency">平均延遲</span>
+                        <span class="stat-value" id="avgLatency">--</span>
+                        <span class="stat-unit">ms</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="currentSeed">當前種子</span>
+                        <span class="stat-value" id="currentSeed">--</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="stepsUsed">步數</span>
+                        <span class="stat-value" id="stepsUsed">8</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h3 data-i18n="feature1">即時生成</h3>
+                    <p data-i18n="feature1Desc">輸入文字即時看到圖像變化</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🚀</div>
+                    <h3 data-i18n="feature2">極速推理</h3>
+                    <p data-i18n="feature2Desc">LCM 模型僅需 4-8 步即可生成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature4">多種風格</h3>
+                    <p data-i18n="feature4Desc">支援動漫、寫實、藝術等風格</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #502</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

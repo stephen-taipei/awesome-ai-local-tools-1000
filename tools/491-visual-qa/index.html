@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual QA | 視覺問答 - AI Local Tools</title>
+    <meta name="description" content="Ask questions about images using AI. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">視覺問答</h1>
+            <p class="subtitle" data-i18n="subtitle">上傳圖片並提問，AI 為您解答</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <div class="upload-icon">🖼️</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP 格式</p>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <div class="image-preview">
+                    <img id="previewImage" alt="Preview">
+                </div>
+
+                <!-- Question Input -->
+                <div class="question-section">
+                    <label data-i18n="askQuestion">請輸入您的問題：</label>
+                    <div class="question-input-wrapper">
+                        <input type="text" id="questionInput" data-i18n-placeholder="questionPlaceholder" placeholder="這張圖片中有什麼？">
+                        <button id="askBtn" class="btn btn-primary" data-i18n="ask">提問</button>
+                    </div>
+                    <div class="suggested-questions">
+                        <span data-i18n="suggestedQuestions">推薦問題：</span>
+                        <button class="suggestion-btn" data-question-zh="這張圖片中有什麼？" data-question-en="What is in this image?">🔍</button>
+                        <button class="suggestion-btn" data-question-zh="圖片中有幾個人？" data-question-en="How many people are in this image?">👥</button>
+                        <button class="suggestion-btn" data-question-zh="這是什麼場景？" data-question-en="What scene is this?">🌆</button>
+                        <button class="suggestion-btn" data-question-zh="圖片的主要顏色是什麼？" data-question-en="What are the main colors?">🎨</button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="analyzing">分析中...</p>
+                </div>
+
+                <!-- Answer Section -->
+                <div class="answer-section" id="answerSection" style="display: none;">
+                    <h3 data-i18n="answer">回答</h3>
+                    <div class="answer-content" id="answerContent"></div>
+                    <div class="confidence-meter">
+                        <span data-i18n="confidence">信心度：</span>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                        <span id="confidenceValue">0%</span>
+                    </div>
+                </div>
+
+                <!-- QA History -->
+                <div class="qa-history" id="qaHistory">
+                    <h3 data-i18n="history">問答歷史</h3>
+                    <div id="historyList"></div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="exportBtn" class="btn btn-success" data-i18n="export">匯出結果</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #491</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

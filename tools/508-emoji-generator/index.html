@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Generator | 表情符號生成 - AI Local Tools</title>
+    <meta name="description" content="Generate custom emoji locally in your browser with AI assistance. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">表情符號生成</h1>
+            <p class="subtitle" data-i18n="subtitle">智能表情設計，本地處理保護隱私</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-group">
+                    <label data-i18n="emotionLabel">表情類型</label>
+                    <div class="emotion-grid" id="emotionGrid">
+                        <button class="emotion-btn active" data-emotion="happy">
+                            <span class="emotion-preview">😊</span>
+                            <span class="emotion-name" data-i18n="emotionHappy">開心</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="sad">
+                            <span class="emotion-preview">😢</span>
+                            <span class="emotion-name" data-i18n="emotionSad">難過</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="angry">
+                            <span class="emotion-preview">😠</span>
+                            <span class="emotion-name" data-i18n="emotionAngry">生氣</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="surprised">
+                            <span class="emotion-preview">😲</span>
+                            <span class="emotion-name" data-i18n="emotionSurprised">驚訝</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="love">
+                            <span class="emotion-preview">😍</span>
+                            <span class="emotion-name" data-i18n="emotionLove">喜愛</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="wink">
+                            <span class="emotion-preview">😉</span>
+                            <span class="emotion-name" data-i18n="emotionWink">眨眼</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="think">
+                            <span class="emotion-preview">🤔</span>
+                            <span class="emotion-name" data-i18n="emotionThink">思考</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="cool">
+                            <span class="emotion-preview">😎</span>
+                            <span class="emotion-name" data-i18n="emotionCool">酷</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="laugh">
+                            <span class="emotion-preview">😂</span>
+                            <span class="emotion-name" data-i18n="emotionLaugh">大笑</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="sleepy">
+                            <span class="emotion-preview">😴</span>
+                            <span class="emotion-name" data-i18n="emotionSleepy">睡眠</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="sick">
+                            <span class="emotion-preview">🤢</span>
+                            <span class="emotion-name" data-i18n="emotionSick">不適</span>
+                        </button>
+                        <button class="emotion-btn" data-emotion="devil">
+                            <span class="emotion-preview">😈</span>
+                            <span class="emotion-name" data-i18n="emotionDevil">調皮</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="faceColorLabel">臉部顏色</label>
+                        <input type="color" id="faceColor" class="color-input" value="#fbbf24">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="accentColorLabel">強調顏色</label>
+                        <input type="color" id="accentColor" class="color-input" value="#ef4444">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="sizeLabel">輸出尺寸</label>
+                        <select id="sizeSelect" class="select-field">
+                            <option value="64">64x64</option>
+                            <option value="128" selected>128x128</option>
+                            <option value="256">256x256</option>
+                            <option value="512">512x512</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="bgLabel">背景</label>
+                        <select id="bgSelect" class="select-field">
+                            <option value="transparent" data-i18n="bgTransparent">透明</option>
+                            <option value="white" data-i18n="bgWhite">白色</option>
+                            <option value="circle" data-i18n="bgCircle">圓形背景</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成表情</span>
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText" data-i18n="processing">AI 正在繪製表情...</p>
+            </div>
+
+            <!-- Canvas Section -->
+            <div class="canvas-section" id="canvasSection" style="display: none;">
+                <h3 data-i18n="previewTitle">表情預覽</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="emojiCanvas" width="256" height="256"></canvas>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成結果</h3>
+                    <div class="output-actions">
+                        <button id="downloadBtn" class="btn btn-secondary btn-sm" data-i18n="downloadPng">下載 PNG</button>
+                        <button id="copyBtn" class="btn btn-secondary btn-sm" data-i18n="copyBtn">複製到剪貼板</button>
+                    </div>
+                </div>
+                <div class="output-stats" id="outputStats"></div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">😊</div>
+                    <h3 data-i18n="feature1">豐富表情</h3>
+                    <p data-i18n="feature1Desc">支援 12 種不同情緒的表情符號</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature2">自訂顏色</h3>
+                    <p data-i18n="feature2Desc">自由調整臉部和強調顏色</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📐</div>
+                    <h3 data-i18n="feature4">多種尺寸</h3>
+                    <p data-i18n="feature4Desc">支援 64px 到 512px 多種尺寸</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #508</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

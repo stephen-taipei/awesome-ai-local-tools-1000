@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticker Generator | 貼圖生成器 - AI Local Tools</title>
+    <meta name="description" content="Generate stickers locally in your browser with AI assistance. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">貼圖生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">智能貼圖設計，本地處理保護隱私</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-group">
+                    <label data-i18n="textLabel">貼圖文字</label>
+                    <input type="text" id="textInput" class="input-field" data-i18n-placeholder="textPlaceholder" placeholder="輸入貼圖上的文字..." maxlength="20">
+                    <small class="char-count"><span id="charCount">0</span>/20</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="styleLabel">貼圖風格</label>
+                        <select id="styleSelect" class="select-field">
+                            <option value="cute" data-i18n="styleCute">可愛</option>
+                            <option value="cool" data-i18n="styleCool">酷炫</option>
+                            <option value="funny" data-i18n="styleFunny">搞笑</option>
+                            <option value="elegant" data-i18n="styleElegant">優雅</option>
+                            <option value="retro" data-i18n="styleRetro">復古</option>
+                            <option value="neon" data-i18n="styleNeon">霓虹</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="shapeLabel">貼圖形狀</label>
+                        <select id="shapeSelect" class="select-field">
+                            <option value="bubble" data-i18n="shapeBubble">對話泡泡</option>
+                            <option value="star" data-i18n="shapeStar">星形</option>
+                            <option value="heart" data-i18n="shapeHeart">愛心</option>
+                            <option value="cloud" data-i18n="shapeCloud">雲朵</option>
+                            <option value="bang" data-i18n="shapeBang">爆炸</option>
+                            <option value="ribbon" data-i18n="shapeRibbon">絲帶</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="bgColorLabel">背景顏色</label>
+                        <input type="color" id="bgColor" class="color-input" value="#a855f7">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="textColorLabel">文字顏色</label>
+                        <input type="color" id="textColor" class="color-input" value="#ffffff">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="decorLabel">裝飾元素</label>
+                    <div class="decor-options">
+                        <label class="decor-option">
+                            <input type="checkbox" value="sparkles" checked>
+                            <span data-i18n="decorSparkles">閃光</span>
+                        </label>
+                        <label class="decor-option">
+                            <input type="checkbox" value="hearts">
+                            <span data-i18n="decorHearts">愛心</span>
+                        </label>
+                        <label class="decor-option">
+                            <input type="checkbox" value="stars">
+                            <span data-i18n="decorStars">星星</span>
+                        </label>
+                        <label class="decor-option">
+                            <input type="checkbox" value="outline" checked>
+                            <span data-i18n="decorOutline">描邊</span>
+                        </label>
+                        <label class="decor-option">
+                            <input type="checkbox" value="shadow" checked>
+                            <span data-i18n="decorShadow">陰影</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成貼圖</span>
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText" data-i18n="processing">AI 正在設計貼圖...</p>
+            </div>
+
+            <!-- Canvas Section -->
+            <div class="canvas-section" id="canvasSection" style="display: none;">
+                <h3 data-i18n="previewTitle">貼圖預覽</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="stickerCanvas" width="400" height="400"></canvas>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成結果</h3>
+                    <div class="output-actions">
+                        <button id="downloadBtn" class="btn btn-secondary btn-sm" data-i18n="downloadPng">下載 PNG (透明背景)</button>
+                    </div>
+                </div>
+                <div class="output-stats" id="outputStats"></div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature1">多種風格</h3>
+                    <p data-i18n="feature1Desc">支援可愛、酷炫、搞笑等多種風格</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✨</div>
+                    <h3 data-i18n="feature2">裝飾元素</h3>
+                    <p data-i18n="feature2Desc">閃光、愛心、星星等裝飾任選</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📥</div>
+                    <h3 data-i18n="feature4">透明背景</h3>
+                    <p data-i18n="feature4Desc">支援透明背景 PNG 下載</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #509</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

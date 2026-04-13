@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Harmony Analysis | 色彩和諧分析 - AI Local Tools</title>
+    <meta name="description" content="Analyze color harmony in images using AI. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">色彩和諧分析</h1>
+            <p class="subtitle" data-i18n="subtitle">AI 分析圖片的色彩組合與和諧度</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <div class="upload-icon">🎨</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP 格式</p>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <div class="image-preview">
+                    <img id="previewImage" alt="Preview">
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="analyzing">分析中...</p>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <!-- Harmony Score -->
+                    <div class="harmony-score">
+                        <div class="score-value" id="harmonyScore">0</div>
+                        <div class="score-label" data-i18n="harmonyScore">和諧度評分</div>
+                        <div class="harmony-type" id="harmonyType"></div>
+                    </div>
+
+                    <!-- Color Palette -->
+                    <div class="color-palette-section">
+                        <h3 data-i18n="colorPalette">色彩調色盤</h3>
+                        <div class="color-palette" id="colorPalette"></div>
+                    </div>
+
+                    <!-- Color Wheel -->
+                    <div class="color-wheel-section">
+                        <h3 data-i18n="colorWheel">色輪分布</h3>
+                        <div class="color-wheel-container">
+                            <canvas id="colorWheelCanvas" width="250" height="250"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Color Stats -->
+                    <div class="color-stats">
+                        <h3 data-i18n="colorStats">色彩統計</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-value" id="dominantHue">-</span>
+                                <span class="stat-label" data-i18n="dominantHue">主色調</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="saturation">-</span>
+                                <span class="stat-label" data-i18n="avgSaturation">平均飽和度</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="colorTemp">-</span>
+                                <span class="stat-label" data-i18n="colorTemp">色溫</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="colorCount">-</span>
+                                <span class="stat-label" data-i18n="colorCount">色彩數量</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Harmony Analysis -->
+                    <div class="harmony-analysis">
+                        <h3 data-i18n="harmonyAnalysis">和諧性分析</h3>
+                        <p id="harmonyDescription"></p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="exportBtn" class="btn btn-success" data-i18n="exportPalette">匯出調色盤</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #496</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

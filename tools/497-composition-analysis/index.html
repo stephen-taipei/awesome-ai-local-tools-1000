@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composition Analysis | 構圖分析 - AI Local Tools</title>
+    <meta name="description" content="Analyze photo composition using AI. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">構圖分析</h1>
+            <p class="subtitle" data-i18n="subtitle">AI 分析照片的構圖技巧與視覺平衡</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <div class="upload-icon">📐</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP 格式</p>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <!-- Canvas with overlays -->
+                <div class="canvas-container">
+                    <canvas id="analysisCanvas"></canvas>
+                    <div class="overlay-controls">
+                        <label><input type="checkbox" id="showGrid" checked> <span data-i18n="showGrid">三分法網格</span></label>
+                        <label><input type="checkbox" id="showGolden"> <span data-i18n="showGolden">黃金分割</span></label>
+                        <label><input type="checkbox" id="showCenter"> <span data-i18n="showCenter">中心點</span></label>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="analyzing">分析中...</p>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <!-- Overall Score -->
+                    <div class="score-card">
+                        <div class="score-value" id="compositionScore">0</div>
+                        <div class="score-label" data-i18n="compositionScore">構圖評分</div>
+                    </div>
+
+                    <!-- Composition Techniques -->
+                    <div class="techniques-section">
+                        <h3 data-i18n="detectedTechniques">偵測到的構圖技巧</h3>
+                        <div class="techniques-list" id="techniquesList"></div>
+                    </div>
+
+                    <!-- Score Breakdown -->
+                    <div class="breakdown-section">
+                        <h3 data-i18n="scoreBreakdown">評分細項</h3>
+                        <div class="breakdown-items">
+                            <div class="breakdown-item">
+                                <span class="breakdown-label" data-i18n="balance">視覺平衡</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill" id="balanceFill"></div></div>
+                                <span class="breakdown-value" id="balanceValue">0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label" data-i18n="ruleOfThirds">三分法則</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill" id="thirdsFill"></div></div>
+                                <span class="breakdown-value" id="thirdsValue">0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label" data-i18n="leadingLines">引導線</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill" id="linesFill"></div></div>
+                                <span class="breakdown-value" id="linesValue">0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label" data-i18n="symmetry">對稱性</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill" id="symmetryFill"></div></div>
+                                <span class="breakdown-value" id="symmetryValue">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggestions -->
+                    <div class="suggestions-section">
+                        <h3 data-i18n="suggestions">改善建議</h3>
+                        <ul id="suggestionsList"></ul>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="downloadBtn" class="btn btn-success" data-i18n="downloadOverlay">下載分析圖</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #497</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interior Design Generator | 室內設計生成 - AI Local Tools</title>
+    <meta name="description" content="Generate interior design layouts locally in your browser with AI assistance. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">室內設計生成</h1>
+            <p class="subtitle" data-i18n="subtitle">智能室內設計，本地處理保護隱私</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="roomTypeLabel">房間類型</label>
+                        <select id="roomType" class="select-field">
+                            <option value="living" data-i18n="roomLiving">客廳</option>
+                            <option value="bedroom" data-i18n="roomBedroom">臥室</option>
+                            <option value="kitchen" data-i18n="roomKitchen">廚房</option>
+                            <option value="office" data-i18n="roomOffice">辦公室</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="styleLabel">設計風格</label>
+                        <select id="designStyle" class="select-field">
+                            <option value="minimalist" data-i18n="styleMinimalist">極簡風格</option>
+                            <option value="modern" data-i18n="styleModern">現代風格</option>
+                            <option value="vintage" data-i18n="styleVintage">復古風格</option>
+                            <option value="industrial" data-i18n="styleIndustrial">工業風格</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="viewLabel">視角</label>
+                        <select id="viewType" class="select-field">
+                            <option value="topdown" data-i18n="viewTopdown">俯視圖</option>
+                            <option value="perspective" data-i18n="viewPerspective">透視圖</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="roomSizeLabel">房間大小</label>
+                        <input type="range" id="roomSize" class="range-input" min="1" max="10" value="5">
+                        <span class="range-value" id="roomSizeValue">5</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="colorsLabel">配色方案</label>
+                    <div class="color-scheme">
+                        <div class="color-picker">
+                            <label data-i18n="colorWall">牆壁</label>
+                            <input type="color" id="colorWall" class="color-input" value="#f472b6">
+                        </div>
+                        <div class="color-picker">
+                            <label data-i18n="colorFloor">地板</label>
+                            <input type="color" id="colorFloor" class="color-input" value="#8b5a3c">
+                        </div>
+                        <div class="color-picker">
+                            <label data-i18n="colorFurniture">家具</label>
+                            <input type="color" id="colorFurniture" class="color-input" value="#1e293b">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary btn-block">
+                    <span data-i18n="generateBtn">生成設計</span>
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText" data-i18n="processing">AI 正在生成室內設計...</p>
+            </div>
+
+            <!-- Canvas Section -->
+            <div class="canvas-section" id="canvasSection" style="display: none;">
+                <h3 data-i18n="previewTitle">設計預覽</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="mainCanvas" width="600" height="500"></canvas>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h3 data-i18n="outputTitle">生成結果</h3>
+                    <div class="output-actions">
+                        <button id="downloadPngBtn" class="btn btn-secondary btn-sm" data-i18n="downloadPng">下載 PNG</button>
+                        <button id="regenerateBtn" class="btn btn-secondary btn-sm" data-i18n="regenerate">重新生成</button>
+                    </div>
+                </div>
+                <div class="output-stats" id="outputStats"></div>
+            </div>
+        </main>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🛋️</div>
+                    <h3 data-i18n="feature1">多種房間</h3>
+                    <p data-i18n="feature1Desc">支援客廳、臥室、廚房、辦公室</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature2">風格多樣</h3>
+                    <p data-i18n="feature2Desc">極簡、現代、復古、工業風格</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📐</div>
+                    <h3 data-i18n="feature4">雙視角</h3>
+                    <p data-i18n="feature4Desc">俯視圖與透視圖兩種視角</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #517</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

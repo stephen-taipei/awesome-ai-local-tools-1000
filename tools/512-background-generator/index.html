@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Background Generator | AI 背景生成器</title>
+    <meta name="description" content="Generate beautiful backgrounds locally in your browser with AI. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">AI 背景生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">完全在瀏覽器本地執行，資料不外傳</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Options Panel -->
+            <div class="options-panel">
+                <h3 data-i18n="bgOptions">背景選項</h3>
+
+                <div class="option-group">
+                    <label data-i18n="bgStyle">背景風格</label>
+                    <div class="style-types">
+                        <button class="style-btn active" data-style="gradient" data-i18n="gradient">漸層</button>
+                        <button class="style-btn" data-style="abstract" data-i18n="abstract">抽象</button>
+                        <button class="style-btn" data-style="geometric" data-i18n="geometric">幾何</button>
+                        <button class="style-btn" data-style="bokeh" data-i18n="bokeh">散景</button>
+                        <button class="style-btn" data-style="nature" data-i18n="nature">自然</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="colorScheme">色彩方案</label>
+                    <div class="color-scheme">
+                        <div class="color-pair">
+                            <label data-i18n="color1">顏色 1</label>
+                            <input type="color" id="color1" value="#0ea5e9">
+                        </div>
+                        <div class="color-pair">
+                            <label data-i18n="color2">顏色 2</label>
+                            <input type="color" id="color2" value="#8b5cf6">
+                        </div>
+                        <div class="color-pair">
+                            <label data-i18n="color3">顏色 3</label>
+                            <input type="color" id="color3" value="#ec4899">
+                        </div>
+                    </div>
+                    <div class="preset-colors">
+                        <button class="preset-btn" data-colors="#667eea,#764ba2,#f093fb" title="Purple Dream"></button>
+                        <button class="preset-btn" data-colors="#11998e,#38ef7d,#00b4db" title="Ocean"></button>
+                        <button class="preset-btn" data-colors="#fc466b,#3f5efb,#00d2ff" title="Sunset"></button>
+                        <button class="preset-btn" data-colors="#232526,#414345,#485563" title="Dark"></button>
+                        <button class="preset-btn" data-colors="#f5af19,#f12711,#ee0979" title="Fire"></button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="aspectRatio">長寬比</label>
+                    <div class="aspect-ratios">
+                        <button class="ratio-btn" data-ratio="16:9">16:9</button>
+                        <button class="ratio-btn active" data-ratio="1:1">1:1</button>
+                        <button class="ratio-btn" data-ratio="4:3">4:3</button>
+                        <button class="ratio-btn" data-ratio="9:16">9:16</button>
+                        <button class="ratio-btn" data-ratio="3:2">3:2</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="resolution">解析度</label>
+                    <select id="resolution">
+                        <option value="720">720p (1280x720)</option>
+                        <option value="1080" selected>1080p (1920x1080)</option>
+                        <option value="1440">1440p (2560x1440)</option>
+                        <option value="2160">4K (3840x2160)</option>
+                    </select>
+                </div>
+
+                <div class="option-group">
+                    <label data-i18n="complexity">複雜度</label>
+                    <input type="range" id="complexitySlider" min="1" max="10" step="1" value="5">
+                    <span id="complexityValue">5</span>
+                </div>
+
+                <button id="generateBtn" class="btn btn-primary" data-i18n="generate">生成背景</button>
+                <button id="randomizeBtn" class="btn btn-secondary" data-i18n="randomize">隨機生成</button>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area">
+                <div class="canvas-container">
+                    <canvas id="bgCanvas" width="800" height="800"></canvas>
+                    <div class="processing-overlay" id="processingOverlay" style="display: none;">
+                        <div class="spinner"></div>
+                        <p data-i18n="generating">生成中...</p>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="progressText">0%</span>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-panel" id="statsPanel" style="display: none;">
+                    <h4 data-i18n="statistics">統計資訊</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statStyle">風格</span>
+                            <span class="stat-value" id="statStyle">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statDimensions">尺寸</span>
+                            <span class="stat-value" id="statDimensions">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statRatio">長寬比</span>
+                            <span class="stat-value" id="statRatio">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-i18n="statComplexity">複雜度</span>
+                            <span class="stat-value" id="statComplexity">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions" id="actionsPanel" style="display: none;">
+                    <button id="downloadPng" class="btn btn-success" data-i18n="downloadPng">下載 PNG</button>
+                    <button id="downloadJpg" class="btn btn-secondary" data-i18n="downloadJpg">下載 JPG</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> |
+                <span data-i18n="toolNumber">工具 #512</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

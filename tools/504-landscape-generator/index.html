@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landscape Generator | 風景生成器</title>
+    <meta name="description" content="Generate AI landscapes locally in your browser. No upload, 100% private.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <header class="header">
+            <h1 data-i18n="title">AI 風景生成器</h1>
+            <p class="subtitle" data-i18n="subtitle">選擇場景類型，生成壯麗的 AI 風景畫</p>
+        </header>
+
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <main class="main-content">
+            <div class="generator-layout">
+                <div class="controls-panel">
+                    <h3 data-i18n="controlsTitle">風景參數</h3>
+
+                    <div class="form-group">
+                        <label data-i18n="sceneLabel">場景類型</label>
+                        <div class="scene-grid">
+                            <label class="scene-item">
+                                <input type="radio" name="scene" value="mountain" checked>
+                                <div class="scene-icon">🏔️</div>
+                                <span data-i18n="sceneMountain">山脈</span>
+                            </label>
+                            <label class="scene-item">
+                                <input type="radio" name="scene" value="beach">
+                                <div class="scene-icon">🏖️</div>
+                                <span data-i18n="sceneBeach">海灘</span>
+                            </label>
+                            <label class="scene-item">
+                                <input type="radio" name="scene" value="forest">
+                                <div class="scene-icon">🌲</div>
+                                <span data-i18n="sceneForest">森林</span>
+                            </label>
+                            <label class="scene-item">
+                                <input type="radio" name="scene" value="desert">
+                                <div class="scene-icon">🏜️</div>
+                                <span data-i18n="sceneDesert">沙漠</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="timeLabel">時間</label>
+                        <select id="timeSelect" class="select-field">
+                            <option value="dawn" data-i18n="timeDawn">黎明</option>
+                            <option value="day" selected data-i18n="timeDay">白天</option>
+                            <option value="sunset" data-i18n="timeSunset">黃昏</option>
+                            <option value="night" data-i18n="timeNight">夜晚</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="weatherLabel">天氣</label>
+                        <select id="weatherSelect" class="select-field">
+                            <option value="clear" data-i18n="weatherClear">晴朗</option>
+                            <option value="cloudy" data-i18n="weatherCloudy">多雲</option>
+                            <option value="rainy" data-i18n="weatherRainy">雨天</option>
+                            <option value="foggy" data-i18n="weatherFoggy">霧氣</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="seasonLabel">季節</label>
+                        <select id="seasonSelect" class="select-field">
+                            <option value="spring" data-i18n="seasonSpring">春</option>
+                            <option value="summer" selected data-i18n="seasonSummer">夏</option>
+                            <option value="autumn" data-i18n="seasonAutumn">秋</option>
+                            <option value="winter" data-i18n="seasonWinter">冬</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="elementsLabel">額外元素</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="addWater" checked>
+                                <span data-i18n="elementWater">水域</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="addClouds" checked>
+                                <span data-i18n="elementClouds">雲朵</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="addSun">
+                                <span data-i18n="elementSun">太陽/月亮</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="addBirds">
+                                <span data-i18n="elementBirds">飛鳥</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button id="generateBtn" class="btn btn-primary btn-block">
+                        <span data-i18n="generateBtn">生成風景</span>
+                    </button>
+                </div>
+
+                <div class="preview-panel">
+                    <div class="canvas-wrapper">
+                        <canvas id="landscapeCanvas" width="768" height="512"></canvas>
+                        <div class="canvas-overlay" id="canvasOverlay">
+                            <div class="spinner"></div>
+                            <p data-i18n="generating">生成中...</p>
+                        </div>
+                    </div>
+
+                    <div class="preview-actions">
+                        <button id="downloadBtn" class="btn btn-success btn-sm" disabled data-i18n="downloadBtn">下載 PNG</button>
+                        <button id="randomizeBtn" class="btn btn-secondary btn-sm" data-i18n="randomizeBtn">隨機生成</button>
+                    </div>
+
+                    <div class="output-stats" id="outputStats" style="display: none;"></div>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <h2 data-i18n="howItWorks">功能特色</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🌄</div>
+                    <h3 data-i18n="feature1">多種場景</h3>
+                    <p data-i18n="feature1Desc">山脈、海灘、森林、沙漠等場景</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🌤️</div>
+                    <h3 data-i18n="feature2">天氣系統</h3>
+                    <p data-i18n="feature2Desc">可調整時間、天氣和季節</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3 data-i18n="feature3">隱私保護</h3>
+                    <p data-i18n="feature3Desc">所有處理在瀏覽器本地完成</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h3 data-i18n="feature4">豐富元素</h3>
+                    <p data-i18n="feature4Desc">水域、雲朵、飛鳥等細節元素</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #504</span>
+            </p>
+            <p class="copyright" data-i18n="copyright">Awesome AI Local Tools © 2024</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

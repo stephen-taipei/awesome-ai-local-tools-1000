@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exposure Analysis | 曝光分析 - AI Local Tools</title>
+    <meta name="description" content="Analyze image exposure using AI. 100% local processing.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+            <button id="lang-zh" class="lang-btn active">繁體中文</button>
+            <button id="lang-en" class="lang-btn">English</button>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 data-i18n="title">曝光分析</h1>
+            <p class="subtitle" data-i18n="subtitle">AI 分析圖片曝光狀態與亮度分布</p>
+        </header>
+
+        <!-- Privacy Badge -->
+        <div class="privacy-badge">
+            <span class="badge-icon">🔒</span>
+            <span data-i18n="privacyBadge">100% 本地處理 · 零資料上傳</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <div class="upload-icon">📊</div>
+                <p class="upload-text" data-i18n="uploadText">拖放圖片到此處或點擊上傳</p>
+                <p class="upload-hint" data-i18n="uploadHint">支援 PNG、JPG、WebP 格式</p>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area" id="previewArea" style="display: none;">
+                <div class="image-preview">
+                    <canvas id="previewCanvas"></canvas>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText" data-i18n="analyzing">分析中...</p>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <!-- Exposure Status -->
+                    <div class="exposure-status" id="exposureStatus">
+                        <div class="status-indicator" id="statusIndicator"></div>
+                        <span class="status-label" id="statusLabel"></span>
+                    </div>
+
+                    <!-- Histogram -->
+                    <div class="histogram-section">
+                        <h3 data-i18n="histogram">亮度直方圖</h3>
+                        <canvas id="histogramCanvas" height="150"></canvas>
+                        <div class="histogram-labels">
+                            <span data-i18n="shadows">暗部</span>
+                            <span data-i18n="midtones">中間調</span>
+                            <span data-i18n="highlights">亮部</span>
+                        </div>
+                    </div>
+
+                    <!-- Metrics -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <span class="metric-value" id="avgBrightness">0</span>
+                            <span class="metric-label" data-i18n="avgBrightness">平均亮度</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value" id="dynamicRange">0</span>
+                            <span class="metric-label" data-i18n="dynamicRange">動態範圍</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value" id="clipping">0%</span>
+                            <span class="metric-label" data-i18n="clipping">剪裁比例</span>
+                        </div>
+                    </div>
+
+                    <!-- Zone Analysis -->
+                    <div class="zone-analysis">
+                        <h3 data-i18n="zoneAnalysis">區域分析</h3>
+                        <div class="zone-bars">
+                            <div class="zone-bar">
+                                <span class="zone-label" data-i18n="underexposed">曝光不足</span>
+                                <div class="zone-fill-container">
+                                    <div class="zone-fill under" id="underFill"></div>
+                                </div>
+                                <span class="zone-value" id="underValue">0%</span>
+                            </div>
+                            <div class="zone-bar">
+                                <span class="zone-label" data-i18n="proper">正常曝光</span>
+                                <div class="zone-fill-container">
+                                    <div class="zone-fill proper" id="properFill"></div>
+                                </div>
+                                <span class="zone-value" id="properValue">0%</span>
+                            </div>
+                            <div class="zone-bar">
+                                <span class="zone-label" data-i18n="overexposed">曝光過度</span>
+                                <div class="zone-fill-container">
+                                    <div class="zone-fill over" id="overFill"></div>
+                                </div>
+                                <span class="zone-value" id="overValue">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggestions -->
+                    <div class="suggestions">
+                        <h3 data-i18n="suggestions">調整建議</h3>
+                        <div id="suggestionContent"></div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="exportBtn" class="btn btn-success" data-i18n="export">匯出報告</button>
+                    <button id="resetBtn" class="btn btn-secondary" data-i18n="uploadAnother">上傳其他圖片</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <a href="../../index.html" data-i18n="backToHome">返回首頁</a> ·
+                <span data-i18n="toolNumber">工具 #495</span>
+            </p>
+            <p class="copyright">Awesome AI Local Tools</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
