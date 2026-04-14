@@ -1,0 +1,24 @@
+# Awesome AI Local Tools 1000
+
+Last updated: 2026-04-14
+
+## Summary (English)
+1000+ AI tools that run locally in the browser with privacy-first, frontend-only execution.
+
+## Summary (Traditional Chinese)
+1000+ AI tools that run locally in the browser with privacy-first, frontend-only execution.
+
+## Summary (Japanese)
+1000+ AI tools that run locally in the browser with privacy-first, frontend-only execution.
+
+## Key Pages
+- / : project landing page
+- /llms.txt : AI-readable summary
+- /sitemap.xml : full crawl map
+- /news-sitemap.xml : recently refreshed pages
+
+## Topics
+- Local AI inference
+- WebGPU and WASM
+- Browser privacy
+- Text, image, audio, and multimodal tools
