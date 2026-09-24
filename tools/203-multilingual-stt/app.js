@@ -86,7 +86,7 @@ window.addEventListener('resize', resizeCanvas);
 
 async function startVisualization() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const stream = await window.LocalSpeech.captureMicrophone();
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
         const source = audioContext.createMediaStreamSource(stream);
@@ -124,14 +124,15 @@ async function startVisualization() {
 }
 
 function stopVisualization() {
+    window.LocalSpeech.releaseMicrophones();
     if (animationId) cancelAnimationFrame(animationId);
-    if (audioContext) audioContext.close();
+    if (audioContext && audioContext.state !== 'closed') void audioContext.close().catch(() => {});
     ctx.fillStyle = '#1a1a2e';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function initRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.LocalSpeech.getConstructor();
     if (!SpeechRecognition) {
         alert('Speech recognition not supported');
         return null;
@@ -169,7 +170,7 @@ function initRecognition() {
                 interim += event.results[i][0].transcript;
             }
         }
-        transcriptContent.innerHTML = transcript + '<span style="color:#999">' + interim + '</span>';
+        window.LocalSpeech.renderText(transcriptContent, transcript, interim);
     };
 
     rec.onerror = (e) => {
@@ -184,7 +185,7 @@ startBtn.addEventListener('click', () => {
     recognition = initRecognition();
     if (recognition) {
         recognition.start();
-        startVisualization();
+
     }
 });
 

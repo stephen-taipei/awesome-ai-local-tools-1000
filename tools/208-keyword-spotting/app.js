@@ -77,9 +77,15 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 function renderKeywords() {
-    keywordTags.innerHTML = keywords.map(word =>
-        `<div class="keyword-tag" data-word="${word}">${word} <span class="remove" onclick="removeKeyword('${word}')">x</span></div>`
-    ).join('');
+    keywordTags.replaceChildren();
+    keywords.forEach(word => {
+        const tag = document.createElement('div'); tag.className = 'keyword-tag'; tag.dataset.word = word;
+        const label = document.createElement('span'); label.textContent = word;
+        const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'remove'; remove.textContent = 'x';
+        remove.setAttribute('aria-label', `Remove ${word}`);
+        remove.addEventListener('click', () => window.removeKeyword(word));
+        tag.append(label, remove); keywordTags.append(tag);
+    });
 }
 
 window.removeKeyword = (word) => {
@@ -103,7 +109,7 @@ keywordInput.addEventListener('keypress', (e) => {
 });
 
 function highlightKeyword(word) {
-    const tag = document.querySelector(`.keyword-tag[data-word="${word}"]`);
+    const tag = Array.from(keywordTags.children).find(element => element.dataset.word === word);
     if (tag) {
         tag.classList.add('detected');
         setTimeout(() => tag.classList.remove('detected'), 1000);
@@ -118,18 +124,22 @@ function addDetection(word) {
 }
 
 function renderLog() {
-    if (detections.length === 0) {
-        logList.innerHTML = `<p class="placeholder">${translations[currentLang].noDetections}</p>`;
-    } else {
-        logList.innerHTML = detections.map(d =>
-            `<div class="log-entry"><span class="keyword">"${d.word}"</span><span class="time">${d.time}</span></div>`
-        ).join('');
+    logList.replaceChildren();
+    if (!detections.length) {
+        const placeholder = document.createElement('p'); placeholder.className = 'placeholder';
+        placeholder.textContent = translations[currentLang].noDetections; logList.append(placeholder);
     }
+    detections.forEach(detection => {
+        const row = document.createElement('div'); row.className = 'log-entry';
+        const word = document.createElement('span'); word.className = 'keyword'; word.textContent = detection.word;
+        const time = document.createElement('span'); time.className = 'time'; time.textContent = detection.time;
+        row.append(word, time); logList.append(row);
+    });
 }
 
 async function startVisualization() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const stream = await window.LocalSpeech.captureMicrophone();
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
         const source = audioContext.createMediaStreamSource(stream);
@@ -167,7 +177,7 @@ async function startVisualization() {
 }
 
 function initRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.LocalSpeech.getConstructor();
     if (!SpeechRecognition) {
         alert('Speech recognition not supported');
         return null;
@@ -201,7 +211,6 @@ startBtn.addEventListener('click', () => {
 
     isListening = true;
     recognition.start();
-    startVisualization();
 
     statusText.textContent = translations[currentLang].listening;
     startBtn.disabled = true;
@@ -212,7 +221,7 @@ stopBtn.addEventListener('click', () => {
     isListening = false;
     if (recognition) recognition.stop();
     if (animationId) cancelAnimationFrame(animationId);
-    if (audioContext) audioContext.close();
+    if (audioContext && audioContext.state !== 'closed') void audioContext.close().catch(() => {});
 
     ctx.fillStyle = '#1a1a2e';
     ctx.fillRect(0, 0, canvas.width, canvas.height);

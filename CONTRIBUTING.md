@@ -1,51 +1,11 @@
-# Contribution Guidelines
+# Contributing
 
-Thank you for your interest in contributing to Awesome AI Local Tools!
+This repository contains working utilities, experiments and unimplemented pages. A page count is not an implementation guarantee. Check `docs/tool-inventory.json` and the audit report before choosing a task.
 
-## Adding a New Tool
+A contribution should implement the named task with deterministic acceptance fixtures, document its actual model/runtime and network behavior, and handle unsupported capabilities, invalid input, size limits, cancellation and resource cleanup. Do not replace missing functionality with random results, generic word counts or simulated success messages. Demo pages must say that they are demos.
 
-Please ensure your pull request adheres to the following guidelines:
+Do not insert user input through `innerHTML`. Use text nodes, or the shared vetted sanitization approach where rich Markdown is required. Native speech must never fall back to a cloud recognizer. Review all model and dependency terms separately; the repository's missing root license text remains an owner decision.
 
-### Requirements
+Run `npm ci --ignore-scripts`, `npm run build:vendor`, `npm test`, `npm run audit:site` and `npm run test:browser` before requesting review. Install the Python requirements and Playwright Chromium for browser tests. Commit regenerated vendor assets and the lockfile when dependencies change. Include actual output fixtures for a newly implemented tool; page boot alone does not qualify it for a verified status.
 
-1. **Must run locally** - The tool should be able to run on the user's own hardware without requiring cloud services for core functionality.
-2. **Open source preferred** - Open source tools are preferred, but proprietary tools with free tiers that work offline are acceptable.
-3. **Active project** - The project should be actively maintained (commits within the last 12 months).
-4. **Quality** - The tool should be functional and provide value to users.
-
-### Format
-
-- Use the following format: `[Tool Name](link) - Short description.`
-- Keep descriptions concise and clear (one line, ending with a period).
-- Add new items in alphabetical order within their category.
-- Check your spelling and grammar.
-- Make sure your text editor is set to remove trailing whitespace.
-
-### Pull Request Process
-
-1. Search previous suggestions before making a new one to avoid duplicates.
-2. Make an individual pull request for each suggestion.
-3. Use the following commit message format: `Add [Tool Name]`
-4. The pull request title should be: `Add [Tool Name]`
-5. Include a link to the tool and why it should be included.
-
-### Updating Your PR
-
-If the maintainers notice anything that needs to be changed, we'll ask you to edit your PR before merging it. There's no need to open a new PR, just edit the existing one.
-
-## Creating Issues
-
-Feel free to open issues for:
-
-- Suggesting new categories
-- Reporting broken links
-- Suggesting improvements to the list structure
-- Asking questions about contribution guidelines
-
-## Code of Conduct
-
-Please note that this project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/). By participating in this project you agree to abide by its terms.
-
-## Questions?
-
-If you have any questions, feel free to open an issue and we'll help you out!
+The category/homepage body and stylesheet are protected by baseline hashes. Do not update those hashes to bypass the design constraint. Child tools may improve their UI, accessibility and behavior without redesigning the category page.

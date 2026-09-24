@@ -171,7 +171,7 @@
         .footer a { color: #667eea; text-decoration: none; }
     </style>
 </head>
-<body>
+<body data-implementation="speech">
     <div class="container">
         <div class="header">
             <div class="lang-switcher">
@@ -225,10 +225,12 @@
         </div>
 
         <div class="footer">
-            <p>Tool #204 | <a href="../index.html">Back to Home</a></p>
+            <p>Tool #204 | <a href="../../index.html">Back to Home</a></p>
         </div>
     </div>
 
+    <script src="../shared/local-speech.js"></script>
+    <script src="../shared/tool-status.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

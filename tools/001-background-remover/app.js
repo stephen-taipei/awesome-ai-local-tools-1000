@@ -35,7 +35,7 @@ const translations = {
         privacy: '隱私保護',
         privacyDesc: '所有處理在瀏覽器本地完成，圖片不會上傳至任何伺服器',
         performance: '高效能',
-        performanceDesc: '支援 WebGPU 加速，處理速度可達 2-5 秒/張',
+        performanceDesc: '可用時使用 WebGPU，否則使用 WASM；速度依裝置及圖片而異',
         cache: '離線快取',
         cacheDesc: '模型下載後自動快取，下次使用無需重新下載',
         techSpecs: '技術規格',
@@ -80,7 +80,7 @@ const translations = {
         privacy: 'Privacy',
         privacyDesc: 'All processing done locally in browser, images never uploaded to any server',
         performance: 'Performance',
-        performanceDesc: 'Supports WebGPU acceleration, processing in 2-5 seconds per image',
+        performanceDesc: 'Uses WebGPU when available, otherwise WASM; speed depends on the device and image',
         cache: 'Offline Cache',
         cacheDesc: 'Model cached locally after download, no re-download needed',
         techSpecs: 'Technical Specs',
@@ -138,7 +138,11 @@ const state = {
     isModelLoaded: false,
     isProcessing: false,
     currentImageData: null,
-    resultBlob: null
+    resultBlob: null,
+    inputUrl: null,
+    outputUrl: null,
+    jobId: 0,
+    isModelLoading: false
 };
 
 // ========================================
@@ -169,30 +173,14 @@ const elements = {
 // ========================================
 
 async function detectAcceleration() {
-    elements.accelerationMethod.textContent = t('detecting');
-
-    // Check WebGPU support
     if (navigator.gpu) {
         try {
-            const adapter = await navigator.gpu.requestAdapter();
-            if (adapter) {
+            if (await navigator.gpu.requestAdapter()) {
                 elements.accelerationMethod.textContent = t('webgpu');
                 return 'webgpu';
             }
-        } catch (e) {
-            console.log('WebGPU not available:', e);
-        }
+        } catch { /* Fall back to the runtime actually used. */ }
     }
-
-    // Check WebGL support
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
-    if (gl) {
-        elements.accelerationMethod.textContent = t('webgl');
-        return 'webgl';
-    }
-
-    // Fallback to WASM
     elements.accelerationMethod.textContent = t('wasm');
     return 'wasm';
 }
@@ -235,61 +223,43 @@ function setModelStatus(status) {
 // ========================================
 
 async function loadModel() {
-    if (state.isModelLoaded) return;
-
+    if (state.isModelLoaded || state.isModelLoading) return;
+    state.isModelLoading = true;
     setModelStatus('loading');
     elements.progressContainer.style.display = 'block';
     elements.uploadArea.classList.add('disabled');
-
     try {
-        // Dynamically import Transformers.js
-        const { AutoModel, AutoProcessor, env, RawImage } = await import(
-            'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2'
-        );
-
-        // Configure environment
+        const { AutoModel, AutoProcessor, env, RawImage } = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2');
         env.allowLocalModels = false;
         env.useBrowserCache = true;
-
-        // Store RawImage for later use
+        if (!globalThis.crossOriginIsolated) env.backends.onnx.wasm.numThreads = 1;
         window.RawImage = RawImage;
-
-        // Detect best acceleration method
-        const accel = await detectAcceleration();
-
-        // Load model and processor with progress tracking
         const modelId = 'briaai/RMBG-1.4';
-
-        // Load processor
-        state.processor = await AutoProcessor.from_pretrained(modelId, {
-            progress_callback: (progress) => {
-                if (progress.status === 'progress') {
-                    updateProgress(progress.progress / 100 * 0.3); // 30% for processor
-                }
+        state.processor = await AutoProcessor.from_pretrained(modelId);
+        let device = await detectAcceleration();
+        const options = {
+            dtype: 'fp32',
+            progress_callback: progress => {
+                if (progress.status === 'progress' && Number.isFinite(progress.progress)) updateProgress(Math.max(0, Math.min(1, progress.progress / 100)));
             }
-        });
-
-        // Load model
-        state.model = await AutoModel.from_pretrained(modelId, {
-            device: accel === 'webgpu' ? 'webgpu' : 'wasm',
-            progress_callback: (progress) => {
-                if (progress.status === 'progress') {
-                    updateProgress(0.3 + (progress.progress / 100 * 0.7)); // 70% for model
-                }
-            }
-        });
-
+        };
+        try { state.model = await AutoModel.from_pretrained(modelId, { ...options, device }); }
+        catch (error) {
+            if (device !== 'webgpu') throw error;
+            device = 'wasm';
+            state.model = await AutoModel.from_pretrained(modelId, { ...options, device });
+        }
+        elements.accelerationMethod.textContent = t(device);
         state.isModelLoaded = true;
-        elements.progressContainer.style.display = 'none';
         setModelStatus('ready');
-
-        console.log('Model loaded successfully');
-
     } catch (error) {
-        console.error('Error loading model:', error);
-        elements.progressContainer.style.display = 'none';
+        state.processor = null;
+        state.isModelLoaded = false;
         setModelStatus('error');
         alert(t('modelError') + '\n\n' + error.message);
+    } finally {
+        state.isModelLoading = false;
+        elements.progressContainer.style.display = 'none';
     }
 }
 
@@ -299,134 +269,92 @@ async function loadModel() {
 
 async function processImage(imageFile) {
     if (!state.isModelLoaded || state.isProcessing) return;
-
+    const job = ++state.jobId;
     state.isProcessing = true;
+    state.resultBlob = null;
+    for (const key of ['inputUrl', 'outputUrl']) {
+        if (state[key]) URL.revokeObjectURL(state[key]);
+        state[key] = null;
+    }
     elements.processingOverlay.style.display = 'flex';
     elements.resultImage.style.display = 'none';
     elements.downloadBtn.disabled = true;
-
+    elements.previewArea.setAttribute('aria-busy', 'true');
     try {
-        // Read image
-        const imageUrl = URL.createObjectURL(imageFile);
-        elements.originalImage.src = imageUrl;
-
-        // Show preview area
+        if (imageFile.size > 20 * 1024 * 1024) throw new Error('Maximum file size: 20 MiB.');
+        state.inputUrl = URL.createObjectURL(imageFile);
+        elements.originalImage.src = state.inputUrl;
         elements.uploadArea.style.display = 'none';
         elements.previewArea.style.display = 'block';
-
-        // Load and process image using RawImage
-        const image = await window.RawImage.fromURL(imageUrl);
-
-        // Check dimensions
-        if (image.width > 4096 || image.height > 4096) {
-            throw new Error(t('errorFileSize'));
-        }
-
-        // Preprocess
-        const processedInputs = await state.processor(image);
-
-        // Run inference
-        const startTime = performance.now();
-        const { output } = await state.model(processedInputs);
-        const inferenceTime = performance.now() - startTime;
-        console.log(`Inference time: ${inferenceTime.toFixed(0)}ms`);
-
-        // Post-process output
-        const maskData = output[0][0].data;
-        const maskWidth = output[0][0].dims[1];
-        const maskHeight = output[0][0].dims[0];
-
-        // Create canvas for mask resizing
+        const image = await window.RawImage.fromURL(state.inputUrl);
+        if (job !== state.jobId) return;
+        if (image.width > 4096 || image.height > 4096) throw new Error(t('errorFileSize'));
+        const rgba = ImageCore.toRGBA(image.data, image.width, image.height, image.channels);
+        const inputs = await state.processor(image);
+        if (job !== state.jobId) return;
+        const { output } = await state.model(inputs);
+        if (job !== state.jobId) return;
+        const mask = output[0][0];
+        const maskHeight = mask.dims[0], maskWidth = mask.dims[1];
+        if (!Number.isInteger(maskWidth) || !Number.isInteger(maskHeight) || maskWidth < 1 || maskHeight < 1 || maskWidth * maskHeight > 4096 * 4096 || mask.data.length !== maskWidth * maskHeight) throw new Error('Unexpected model mask shape.');
         const maskCanvas = document.createElement('canvas');
-        maskCanvas.width = maskWidth;
-        maskCanvas.height = maskHeight;
-        const maskCtx = maskCanvas.getContext('2d');
-
-        // Create ImageData from mask
-        const maskImageData = maskCtx.createImageData(maskWidth, maskHeight);
-        for (let i = 0; i < maskData.length; i++) {
-            const val = Math.round(maskData[i] * 255);
-            maskImageData.data[i * 4] = val;
-            maskImageData.data[i * 4 + 1] = val;
-            maskImageData.data[i * 4 + 2] = val;
-            maskImageData.data[i * 4 + 3] = 255;
+        maskCanvas.width = maskWidth; maskCanvas.height = maskHeight;
+        const maskContext = maskCanvas.getContext('2d');
+        const maskPixels = maskContext.createImageData(maskWidth, maskHeight);
+        for (let i = 0; i < mask.data.length; i++) {
+            const value = mask.data[i];
+            if (!Number.isFinite(value)) throw new Error('Invalid model mask value.');
+            maskPixels.data[i * 4] = Math.round(Math.max(0, Math.min(1, value)) * 255);
+            maskPixels.data[i * 4 + 3] = 255;
         }
-        maskCtx.putImageData(maskImageData, 0, 0);
-
-        // Create output canvas at original size
-        const outputCanvas = document.createElement('canvas');
-        outputCanvas.width = image.width;
-        outputCanvas.height = image.height;
-        const outputCtx = outputCanvas.getContext('2d');
-
-        // Draw original image
-        const originalCanvas = document.createElement('canvas');
-        originalCanvas.width = image.width;
-        originalCanvas.height = image.height;
-        const originalCtx = originalCanvas.getContext('2d');
-
-        // Convert RawImage to canvas
-        const originalImageData = originalCtx.createImageData(image.width, image.height);
-        for (let i = 0; i < image.data.length; i++) {
-            originalImageData.data[i] = image.data[i];
-        }
-        originalCtx.putImageData(originalImageData, 0, 0);
-
-        // Draw original to output
-        outputCtx.drawImage(originalCanvas, 0, 0);
-
-        // Draw resized mask to get alpha channel
-        const resizedMaskCanvas = document.createElement('canvas');
-        resizedMaskCanvas.width = image.width;
-        resizedMaskCanvas.height = image.height;
-        const resizedMaskCtx = resizedMaskCanvas.getContext('2d');
-        resizedMaskCtx.drawImage(maskCanvas, 0, 0, image.width, image.height);
-        const resizedMaskData = resizedMaskCtx.getImageData(0, 0, image.width, image.height);
-
-        // Apply mask as alpha channel
-        const outputImageData = outputCtx.getImageData(0, 0, image.width, image.height);
-        for (let i = 0; i < outputImageData.data.length / 4; i++) {
-            outputImageData.data[i * 4 + 3] = resizedMaskData.data[i * 4]; // Use red channel as alpha
-        }
-        outputCtx.putImageData(outputImageData, 0, 0);
-
-        // Convert to blob and display
-        outputCanvas.toBlob((blob) => {
-            state.resultBlob = blob;
-            const resultUrl = URL.createObjectURL(blob);
-            elements.resultImage.src = resultUrl;
-            elements.resultImage.style.display = 'block';
-            elements.processingOverlay.style.display = 'none';
-            elements.downloadBtn.disabled = false;
-        }, 'image/png');
-
-        // Cleanup
-        URL.revokeObjectURL(imageUrl);
-
+        maskContext.putImageData(maskPixels, 0, 0);
+        const canvas = document.createElement('canvas');
+        canvas.width = image.width; canvas.height = image.height;
+        const context = canvas.getContext('2d');
+        context.drawImage(maskCanvas, 0, 0, image.width, image.height);
+        const resizedMask = context.getImageData(0, 0, image.width, image.height);
+        context.putImageData(new ImageData(ImageCore.applyMask(rgba, resizedMask.data), image.width, image.height), 0, 0);
+        const blob = await new Promise((resolve, reject) => canvas.toBlob(value => value ? resolve(value) : reject(new Error('PNG export failed.')), 'image/png'));
+        if (job !== state.jobId) return;
+        state.resultBlob = blob;
+        state.outputUrl = URL.createObjectURL(blob);
+        elements.resultImage.src = state.outputUrl;
+        elements.resultImage.style.display = 'block';
+        elements.downloadBtn.disabled = false;
     } catch (error) {
-        console.error('Error processing image:', error);
-        alert(t('errorProcessing') + '\n\n' + error.message);
-        resetUI();
+        if (job === state.jobId) {
+            alert(t('errorProcessing') + '\n\n' + error.message);
+            resetUI();
+        }
     } finally {
         state.isProcessing = false;
+        elements.processingOverlay.style.display = 'none';
+        elements.previewArea.setAttribute('aria-busy', 'false');
     }
 }
 
 function downloadResult() {
-    if (!state.resultBlob) return;
-
+    if (!state.resultBlob || state.isProcessing) return;
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(state.resultBlob);
-    link.download = `background-removed-${Date.now()}.png`;
+    const url = URL.createObjectURL(state.resultBlob);
+    link.href = url;
+    link.download = 'background-removed.png';
     link.click();
-    URL.revokeObjectURL(link.href);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function resetUI() {
+    state.jobId++;
+    for (const key of ['inputUrl', 'outputUrl']) {
+        if (state[key]) URL.revokeObjectURL(state[key]);
+        state[key] = null;
+    }
+    elements.originalImage.removeAttribute('src');
+    elements.resultImage.removeAttribute('src');
     elements.uploadArea.style.display = 'block';
     elements.previewArea.style.display = 'none';
     elements.resultImage.style.display = 'none';
-    elements.processingOverlay.style.display = 'flex';
+    elements.processingOverlay.style.display = 'none';
     elements.downloadBtn.disabled = true;
     elements.fileInput.value = '';
     state.resultBlob = null;
@@ -527,3 +455,5 @@ async function init() {
 
 // Start app
 init();
+
+window.addEventListener('pagehide', resetUI);

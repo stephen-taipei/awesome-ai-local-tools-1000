@@ -45,7 +45,7 @@
         footer { text-align: center; padding: 30px; margin-top: 40px; color: #666; }
     </style>
 </head>
-<body>
+<body data-implementation="demo">
     <div class="container">
         <div class="lang-switcher">
             <button class="lang-btn active" onclick="setLang('en')">English</button>
@@ -66,7 +66,7 @@
             </div>
             <div class="controls">
                 <button class="btn btn-primary" id="startBtn" onclick="startCamera()" data-i18n="start">Start Camera</button>
-                <button class="btn btn-primary" onclick="capturePhoto()" data-i18n="capture">Capture</button>
+                <button class="btn btn-primary" onclick="capturePhoto()" id="captureBtn" disabled data-i18n="capture">Capture</button>
             </div>
             <div class="category-tabs">
                 <button class="tab-btn active" onclick="showCategory('glasses')" data-i18n="catGlasses">Glasses</button>
@@ -80,7 +80,7 @@
             <div class="info-card">
                 <div class="info-icon">👓</div>
                 <h3 data-i18n="accurate">Accurate Fit</h3>
-                <p data-i18n="accurateDesc">Items placed precisely using face tracking</p>
+                <p data-i18n="accurateDesc">Centered sticker preview only; no face tracking is implemented</p>
             </div>
             <div class="info-card">
                 <div class="info-icon">🎨</div>
@@ -97,6 +97,7 @@
             <p>Tool #805 | AR Virtual Try-On | Awesome AI Local Tools</p>
         </footer>
     </div>
+    <script src="../shared/tool-status.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

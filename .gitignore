@@ -64,3 +64,8 @@ proxy.conf.json
 AGENTS.md
 MIGRATION.md
 ARCHITECTURE.md
+
+# Local audit evidence and Python bytecode
+audit-output/
+__pycache__/
+*.pyc

@@ -117,6 +117,7 @@ const translations = {
 
 // State
 let currentLang = 'zh';
+let processingTimer = null;
 let originalImage = null;
 let isPickingColor = false;
 let currentSettings = {
@@ -152,8 +153,8 @@ const edgeValue = document.getElementById('edgeValue');
 const applyBtn = document.getElementById('applyBtn');
 const resetBtn = document.getElementById('resetBtn');
 const downloadBtn = document.getElementById('downloadBtn');
-const pickColorBtn = document.getElementById('pickColorBtn');
-const colorInput = document.getElementById('colorInput');
+const pickColorBtn = document.getElementById('pickerBtn');
+const colorInput = document.getElementById('customColor');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -223,6 +224,7 @@ function initUpload() {
 }
 
 function handleFile(file) {
+    if (file.size > 10 * 1024 * 1024) { alert('Maximum image size: 10 MiB.'); return; }
     if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
         alert('請選擇 JPG、PNG 或 WebP 格式的圖片');
         return;
@@ -232,6 +234,7 @@ function handleFile(file) {
     reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
+            if (img.width > 4096 || img.height > 4096) { alert('Maximum dimensions: 4096 x 4096.'); return; }
             originalImage = img;
             showEditor();
             drawOriginal();
@@ -248,12 +251,16 @@ function showEditor() {
 }
 
 function resetEditor() {
+    clearTimeout(processingTimer);
+    processingOverlay.style.display = 'none';
     uploadArea.style.display = 'flex';
     editorArea.style.display = 'none';
     originalImage = null;
     fileInput.value = '';
     isPickingColor = false;
-    document.getElementById('pickColorHint').style.display = 'none';
+    pickColorBtn.classList.remove('active');
+    document.getElementById('pickColorHint').hidden = true;
+    resultCanvas.style.cursor = originalCanvas.style.cursor = 'default';
 }
 
 // Draw original image
@@ -272,143 +279,59 @@ function drawOriginal() {
 
 // Controls
 function initControls() {
-    // Sliders
-    toleranceSlider.addEventListener('input', (e) => {
-        currentSettings.tolerance = parseInt(e.target.value);
-        toleranceValue.textContent = e.target.value;
-    });
-
-    softnessSlider.addEventListener('input', (e) => {
-        currentSettings.softness = parseInt(e.target.value);
-        softnessValue.textContent = e.target.value;
-    });
-
-    spillSlider.addEventListener('input', (e) => {
-        currentSettings.spillSuppression = parseInt(e.target.value);
-        spillValue.textContent = e.target.value + '%';
-    });
-
-    edgeSlider.addEventListener('input', (e) => {
-        currentSettings.edgeRefinement = parseInt(e.target.value);
-        edgeValue.textContent = e.target.value + 'px';
-    });
-
-    // Color presets
-    document.querySelectorAll('.color-preset-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.color-preset-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const preset = btn.dataset.preset;
-            if (preset === 'green') {
-                currentSettings.keyColor = { h: 120, s: 100, v: 100 };
-                colorInput.value = '#00ff00';
-            } else if (preset === 'blue') {
-                currentSettings.keyColor = { h: 240, s: 100, v: 100 };
-                colorInput.value = '#0000ff';
-            }
+    for (const [slider, label, key, suffix] of [
+        [toleranceSlider, toleranceValue, 'tolerance', '%'],
+        [softnessSlider, softnessValue, 'softness', '%'],
+        [spillSlider, spillValue, 'spillSuppression', '%'],
+        [edgeSlider, edgeValue, 'edgeRefinement', 'px']
+    ]) {
+        currentSettings[key] = Number(slider.value);
+        slider.addEventListener('input', () => {
+            currentSettings[key] = Number(slider.value);
+            label.textContent = slider.value + suffix;
         });
-    });
-
-    // Custom color input
-    colorInput.addEventListener('input', (e) => {
-        const hex = e.target.value;
+        slider.addEventListener('change', applyChromaKey);
+    }
+    function chooseColor(hex) {
         const rgb = hexToRgb(hex);
         currentSettings.keyColor = rgbToHsv(rgb.r, rgb.g, rgb.b);
-
-        // Activate custom preset
-        document.querySelectorAll('.color-preset-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-preset="custom"]').classList.add('active');
-    });
-
-    // Color picker (eyedropper)
+        colorInput.value = hex;
+        document.querySelectorAll('.color-preset').forEach(button => button.classList.toggle('active', button.dataset.color === hex));
+        applyChromaKey();
+    }
+    document.querySelectorAll('.color-preset').forEach(button => button.addEventListener('click', () => chooseColor(button.dataset.color)));
+    colorInput.addEventListener('input', () => chooseColor(colorInput.value));
     pickColorBtn.addEventListener('click', () => {
         isPickingColor = !isPickingColor;
         pickColorBtn.classList.toggle('active', isPickingColor);
-        document.getElementById('pickColorHint').style.display = isPickingColor ? 'block' : 'none';
-
-        if (isPickingColor) {
-            resultCanvas.style.cursor = 'crosshair';
-            originalCanvas.style.cursor = 'crosshair';
-        } else {
-            resultCanvas.style.cursor = 'default';
-            originalCanvas.style.cursor = 'default';
-        }
+        document.getElementById('pickColorHint').hidden = !isPickingColor;
+        for (const canvas of [resultCanvas, originalCanvas]) canvas.style.cursor = isPickingColor ? 'crosshair' : 'default';
     });
-
-    // Click on canvas to pick color
-    const handleCanvasClick = (e) => {
+    for (const canvas of [resultCanvas, originalCanvas]) canvas.addEventListener('click', event => {
         if (!isPickingColor || !originalImage) return;
-
-        const canvas = e.target;
         const rect = canvas.getBoundingClientRect();
-        const scaleX = canvas.width / rect.width;
-        const scaleY = canvas.height / rect.height;
-        const x = Math.floor((e.clientX - rect.left) * scaleX);
-        const y = Math.floor((e.clientY - rect.top) * scaleY);
-
-        const ctx = originalCanvas.getContext('2d');
-        const pixel = ctx.getImageData(x, y, 1, 1).data;
-
-        currentSettings.keyColor = rgbToHsv(pixel[0], pixel[1], pixel[2]);
-        colorInput.value = rgbToHex(pixel[0], pixel[1], pixel[2]);
-
-        // Activate custom preset
-        document.querySelectorAll('.color-preset-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-preset="custom"]').classList.add('active');
-
-        // Disable picking mode
+        const x = Math.max(0, Math.min(canvas.width - 1, Math.floor((event.clientX - rect.left) * canvas.width / rect.width)));
+        const y = Math.max(0, Math.min(canvas.height - 1, Math.floor((event.clientY - rect.top) * canvas.height / rect.height)));
+        const data = originalCanvas.getContext('2d').getImageData(x, y, 1, 1).data;
+        chooseColor(rgbToHex(data[0], data[1], data[2]));
         isPickingColor = false;
         pickColorBtn.classList.remove('active');
-        document.getElementById('pickColorHint').style.display = 'none';
-        resultCanvas.style.cursor = 'default';
-        originalCanvas.style.cursor = 'default';
-
-        // Auto apply
-        applyChromaKey();
-    };
-
-    resultCanvas.addEventListener('click', handleCanvasClick);
-    originalCanvas.addEventListener('click', handleCanvasClick);
-
-    // Quick presets
-    document.querySelectorAll('.preset-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const preset = btn.dataset.preset;
-            applyQuickPreset(preset);
-        });
+        document.getElementById('pickColorHint').hidden = true;
+        resultCanvas.style.cursor = originalCanvas.style.cursor = 'default';
     });
-
-    // Background preview modes
-    document.querySelectorAll('.bg-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentBgMode = btn.dataset.bg;
-
-            if (currentBgMode === 'custom') {
-                document.getElementById('customBgColor').click();
-            } else {
-                updateBackgroundPreview();
-            }
-        });
-    });
-
-    document.getElementById('customBgColor').addEventListener('input', (e) => {
-        customBgColor = e.target.value;
+    document.querySelectorAll('.preset-btn').forEach(button => button.addEventListener('click', () => applyQuickPreset(button.dataset.preset)));
+    document.querySelectorAll('.bg-preset').forEach(button => button.addEventListener('click', () => {
+        document.querySelectorAll('.bg-preset').forEach(other => other.classList.toggle('active', other === button));
+        currentBgMode = button.dataset.bg === 'checker' ? 'checkerboard' : button.dataset.bg;
+        updateBackgroundPreview();
+    }));
+    document.getElementById('customBgColor').addEventListener('input', event => {
+        customBgColor = event.target.value;
         currentBgMode = 'custom';
-        document.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-bg="custom"]').classList.add('active');
+        document.querySelectorAll('.bg-preset').forEach(button => button.classList.remove('active'));
         updateBackgroundPreview();
     });
-
-    // Apply button
     applyBtn.addEventListener('click', applyChromaKey);
-
-    // Download button
     downloadBtn.addEventListener('click', downloadResult);
 }
 
@@ -477,8 +400,8 @@ function applyChromaKey() {
 
     processingOverlay.style.display = 'flex';
 
-    // Use setTimeout to allow UI to update
-    setTimeout(() => {
+    clearTimeout(processingTimer);
+    processingTimer = setTimeout(() => {
         const srcCtx = originalCanvas.getContext('2d');
         const srcData = srcCtx.getImageData(0, 0, originalCanvas.width, originalCanvas.height);
 
@@ -514,7 +437,9 @@ function applyChromaKey() {
 
             // Calculate alpha based on tolerance and softness
             let alpha;
-            if (effectiveDiff < tolerance - softness) {
+            if (softness === 0) {
+                alpha = effectiveDiff <= tolerance ? 0 : 255;
+            } else if (effectiveDiff < tolerance - softness) {
                 alpha = 0; // Fully transparent
             } else if (effectiveDiff > tolerance + softness) {
                 alpha = 255; // Fully opaque
@@ -552,6 +477,10 @@ function applyChromaKey() {
             refineEdges(resultData, currentSettings.edgeRefinement);
         }
 
+        for (let i = 0; i < resultData.data.length; i += 4) {
+            resultData.data[i + 3] = Math.min(resultData.data[i + 3], srcData.data[i + 3]);
+            maskData.data[i] = maskData.data[i + 1] = maskData.data[i + 2] = resultData.data[i + 3];
+        }
         resultCtx.putImageData(resultData, 0, 0);
         maskCtx.putImageData(maskData, 0, 0);
 
@@ -562,8 +491,8 @@ function applyChromaKey() {
 
 // Edge refinement using morphological operations
 function refineEdges(imageData, radius) {
-    const width = Math.sqrt(imageData.data.length / 4);
-    const height = imageData.data.length / 4 / width;
+    const width = imageData.width;
+    const height = imageData.height;
     const alphaChannel = new Uint8Array(width * height);
 
     // Extract alpha channel
@@ -582,29 +511,25 @@ function refineEdges(imageData, radius) {
 
 // Simple gaussian blur for alpha channel
 function gaussianBlur(data, width, height, radius) {
-    const result = new Uint8Array(data.length);
-    const kernel = createGaussianKernel(radius);
-    const kSize = radius * 2 + 1;
-
-    for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-            let sum = 0;
-            let weightSum = 0;
-
-            for (let ky = -radius; ky <= radius; ky++) {
-                for (let kx = -radius; kx <= radius; kx++) {
-                    const px = Math.min(Math.max(x + kx, 0), width - 1);
-                    const py = Math.min(Math.max(y + ky, 0), height - 1);
-                    const weight = kernel[(ky + radius) * kSize + (kx + radius)];
-                    sum += data[py * width + px] * weight;
-                    weightSum += weight;
-                }
-            }
-
-            result[y * width + x] = Math.round(sum / weightSum);
-        }
+    // Separable Gaussian: O(pixels * radius), instead of a quadratic kernel per pixel.
+    if (!radius) return new Uint8Array(data);
+    const kernel = [], sigma = radius / 2;
+    let total = 0;
+    for (let offset = -radius; offset <= radius; offset++) {
+        const weight = Math.exp(-offset * offset / (2 * sigma * sigma));
+        kernel.push(weight); total += weight;
     }
-
+    const temp = new Float32Array(data.length), result = new Uint8Array(data.length);
+    for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+        let value = 0;
+        for (let offset = -radius; offset <= radius; offset++) value += data[y * width + Math.max(0, Math.min(width - 1, x + offset))] * kernel[offset + radius];
+        temp[y * width + x] = value / total;
+    }
+    for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+        let value = 0;
+        for (let offset = -radius; offset <= radius; offset++) value += temp[Math.max(0, Math.min(height - 1, y + offset)) * width + x] * kernel[offset + radius];
+        result[y * width + x] = Math.round(value / total);
+    }
     return result;
 }
 
@@ -632,7 +557,7 @@ function createGaussianKernel(radius) {
 
 // Update background preview
 function updateBackgroundPreview() {
-    const previewBox = document.getElementById('previewBox');
+    const previewBox = document.querySelector('.checkerboard-bg');
 
     switch (currentBgMode) {
         case 'checkerboard':
@@ -653,6 +578,9 @@ function updateBackgroundPreview() {
         case 'black':
             previewBox.style.background = '#000000';
             previewBox.style.backgroundSize = 'auto';
+            break;
+        case 'red':
+            previewBox.style.background = '#ef4444';
             break;
         case 'custom':
             previewBox.style.background = customBgColor;

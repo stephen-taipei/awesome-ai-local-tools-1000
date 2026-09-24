@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown Preview - Tool #991</title>
-    <link href="/vendor/tailwind/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
-    <script src="/vendor/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="/vendor/misc/github-markdown-light.min.css">
-    <link rel="stylesheet" href="/vendor/prism/themes/prism.min.css">
+    <link href="../../vendor/tailwind/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css">
+    <script src="../../vendor/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="../../vendor/misc/github-markdown-light.min.css">
+    <link rel="stylesheet" href="../../vendor/prism/themes/prism.min.css">
     <style>
+        .flex:has(> .format-btn), .flex:has(> #sample-btn) { flex-wrap: wrap; max-width: 100%; min-width: 0; }
+        .format-btn { flex: 0 0 auto; }
+        .editor-container > * { min-width: 0; }
+        .markdown-body { overflow-wrap: anywhere; }
         .code-text {
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
         }
@@ -48,12 +52,13 @@
                 </div>
                 <h1 class="text-xl font-semibold text-gray-900">Markdown Preview</h1>
             </div>
-            <a href="../" class="text-gray-500 hover:text-gray-700 transition-colors">
+            <a href="../../index.html" class="text-gray-500 hover:text-gray-700 transition-colors">
                 <i class="fas fa-home"></i> Back
             </a>
         </div>
     </header>
 
+    <p id="markdown-privacy-note" class="mx-auto max-w-7xl px-4 pt-4 text-sm">Preview and exported HTML omit images and embedded documents to prevent passive external requests.</p>
     <main class="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-8">
         <div class="text-center mb-6">
             <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Markdown Editor & Preview</h2>
@@ -203,11 +208,12 @@
         </div>
     </main>
 
-    <script src="/vendor/prism/prism.min.js"></script>
-    <script src="/vendor/prism/components/prism-javascript.min.js"></script>
-    <script src="/vendor/prism/components/prism-python.min.js"></script>
-    <script src="/vendor/prism/components/prism-bash.min.js"></script>
-    <script src="/vendor/prism/components/prism-json.min.js"></script>
+    <script src="../../vendor/prism/prism.min.js"></script>
+    <script src="../../vendor/prism/components/prism-javascript.min.js"></script>
+    <script src="../../vendor/prism/components/prism-python.min.js"></script>
+    <script src="../../vendor/prism/components/prism-bash.min.js"></script>
+    <script src="../../vendor/prism/components/prism-json.min.js"></script>
+    <script src="../../vendor/dompurify/purify.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

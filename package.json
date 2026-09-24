@@ -1,0 +1,29 @@
+{
+  "name": "awesome-ai-local-tools-audit",
+  "private": true,
+  "version": "1.0.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build:vendor": "node scripts/build-vendor.mjs",
+    "audit:site": "python3 verification/audit_site.py",
+    "test": "node --test verification/*.test.cjs",
+    "test:browser": "python3 verification/browser_smoke.py && python3 verification/browser_extras.py && python3 verification/browser_layout.py"
+  },
+  "devDependencies": {
+    "acorn": "8.14.1",
+    "crypto-js": "4.2.0",
+    "dompurify": "3.4.16",
+    "esprima": "4.0.1",
+    "gif.js": "0.2.0",
+    "github-markdown-css": "5.8.1",
+    "js-beautify": "1.15.4",
+    "katex": "0.16.22",
+    "marked": "15.0.12",
+    "prismjs": "1.30.0",
+    "tailwindcss": "3.4.17",
+    "three": "0.160.1",
+    "@fortawesome/free-solid-svg-icons": "6.7.2",
+    "@fortawesome/free-regular-svg-icons": "6.7.2",
+    "@fortawesome/free-brands-svg-icons": "6.7.2"
+  }
+}

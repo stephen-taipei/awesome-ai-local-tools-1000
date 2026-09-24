@@ -77,17 +77,16 @@ greet("Developer");
 `;
 
     // Configure marked
-    marked.setOptions({
-        breaks: true,
-        gfm: true,
-        headerIds: true,
-        highlight: function(code, lang) {
-            if (Prism.languages[lang]) {
-                return Prism.highlight(code, Prism.languages[lang], lang);
-            }
-            return code;
-        }
-    });
+    marked.setOptions({ breaks: true, gfm: true });
+    function safeMarkdown(value) {
+        return DOMPurify.sanitize(marked.parse(value), {
+            ALLOWED_TAGS: ['p', 'br', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong', 'em', 'del', 'blockquote', 'ul', 'ol', 'li', 'pre', 'code', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'a', 'span'],
+            ALLOWED_ATTR: ['href', 'title', 'class'],
+            ALLOW_DATA_ATTR: false,
+            FORBID_TAGS: ['style', 'script', 'svg', 'math', 'img', 'iframe', 'object', 'embed', 'form'],
+            FORBID_ATTR: ['style', 'src', 'srcset', 'id', 'name']
+        });
+    }
 
     // ========== Live Preview ==========
 
@@ -96,7 +95,7 @@ greet("Developer");
     function updatePreview() {
         const markdown = mdInput.value;
         try {
-            const html = marked.parse(markdown);
+            const html = safeMarkdown(markdown);
             mdPreview.innerHTML = html;
 
             // Apply Prism highlighting to code blocks
@@ -157,17 +156,13 @@ greet("Developer");
                 newText = text.substring(0, start) + format.insert + text.substring(end);
                 newCursorPos = start + format.insert.length;
             } else if (format.line) {
-                // Line-based format (add at start of line)
-                let lineStart = text.lastIndexOf('\n', start - 1) + 1;
-                const before = text.substring(0, lineStart);
-                const after = text.substring(lineStart);
-
-                if (selected) {
-                    newText = before + format.prefix + selected + format.suffix + after.substring(selected.length);
-                } else {
-                    newText = before + format.prefix + format.placeholder + format.suffix + after;
-                }
-                newCursorPos = lineStart + format.prefix.length + (selected || format.placeholder).length;
+                const lineStart = start === 0 ? 0 : text.lastIndexOf('\n', start - 1) + 1;
+                const lineEnd = text.indexOf('\n', Math.max(start, end - 1));
+                const stop = lineEnd < 0 ? text.length : lineEnd;
+                const lines = text.slice(lineStart, stop).split('\n');
+                const formatted = lines.map(line => format.prefix + (line || format.placeholder)).join('\n');
+                newText = text.slice(0, lineStart) + formatted + text.slice(stop);
+                newCursorPos = start + format.prefix.length;
             } else if (format.block) {
                 // Block format
                 const content = selected || format.placeholder;
@@ -221,7 +216,7 @@ greet("Developer");
 
             const view = btn.dataset.view;
             if (view === 'split') {
-                editorContainer.style.gridTemplateColumns = '1fr 1fr';
+                editorContainer.style.gridTemplateColumns = '';
                 inputPanel.classList.remove('hidden');
                 previewPanel.classList.remove('hidden');
             } else if (view === 'edit') {
@@ -269,7 +264,7 @@ greet("Developer");
             return;
         }
         try {
-            const html = marked.parse(mdInput.value);
+            const html = safeMarkdown(mdInput.value);
             await navigator.clipboard.writeText(html);
             showNotification('HTML copied', 'success');
         } catch (e) {
