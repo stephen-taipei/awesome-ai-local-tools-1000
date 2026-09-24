@@ -1,0 +1,74 @@
+name: Apply reviewed audit repairs
+on:
+  push:
+    branches: ['audit/ai-local-tools-20260924']
+    paths:
+      - 'scripts/**'
+      - 'tools/shared/**'
+      - 'verification/**'
+      - 'package.json'
+      - '.github/workflows/apply-audit.yml'
+permissions:
+  contents: read
+concurrency:
+  group: apply-audit-20260924
+  cancel-in-progress: false
+jobs:
+  repair:
+    if: github.repository == 'stephen-taipei/awesome-ai-local-tools-1000' && github.ref == 'refs/heads/audit/ai-local-tools-20260924' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Apply deterministic source migration
+        run: |
+          mkdir -p audit-output docs
+          if [ ! -f docs/architecture-proposal.md ]; then
+            printf '> Historical proposal, not an implementation or privacy guarantee. See README and the audit report.\n\n' > docs/architecture-proposal.md
+            cat README.md >> docs/architecture-proposal.md
+          fi
+          python3 scripts/apply-audit-repairs.py
+          git diff --binary > /tmp/audit-first.patch
+          python3 scripts/apply-audit-repairs.py
+          git diff --binary > /tmp/audit-second.patch
+          cmp /tmp/audit-first.patch /tmp/audit-second.patch
+      - name: Build self-hosted assets and lock dependency graph
+        run: |
+          if [ -f package-lock.json ]; then npm ci --ignore-scripts; else npm install --ignore-scripts; fi
+          npm run build:vendor
+          npm audit --json > audit-output/npm-audit.json
+      - name: Verify core logic and all local resource references
+        run: |
+          npm test | tee audit-output/unit-tests.txt
+          npm run audit:site
+      - name: Verify browser behavior at the project subpath
+        run: |
+          python3 -m pip install -r verification/requirements.txt
+          python3 -m playwright install --with-deps chromium
+          timeout 600s npm run test:browser
+      - name: Preserve exact generated source and test evidence
+        if: always()
+        run: |
+          mkdir -p audit-output
+          tar --exclude=.git --exclude=node_modules --exclude=audit-output --exclude=__pycache__ -czf /tmp/audit-source.tar.gz .
+          mv /tmp/audit-source.tar.gz audit-output/source-state.tar.gz
+      - name: Commit only verified generated changes to this audit branch
+        run: |
+          remote_head=$(git ls-remote origin refs/heads/audit/ai-local-tools-20260924 | cut -f1)
+          test "$remote_head" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- tools index.html vendor package-lock.json docs/tool-inventory.json docs/architecture-proposal.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: apply audited tool repairs and commit verified local assets'
+            git push origin HEAD:refs/heads/audit/ai-local-tools-20260924
+          fi
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: always()
+        with:
+          name: applied-audit-evidence
+          path: audit-output/
+          retention-days: 7
+          if-no-files-found: error
