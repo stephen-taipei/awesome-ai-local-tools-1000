@@ -27,7 +27,7 @@
     document.addEventListener('click', event => {
         if (event.target.closest('.lang-btn')) queueMicrotask(() => {
             const active = document.querySelector('.lang-btn.active');
-            if (active) document.documentElement.lang = active.id.includes('zh') ? 'zh-TW' : 'en';
+            if (active && ['lang-zh', 'lang-en'].includes(active.id)) document.documentElement.lang = active.id.includes('zh') ? 'zh-TW' : 'en';
             update();
         });
     });

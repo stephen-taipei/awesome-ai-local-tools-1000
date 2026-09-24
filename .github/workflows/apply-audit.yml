@@ -30,8 +30,10 @@ jobs:
             cat README.md >> docs/architecture-proposal.md
           fi
           python3 scripts/apply-audit-repairs.py
+          python3 scripts/apply-browser-repairs.py
           git diff --binary > /tmp/audit-first.patch
           python3 scripts/apply-audit-repairs.py
+          python3 scripts/apply-browser-repairs.py
           git diff --binary > /tmp/audit-second.patch
           cmp /tmp/audit-first.patch /tmp/audit-second.patch
       - name: Build self-hosted assets and lock dependency graph
@@ -48,6 +50,7 @@ jobs:
           python3 -m pip install -r verification/requirements.txt
           python3 -m playwright install --with-deps chromium
           timeout 600s npm run test:browser
+          python3 verification/browser_extras.py
       - name: Preserve exact generated source and test evidence
         if: always()
         run: |

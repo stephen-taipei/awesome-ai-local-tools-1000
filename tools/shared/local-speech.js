@@ -5,8 +5,10 @@
     const instances = new Set();
     const streams = new Set();
     let generation = 0;
+    let visualizationActive = false;
     function releaseMicrophones() {
         generation++;
+        visualizationActive = false;
         streams.forEach(stream => stream.getTracks().forEach(track => track.stop()));
         streams.clear();
     }
@@ -37,13 +39,17 @@
                 this.processLocally = true;
                 this.addEventListener('start', () => {
                     instances.add(this);
-                    if (typeof root.startVisualization === 'function') void root.startVisualization();
+                    if (!visualizationActive && typeof root.startVisualization === 'function') {
+                        visualizationActive = true;
+                        void root.startVisualization();
+                    }
                 });
                 this.addEventListener('end', () => instances.delete(this));
                 this.addEventListener('error', () => { stopUI(); }, { capture: true });
                 instances.add(this);
             }
             start() {
+                instances.add(this);
                 this.processLocally = true;
                 if (this.processLocally !== true) throw new Error('On-device recognition is unavailable.');
                 try { return super.start(); }

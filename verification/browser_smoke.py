@@ -10,6 +10,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
 import threading
+import traceback
 from playwright.async_api import async_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -75,12 +76,12 @@ async def run():
         page.on('dialog', lambda dialog: asyncio.create_task(dialog.dismiss()))
         async def regression(name, function):
             try:
-                await function(); regressions.append({'name': name, 'status': 'pass'})
+                await asyncio.wait_for(function(), timeout=45); regressions.append({'name': name, 'status': 'pass'})
             except Exception as error:
-                regressions.append({'name': name, 'status': 'fail', 'error': str(error)})
+                regressions.append({'name': name, 'status': 'fail', 'error': str(error), 'traceback': traceback.format_exc()})
         async def markdown():
             await page.goto(base + 'tools/991-markdown-preview/index.html')
-            await page.locator('#md-input').fill('# Safe\n<img src="https://example.invalid/track" onerror="window.pwned=1">\n<script>window.pwned=1</script>\n[link](javascript:alert(1))')
+            await page.locator('#md-input').fill('# Safe\n\n[link](javascript:alert(1))\n\n<img src="https://example.invalid/track" onerror="window.pwned=1">\n<script>window.pwned=1</script>')
             await page.wait_for_timeout(250)
             assert await page.locator('#md-preview h1').inner_text() == 'Safe'
             assert await page.locator('#md-preview img, #md-preview script, #md-preview [onerror], #md-preview a[href^="javascript:"]').count() == 0
@@ -127,6 +128,12 @@ async def run():
             assert await page.evaluate('window.pwned === undefined')
         await regression('Participant and keyword text injection', injection)
         async def image():
+            async def instrument_module(route):
+                # Test-only lexical access. Never export app state in shipped source.
+                source = (ROOT / 'tools/001-background-remover/app.js').read_text()
+                source += '\nObject.assign(globalThis, { state, elements, processImage, resetUI });\n'
+                await route.fulfill(status=200, content_type='text/javascript', body=source)
+            await page.route('**/001-background-remover/app.js', instrument_module)
             await page.goto(base + 'tools/001-background-remover/index.html')
             pixels = await page.evaluate('''async () => {
                 window.RawImage = { fromURL: async () => ({ data: [255, 10, 20], channels: 3, width: 1, height: 1 }) };
