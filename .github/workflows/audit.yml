@@ -1,66 +1,44 @@
 name: Repository audit
-
 on:
   push:
     branches: [main, 'audit/**']
   pull_request:
   workflow_dispatch:
-
 permissions:
   contents: read
-
 concurrency:
   group: audit-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
-      - name: Build pinned local browser dependencies
+      - name: Install locked build dependencies
+        run: npm ci --ignore-scripts
+      - name: Verify reproducible assets and dependency advisories
         run: |
-          npm install --ignore-scripts
           npm run build:vendor
+          git diff --exit-code -- vendor package-lock.json
           mkdir -p audit-output
-          tar -czf audit-output/vendor.tar.gz vendor package-lock.json
-          npm audit --json > audit-output/npm-audit.json || true
-      - name: Inspect source inventory and JavaScript syntax
+          npm audit --json > audit-output/npm-audit.json
+      - name: Unit and whole-source checks
         run: |
-          mkdir -p audit-output
-          python3 - <<'PY'
-          import collections, json, pathlib, re, subprocess
-          root = pathlib.Path('.')
-          files = [p for p in root.rglob('*') if p.is_file() and not {'.git', 'node_modules', 'vendor', 'audit-output'}.intersection(p.parts)]
-          tools = sorted(p.name for p in pathlib.Path('tools').iterdir() if p.is_dir())
-          failures = []
-          javascript = [p for p in files if p.suffix in ('.js', '.mjs')]
-          for path in javascript:
-              result = subprocess.run(['node', '--input-type=module', '--check'], input=path.read_text(), text=True, capture_output=True)
-              if result.returncode:
-                  failures.append({'path': str(path), 'error': result.stderr})
-          signals = {}
-          for name, pattern in {'random': r'Math\.random\(', 'simulation': r'simulat|mock|placeholder', 'unsafe_html': r'innerHTML\s*=', 'remote_speech': r'webkitSpeechRecognition|new SpeechRecognition', 'network': r'fetch\(|XMLHttpRequest|sendBeacon|WebSocket\('}.items():
-              matched = []
-              for path in files:
-                  if path.suffix in ('.js', '.html'):
-                      text = path.read_text()
-                      if re.search(pattern, text, re.I):
-                          matched.append(str(path))
-              signals[name] = matched
-          report = {'tools': tools, 'file_counts': dict(collections.Counter(p.suffix for p in files)), 'javascript_files': len(javascript), 'syntax_failures': failures, 'review_signals': signals}
-          pathlib.Path('audit-output/baseline.json').write_text(json.dumps(report, indent=2))
-          print(json.dumps({'tools': len(tools), 'files': report['file_counts'], 'javascript_files': len(javascript), 'syntax_failures': failures, 'review_signal_counts': {k:len(v) for k,v in signals.items()}}, indent=2))
-          PY
-      - name: Package tracked public source for reproducible review
-        run: git archive --format=tar.gz HEAD > audit-output/source.tar.gz
+          set -o pipefail
+          npm test | tee audit-output/unit-tests.txt
+          npm run audit:site
+      - name: Browser regression suite
+        run: |
+          python3 -m pip install -r verification/requirements.txt
+          python3 -m playwright install --with-deps chromium
+          npm run test:browser
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         if: always()
         with:
-          name: audit-baseline
+          name: audit-results
           path: audit-output/
-          retention-days: 3
-          if-no-files-found: error
+          retention-days: 7
+          if-no-files-found: warn

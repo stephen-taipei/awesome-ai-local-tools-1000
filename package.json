@@ -7,7 +7,7 @@
     "build:vendor": "node scripts/build-vendor.mjs",
     "audit:site": "python3 verification/audit_site.py",
     "test": "node --test verification/*.test.cjs",
-    "test:browser": "python3 verification/browser_smoke.py"
+    "test:browser": "python3 verification/browser_smoke.py && python3 verification/browser_extras.py && python3 verification/browser_layout.py"
   },
   "devDependencies": {
     "acorn": "8.14.1",

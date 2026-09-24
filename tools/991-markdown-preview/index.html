@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="../../vendor/misc/github-markdown-light.min.css">
     <link rel="stylesheet" href="../../vendor/prism/themes/prism.min.css">
     <style>
+        .flex:has(> .format-btn), .flex:has(> #sample-btn) { flex-wrap: wrap; max-width: 100%; min-width: 0; }
+        .format-btn { flex-shrink: 0; }
+        .editor-container > * { min-width: 0; }
+        .markdown-body { overflow-wrap: anywhere; }
         .code-text {
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
         }
