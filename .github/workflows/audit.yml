@@ -21,13 +21,20 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+      - name: Build pinned local browser dependencies
+        run: |
+          npm install --ignore-scripts
+          npm run build:vendor
+          mkdir -p audit-output
+          tar -czf audit-output/vendor.tar.gz vendor package-lock.json
+          npm audit --json > audit-output/npm-audit.json || true
       - name: Inspect source inventory and JavaScript syntax
         run: |
           mkdir -p audit-output
           python3 - <<'PY'
           import collections, json, pathlib, re, subprocess
           root = pathlib.Path('.')
-          files = [p for p in root.rglob('*') if p.is_file() and '.git' not in p.parts and 'audit-output' not in p.parts]
+          files = [p for p in root.rglob('*') if p.is_file() and not {'.git', 'node_modules', 'vendor', 'audit-output'}.intersection(p.parts)]
           tools = sorted(p.name for p in pathlib.Path('tools').iterdir() if p.is_dir())
           failures = []
           javascript = [p for p in files if p.suffix in ('.js', '.mjs')]
@@ -51,6 +58,7 @@ jobs:
       - name: Package tracked public source for reproducible review
         run: git archive --format=tar.gz HEAD > audit-output/source.tar.gz
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: always()
         with:
           name: audit-baseline
           path: audit-output/
