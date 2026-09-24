@@ -762,7 +762,7 @@ async function exportAnimation() {
             quality: quality,
             width: previewCanvas.width,
             height: previewCanvas.height,
-            workerScript: '/vendor/gif/gif.worker.js'
+            workerScript: '../../vendor/gif/gif.worker.js'
         });
 
         // Generate frames

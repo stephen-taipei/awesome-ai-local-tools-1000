@@ -47,6 +47,8 @@
                             <button class="tab-btn" data-tab="original" data-i18n="tabOriginal">原圖</button>
                             <button class="tab-btn" data-tab="mask" data-i18n="tabMask">遮罩</button>
                         </div>
+                        <p id="pickColorHint" data-i18n="pickColorHint" hidden>點擊圖片吸取顏色</p>
+                        <p id="processingOverlay" style="display:none" role="status" data-i18n="processing">正在處理中...</p>
                         <div class="preview-box" id="previewBox">
                             <div class="checkerboard-bg">
                                 <canvas id="resultCanvas"></canvas>
@@ -56,6 +58,7 @@
                         </div>
                         <div class="preview-actions">
                             <button id="resetBtn" class="btn btn-secondary" data-i18n="newImage">選擇新圖片</button>
+                            <button id="applyBtn" class="btn btn-secondary" data-i18n="applyEffect">套用效果</button>
                             <button id="downloadBtn" class="btn btn-primary" data-i18n="download">下載 PNG</button>
                         </div>
                     </div>

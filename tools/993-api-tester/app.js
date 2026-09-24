@@ -129,7 +129,12 @@
     });
 
     async function sendRequest() {
+        if (sendBtn.disabled) return;
         const url = urlInput.value.trim();
+        try {
+            const parsed = new URL(url);
+            if (!['http:', 'https:'].includes(parsed.protocol) || parsed.username || parsed.password) throw new Error('Use an HTTP(S) URL without embedded credentials.');
+        } catch (error) { showNotification(error.message, 'warning'); return; }
         if (!url) {
             showNotification('Please enter a URL', 'warning');
             return;
@@ -166,11 +171,13 @@
         const options = {
             method,
             headers,
-            mode: 'cors'
+            mode: 'cors',
+            credentials: 'omit',
+            redirect: 'error'
         };
 
         // Add body for non-GET requests
-        if (method !== 'GET' && method !== 'DELETE') {
+        if (method !== 'GET' && method !== 'HEAD') {
             const bodyType = document.querySelector('input[name="body-type"]:checked').value;
             const body = bodyInput.value.trim();
 
@@ -199,6 +206,11 @@
         loading.classList.remove('hidden');
         responseSection.classList.add('hidden');
 
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 15000);
+        options.signal = controller.signal;
+        sendBtn.disabled = true;
+        lastResponse = '';
         const startTime = performance.now();
 
         try {
@@ -207,7 +219,21 @@
             const duration = Math.round(endTime - startTime);
 
             // Get response text
-            const text = await response.text();
+            const reader = response.body?.getReader();
+            const parts = [];
+            let bytes = 0;
+            if (reader) {
+                try {
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        bytes += value.byteLength;
+                        if (bytes > 2 * 1024 * 1024) { await reader.cancel(); throw new Error('Response exceeds 2 MiB limit.'); }
+                        parts.push(value);
+                    }
+                } finally { reader.releaseLock(); }
+            }
+            const text = await new Blob(parts).text();
             lastResponse = text;
 
             // Try to parse as JSON
@@ -257,6 +283,8 @@
 
             showNotification('Request failed: ' + error.message, 'error');
         } finally {
+            clearTimeout(timeout);
+            sendBtn.disabled = false;
             loading.classList.add('hidden');
         }
     }
@@ -281,7 +309,7 @@
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
-        return div.innerHTML;
+        return div.innerHTML.replaceAll('"', '&quot;').replaceAll("'", '&#39;');
     }
 
     function formatBytes(bytes) {

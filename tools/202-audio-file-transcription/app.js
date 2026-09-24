@@ -146,7 +146,7 @@ function handleFile(file) {
     const url = URL.createObjectURL(file);
     audioPlayer.src = url;
 
-    transcribeBtn.disabled = false;
+    transcribeBtn.disabled = true;
     drawWaveform(file);
 }
 
@@ -186,7 +186,7 @@ async function drawWaveform(file) {
 
 // Transcription using MediaRecorder + Speech Recognition workaround
 transcribeBtn.addEventListener('click', async () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.LocalSpeech.getConstructor();
     if (!SpeechRecognition) {
         alert(translations[currentLang].notSupported);
         return;
@@ -223,13 +223,13 @@ transcribeBtn.addEventListener('click', async () => {
         recognition.onend = () => {
             progressFill.style.width = '100%';
             progressText.textContent = translations[currentLang].complete;
-            transcribeBtn.disabled = false;
+            transcribeBtn.disabled = true;
         };
 
         recognition.onerror = (e) => {
             console.error('Recognition error:', e);
             progressText.textContent = translations[currentLang].error;
-            transcribeBtn.disabled = false;
+            transcribeBtn.disabled = true;
         };
 
         // Note: This is a simulation - real file transcription requires server-side processing
@@ -237,13 +237,13 @@ transcribeBtn.addEventListener('click', async () => {
         transcriptContent.textContent = 'Note: For full audio file transcription, a backend service with Whisper or similar model is recommended. Browser Speech API works best with live microphone input.';
         progressFill.style.width = '100%';
         progressText.textContent = 'Demo mode - See note above';
-        transcribeBtn.disabled = false;
+        transcribeBtn.disabled = true;
 
-        audioContext.close();
+        if (audioContext.state !== 'closed') void audioContext.close().catch(() => {});
     } catch (error) {
         console.error('Transcription error:', error);
         progressText.textContent = translations[currentLang].error;
-        transcribeBtn.disabled = false;
+        transcribeBtn.disabled = true;
     }
 });
 

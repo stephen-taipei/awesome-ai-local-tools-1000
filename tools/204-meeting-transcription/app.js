@@ -88,12 +88,16 @@ document.getElementById('addParticipantBtn').addEventListener('click', () => {
 
 function renderParticipants() {
     const list = document.getElementById('participantList');
-    list.innerHTML = participants.map((p, i) => `
-        <div class="participant">
-            <span>${p}</span>
-            <span class="remove" onclick="removeParticipant(${i})">x</span>
-        </div>
-    `).join('');
+    list.replaceChildren();
+    participants.forEach((participant, index) => {
+        const row = document.createElement('div'); row.className = 'participant';
+        const label = document.createElement('span'); label.textContent = participant;
+        const remove = document.createElement('button');
+        remove.type = 'button'; remove.className = 'remove'; remove.textContent = 'x';
+        remove.setAttribute('aria-label', `Remove ${participant}`);
+        remove.addEventListener('click', () => window.removeParticipant(index));
+        row.append(label, remove); list.append(row);
+    });
 }
 
 window.removeParticipant = (index) => {
@@ -128,7 +132,7 @@ function getTimestamp() {
 // Visualization
 async function startVisualization() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const stream = await window.LocalSpeech.captureMicrophone();
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
         const source = audioContext.createMediaStreamSource(stream);
@@ -163,15 +167,16 @@ async function startVisualization() {
 }
 
 function stopVisualization() {
+    window.LocalSpeech.releaseMicrophones();
     if (animationId) cancelAnimationFrame(animationId);
-    if (audioContext) audioContext.close();
+    if (audioContext && audioContext.state !== 'closed') void audioContext.close().catch(() => {});
     ctx.fillStyle = '#1a1a2e';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 // Speech recognition
 function initRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.LocalSpeech.getConstructor();
     if (!SpeechRecognition) {
         alert('Speech recognition not supported');
         return null;
@@ -210,19 +215,21 @@ function addTranscriptEntry(text) {
 
 function renderTranscript() {
     const list = document.getElementById('transcriptList');
-    if (transcriptEntries.length === 0) {
-        list.innerHTML = `<p class="placeholder">${translations[currentLang].placeholder}</p>`;
-        return;
+    list.replaceChildren();
+    if (!transcriptEntries.length) {
+        const placeholder = document.createElement('p');
+        placeholder.className = 'placeholder';
+        placeholder.textContent = translations[currentLang].placeholder;
+        list.append(placeholder);
     }
-
-    list.innerHTML = transcriptEntries.map(entry => `
-        <div class="transcript-entry">
-            <div class="transcript-time">[${entry.time}]</div>
-            <div class="transcript-speaker">${entry.speaker}</div>
-            <div class="transcript-text">${entry.text}</div>
-        </div>
-    `).join('');
-
+    transcriptEntries.forEach(entry => {
+        const row = document.createElement('div'); row.className = 'transcript-entry';
+        for (const [className, value] of [['transcript-time', `[${entry.time}]`], ['transcript-speaker', entry.speaker], ['transcript-text', entry.text]]) {
+            const field = document.createElement('div'); field.className = className;
+            field.textContent = value; row.append(field);
+        }
+        list.append(row);
+    });
     list.scrollTop = list.scrollHeight;
 }
 
@@ -236,7 +243,6 @@ document.getElementById('startBtn').addEventListener('click', () => {
     timerInterval = setInterval(updateTimer, 1000);
 
     recognition.start();
-    startVisualization();
 
     document.getElementById('recordingDot').classList.remove('stopped');
     document.getElementById('statusText').textContent = translations[currentLang].recording;

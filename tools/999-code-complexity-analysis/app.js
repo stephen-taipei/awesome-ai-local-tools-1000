@@ -52,123 +52,17 @@ analyzeBtn.addEventListener('click', analyzeCode);
 function analyzeCode() {
     const code = codeInput.value;
     if (!code.trim()) return;
-
     try {
-        // Parse code using Esprima
-        const ast = esprima.parseScript(code, { loc: true, range: true });
-        
-        // Reset metrics
-        let totalCyclomatic = 0;
-        let functionCount = 0;
-        let maxNesting = 0;
-        const functionDetails = [];
-
-        // Helper to traverse AST
-        function traverse(node, parent, depth = 0) {
-            if (!node) return;
-
-            // Cyclomatic Complexity Logic
-            // Base 1 + 1 for each: if, while, for, case, catch, ternary, ||, &&
-            let complexityIncrement = 0;
-            
-            if (['IfStatement', 'WhileStatement', 'DoWhileStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement', 'CaseClause', 'CatchClause', 'ConditionalExpression'].includes(node.type)) {
-                complexityIncrement = 1;
-            } else if (node.type === 'LogicalExpression' && (node.operator === '||' || node.operator === '&&')) {
-                complexityIncrement = 1;
-            }
-
-            // Nesting Depth
-            if (['IfStatement', 'ForStatement', 'WhileStatement', 'FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression'].includes(node.type)) {
-                maxNesting = Math.max(maxNesting, depth + 1);
-            }
-
-            // Function Analysis
-            if (['FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression'].includes(node.type)) {
-                functionCount++;
-                const funcName = node.id ? node.id.name : '(anonymous)';
-                const funcComplexity = calculateFunctionComplexity(node);
-                functionDetails.push({ name: funcName, complexity: funcComplexity, line: node.loc.start.line });
-            }
-
-            // Recursively traverse children
-            for (const key in node) {
-                if (node.hasOwnProperty(key)) {
-                    const child = node[key];
-                    if (typeof child === 'object' && child !== null) {
-                        if (Array.isArray(child)) {
-                            child.forEach(c => traverse(c, node, depth + (complexityIncrement ? 1 : 0)));
-                        } else if (child.type) {
-                            traverse(child, node, depth + (complexityIncrement ? 1 : 0));
-                        }
-                    }
-                }
-            }
-        }
-        
-        // Specialized traversal just for a node's complexity (not full tree again)
-        function calculateFunctionComplexity(funcNode) {
-            let complexity = 1; // Base complexity
-            
-            function visit(node) {
-                if (!node) return;
-                if (['IfStatement', 'WhileStatement', 'DoWhileStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement', 'CaseClause', 'CatchClause', 'ConditionalExpression'].includes(node.type)) {
-                    complexity++;
-                } else if (node.type === 'LogicalExpression' && (node.operator === '||' || node.operator === '&&')) {
-                    complexity++;
-                }
-                
-                for (const key in node) {
-                    if (node.hasOwnProperty(key)) {
-                        const child = node[key];
-                        if (typeof child === 'object' && child !== null) {
-                            // Don't traverse into nested functions for *this* function's complexity
-                            if (['FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression'].includes(child.type)) continue;
-
-                            if (Array.isArray(child)) {
-                                child.forEach(visit);
-                            } else if (child.type) {
-                                visit(child);
-                            }
-                        }
-                    }
-                }
-            }
-            
-            // Visit body of function
-            if (funcNode.body) visit(funcNode.body);
-            return complexity;
-        }
-
-        // Start Traversal
-        traverse(ast, null);
-        
-        // Calculate Total Cyclomatic (Sum of functions or global + functions)
-        // For this tool, let's sum function complexities + a global check
-        // Actually, traverse() already tracks structure. Let's aggregate functionDetails for simplicity.
-        const avgComplexity = functionDetails.length > 0 
-            ? (functionDetails.reduce((sum, f) => sum + f.complexity, 0) / functionDetails.length).toFixed(1) 
-            : 1;
-        
-        const maxComplexity = functionDetails.length > 0 
-            ? Math.max(...functionDetails.map(f => f.complexity)) 
-            : 1;
-
-        // Update UI
+        const ast = esprima.parseScript(code, { loc: true });
+        const result = ComplexityCore.analyze(ast);
         metricLoc.textContent = code.split('\n').length;
-        metricFunctions.textContent = functionCount;
-        metricNesting.textContent = maxNesting;
-        metricCyclo.textContent = maxComplexity; // Showing Max complexity as the "Cyclomatic" metric usually refers to the worst offender
-
-        // Update Score Circle (Visualizing Complexity: Lower is better, but for progress bar, let's say 0-20 scale)
-        // 1-5: Good (Green), 6-10: Warning (Yellow), >10: Bad (Red)
-        updateScoreCircle(maxComplexity);
-
-        // Update Details
-        updateDetailsList(functionDetails);
-
+        metricFunctions.textContent = result.functionCount;
+        metricNesting.textContent = result.maxNesting;
+        metricCyclo.textContent = result.maxComplexity;
+        updateScoreCircle(result.maxComplexity);
+        updateDetailsList(result.details);
     } catch (error) {
-        console.error(error);
-        alert("Error parsing code: " + error.message);
+        alert('Error parsing code: ' + error.message);
     }
 }
 
@@ -205,31 +99,25 @@ function updateScoreCircle(complexity) {
 }
 
 function updateDetailsList(details) {
-    detailsList.innerHTML = '';
-    if (details.length === 0) {
-        detailsList.innerHTML = '<li class="px-4 py-3 text-gray-500 text-center italic">No functions found.</li>';
+    detailsList.replaceChildren();
+    if (!details.length) {
+        const empty = document.createElement('li');
+        empty.className = 'px-4 py-3 text-gray-500 text-center italic';
+        empty.textContent = 'No functions found.';
+        detailsList.appendChild(empty);
         return;
     }
-
-    details.sort((a, b) => b.complexity - a.complexity); // Sort by complexity desc
-
-    details.forEach(func => {
+    [...details].sort((a, b) => b.complexity - a.complexity).forEach(func => {
         const li = document.createElement('li');
-        li.className = "px-4 py-3 flex justify-between items-center hover:bg-gray-50 transition-colors";
-        
-        let colorClass = "bg-green-100 text-green-800";
-        if (func.complexity > 10) colorClass = "bg-red-100 text-red-800";
-        else if (func.complexity > 5) colorClass = "bg-yellow-100 text-yellow-800";
-
-        li.innerHTML = "`
-            <div>
-                <span class="font-medium text-gray-700">${func.name}</span>
-                <span class="text-xs text-gray-400 ml-2">Line ${func.line}</span>
-            </div>
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colorClass}">
-                CC: ${func.complexity}
-            </span>
-        `";
+        li.className = 'px-4 py-3 flex justify-between items-center hover:bg-gray-50 transition-colors';
+        const name = document.createElement('span');
+        name.className = 'font-medium text-gray-700';
+        name.textContent = `${func.name} — Line ${func.line}`;
+        const badge = document.createElement('span');
+        const color = func.complexity > 10 ? 'bg-red-100 text-red-800' : func.complexity > 5 ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800';
+        badge.className = `inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${color}`;
+        badge.textContent = `CC: ${func.complexity}`;
+        li.append(name, badge);
         detailsList.appendChild(li);
     });
 }

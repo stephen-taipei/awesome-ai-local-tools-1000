@@ -90,7 +90,7 @@ function executeCommand(cmd) {
 
 async function startVisualization() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const stream = await window.LocalSpeech.captureMicrophone();
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
         const source = audioContext.createMediaStreamSource(stream);
@@ -128,14 +128,15 @@ async function startVisualization() {
 }
 
 function stopVisualization() {
+    window.LocalSpeech.releaseMicrophones();
     if (animationId) cancelAnimationFrame(animationId);
-    if (audioContext) audioContext.close();
+    if (audioContext && audioContext.state !== 'closed') void audioContext.close().catch(() => {});
     ctx.fillStyle = '#1a1a2e';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function initRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.LocalSpeech.getConstructor();
     if (!SpeechRecognition) {
         alert('Speech recognition not supported');
         return null;
@@ -176,7 +177,7 @@ function toggleListening() {
 
         isListening = true;
         recognition.start();
-        startVisualization();
+
         micIcon.classList.add('listening');
         statusText.textContent = translations[currentLang].listening;
     }

@@ -16,7 +16,7 @@ const i18n = {
         catJewelry: "Jewelry",
         catMakeup: "Makeup",
         accurate: "Accurate Fit",
-        accurateDesc: "Items placed precisely using face tracking",
+        accurateDesc: "Centered sticker preview only; no face tracking is implemented",
         variety: "Wide Variety",
         varietyDesc: "Multiple categories of virtual items",
         share: "Share",
@@ -72,17 +72,20 @@ const items = {
 let currentLang = 'en';
 let video, canvas, ctx;
 let isRunning = false;
+let cameraRequestId = 0, cameraStarting = false;
 let currentCategory = 'glasses';
 let selectedItem = null;
 
 function setLang(lang) {
+    if (!i18n[lang]) return;
     currentLang = lang;
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (i18n[lang][key]) el.textContent = i18n[lang][key];
+    document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const value = i18n[lang][element.dataset.i18n];
+        if (value) element.textContent = value;
     });
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    document.querySelectorAll('.lang-btn').forEach((button, index) => button.classList.toggle('active', ['en', 'zh'][index] === lang));
+    document.getElementById('startBtn').textContent = i18n[lang][isRunning ? 'stop' : 'start'];
 }
 
 function init() {
@@ -93,17 +96,23 @@ function init() {
 }
 
 function showCategory(category) {
+    if (!Object.hasOwn(items, category)) return;
+    if (category !== currentCategory) selectedItem = null;
     currentCategory = category;
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-
+    document.querySelectorAll('.tab-btn').forEach((button, index) => button.classList.toggle('active', Object.keys(items)[index] === category));
     const grid = document.getElementById('itemsGrid');
-    grid.innerHTML = items[category].map(item => `
-        <div class="item-card ${selectedItem === item.id ? 'active' : ''}" onclick="selectItem('${item.id}')">
-            <div class="icon">${item.icon}</div>
-            <div class="name">${item.name}</div>
-        </div>
-    `).join('');
+    grid.replaceChildren();
+    items[category].forEach(item => {
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = 'item-card';
+        button.classList.toggle('active', selectedItem === item.id);
+        button.setAttribute('aria-pressed', String(selectedItem === item.id));
+        const icon = document.createElement('div'); icon.className = 'icon'; icon.textContent = item.icon;
+        const label = document.createElement('div'); label.className = 'name'; label.textContent = item.name;
+        button.append(icon, label);
+        button.addEventListener('click', () => selectItem(item.id));
+        grid.append(button);
+    });
 }
 
 function selectItem(id) {
@@ -112,38 +121,37 @@ function selectItem(id) {
 }
 
 async function startCamera() {
-    const btn = document.getElementById('startBtn');
-
-    if (isRunning) {
-        stopCamera();
-        return;
-    }
-
+    if (isRunning || cameraStarting) { stopCamera(); return; }
+    const request = ++cameraRequestId;
+    cameraStarting = true;
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'user', width: 720, height: 960 }
-        });
-        video.srcObject = stream;
-
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 720, height: 960 } });
+        if (request !== cameraRequestId) { stream.getTracks().forEach(track => track.stop()); return; }
         video.onloadedmetadata = () => {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            isRunning = true;
-            btn.textContent = i18n[currentLang].stop;
+            if (request !== cameraRequestId) return;
+            canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+            isRunning = true; cameraStarting = false;
+            document.getElementById('captureBtn').disabled = false;
+            document.getElementById('startBtn').textContent = i18n[currentLang].stop;
             renderLoop();
         };
-    } catch (err) {
-        console.error('Camera error:', err);
+        video.srcObject = stream;
+    } catch (error) {
+        if (request === cameraRequestId) { stopCamera(); alert('Camera unavailable: ' + error.message); }
     }
 }
 
 function stopCamera() {
+    cameraRequestId++;
+    cameraStarting = false;
     isRunning = false;
-    const stream = video.srcObject;
-    if (stream) stream.getTracks().forEach(track => track.stop());
+    if (!video) return;
+    video.onloadedmetadata = null;
+    video.srcObject?.getTracks().forEach(track => track.stop());
     video.srcObject = null;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     document.getElementById('startBtn').textContent = i18n[currentLang].start;
+    document.getElementById('captureBtn').disabled = true;
 }
 
 function renderLoop() {
@@ -201,6 +209,7 @@ function applyItem() {
 }
 
 function capturePhoto() {
+    if (!isRunning || !video.videoWidth) return;
     const captureCanvas = document.createElement('canvas');
     captureCanvas.width = video.videoWidth;
     captureCanvas.height = video.videoHeight;
@@ -221,3 +230,5 @@ function capturePhoto() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+window.addEventListener('pagehide', stopCamera);

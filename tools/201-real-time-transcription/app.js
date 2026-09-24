@@ -123,7 +123,7 @@ document.getElementById('lang-zh').addEventListener('click', () => setLanguage('
 
 // Initialize Speech Recognition
 function initSpeechRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition = window.LocalSpeech.getConstructor();
 
     if (!SpeechRecognition) {
         alert(translations[currentLang].notSupported);
@@ -196,12 +196,7 @@ function updateStatus(status) {
 
 // Update transcript display
 function updateTranscript() {
-    if (!finalTranscript && !interimTranscript) {
-        transcriptContent.innerHTML = `<p class="placeholder">${translations[currentLang].placeholder}</p>`;
-    } else {
-        transcriptContent.innerHTML = finalTranscript +
-            (interimTranscript ? `<span class="interim">${interimTranscript}</span>` : '');
-    }
+    window.LocalSpeech.renderText(transcriptContent, finalTranscript || translations[currentLang].placeholder, interimTranscript);
     updateWordCount();
 }
 
@@ -215,7 +210,7 @@ function updateWordCount() {
 // Audio visualization
 async function startVisualization() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const stream = await window.LocalSpeech.captureMicrophone();
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
         const source = audioContext.createMediaStreamSource(stream);
@@ -256,11 +251,12 @@ async function startVisualization() {
 }
 
 function stopVisualization() {
+    window.LocalSpeech.releaseMicrophones();
     if (animationId) {
         cancelAnimationFrame(animationId);
     }
     if (audioContext) {
-        audioContext.close();
+        if (audioContext.state !== 'closed') void audioContext.close().catch(() => {});
     }
     // Clear canvas
     const width = canvas.offsetWidth;
@@ -275,7 +271,7 @@ startBtn.addEventListener('click', () => {
         recognition.lang = languageSelect.value;
         recognition.continuous = continuousCheck.checked;
         recognition.start();
-        startVisualization();
+
     }
 });
 

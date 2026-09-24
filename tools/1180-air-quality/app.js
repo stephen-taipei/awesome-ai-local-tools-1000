@@ -55,9 +55,10 @@ document.getElementById('process-btn').addEventListener('click', () => {
 });
 
 function processText(text) {
-  const words = text.split(/\s+/).filter(Boolean);
-  const sentences = text.split(/[.!?]+/).filter(Boolean);
-  return `Analysis complete:\n- Words: ${words.length}\n- Sentences: ${sentences.length}\n- Characters: ${text.length}\n\nProcessed output:\n${text}`;
+    // IMPLEMENTATION_PENDING: no task-specific model or algorithm is implemented.
+    return lang === 'en'
+        ? 'Not implemented. This page does not perform the advertised analysis.'
+        : '功能尚未實作；此頁無法執行標題描述的分析。';
 }
 
 applyI18n();
